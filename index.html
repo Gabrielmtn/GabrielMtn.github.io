@@ -5,40 +5,30 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Hello World</title>
+	<link rel="stylesheet" href="animate.css">
 	
 
 </head>
 <body>	
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="jquery.js"></script>
  <div class="row">
  	<div class="text-center twelve columns">
  		<h1>Gabriel Martin</h1>
 
  <h5>I do beleive that I've gotten it. Later I'll hook up some JS and CSS...<sup>:)</sup></h4>
  <br>
- <h5> Now for the image:</h5>
+ <div class="container animated fadeInDown rollIn">
+ 	<div class="box animated bounceIn rotateIn">This is a text box</div>
+ </div>
+ <h5 class="animated rubberBand"> Now for the image:</h5>
  
  <img src="https://s3.amazonaws.com/startupi/blogFaceImage" alt="My Face!"> 
-
-
 
  	</div>
 
  </div>
 
- <script>
-	
-if (typeof jQuery != 'undefined') {
  
-    alert("jQuery library is loaded!");
- 
-}else{
- 
-    alert("jQuery library is not found!");
- 
-}
-
-</script>	
 
 
 </body>
