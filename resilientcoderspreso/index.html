@@ -1,0 +1,695 @@
+<!doctype html>
+
+<!--
+
+    Welcome to the light side of the source, young padawan.
+
+    One step closer to learn something interesting you are...
+
+                               ____                  
+                            _.' :  `._               
+                        .-.'`.  ;   .'`.-.           
+               __      / : ___\ ;  /___ ; \      __  
+             ,'_ ""=-.:__;".-.";: :".-.":__;.-="" _`,
+             :' `.t""=-.. '<@.`;_  ',@:` ..-=""j.' `;
+                  `:-.._J '-.-'L__ `-.-' L_..-;'     
+                    "-.__ ;  .-"  "-.  : __.-"       
+                        L ' /.======.\ ' J           
+                         "-.   "__"   .-"            
+                        __.l"-:_JL_;-";.__           
+                     .-j/'.;  ;""""  / .'\"-.        
+                   .' /:`. "-.:     .-" .';  `.      
+                .-"  / ;  "-. "-..-" .-"  :    "-.   
+             .+"-.  : :      "-.__.-"      ;-._   \  
+             ; \  `.; ;                    : : "+. ; 
+             :  ;   ; ;                    : ;  : \: 
+             ;  :   ; :                    ;:   ;  : 
+            : \  ;  :  ;                  : ;  /  :: 
+            ;  ; :   ; :                  ;   :   ;: 
+            :  :  ;  :  ;                : :  ;  : ; 
+            ;\    :   ; :                ; ;     ; ; 
+            : `."-;   :  ;              :  ;    /  ; 
+             ;    -:   ; :              ;  : .-"   : 
+             :\     \  :  ;            : \.-"      : 
+              ;`.    \  ; :            ;.'_..-=  / ; 
+              :  "-.  "-:  ;          :/."      .'  :
+               \         \ :          ;/  __        :
+                \       .-`.\        /t-""  ":-+.   :
+                 `.  .-"    `l    __/ /`. :  ; ; \  ;
+                   \   .-" .-"-.-"  .' .'j \  /   ;/ 
+                    \ / .-"   /.     .'.' ;_:'    ;  
+                     :-""-.`./-.'     /    `.___.'   
+                           \ `t  ._  /               
+                            "-.t-._:'                
+
+-->
+
+<!--
+    
+    So you'd like to know how to use impress.js?
+    
+    You've made the first, very important step - you're reading the source code.
+    And that's how impress.js presentations are built - with HTML and CSS code.
+    
+    Believe me, you need quite decent HTML and CSS skills to be able to use impress.js effectively.
+    And what is even more important, you need to be a designer, too, because there are no default
+    styles for impress.js presentations, there is no default or automatic layout for them.
+    
+    You need to design and build it by hand.
+    
+    So...
+    
+    Would you still like to know how to use impress.js?
+    
+-->
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>impress.js | presentation tool based on the power of CSS3 transforms and transitions in modern browsers | by Bartek Szopka @bartaz</title>
+    
+    <meta name="description" content="impress.js is a presentation tool based on the power of CSS3 transforms and transitions in modern browsers and inspired by the idea behind prezi.com." />
+    <meta name="author" content="Bartek Szopka" />
+
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
+
+    <!--
+        
+        Impress.js doesn't depend on any external stylesheet. Script adds all styles it needs for
+        presentation to work.
+        
+        This style below contains styles only for demo presentation. Browse it to see how impress.js
+        classes are used to style presentation steps, or how to apply fallback styles, but I don't want
+        you to use them directly in your presentation.
+        
+        Be creative, build your own. We don't really want all impress.js presentations to look the same,
+        do we?
+        
+        When creating your own presentation get rid of this file. Start from scratch, it's fun!
+        
+    -->
+    <link href="css/impress-demo.css" rel="stylesheet" />
+    
+    <link rel="shortcut icon" href="favicon.png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+</head>
+
+<!--
+    
+    Body element is used by impress.js to set some useful class names, that will allow you to detect
+    the support and state of the presentation in CSS or other scripts.
+    
+    First very useful class name is `impress-not-supported`. This class means, that browser doesn't
+    support features required by impress.js, so you should apply some fallback styles in your CSS.
+    It's not necessary to add it manually on this element. If the script detects that browser is not
+    good enough it will add this class, but keeping it in HTML means that users without JavaScript
+    will also get fallback styles.
+    
+    When impress.js script detects that browser supports all required features, this class name will
+    be removed.
+    
+    The class name on body element also depends on currently active presentation step. More details about
+    it can be found later, when `hint` element is being described.
+    
+-->
+<body class="impress-not-supported">
+
+<!--
+    For example this fallback message is only visible when there is `impress-not-supported` class on body.
+-->
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<!--
+    
+    Now that's the core element used by impress.js.
+    
+    That's the wrapper for your presentation steps. In this element all the impress.js magic happens.
+    It doesn't have to be a `<div>`. Only `id` is important here as that's how the script find it.
+    
+    You probably won't need it now, but there are some configuration options that can be set on this element.
+    
+    To change the duration of the transition between slides use `data-transition-duration="2000"` giving it
+    a number of ms. It defaults to 1000 (1s).
+    
+    You can also control the perspective with `data-perspective="500"` giving it a number of pixels.
+    It defaults to 1000. You can set it to 0 if you don't want any 3D effects.
+    If you are willing to change this value make sure you understand how CSS perspective works:
+    https://developer.mozilla.org/en/CSS/perspective
+    
+    But as I said, you won't need it for now, so don't worry - there are some simple but interesing things
+    right around the corner of this tag ;)
+    
+-->
+<div id="impress">
+
+    <!--
+        
+        Here is where interesting thing start to happen.
+        
+        Each step of the presentation should be an element inside the `#impress` with a class name
+        of `step`. These step elements are positioned, rotated and scaled by impress.js, and
+        the 'camera' shows them on each step of the presentation.
+        
+        Positioning information is passed through data attributes.
+        
+        In the example below we only specify x and y position of the step element with `data-x="-1000"`
+        and `data-y="-1500` attributes. This means that **the center** of the element (yes, the center)
+        will be positioned in point x = -1000px and y = -1500px of the presentation 'canvas'.
+        
+        It will not be rotated or scaled.
+        
+    -->
+    <div id="bored" class="step slide" data-x="-1000" data-y="-1500">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div style = "text-align:center;">Okay. </div>
+    </div>
+
+    <!--
+        
+        The `id` attribute of the step element is used to identify it in the URL, but it's optional.
+        If it is not defined, it will get a default value of `step-N` where N is a number of slide.
+        
+        So in the example below it'll be `step-2`.
+        
+        The hash part of the url when this step is active will be `#/step-2`.
+        
+        You can also use `#step-2` in a link, to point directly to this particular step.
+        
+        Please note, that while `#/step-2` (with slash) would also work in a link it's not recommended.
+        Using classic `id`-based links like `#step-2` makes these links usable also in fallback mode.
+        
+    -->
+    <div class="step slide" data-x="0" data-y="-1500">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div style = "text-align:center;">I'm going to give you some exercises that may help you, and you're going to have to take a deep breath, sit down, and accept that no one's house is like the ones on TV, unless they are really doing nothing but cleaning, nonstop</div>
+
+    </div>
+
+    <div class="step slide" data-x="1000" data-y="-1500">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+<div style = "text-align:center;">Part of the problem is that you don't see the clutter. </div>
+    </div>
+
+    <!--
+        
+        This is an example of step element being scaled.
+        
+        Again, we use a `data-` attribute, this time it's `data-scale="4"`, so it means that this
+        element will be 4 times larger than the others.
+        From presentation and transitions point of view it means, that it will have to be scaled
+        down (4 times) to make it back to it's correct size.
+        
+    -->
+    <div id="title" class="step" data-x="0" data-y="0" data-scale="4">
+        
+        <h1><div style = "text-align:center;">Really. </div></h1>
+        <span class="footnote"><sup></sup></span>
+    </div>
+
+    <!--
+        
+        This element introduces rotation.
+        
+        Notation shouldn't be a surprise. We use `data-rotate="90"` attribute, meaning that this
+        element should be rotated by 90 degrees clockwise.
+        
+    -->
+    <div id="its" class="step" data-x="850" data-y="3000" data-rotate="90" data-scale="5">
+        <div style = "text-align:center;">You're in the habit of not seeing it- and when you DO see it, there's so much it's overwhelming. </div>
+
+    </div>
+
+    <div id="big" class="step" data-x="3500" data-y="2100" data-rotate="180" data-scale="6">
+<div style = "text-align:center;">So you're going to have to learn two things. </div>
+    </div>
+
+    <!--
+        
+        And now it gets really exciting! We move into third dimension!
+        
+        Along with `data-x` and `data-y`, you can define the position on third (Z) axis, with
+        `data-z`. In the example below we use `data-z="-3000"` meaning that element should be
+        positioned far away from us (by 3000px).
+        
+    -->
+    <div id="tiny" class="step" data-x="2845" data-y="2370" data-z="-3000" data-rotate="90" data-scale=".172">
+        <div style = "text-align:center;">One, to see more clearly. </div>
+    </div>
+
+    <div id="tiny-two" class="step" data-x="2840" data-y="2439" data-z="-3000" data-rotate="90" data-scale=".172">
+        <div style = "text-align:center;">Two, to handle the anxiety that all the clutter brings. </div>
+    </div>
+
+    <div id="tiny-three" class="step" data-x="2724" data-y="2370" data-z="-3000" data-rotate="90" data-scale=".112">
+        <div style = "text-align:center;">Because that's why you don't see it- when you do, it's painful. </div>
+    </div>
+    <div id="tiny-four" class="step" data-x="2710.2" data-y="2378.53" data-z="-3000" data-rotate="90" data-scale=".0009">
+        <div style = "text-align:center;">So your brain, with all it's clever ways of avoiding pain, is taking the shortcut and not seeing it</div>
+    </div>
+    <div id="tiny-five" class="step" data-x="2710.7" data-y="2370.52" data-z="-3000" data-rotate="180" data-scale=".0031">
+        <div style = "text-align:center;">Here's what you're going to do</div>
+    </div>
+
+
+    <div id="tiny-six" class="step" data-x="2750.7" data-y="2333.52" data-z="-3000" data-rotate="179.8" data-scale=".0231">
+<div style = "text-align:center;">You're going to stop thinking of this as an all-or-nothing thing, and you're going to start by doing three things a day. </div>
+    </div>
+
+    <div id="tiny-seven" class="step" data-x="2550.7" data-y="2333.52" data-z="-3000" data-rotate="179.8" data-scale=".0631">
+<div style = "text-align:center;">Just three, and you'll do them every day. </div>
+
+    </div>
+
+<div id="tiny-eight" class="step" data-x="2094.4" data-y="2414.52" data-z="-3000" data-rotate="179.8" data-scale=".0900">
+<div>Make a chart and give yourself stars if you want to. </div>
+<br><br><br><br>    
+<div>Whatever helps. </div>
+
+    </div>
+
+
+
+    <!--
+        
+        This step here doesn't introduce anything new when it comes to data attributes, but you
+        should notice in the demo that some words of this text are being animated.
+        It's a very basic CSS transition that is applied to the elements when this step element is
+        reached.
+        
+        At the very beginning of the presentation all step elements are given the class of `future`.
+        It means that they haven't been visited yet.
+        
+        When the presentation moves to given step `future` is changed to `present` class name.
+        That's how animation on this step works - text moves when the step has `present` class.
+        
+        Finally when the step is left the `present` class is removed from the element and `past`
+        class is added.
+        
+        So basically every step element has one of three classes: `future`, `present` and `past`.
+        Only one current step has the `present` class.
+        
+    -->
+    <div id="ing" class="step" data-x="3500" data-y="-850" data-rotate="270" data-scale="6">
+        <div style = "text-align:center;">But these <b class="positioning">three</b> things, they have to be <b class="scaling">small</b> and simple. </div>
+
+    </div>
+
+    <div id="imagination" class="step" data-x="6700" data-y="-300" data-scale="6">
+        <div style = "text-align:center;">Just three things. </div>
+    </div>
+
+        <div id="imagination2" class="step" data-x="6485" data-y="-50" data-scale="2">
+        <div style = "text-align:center;">Anyone can do three things. </div>
+    </div>
+
+        
+
+        <div id="imagination3" class="step" data-x="5913" data-y="-50" data-rotate-x="-180" data-scale="0.023">
+        
+        <div style = "text-align:center;">The object is to get you into the habit of these three things until they feel normal to you, and it will give you the sense of having done something, which will really help</div>
+
+    </div>
+
+    <div id="imagination4" class="step" data-x="5978" data-y="-40" data-rotate-x="0" data-scale="0.033">
+        
+        <div style = "text-align:center;">Think about good self-care, small rewards that you can do after cleaning. </div>
+        <div style = "text-align:center;">Like you clean for fifteen minutes- just fifteen- and then sit and read a book for half an hour. </div>
+    </div>
+
+    <div id="imagination5" class="step" data-x="6033" data-y="-50" data-rotate-x="-180" data-scale="0.033">
+    
+
+    <div style = "text-align:center;">Then another fifteen minutes of calmly removing clutter. </div>
+    <div style = "text-align:center;">Don't do it all day, but start it in small amounts, and in a small area</div>    
+    
+
+
+    </div>
+    <div id="imagination6" class="step" data-x="6080" data-y="-40" data-rotate-x="0" data-scale="0.033">
+        
+    <div style = "text-align:center;">Think of it as clearing a petri dish full of mold- you put the penicillin in one spot continuously till it's clear, and then keep adding it there until it spreads out across the dish. </div>
+    <br>
+    <div style = "text-align:center;">In this case, it's your home. </div>
+    </div>
+    
+
+    <div id="imagination7" class="step" data-x="6137" data-y="-40" data-rotate-x="-180" data-scale="0.033">
+        
+        <div style = "text-align:center;">Start with ONE area, whether it's the sink or one counter-top, and get it clear. </div><br>
+<div style = "text-align:center;">Keep it clear. </div>
+
+</div>    
+
+    
+
+    <div id="imagination9" class="step" data-x="6191" data-y="-45" data-rotate-x="-180" data-scale="0.033">
+        
+    <div style = "text-align:center;">Don't think of it as removing clutter, think of it as building space. </div>
+    <div style = "text-align:center;">You will still freak out at the giant mess. </div>
+    
+    </div>
+
+    <div id="imagination10" class="step" data-x="6191" data-y="-64" data-rotate-x="-180" data-scale="0.033">
+        
+
+    <div style = "text-align:center;">Learn not to. </div>
+
+    </div>     
+
+
+
+     <div id="rotate1" class="step" data-x="6265" data-y="-34" data-rotate="45" data-rotate-x="-180" data-scale="0.033">
+        
+
+    <div style = "text-align:center;">Cultivate an attitude of patience with yourself, and say, "Your turn will come" to the rest of it. </div>
+
+    </div>  
+     <div id="rotate2" class="step" data-x="6265" data-y="-34" data-rotate="90" data-rotate-x="0" data-scale="0.033">
+        
+
+    <div style = "text-align:center;">Focus on the small space, and build a clean spot there.</div>
+
+    </div>  
+     <div id="rotate3" class="step" data-x="6265" data-y="-34" data-rotate="135" data-rotate-x="-180" data-scale="0.033">
+        
+
+    <div style = "text-align:center;">By focusing on the clean spots you're building, you'll be able to enjoy having them clear more. </div>
+
+    </div>  
+     <div id="rotate4" class="step" data-x="6265" data-y="-34" data-rotate="180" data-rotate-x="0" data-scale="0.033">
+        
+    <div style = "text-align:center;">And it will really help with the rest.</div>
+
+    </div>  
+
+
+     <div id="rotate5" class="step" data-x="6225" data-y="-30" data-rotate="90" data-rotate-x="0" data-scale="0.1033">
+        
+<div style = "text-align:center;">Just say, "your turn will come," and tackle the next area once your one corner/sink/counter-top has been clean for a week.</div>
+
+
+    </div>  
+
+<div id="keep-or-not1" class="step" data-x="6317.5" data-y="-37" data-rotate="90" data-rotate-x="0" data-scale="0.0310">
+        
+<div style = "text-align:center;">Meanwhile, when you pick up items to decide whether you want them? Think about whether YOU would buy it at a yard sale. </div>
+
+
+    </div>  
+
+<div id="keep-or-not2" class="step" data-x="6344.5" data-y="-37" data-rotate="90" data-rotate-x="0" data-scale="0.0533">
+        
+<div style = "text-align:center;">Whether you would look for a replacement if it weren't there. </div>
+
+    </div>  
+
+<div id="keep-or-not3" class="step" data-x="6375" data-y="-30" data-rotate="-90" data-rotate-x="0" data-scale="0.0233">
+        
+<div style = "text-align:center;">Including papers- if you lost this paper in a house fire, would you need to find another copy somewhere? Yes, because it's a bank account you don't have online access to. </div>
+
+
+    </div> 
+
+<div id="keep-or-not4" class="step" data-x="6375" data-y="-4" data-rotate="180" data-rotate-x="0" data-scale="0.0233">
+        
+<div style = "text-align:center;">Okay, file that one and keep it. </div>
+
+
+    </div>  
+
+<div id="keep-or-not5" class="step" data-x="6412" data-y="7" data-rotate="180" data-rotate-x="0" data-scale="0.0233">
+        
+<div style = "text-align:center;">This one you have online access to, so you don't need the paper? Shred it and move on. </div> <br><br>
+<div style = "text-align:center;">There, you lost it in an imaginary house fire and don't have to worry about it any more. </div>
+
+    </div>  
+
+<div id="keep-or-not6" class="step" data-x="6419" data-y="-37" data-rotate="90" data-rotate-x="0" data-scale="0.05233">
+        
+<div style = "text-align:center;">You'll be amazed what you wouldn't replace.</div>
+
+
+    </div> 
+
+        
+<div id="keep-or-not7" class="step" data-x="4185" data-y="1060" data-rotate="135" data-rotate-x="0" data-rotate-z="45" data-scale="01.05">
+<div style = "text-align:center;">It's about learning a new framework for owning things, keeping only what adds to your life in a <b>positive</b> way. </div>
+
+    </div> 
+
+
+
+
+    <div id="Projects" class="step" data-x="6282" data-y="2000" data-rotate="45"  data-scale="3.8">
+<div style = "text-align:center;">If it represents a potential project, something you hope one day you'll do? Give yourself ONE box for those, and when it's full, you can't add anything else unless you get rid of something in it. </div>
+    </div>
+
+
+    <div id="Deserved1" class="step" data-x="6300" data-y="2000" data-rotate="45" data-rotate-x="-180" data-scale=".08">
+<div style = "text-align:center;">You'll find, over time, that you need fewer and fewer "potential" things, because you'll have space to work on the things you do care about.</div>
+
+    </div>
+    <div id="Deserved2" class="step" data-x="6298" data-y="2000" data-rotate="45" data-rotate-x="-180" data-scale=".0151">
+    <div style = "text-align:center;">You're not demolishing the mess. </div>
+<br>
+
+    </div>
+    <div id="Deserved3" class="step" data-x="6298" data-y="1999.99" data-rotate="45" data-rotate-x="-180" data-scale=".00011">
+<div style = "text-align:center;">You're building the space you deserve.</div>
+
+
+    </div>
+    <div id="Deserved4" class="step" data-x="6299.5" data-y="2000.5" data-rotate="45" data-rotate-x="-180" data-scale=".0021">
+<div style = "text-align:center;">This is an important distinction, because it helps keep it in perspective. </div>
+
+    </div>
+    <div id="Deserved5" class="step" data-x="6283.1" data-y="2025.1" data-rotate="45" data-rotate-x="-180" data-scale=".01">
+<div style = "text-align:center;">You're choosing, out of what you have, what kind of life you're going to build.</div>
+
+    </div>
+
+    <div id="Deserved6" class="step" data-x="6335.09" data-y="1981.1" data-rotate="45" data-rotate-x="-180" data-scale="0.03">
+<div style = "text-align:center;">Don't be afraid to seek out a counselor, either. </div>
+
+
+    </div>
+
+    <div id="Deserved7" class="step" data-x="6386.08" data-y="1917.1" data-rotate="45" data-rotate-x="-180" data-scale=".14">
+<div style = "text-align:center;">It will really help to have someone to work through the issues with, who can help you with ways to deal with the anxiety. </div>
+
+
+    </div>
+
+    <div id="Deserved8" class="step" data-x="6581.08" data-y="2109.1" data-rotate="45" data-rotate-x="-180" data-scale=".14">
+<div style = "text-align:center;">Because the anxiety is terrible, isn't it? It's the worst part, that flat panic when you turn and really see the mess.</div>
+
+
+
+    </div>
+
+    <div id="Deserved9" class="step" data-x="6404.08" data-y="2345.1" data-rotate="45" data-rotate-x="-180" data-scale=".23">
+        <div style = "text-align:center;">Don't expect perfection. </div>
+<br>
+<div style = "text-align:center;">Expect progress. </div>
+
+    </div>
+
+
+    <div id="Deserved10" class="step" data-x="6760.08" data-y="2318.1" data-rotate="45" data-rotate-x="-180" data-scale=".12">
+<div style = "text-align:center;">Slow, good progress, as you change and learn how you want to keep the place. </div><br>
+
+
+    </div>
+
+
+
+    <div id="one-more-thing" class="step" data-x="6000" data-y="4000" data-scale="2">
+        <div style = "text-align:center;">You'll have weeks when you slip. </div>
+
+    </div>
+
+    <!--
+        
+        And the last one shows full power and flexibility of impress.js.
+        
+        You can not only position element in 3D, but also rotate it around any axis.
+        So this one here will get rotated by -40 degrees (40 degrees anticlockwise) around X axis and
+        10 degrees (clockwise) around Y axis.
+        
+        You can of course rotate it around Z axis with `data-rotate-z` - it has exactly the same effect
+        as `data-rotate` (these two are basically aliases).
+        
+    -->
+    <div id="its-in-3d" class="step" data-x="6200" data-y="4300" data-z="-100" data-rotate-x="-40" data-rotate-y="10" data-scale="2">
+        <div style = "text-align:center;">Don't give up, go back to those three things you started with, and keep going. </div>
+
+    </div>
+
+    <!--
+        
+        So to make a summary of all the possible attributes used to position presentation steps, we have:
+        
+        * `data-x`, `data-y`, `data-z` - they define the position of **the center** of step element on
+            the canvas in pixels; their default value is 0;
+        * `data-rotate-x`, `data-rotate-y`, 'data-rotate-z`, `data-rotate` - they define the rotation of
+            the element around given axis in degrees; their default value is 0; `data-rotate` and `data-rotate-z`
+            are exactly the same;
+        * `data-scale` - defines the scale of step element; default value is 1
+        
+        These values are used by impress.js in CSS transformation functions, so for more information consult
+        CSS transfrom docs: https://developer.mozilla.org/en/CSS/transform
+        
+    -->
+    <div id="overview" class="step" data-x="3000" data-y="1500" data-scale="10">
+    </div>
+
+</div>
+
+<!--
+    
+    Hint is not related to impress.js in any way.
+    
+    But it can show you how to use impress.js features in creative way.
+    
+    When the presentation step is shown (selected) its element gets the class of "active" and the body element
+    gets the class based on active step id `impress-on-ID` (where ID is the step's id)... It may not be
+    so clear because of all these "ids" in previous sentence, so for example when the first step (the one with
+    the id of `bored`) is active, body element gets a class of `impress-on-bored`.
+    
+    This class is used by this hint below. Check CSS file to see how it's shown with delayed CSS animation when
+    the first step of presentation is visible for a couple of seconds.
+    
+    ...
+    
+    And when it comes to this piece of JavaScript below ... kids, don't do this at home ;)
+    It's just a quick and dirty workaround to get different hint text for touch devices.
+    In a real world it should be at least placed in separate JS file ... and the touch content should be
+    probably just hidden somewhere in HTML - not hard-coded in the script.
+    
+    Just sayin' ;)
+    
+-->
+<div class="hint">
+    <p>Use a spacebar or arrow keys to navigate</p>
+</div>
+<script>
+if ("ontouchstart" in document.documentElement) { 
+    document.querySelector(".hint").innerHTML = "<p>Tap on the left or right to navigate</p>";
+}
+</script>
+
+<!--
+    
+    Last, but not least.
+    
+    To make all described above really work, you need to include impress.js in the page.
+    I strongly encourage to minify it first.
+    
+    In here I just include full source of the script to make it more readable.
+    
+    You also need to call a `impress().init()` function to initialize impress.js presentation.
+    And you should do it in the end of your document. Not only because it's a good practice, but also
+    because it should be done when the whole document is ready.
+    Of course you can wrap it in any kind of "DOM ready" event, but I was too lazy to do so ;)
+    
+-->
+<script src="js/impress.js"></script>
+<script>impress().init();</script>
+
+<!--
+    
+    The `impress()` function also gives you access to the API that controls the presentation.
+    
+    Just store the result of the call:
+    
+        var api = impress();
+    
+    and you will get three functions you can call:
+    
+        `api.init()` - initializes the presentation,
+        `api.next()` - moves to next step of the presentation,
+        `api.prev()` - moves to previous step of the presentation,
+        `api.goto( idx | id | element, [duration] )` - moves the presentation to the step given by its index number
+                id or the DOM element; second parameter can be used to define duration of the transition in ms,
+                but it's optional - if not provided default transition duration for the presentation will be used.
+    
+    You can also simply call `impress()` again to get the API, so `impress().next()` is also allowed.
+    Don't worry, it wont initialize the presentation again.
+    
+    For some example uses of this API check the last part of the source of impress.js where the API
+    is used in event handlers.
+    
+-->
+
+</body>
+</html>
+
+<!--
+    
+    Now you know more or less everything you need to build your first impress.js presentation, but before
+    you start...
+    
+    Oh, you've already cloned the code from GitHub?
+    
+    You have it open in text editor?
+    
+    Stop right there!
+    
+    That's not how you create awesome presentations. This is only a code. Implementation of the idea that
+    first needs to grow in your mind.
+    
+    So if you want to build great presentation take a pencil and piece of paper. And turn off the computer.
+    
+    Sketch, draw and write. Brainstorm your ideas on a paper. Try to build a mind-map of what you'd like
+    to present. It will get you closer and closer to the layout you'll build later with impress.js.
+    
+    Get back to the code only when you have your presentation ready on a paper. It doesn't make sense to do
+    it earlier, because you'll only waste your time fighting with positioning of useless points.
+    
+    If you think I'm crazy, please put your hands on a book called "Presentation Zen". It's all about 
+    creating awesome and engaging presentations.
+    
+    Think about it. 'Cause impress.js may not help you, if you have nothing interesting to say.
+    
+-->
+
+<!--
+    
+    Are you still reading this?
+    
+    For real?
+    
+    I'm impressed! Feel free to let me know that you got that far (I'm @bartaz on Twitter), 'cause I'd like
+    to congratulate you personally :)
+    
+    But you don't have to do it now. Take my advice and take some time off. Make yourself a cup of coffee, tea,
+    or anything you like to drink. And raise a glass for me ;)
+    
+    Cheers!
+    
+-->
+
