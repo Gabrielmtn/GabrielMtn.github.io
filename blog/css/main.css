@@ -1,0 +1,30 @@
+@font-face { 
+	font-family: 'Oswald', sans-serif;}
+
+
+
+body {
+	font-family:"Oswald";
+}
+
+.logo{
+	float: left;
+	display:inline-block;
+}
+
+.sidebar{
+float: left;
+}
+
+.blogpost{
+	float: right;
+    display:block;
+	
+}
+.nobullets{
+	list-style-type: none;
+}
+.inline-nav{
+	display: inline;
+	float: right;
+}
