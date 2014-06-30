@@ -14,6 +14,7 @@ body {
 
 .sidebar{
 float: left;
+width: 10%;
 }
 
 .blogpost{
@@ -27,4 +28,9 @@ float: left;
 .inline-nav{
 	display: inline;
 	float: right;
+	padding:0px :0px :0px :0px;
+}
+
+.clear{
+	clear:both;
 }
