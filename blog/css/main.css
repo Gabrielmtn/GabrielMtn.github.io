@@ -5,6 +5,8 @@
 
 body {
 	font-family:"Oswald";
+
+
 }
 
 .logo{
@@ -14,23 +16,32 @@ body {
 
 .sidebar{
 float: left;
-width: 10%;
+
+width: 20%;
 }
 
 .blogpost{
 	float: right;
     display:block;
+    width: 70%;
 	
 }
 .nobullets{
 	list-style-type: none;
 }
 .inline-nav{
-	display: inline;
-	float: right;
-	padding:0px :0px :0px :0px;
-}
+	display:inline;
+	float:right;
+	padding:5px 5px 5px 5px;
 
+}
+.date{
+	margin:0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+}
 .clear{
 	clear:both;
+}
+.blogbody{
+
 }
