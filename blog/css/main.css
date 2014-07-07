@@ -9,6 +9,10 @@ body {
 
 }
 
+a:link {
+    color: #000;
+}
+
 .logo{
 	display:inline-block;
 	padding-left: 20px;
