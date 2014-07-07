@@ -94,6 +94,11 @@ body {
     background:         radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
 }
 
+.center{
+    vertical-align:text-top;
+    margin-left: auto;
+    margin-right: auto;
+}
 /*
     Now let's bring some text styles back ...
 */
@@ -252,6 +257,8 @@ a:focus {
 
 #title {
     padding: 0;
+    vertical-align:auto;
+    text-align: center;
 }
 
 #title .try {
