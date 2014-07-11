@@ -28,7 +28,7 @@
         <!-- Add your site or application content here -->
         <div id="firepad"></div>
     <script>
-      var firepadRef = new Firebase('<https://sibpad.firebaseio.com>');
+      var firepadRef = new Firebase('https://sibpad.firebaseio.com');
       var codeMirror = CodeMirror(document.getElementById('firepad'), { lineWrapping: true });
       var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror,
           { richTextShortcuts: true, richTextToolbar: true });
