@@ -244,7 +244,7 @@
 
 
     var /** holds major version number for IE or NaN for real browsers */
-    msie,
+        msie,
         jqLite, // delay binding since jQuery could be loaded after us.
         jQuery, // delay binding
         slice = [].slice,
@@ -715,7 +715,8 @@
      * @returns {object} in the form of {key1:true, key2:true, ...}
      */
     function makeMap(str) {
-        var obj = {}, items = str.split(","),
+        var obj = {},
+            items = str.split(","),
             i;
         for (i = 0; i < items.length; i++)
             obj[items[i]] = true;
@@ -1021,7 +1022,8 @@
                     for (key in o2) {
                         if (!keySet.hasOwnProperty(key) &&
                             key.charAt(0) !== '$' &&
-                            o2[key] !== undefined && !isFunction(o2[key])) return false;
+                            o2[key] !== undefined &&
+                            !isFunction(o2[key])) return false;
                     }
                     return true;
                 }
@@ -1033,7 +1035,8 @@
 
     function csp() {
         return (document.securityPolicy && document.securityPolicy.isActive) ||
-            (document.querySelector && !! (document.querySelector('[ng-csp]') || document.querySelector('[data-ng-csp]')));
+            (document.querySelector &&
+                !!(document.querySelector('[ng-csp]') || document.querySelector('[data-ng-csp]')));
     }
 
 
@@ -1185,7 +1188,8 @@
      * @returns {Object.<string,boolean|Array>}
      */
     function parseKeyValue( /**string*/ keyValue) {
-        var obj = {}, key_value, key;
+        var obj = {},
+            key_value, key;
         forEach((keyValue || "").split('&'), function(keyValue) {
             if (keyValue) {
                 key_value = keyValue.split('=');
@@ -2808,7 +2812,7 @@
             var lowercasedName = lowercase(name);
             if (BOOLEAN_ATTR[lowercasedName]) {
                 if (isDefined(value)) {
-                    if ( !! value) {
+                    if (!!value) {
                         element[name] = true;
                         element.setAttribute(name, lowercasedName);
                     } else {
@@ -3015,25 +3019,25 @@
                 if (!eventFns) {
                     if (type == 'mouseenter' || type == 'mouseleave') {
                         var contains = document.body.contains || document.body.compareDocumentPosition ?
-                                function(a, b) {
-                                    // jshint bitwise: false
-                                    var adown = a.nodeType === 9 ? a.documentElement : a,
-                                        bup = b && b.parentNode;
-                                    return a === bup || !! (bup && bup.nodeType === 1 && (
-                                        adown.contains ?
-                                        adown.contains(bup) :
-                                        a.compareDocumentPosition && a.compareDocumentPosition(bup) & 16
-                                    ));
+                            function(a, b) {
+                                // jshint bitwise: false
+                                var adown = a.nodeType === 9 ? a.documentElement : a,
+                                    bup = b && b.parentNode;
+                                return a === bup || !!(bup && bup.nodeType === 1 && (
+                                    adown.contains ?
+                                    adown.contains(bup) :
+                                    a.compareDocumentPosition && a.compareDocumentPosition(bup) & 16
+                                ));
                             } :
-                                function(a, b) {
-                                    if (b) {
-                                        while ((b = b.parentNode)) {
-                                            if (b === a) {
-                                                return true;
-                                            }
+                            function(a, b) {
+                                if (b) {
+                                    while ((b = b.parentNode)) {
+                                        if (b === a) {
+                                            return true;
                                         }
                                     }
-                                    return false;
+                                }
+                                return false;
                             };
 
                         events[type] = [];
@@ -6162,7 +6166,7 @@
                         // important!!: we must call our jqLite.clone() since the jQuery one is trying to be smart
                         // and sometimes changes the structure of the DOM.
                         var $linkNode = cloneConnectFn ? JQLitePrototype.clone.call($compileNodes) // IMPORTANT!!!
-                        : $compileNodes;
+                            : $compileNodes;
 
                         forEach(transcludeControllers, function(instance, name) {
                             $linkNode.data('$' + name + 'Controller', instance);
@@ -6226,7 +6230,9 @@
                             safeAddClass(jqLite(nodeList[i]), 'ng-scope');
                         }
 
-                        childLinkFn = (nodeLinkFn && nodeLinkFn.terminal || !(childNodes = nodeList[i].childNodes) || !childNodes.length) ? null : compileNodes(childNodes,
+                        childLinkFn = (nodeLinkFn && nodeLinkFn.terminal ||
+                            !(childNodes = nodeList[i].childNodes) ||
+                            !childNodes.length) ? null : compileNodes(childNodes,
                             nodeLinkFn ? (
                                 (nodeLinkFn.transcludeOnThisElement || !nodeLinkFn.templateOnThisElement) && nodeLinkFn.transclude) : transcludeFn);
 
@@ -6333,7 +6339,7 @@
 
                             // iterate over the attributes
                             for (var attr, name, nName, ngAttrName, value, isNgAttr, nAttrs = node.attributes,
-                                    j = 0, jj = nAttrs && nAttrs.length; j < jj; j++) {
+                                j = 0, jj = nAttrs && nAttrs.length; j < jj; j++) {
                                 var attrStartName = false;
                                 var attrEndName = false;
 
@@ -6748,7 +6754,8 @@
 
 
                     function nodeLinkFn(childLinkFn, scope, linkNode, $rootElement, boundTranscludeFn) {
-                        var attrs, $element, i, ii, linkFn, controller, isolateScope, elementControllers = {}, transcludeFn;
+                        var attrs, $element, i, ii, linkFn, controller, isolateScope, elementControllers = {},
+                            transcludeFn;
 
                         if (compileNode === linkNode) {
                             attrs = templateAttrs;
@@ -6854,11 +6861,12 @@
                         if (controllerDirectives) {
                             forEach(controllerDirectives, function(directive) {
                                 var locals = {
-                                    $scope: directive === newIsolateScopeDirective || directive.$$isolateScope ? isolateScope : scope,
-                                    $element: $element,
-                                    $attrs: attrs,
-                                    $transclude: transcludeFn
-                                }, controllerInstance;
+                                        $scope: directive === newIsolateScopeDirective || directive.$$isolateScope ? isolateScope : scope,
+                                        $element: $element,
+                                        $attrs: attrs,
+                                        $transclude: transcludeFn
+                                    },
+                                    controllerInstance;
 
                                 controller = directive.controller;
                                 if (controller == '@') {
@@ -6961,7 +6969,7 @@
                     var match = null;
                     if (hasDirectives.hasOwnProperty(name)) {
                         for (var directive, directives = $injector.get(name + Suffix),
-                                i = 0, ii = directives.length; i < ii; i++) {
+                            i = 0, ii = directives.length; i < ii; i++) {
                             try {
                                 directive = directives[i];
                                 if ((maxPriority === undefined || maxPriority > directive.priority) &&
@@ -7309,7 +7317,7 @@
                             if ($rootElement[i] == firstElementToRemove) {
                                 $rootElement[i++] = newNode;
                                 for (var j = i, j2 = j + removeCount - 1,
-                                        jj = $rootElement.length; j < jj; j++, j2++) {
+                                    jj = $rootElement.length; j < jj; j++, j2++) {
                                     if (j2 < jj) {
                                         $rootElement[j] = $rootElement[j2];
                                     } else {
@@ -7616,7 +7624,8 @@
      * @returns {Object} Parsed headers as key value object
      */
     function parseHeaders(headers) {
-        var parsed = {}, key, val, i;
+        var parsed = {},
+            key, val, i;
 
         if (!headers) return parsed;
 
@@ -8591,7 +8600,8 @@
         //if IE and the method is not RFC2616 compliant, or if XMLHttpRequest
         //is not available, try getting an ActiveXObject. Otherwise, use XMLHttpRequest
         //if it is available
-        if (msie <= 8 && (!method.match(/^(get|post|head|put|delete|options)$/i) || !window.XMLHttpRequest)) {
+        if (msie <= 8 && (!method.match(/^(get|post|head|put|delete|options)$/i) ||
+            !window.XMLHttpRequest)) {
             return new window.ActiveXObject("Microsoft.XMLHTTP");
         } else if (window.XMLHttpRequest) {
             return new window.XMLHttpRequest();
@@ -8977,7 +8987,7 @@
                  * - `context`: evaluation context for all expressions embedded in the interpolated text
                  */
                 function $interpolate(text, mustHaveExpression, trustedContext, allOrNothing) {
-                    allOrNothing = !! allOrNothing;
+                    allOrNothing = !!allOrNothing;
                     var startIndex,
                         endIndex,
                         index = 0,
@@ -10324,7 +10334,7 @@
                     // Note: reading logFn.apply throws an error in IE11 in IE8 document mode.
                     // The reason behind this is that console.log has type "object" in IE8...
                     try {
-                        hasApply = !! logFn.apply;
+                        hasApply = !!logFn.apply;
                     } catch (e) {}
 
                     if (hasApply) {
@@ -10810,8 +10820,8 @@
                 this.throwError('is an unexpected token', this.tokens[0]);
             }
 
-            value.literal = !! value.literal;
-            value.constant = !! value.constant;
+            value.literal = !!value.literal;
+            value.constant = !!value.constant;
 
             return value;
         },
@@ -12037,18 +12047,18 @@
                     $window.mozCancelAnimationFrame ||
                     $window.webkitCancelRequestAnimationFrame;
 
-                var rafSupported = !! requestAnimationFrame;
+                var rafSupported = !!requestAnimationFrame;
                 var raf = rafSupported ? function(fn) {
-                        var id = requestAnimationFrame(fn);
-                        return function() {
-                            cancelAnimationFrame(id);
-                        };
-                    } : function(fn) {
-                        var timer = $timeout(fn, 16.66, false); // 1000 / 60 = 16.666
-                        return function() {
-                            $timeout.cancel(timer);
-                        };
+                    var id = requestAnimationFrame(fn);
+                    return function() {
+                        cancelAnimationFrame(id);
                     };
+                } : function(fn) {
+                    var timer = $timeout(fn, 16.66, false); // 1000 / 60 = 16.666
+                    return function() {
+                        $timeout.cancel(timer);
+                    };
+                };
 
                 raf.supported = rafSupported;
 
@@ -12392,7 +12402,7 @@
                                 last: initWatchVal,
                                 get: get,
                                 exp: watchExp,
-                                eq: !! objectEquality
+                                eq: !!objectEquality
                             };
 
                         lastDirtyWatch = null;
@@ -12755,7 +12765,8 @@
                                             // Most common watches are on primitives, in which case we can short
                                             // circuit it with === operator, only when === fails do we use .equals
                                             if (watch) {
-                                                if ((value = watch.get(current)) !== (last = watch.last) && !(watch.eq ? equals(value, last) : (typeof value === 'number' && typeof last === 'number' && isNaN(value) && isNaN(last)))) {
+                                                if ((value = watch.get(current)) !== (last = watch.last) &&
+                                                    !(watch.eq ? equals(value, last) : (typeof value === 'number' && typeof last === 'number' && isNaN(value) && isNaN(last)))) {
                                                     dirty = true;
                                                     lastDirtyWatch = watch;
                                                     watch.last = watch.eq ? copy(value, null) : value;
@@ -14037,7 +14048,7 @@
          */
         this.enabled = function(value) {
             if (arguments.length) {
-                enabled = !! value;
+                enabled = !!value;
             }
             return enabled;
         };
@@ -14445,7 +14456,7 @@
             function($window, $document) {
                 var eventSupport = {},
                     android =
-                        int((/android (\d+)/.exec(lowercase(($window.navigator || {}).userAgent)) || [])[1]),
+                    int((/android (\d+)/.exec(lowercase(($window.navigator || {}).userAgent)) || [])[1]),
                     boxee = /Boxee/i.test(($window.navigator || {}).userAgent),
                     document = $document[0] || {},
                     documentMode = document.documentMode,
@@ -14469,8 +14480,8 @@
                         vendorPrefix = ('WebkitOpacity' in bodyStyle) && 'webkit';
                     }
 
-                    transitions = !! (('transition' in bodyStyle) || (vendorPrefix + 'Transition' in bodyStyle));
-                    animations = !! (('animation' in bodyStyle) || (vendorPrefix + 'Animation' in bodyStyle));
+                    transitions = !!(('transition' in bodyStyle) || (vendorPrefix + 'Transition' in bodyStyle));
+                    animations = !!(('animation' in bodyStyle) || (vendorPrefix + 'Animation' in bodyStyle));
 
                     if (android && (!transitions || !animations)) {
                         transitions = isString(document.body.style.webkitTransition);
@@ -14489,7 +14500,7 @@
                     // so let's not use the history API also
                     // We are purposefully using `!(android < 4)` to cover the case when `android` is undefined
                     // jshint -W018
-                    history: !! ($window.history && $window.history.pushState && !(android < 4) && !boxee),
+                    history: !!($window.history && $window.history.pushState && !(android < 4) && !boxee),
                     // jshint +W018
                     hashchange: 'onhashchange' in $window &&
                     // IE8 compatible mode lies
@@ -16333,7 +16344,7 @@
                 priority: 100,
                 link: function(scope, element, attr) {
                     scope.$watch(attr[normalized], function ngBooleanAttrWatchAction(value) {
-                        attr.$set(attrName, !! value);
+                        attr.$set(attrName, !!value);
                     });
                 }
             };
@@ -16786,62 +16797,64 @@
  *
  */
     var formDirectiveFactory = function(isNgForm) {
-        return ['$timeout', function($timeout) {
-            var formDirective = {
-                name: 'form',
-                restrict: isNgForm ? 'EAC' : 'E',
-                controller: FormController,
-                compile: function() {
-                    return {
-                        pre: function(scope, formElement, attr, controller) {
-                            if (!attr.action) {
-                                // we can't use jq events because if a form is destroyed during submission the default
-                                // action is not prevented. see #1238
-                                //
-                                // IE 9 is not affected because it doesn't fire a submit event and try to do a full
-                                // page reload if the form was destroyed by submission of the form via a click handler
-                                // on a button in the form. Looks like an IE9 specific bug.
-                                var handleFormSubmission = function(event) {
-                                    scope.$apply(function() {
-                                        controller.$commitViewValue();
+        return ['$timeout',
+            function($timeout) {
+                var formDirective = {
+                    name: 'form',
+                    restrict: isNgForm ? 'EAC' : 'E',
+                    controller: FormController,
+                    compile: function() {
+                        return {
+                            pre: function(scope, formElement, attr, controller) {
+                                if (!attr.action) {
+                                    // we can't use jq events because if a form is destroyed during submission the default
+                                    // action is not prevented. see #1238
+                                    //
+                                    // IE 9 is not affected because it doesn't fire a submit event and try to do a full
+                                    // page reload if the form was destroyed by submission of the form via a click handler
+                                    // on a button in the form. Looks like an IE9 specific bug.
+                                    var handleFormSubmission = function(event) {
+                                        scope.$apply(function() {
+                                            controller.$commitViewValue();
+                                        });
+
+                                        event.preventDefault ? event.preventDefault() : event.returnValue = false; // IE
+                                    };
+
+                                    addEventListenerFn(formElement[0], 'submit', handleFormSubmission);
+
+                                    // unregister the preventDefault listener so that we don't not leak memory but in a
+                                    // way that will achieve the prevention of the default action.
+                                    formElement.on('$destroy', function() {
+                                        $timeout(function() {
+                                            removeEventListenerFn(formElement[0], 'submit', handleFormSubmission);
+                                        }, 0, false);
                                     });
+                                }
 
-                                    event.preventDefault ? event.preventDefault() : event.returnValue = false; // IE
-                                };
+                                var parentFormCtrl = formElement.parent().controller('form'),
+                                    alias = attr.name || attr.ngForm;
 
-                                addEventListenerFn(formElement[0], 'submit', handleFormSubmission);
-
-                                // unregister the preventDefault listener so that we don't not leak memory but in a
-                                // way that will achieve the prevention of the default action.
-                                formElement.on('$destroy', function() {
-                                    $timeout(function() {
-                                        removeEventListenerFn(formElement[0], 'submit', handleFormSubmission);
-                                    }, 0, false);
-                                });
+                                if (alias) {
+                                    setter(scope, alias, controller, alias);
+                                }
+                                if (parentFormCtrl) {
+                                    formElement.on('$destroy', function() {
+                                        parentFormCtrl.$removeControl(controller);
+                                        if (alias) {
+                                            setter(scope, alias, undefined, alias);
+                                        }
+                                        extend(controller, nullFormCtrl); //stop propagating child destruction handlers upwards
+                                    });
+                                }
                             }
+                        };
+                    }
+                };
 
-                            var parentFormCtrl = formElement.parent().controller('form'),
-                                alias = attr.name || attr.ngForm;
-
-                            if (alias) {
-                                setter(scope, alias, controller, alias);
-                            }
-                            if (parentFormCtrl) {
-                                formElement.on('$destroy', function() {
-                                    parentFormCtrl.$removeControl(controller);
-                                    if (alias) {
-                                        setter(scope, alias, undefined, alias);
-                                    }
-                                    extend(controller, nullFormCtrl); //stop propagating child destruction handlers upwards
-                                });
-                            }
-                        }
-                    };
-                }
-            };
-
-            return formDirective;
-        }];
+                return formDirective;
+            }
+        ];
     };
 
     var formDirective = formDirectiveFactory();
@@ -17729,7 +17742,8 @@
             var validator = function(value) {
                 // Don't overwrite previous validation, don't consider valueMissing to apply (ng-required can
                 // perform the required validation)
-                if (!ctrl.$error[validatorName] && !testFlags(validity, ignoreFlags) &&
+                if (!ctrl.$error[validatorName] &&
+                    !testFlags(validity, ignoreFlags) &&
                     testFlags(validity, badFlags)) {
                     ctrl.$setValidity(validatorName, false);
                     return;
@@ -19580,118 +19594,120 @@
 
     function classDirective(name, selector) {
         name = 'ngClass' + name;
-        return ['$animate', function($animate) {
-            return {
-                restrict: 'AC',
-                link: function(scope, element, attr) {
-                    var oldVal;
+        return ['$animate',
+            function($animate) {
+                return {
+                    restrict: 'AC',
+                    link: function(scope, element, attr) {
+                        var oldVal;
 
-                    scope.$watch(attr[name], ngClassWatchAction, true);
+                        scope.$watch(attr[name], ngClassWatchAction, true);
 
-                    attr.$observe('class', function(value) {
-                        ngClassWatchAction(scope.$eval(attr[name]));
-                    });
-
-
-                    if (name !== 'ngClass') {
-                        scope.$watch('$index', function($index, old$index) {
-                            // jshint bitwise: false
-                            var mod = $index & 1;
-                            if (mod !== (old$index & 1)) {
-                                var classes = arrayClasses(scope.$eval(attr[name]));
-                                mod === selector ?
-                                    addClasses(classes) :
-                                    removeClasses(classes);
-                            }
+                        attr.$observe('class', function(value) {
+                            ngClassWatchAction(scope.$eval(attr[name]));
                         });
-                    }
 
-                    function addClasses(classes) {
-                        var newClasses = digestClassCounts(classes, 1);
-                        attr.$addClass(newClasses);
-                    }
 
-                    function removeClasses(classes) {
-                        var newClasses = digestClassCounts(classes, -1);
-                        attr.$removeClass(newClasses);
-                    }
+                        if (name !== 'ngClass') {
+                            scope.$watch('$index', function($index, old$index) {
+                                // jshint bitwise: false
+                                var mod = $index & 1;
+                                if (mod !== (old$index & 1)) {
+                                    var classes = arrayClasses(scope.$eval(attr[name]));
+                                    mod === selector ?
+                                        addClasses(classes) :
+                                        removeClasses(classes);
+                                }
+                            });
+                        }
 
-                    function digestClassCounts(classes, count) {
-                        var classCounts = element.data('$classCounts') || {};
-                        var classesToUpdate = [];
-                        forEach(classes, function(className) {
-                            if (count > 0 || classCounts[className]) {
-                                classCounts[className] = (classCounts[className] || 0) + count;
-                                if (classCounts[className] === +(count > 0)) {
-                                    classesToUpdate.push(className);
+                        function addClasses(classes) {
+                            var newClasses = digestClassCounts(classes, 1);
+                            attr.$addClass(newClasses);
+                        }
+
+                        function removeClasses(classes) {
+                            var newClasses = digestClassCounts(classes, -1);
+                            attr.$removeClass(newClasses);
+                        }
+
+                        function digestClassCounts(classes, count) {
+                            var classCounts = element.data('$classCounts') || {};
+                            var classesToUpdate = [];
+                            forEach(classes, function(className) {
+                                if (count > 0 || classCounts[className]) {
+                                    classCounts[className] = (classCounts[className] || 0) + count;
+                                    if (classCounts[className] === +(count > 0)) {
+                                        classesToUpdate.push(className);
+                                    }
+                                }
+                            });
+                            element.data('$classCounts', classCounts);
+                            return classesToUpdate.join(' ');
+                        }
+
+                        function updateClasses(oldClasses, newClasses) {
+                            var toAdd = arrayDifference(newClasses, oldClasses);
+                            var toRemove = arrayDifference(oldClasses, newClasses);
+                            toRemove = digestClassCounts(toRemove, -1);
+                            toAdd = digestClassCounts(toAdd, 1);
+
+                            if (toAdd.length === 0) {
+                                $animate.removeClass(element, toRemove);
+                            } else if (toRemove.length === 0) {
+                                $animate.addClass(element, toAdd);
+                            } else {
+                                $animate.setClass(element, toAdd, toRemove);
+                            }
+                        }
+
+                        function ngClassWatchAction(newVal) {
+                            if (selector === true || scope.$index % 2 === selector) {
+                                var newClasses = arrayClasses(newVal || []);
+                                if (!oldVal) {
+                                    addClasses(newClasses);
+                                } else if (!equals(newVal, oldVal)) {
+                                    var oldClasses = arrayClasses(oldVal);
+                                    updateClasses(oldClasses, newClasses);
                                 }
                             }
-                        });
-                        element.data('$classCounts', classCounts);
-                        return classesToUpdate.join(' ');
-                    }
-
-                    function updateClasses(oldClasses, newClasses) {
-                        var toAdd = arrayDifference(newClasses, oldClasses);
-                        var toRemove = arrayDifference(oldClasses, newClasses);
-                        toRemove = digestClassCounts(toRemove, -1);
-                        toAdd = digestClassCounts(toAdd, 1);
-
-                        if (toAdd.length === 0) {
-                            $animate.removeClass(element, toRemove);
-                        } else if (toRemove.length === 0) {
-                            $animate.addClass(element, toAdd);
-                        } else {
-                            $animate.setClass(element, toAdd, toRemove);
+                            oldVal = shallowCopy(newVal);
                         }
                     }
+                };
 
-                    function ngClassWatchAction(newVal) {
-                        if (selector === true || scope.$index % 2 === selector) {
-                            var newClasses = arrayClasses(newVal || []);
-                            if (!oldVal) {
-                                addClasses(newClasses);
-                            } else if (!equals(newVal, oldVal)) {
-                                var oldClasses = arrayClasses(oldVal);
-                                updateClasses(oldClasses, newClasses);
+                function arrayDifference(tokens1, tokens2) {
+                    var values = [];
+
+                    outer: for (var i = 0; i < tokens1.length; i++) {
+                        var token = tokens1[i];
+                        for (var j = 0; j < tokens2.length; j++) {
+                            if (token == tokens2[j]) continue outer;
+                        }
+                        values.push(token);
+                    }
+                    return values;
+                }
+
+                function arrayClasses(classVal) {
+                    if (isArray(classVal)) {
+                        return classVal;
+                    } else if (isString(classVal)) {
+                        return classVal.split(' ');
+                    } else if (isObject(classVal)) {
+                        var classes = [],
+                            i = 0;
+                        forEach(classVal, function(v, k) {
+                            if (v) {
+                                classes = classes.concat(k.split(' '));
                             }
-                        }
-                        oldVal = shallowCopy(newVal);
+                        });
+                        return classes;
                     }
-                }
-            };
-
-            function arrayDifference(tokens1, tokens2) {
-                var values = [];
-
-                outer: for (var i = 0; i < tokens1.length; i++) {
-                    var token = tokens1[i];
-                    for (var j = 0; j < tokens2.length; j++) {
-                        if (token == tokens2[j]) continue outer;
-                    }
-                    values.push(token);
-                }
-                return values;
-            }
-
-            function arrayClasses(classVal) {
-                if (isArray(classVal)) {
                     return classVal;
-                } else if (isString(classVal)) {
-                    return classVal.split(' ');
-                } else if (isObject(classVal)) {
-                    var classes = [],
-                        i = 0;
-                    forEach(classVal, function(v, k) {
-                        if (v) {
-                            classes = classes.concat(k.split(' '));
-                        }
-                    });
-                    return classes;
                 }
-                return classVal;
             }
-        }];
+        ];
     }
 
     /**
@@ -22964,8 +22980,8 @@
                         function render() {
                             // Temporary location for the option groups before we render them
                             var optionGroups = {
-                                '': []
-                            },
+                                    '': []
+                                },
                                 optionGroupNames = [''],
                                 optionGroupName,
                                 optionGroup,
@@ -23169,7 +23185,7 @@
                         var selectCtrlName = '$selectController',
                             parent = element.parent(),
                             selectCtrl = parent.data(selectCtrlName) ||
-                                parent.parent().data(selectCtrlName); // in case we are in optgroup
+                            parent.parent().data(selectCtrlName); // in case we are in optgroup
 
                         if (selectCtrl && selectCtrl.databound) {
                             // For some reason Opera defaults to true and if not overridden this messes up the repeater.

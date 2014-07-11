@@ -19,6 +19,11 @@
         <!-- Download from http://www.firepad.io/firepad.zip -->
         <link rel="stylesheet" href="css/firepad.css" />
         <script src="js/firepad.js"></script>
+        <style>
+        .firepad .CodeMirror {
+        height: 400px;
+        }
+</style>
     </head>
     <body>
         <!--[if lt IE 8]>
@@ -28,6 +33,7 @@
         <!-- Add your site or application content here -->
         <div id="firepad"></div>
     <script>
+
       var firepadRef = new Firebase('https://sibpad.firebaseio.com');
       var codeMirror = CodeMirror(document.getElementById('firepad'), { lineWrapping: true });
       var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror,
