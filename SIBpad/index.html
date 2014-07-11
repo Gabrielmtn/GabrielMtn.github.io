@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="">
+<html class= lang="">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -28,12 +28,10 @@
         <!-- Add your site or application content here -->
         <div id="firepad"></div>
     <script>
-      var firepadRef = new Firebase('<https://sibpad.firebaseio.com/>');
+      var firepadRef = new Firebase('<https://sibpad.firebaseio.com>');
       var codeMirror = CodeMirror(document.getElementById('firepad'), { lineWrapping: true });
       var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror,
           { richTextShortcuts: true, richTextToolbar: true });
-      Firepad.fromCodeMirror(firebaseRef, codeMirror, options)
-
     </script>
 
 
