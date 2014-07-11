@@ -9,9 +9,6 @@
 
         <!-- Place favicon.ico and apple-touch-icon(s) in the root directory -->
 
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/main.css">
-        <script src="js/vendor/modernizr-2.8.0.min.js"></script>
         
         <script src="https://cdn.firebase.com/js/client/1.0.17/firebase.js"></script>
 
@@ -35,12 +32,10 @@
       var codeMirror = CodeMirror(document.getElementById('firepad'), { lineWrapping: true });
       var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror,
           { richTextShortcuts: true, richTextToolbar: true });
+      Firepad.fromCodeMirror(firebaseRef, codeMirror, options)
+
     </script>
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.1.min.js"><\/script>')</script>
-        <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
 
     
     </body>
