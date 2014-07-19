@@ -1,0 +1,55 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Place favicon.ico and apple-touch-icon(s) in the root directory -->
+
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/main.css">
+        <script src="js/vendor/modernizr-2.8.0.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!-- Add your site or application content here -->
+        <p>Dream Beans Caffee</p>
+
+<p>about</p>
+<p>beans</p>
+<p>specials</p>
+<p>contact</p>
+
+<p>Organic. Crema. Barista </p>
+<p>est spoon half and half extra flavour saucer. Plunger pot café au lait froth ut fair trade whipped, doppio, milk at half and half white percolator. French press iced carajillo, coffee caramelization caffeine half and half irish id kopi-luwak latte cappuccino. Extra id, sweet breve robust extra seasonal.</p>
+
+<p>A robust, extra shop, espresso eu, cultivar ut barista whipped extra. Et galão, robusta mocha froth dark percolator. Flavour aftertaste, cup froth, chicory sugar barista roast robust caramelization. Macchiato single shot steamed, ristretto acerbic coffee aroma mocha at dripper.</p>
+<p>Coffee. Bar. French Press </p>
+<p>trifecta, organic kopi-luwak mocha redeye et instant. Crema, at, french press, americano bar trifecta dark breve carajillo caffeine wings. Cinnamon cappuccino cultivar organic, filter in, lungo, cultivar strong acerbic qui galão. Cultivar aromatic, saucer shop, latte in sugar crema blue mountain aftertaste.</p>
+
+<p>Caffeine percolator café au lait body robust espresso variety kopi-luwak. Extraction cortado aged organic macchiato seasonal cortado trifecta. Mug brewed sugar turkish americano lungo extraction. Ristretto, robusta dripper, half and half cup dark single shot seasonal.</p>
+
+<p>123 Latte Lane, Javaville - 555-423-1234</p>
+<p>©Dream Beans Caffe 2013</p>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.1.min.js"><\/script>')</script>
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
+
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <script>
+            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+            e.src='//www.google-analytics.com/analytics.js';
+            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+            ga('create','UA-XXXXX-X');ga('send','pageview');
+        </script>
+    </body>
+</html>
