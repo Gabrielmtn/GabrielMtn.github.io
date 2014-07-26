@@ -1,0 +1,103 @@
+@import 'nib'
+$shadow = drop-shadow(30px 30px 23px rgba(0, 0, 0, .3))
+
+#choose-time
+  margin: 80px auto
+  width: 300px
+  text-align: center
+
+#set-button, #submit
+  background-color: #888
+  color: #fff
+  border-radius: 3px
+  padding: 2px 6px
+  padding-bottom: 4px
+  cursor: pointer
+  margin-left: 5px
+  opacity: .95
+  font-size: 20px
+
+  &:hover
+    opacity: 1
+
+.demo
+  margin: 0 auto
+  -webkit-filter: $shadow
+  -moz-filter: $shadow
+  filter: $shadow
+  
+
+#hexaflip-demo1, #hexaflip-demo2
+  margin-bottom: 4rem
+
+  .hexaflip-cube
+    opacity: .9
+
+    .hexaflip-left, .hexaflip-right
+      background-color: #222 !important
+
+    > div
+      font-weight: 100
+      text-shadow: none
+
+      &:nth-child(1n+1)
+        background-color: #069ad5
+
+      &:nth-child(2n+2)
+        background-color: #fc5215
+
+      &:nth-child(3n+3)
+        background-color: #30b71d
+
+      &:nth-child(4n+4)
+        background-color: #eee
+        color: #222
+
+#hexaflip-demo2
+  margin-bottom: 6rem
+
+#hexaflip-demo5
+  
+  .hexaflip-cube
+    > div
+      color: rgba(255, 255, 255, .3)
+      font-weight: 900 !important
+      letter-spacing: -3px
+      text-shadow: none
+
+  + div
+    margin-top: 80px
+    text-align: center
+
+
+.buttons
+  position: relative
+  top: 230px
+  width: 640px
+  margin: 0 auto
+  z-index: 100
+
+.disc-button
+  background-color: #222
+  color: #fff
+  text-align: center
+  width: 30px
+  height: 30px
+  border-radius: 100%
+  font-weight: 100
+  font-size: 24px
+  cursor: pointer
+  
+  &:hover
+    opacity: .8
+  
+
+#prev
+  float: left
+
+#next
+  float: right
+
+
+#output
+  line-height: 2

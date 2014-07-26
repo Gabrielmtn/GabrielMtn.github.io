@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='utf-8'>
+		<title>Bootstrap Arrows - Demo</title>
+		<meta name='description' content='Bootstrap Arrows is a simple jQuery plugin and add-on to the popular Twitter Bootstrap framework to include the use of arrows at any angle in your UI designs.'>
+		<meta name='author' content='Iarfhlaith Kelly'>
+		
+		<link href='css/bootstrap.min.css' rel='stylesheet' type='text/css' media='screen' />
+		<link href='css/bootstrap-arrows.css' rel='stylesheet' type='text/css' media='screen' />
+		
+		<!-- Bootstrap Overrides -->
+		<style type="text/css">
+			.span2, .span3 { text-align:center }
+			.navbar .nav.pull-right {margin-top: 10px;}
+		</style>
+		
+	</head>
+	<body>
+		
+		<div class="navbar navbar-inverse navbar-fixed-top">
+	      <div class="navbar-inner">
+	        <div class="container">
+	          <a class="brand" href="index.html">Bootstrap Arrows</a>
+	          <ul class="nav">
+	          	<li><a href="index.html">Home</a></li>
+	            <li class="active"><a href="demo.html">Demo</a></li>
+	            <li><a href="http://bootstrap-arrows.iarfhlaith.com/bootstrap-arrows.zip">Download</a></li>
+	            <li><a href="usage.html">Installation and Usage</a></li>
+	          </ul>
+	          
+	          <ul class="nav pull-right">
+	          	<li class='pull-right'>
+	          		<a href="https://twitter.com/Iarfhlaith" class="twitter-follow-button" data-show-count="false">Follow @Iarfhlaith</a>
+	          		<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://bootstrap-arrows.iarfhlaith.com" data-text="Bootstrap Arrows" data-via="Iarfhlaith">Tweet</a>
+					<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>		
+				</li>
+	          </ul>
+	          
+	        </div>
+	      </div>
+	    </div>
+		
+		<div class='container'>
+			
+			<div><br />&nbsp;<br />&nbsp;</div>
+			
+			<ul class='nav nav-tabs' id='tabs'>
+				<li class='active'><a href='#demo'>Multi-Angle Demo</a></li>
+				<li class='dropdown'>
+					<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Demos with Other Colours <i class='caret'></i></a>
+					<ul class="dropdown-menu">
+						<li><a href="#primary">Primary</a></li>
+						<li><a href="#info">Info</a></li>
+						<li><a href="#success">Success</a></li>
+						<li><a href="#warning">Warning</a></li>
+						<li><a href="#danger">Danger</a></li>
+						<li><a href="#inverse">Inverse</a></li>
+					</ul>
+				</li>
+			</ul>
+			
+			<div class="tab-content">
+			
+				<div class='tab-pane active' id='demo'>
+				
+					<div class='row'>
+						<div class='span12'>
+						    <ul class="thumbnails">
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow'></span></p>
+										<p><code><small>class='arrow'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow' data-angle='90'></span></p>
+										<p><code><small>class='arrow' data-angle='90'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow' data-angle='180'></span></p>
+										<p><code><small>class='arrow' data-angle='180'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow' data-angle='270'></span></p>
+										<p><code><small>class='arrow' data-angle='270'</small></code></p>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class='row'>
+						<div class='span12'>
+							<ul class="thumbnails">
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow' data-angle='45'></span></p>
+										<p><code><small>class='arrow' data-angle='45'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow' data-angle='135'></span></p>
+										<p><code><small>class='arrow' data-angle='135'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow' data-angle='225'></span></p>
+										<p><code><small>class='arrow' data-angle='225'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow' data-angle='315'></span></p>
+										<p><code><small>class='arrow' data-angle='315'</small></code></p>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class='row'>
+						<div class='span12'>
+							<ul class="thumbnails">
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-large'></span></p>
+										<p><code><small>class='arrow-large'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-large' data-angle='90'></span></p>
+										<p><code><small>class='arrow-large' data-angle='90'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-large' data-angle='180'></span></p>
+										<p><code><small>class='arrow-large' data-angle='180'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-large' data-angle='270'></span></p>
+										<p><code><small>class='arrow-large' data-angle='270'</small></code></p>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class='row'>
+						<div class='span12'>
+							<ul class="thumbnails">
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-large' data-angle='45'></span></p>
+										<p><code><small>class='arrow-large' data-angle='45'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-large' data-angle='135'></span></p>
+										<p><code><small>class='arrow-large' data-angle='135'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-large' data-angle='225'></span></p>
+										<p><code><small>class='arrow-large' data-angle='225'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-large' data-angle='315'></span></p>
+										<p><code><small>class='arrow-large' data-angle='315'</small></code></p>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				
+				</div> <!--/default-->
+				
+				<div class='tab-pane' id='primary'>
+				
+					<div class='row'>
+						<div class='span12'>
+						    <ul class="thumbnails">
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-primary'></span></p>
+										<p><code><small>class='arrow-primary'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-primary' data-angle='90'></span></p>
+										<p><code><small>class='arrow-primary' data-angle='90'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-primary' data-angle='180'></span></p>
+										<p><code><small>class='arrow-primary' data-angle='180'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-primary' data-angle='270'></span></p>
+										<p><code><small>class='arrow-primary' data-angle='270'</small></code></p>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class='row'>
+						<div class='span12'>
+							<ul class="thumbnails">
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-primary' data-angle='45'></span></p>
+										<p><code><small>class='arrow-primary' data-angle='45'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-primary' data-angle='135'></span></p>
+										<p><code><small>class='arrow-primary' data-angle='135'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-primary' data-angle='225'></span></p>
+										<p><code><small>class='arrow-primary' data-angle='225'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-primary' data-angle='315'></span></p>
+										<p><code><small>class='arrow-primary' data-angle='315'</small></code></p>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class='row'>
+						<div class='span12'>
+							<ul class="thumbnails">
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-primary-large'></span></p>
+										<p><code><small>class='arrow-primary-large'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-primary-large' data-angle='90'></span></p>
+										<p><code><small>class='arrow-primary-large' data-angle='90'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-primary-large' data-angle='180'></span></p>
+										<p><code><small>class='arrow-primary-large' data-angle='180'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-primary-large' data-angle='270'></span></p>
+										<p><code><small>class='arrow-primary-large' data-angle='270'</small></code></p>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class='row'>
+						<div class='span12'>
+							<ul class="thumbnails">
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-primary-large' data-angle='45'></span></p>
+										<p><code><small>class='arrow-primary-large' data-angle='45'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-primary-large' data-angle='135'></span></p>
+										<p><code><small>class='arrow-primary-large' data-angle='135'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-primary-large' data-angle='225'></span></p>
+										<p><code><small>class='arrow-primary-large' data-angle='225'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-primary-large' data-angle='315'></span></p>
+										<p><code><small>class='arrow-primary-large' data-angle='315'</small></code></p>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				
+				</div> <!--/primary-->
+				
+				<div class='tab-pane' id='info'>
+				
+					<div class='row'>
+						<div class='span12'>
+						    <ul class="thumbnails">
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-info'></span></p>
+										<p><code><small>class='arrow-info'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-info' data-angle='90'></span></p>
+										<p><code><small>class='arrow-info' data-angle='90'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-info' data-angle='180'></span></p>
+										<p><code><small>class='arrow-info' data-angle='180'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-info' data-angle='270'></span></p>
+										<p><code><small>class='arrow-info' data-angle='270'</small></code></p>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class='row'>
+						<div class='span12'>
+							<ul class="thumbnails">
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-info' data-angle='45'></span></p>
+										<p><code><small>class='arrow-info' data-angle='45'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-info' data-angle='135'></span></p>
+										<p><code><small>class='arrow-info' data-angle='135'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-info' data-angle='225'></span></p>
+										<p><code><small>class='arrow-info' data-angle='225'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-info' data-angle='315'></span></p>
+										<p><code><small>class='arrow-info' data-angle='315'</small></code></p>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class='row'>
+						<div class='span12'>
+							<ul class="thumbnails">
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-info-large'></span></p>
+										<p><code><small>class='arrow-info-large'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-info-large' data-angle='90'></span></p>
+										<p><code><small>class='arrow-info-large' data-angle='90'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-info-large' data-angle='180'></span></p>
+										<p><code><small>class='arrow-info-large' data-angle='180'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-info-large' data-angle='270'></span></p>
+										<p><code><small>class='arrow-info-large' data-angle='270'</small></code></p>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class='row'>
+						<div class='span12'>
+							<ul class="thumbnails">
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-info-large' data-angle='45'></span></p>
+										<p><code><small>class='arrow-info-large' data-angle='45'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-info-large' data-angle='135'></span></p>
+										<p><code><small>class='arrow-info-large' data-angle='135'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-info-large' data-angle='225'></span></p>
+										<p><code><small>class='arrow-info-large' data-angle='225'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-info-large' data-angle='315'></span></p>
+										<p><code><small>class='arrow-info-large' data-angle='315'</small></code></p>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				
+				</div> <!--/info-->
+				
+				<div class='tab-pane' id='success'>
+				
+					<div class='row'>
+						<div class='span12'>
+						    <ul class="thumbnails">
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-success'></span></p>
+										<p><code><small>class='arrow-success'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-success' data-angle='90'></span></p>
+										<p><code><small>class='arrow-success' data-angle='90'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-success' data-angle='180'></span></p>
+										<p><code><small>class='arrow-success' data-angle='180'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-success' data-angle='270'></span></p>
+										<p><code><small>class='arrow-success' data-angle='270'</small></code></p>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class='row'>
+						<div class='span12'>
+							<ul class="thumbnails">
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-success' data-angle='45'></span></p>
+										<p><code><small>class='arrow-success' data-angle='45'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-success' data-angle='135'></span></p>
+										<p><code><small>class='arrow-success' data-angle='135'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-success' data-angle='225'></span></p>
+										<p><code><small>class='arrow-success' data-angle='225'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-success' data-angle='315'></span></p>
+										<p><code><small>class='arrow-success' data-angle='315'</small></code></p>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class='row'>
+						<div class='span12'>
+							<ul class="thumbnails">
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-success-large'></span></p>
+										<p><code><small>class='arrow-success-large'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-success-large' data-angle='90'></span></p>
+										<p><code><small>class='arrow-success-large' data-angle='90'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-success-large' data-angle='180'></span></p>
+										<p><code><small>class='arrow-success-large' data-angle='180'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-success-large' data-angle='270'></span></p>
+										<p><code><small>class='arrow-success-large' data-angle='270'</small></code></p>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class='row'>
+						<div class='span12'>
+							<ul class="thumbnails">
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-success-large' data-angle='45'></span></p>
+										<p><code><small>class='arrow-success-large' data-angle='45'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-success-large' data-angle='135'></span></p>
+										<p><code><small>class='arrow-success-large' data-angle='135'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-success-large' data-angle='225'></span></p>
+										<p><code><small>class='arrow-success-large' data-angle='225'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-success-large' data-angle='315'></span></p>
+										<p><code><small>class='arrow-success-large' data-angle='315'</small></code></p>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				
+				</div> <!--/success-->
+				
+				<div class='tab-pane' id='warning'>
+				
+					<div class='row'>
+						<div class='span12'>
+						    <ul class="thumbnails">
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-warning'></span></p>
+										<p><code><small>class='arrow-warning'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-warning' data-angle='90'></span></p>
+										<p><code><small>class='arrow-warning' data-angle='90'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-warning' data-angle='180'></span></p>
+										<p><code><small>class='arrow-warning' data-angle='180'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-warning' data-angle='270'></span></p>
+										<p><code><small>class='arrow-warning' data-angle='270'</small></code></p>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class='row'>
+						<div class='span12'>
+							<ul class="thumbnails">
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-warning' data-angle='45'></span></p>
+										<p><code><small>class='arrow-warning' data-angle='45'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-warning' data-angle='135'></span></p>
+										<p><code><small>class='arrow-warning' data-angle='135'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-warning' data-angle='225'></span></p>
+										<p><code><small>class='arrow-warning' data-angle='225'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-warning' data-angle='315'></span></p>
+										<p><code><small>class='arrow-warning' data-angle='315'</small></code></p>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class='row'>
+						<div class='span12'>
+							<ul class="thumbnails">
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-warning-large'></span></p>
+										<p><code><small>class='arrow-warning-large'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-warning-large' data-angle='90'></span></p>
+										<p><code><small>class='arrow-warning-large' data-angle='90'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-warning-large' data-angle='180'></span></p>
+										<p><code><small>class='arrow-warning-large' data-angle='180'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-warning-large' data-angle='270'></span></p>
+										<p><code><small>class='arrow-warning-large' data-angle='270'</small></code></p>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class='row'>
+						<div class='span12'>
+							<ul class="thumbnails">
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-warning-large' data-angle='45'></span></p>
+										<p><code><small>class='arrow-warning-large' data-angle='45'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-warning-large' data-angle='135'></span></p>
+										<p><code><small>class='arrow-warning-large' data-angle='135'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-warning-large' data-angle='225'></span></p>
+										<p><code><small>class='arrow-warning-large' data-angle='225'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-warning-large' data-angle='315'></span></p>
+										<p><code><small>class='arrow-warning-large' data-angle='315'</small></code></p>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				
+				</div> <!--/warning-->
+				
+				<div class='tab-pane' id='danger'>
+				
+					<div class='row'>
+						<div class='span12'>
+						    <ul class="thumbnails">
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-danger'></span></p>
+										<p><code><small>class='arrow-danger'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-danger' data-angle='90'></span></p>
+										<p><code><small>class='arrow-danger' data-angle='90'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-danger' data-angle='180'></span></p>
+										<p><code><small>class='arrow-danger' data-angle='180'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-danger' data-angle='270'></span></p>
+										<p><code><small>class='arrow-danger' data-angle='270'</small></code></p>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class='row'>
+						<div class='span12'>
+							<ul class="thumbnails">
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-danger' data-angle='45'></span></p>
+										<p><code><small>class='arrow-danger' data-angle='45'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-danger' data-angle='135'></span></p>
+										<p><code><small>class='arrow-danger' data-angle='135'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-danger' data-angle='225'></span></p>
+										<p><code><small>class='arrow-danger' data-angle='225'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-danger' data-angle='315'></span></p>
+										<p><code><small>class='arrow-danger' data-angle='315'</small></code></p>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class='row'>
+						<div class='span12'>
+							<ul class="thumbnails">
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-danger-large'></span></p>
+										<p><code><small>class='arrow-danger-large'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-danger-large' data-angle='90'></span></p>
+										<p><code><small>class='arrow-danger-large' data-angle='90'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-danger-large' data-angle='180'></span></p>
+										<p><code><small>class='arrow-danger-large' data-angle='180'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-danger-large' data-angle='270'></span></p>
+										<p><code><small>class='arrow-danger-large' data-angle='270'</small></code></p>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class='row'>
+						<div class='span12'>
+							<ul class="thumbnails">
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-danger-large' data-angle='45'></span></p>
+										<p><code><small>class='arrow-danger-large' data-angle='45'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-danger-large' data-angle='135'></span></p>
+										<p><code><small>class='arrow-danger-large' data-angle='135'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-danger-large' data-angle='225'></span></p>
+										<p><code><small>class='arrow-danger-large' data-angle='225'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-danger-large' data-angle='315'></span></p>
+										<p><code><small>class='arrow-danger-large' data-angle='315'</small></code></p>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				
+				</div> <!--/danger-->
+				
+				<div class='tab-pane' id='inverse'>
+				
+					<div class='row'>
+						<div class='span12'>
+						    <ul class="thumbnails">
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-inverse'></span></p>
+										<p><code><small>class='arrow-inverse'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-inverse' data-angle='90'></span></p>
+										<p><code><small>class='arrow-inverse' data-angle='90'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-inverse' data-angle='180'></span></p>
+										<p><code><small>class='arrow-inverse' data-angle='180'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-inverse' data-angle='270'></span></p>
+										<p><code><small>class='arrow-inverse' data-angle='270'</small></code></p>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class='row'>
+						<div class='span12'>
+							<ul class="thumbnails">
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-inverse' data-angle='45'></span></p>
+										<p><code><small>class='arrow-inverse' data-angle='45'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-inverse' data-angle='135'></span></p>
+										<p><code><small>class='arrow-inverse' data-angle='135'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-inverse' data-angle='225'></span></p>
+										<p><code><small>class='arrow-inverse' data-angle='225'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-inverse' data-angle='315'></span></p>
+										<p><code><small>class='arrow-inverse' data-angle='315'</small></code></p>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class='row'>
+						<div class='span12'>
+							<ul class="thumbnails">
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-inverse-large'></span></p>
+										<p><code><small>class='arrow-inverse-large'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-inverse-large' data-angle='90'></span></p>
+										<p><code><small>class='arrow-inverse-large' data-angle='90'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-inverse-large' data-angle='180'></span></p>
+										<p><code><small>class='arrow-inverse-large' data-angle='180'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-inverse-large' data-angle='270'></span></p>
+										<p><code><small>class='arrow-inverse-large' data-angle='270'</small></code></p>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class='row'>
+						<div class='span12'>
+							<ul class="thumbnails">
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-inverse-large' data-angle='45'></span></p>
+										<p><code><small>class='arrow-inverse-large' data-angle='45'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-inverse-large' data-angle='135'></span></p>
+										<p><code><small>class='arrow-inverse-large' data-angle='135'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-inverse-large' data-angle='225'></span></p>
+										<p><code><small>class='arrow-inverse-large' data-angle='225'</small></code></p>
+									</div>
+								</li>
+								<li class="span3">
+									<div class="thumbnail">
+										<p><span class='arrow-inverse-large' data-angle='315'></span></p>
+										<p><code><small>class='arrow-inverse-large' data-angle='315'</small></code></p>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				
+				</div> <!--/inverse-->
+				
+				<div class='tab-pane' id='guide'>
+				
+					<div class='row'>
+						<div class='span12'>
+							<h2>Installation and Usage Guide</h2>
+							
+							<p class='lead'>
+								This guide tells you everything you need to know to install Bootstrap Arrows into your project
+								and get it up and running.
+							</p>
+							
+							<h3>Dependencies</h3>
+							
+							<p>
+								Bootstrap Arrows works in a restricted form independently of any 3<sup>rd</sup> party code. However, to use
+								the multi-angle feature, <a href='http://jquery.com'>jQuery</a> is required.
+							</p>
+							
+							<p>
+								Although Bootstrap Arrows matches the look and feel of Bootstrap's button colours and style
+								it does not actually have a dependancy on the <a href='http://twitter.github.com/bootstrap/'>Bootstrap framework</a>.
+							</p>
+							
+							<h3>Installation</h3>
+							
+							<p>
+								Installing is simple. Place the <code>bootstrap-arrows.js</code> file in the your preferred js directory. Most likely this will be
+								the same directory where you placed the jQuery and Bootstrap JavaScript files. This can be anywhere in your file structure but I recommend placing it in <code>/assets/js</code>.
+							</p>
+							
+							<p>
+								Next, place the <code>bootstrap-arrows.css</code> file in your CSS folder. This can also be anywhere but I recommend placing it in <code>/assets/css</code>.
+							</p>
+							
+							<p>
+								And finally put the <code>arrows.png</code> sprite image into your <code>image</code> folder. To save having to update the image reference in the <code>bootstrap-arrows.css</code> file
+								place the image in <code>/assets/img</code>.
+							<p>
+								
+							<p>
+								Reference the CSS within the <code>&lt;head&gt;</code> of your document,
+								like this <code>&lt;link href='/css/bootstrap-arrows.css' rel='stylesheet' type='text/css' /&gt;</code>
+							</p>
+							
+							<p>
+								Then reference your JavaScript files at the bottom of your document just above the <code>&lt;/html&gt;</code> tag.
+								With the jQuery and Bootstrap references already in place, add the reference to the <code>bootstrap-arrows.js</code> like this
+								<code>&lt;script type="text/javascript" src="js/bootstrap-arrows.js"&gt;&lt;/script&gt;</code> and you're ready to use it.
+								
+								
+							</p>	
+							
+							<h3>Usage</h3>
+							
+							<p>
+								Now that all the requirements are in place you're ready to use Bootstrap Arrows.
+							</p>
+							
+							<p>
+								Draw your first arrow with <code>&lt;span class='arrow'&gt;&lt;/span&gt;</code>
+							</p>
+							
+							<p>
+								You should see an arrow like this one: <span class='arrow'></span>
+							</p>
+							
+							<p>
+								If you need arrows that point in directons other than up, initialise the <code>bootstrap-arrows.js</code> jQuery plugin, which dynamically adds 
+								the CSS3 <code>rotate</code> transform attribute to specified arrows, allowing you to have each arrow
+								point at any angle from 0 to 360 degrees.
+							</p>
+							
+							<p>
+								Inside the <code>$(function () {</code> and <code>});</code> tags initialise the plugin with <code>$('.arrow, [class^=arrow-]').bootstrapArrows();</code>.
+							</p>
+							
+							<p>
+								Now you can point an arrow to any angle by specifying the angle inside the <code>data-angle</code> tag of the element. For instance,
+								<code>&lt;span class='arrow' data-angle='45'&gt;&lt;/span&gt;</code> will render the default grey arrow pointing to 45 degrees, like this one:
+								<span class='arrow' data-angle='45'></span>
+							</p>
+							
+							<p>
+								You can also use the larger arrow format: <code>&lt;span class='arrow-large' data-angle='45'&gt;&lt;/span&gt;</code> which will render an arrow like this one: 
+								<span class='arrow-large' data-angle='45'></span>
+							</p>
+							
+							<p>
+								Bootstrap supports the same type of formats as Bootstrap Alerts. So you can add
+								<code>-primary</code>, <code>-info</code>, <code>-success</code>,
+								<code>-warning</code>, <code>-danger</code>, and <code>-inverse</code> to any arrow to get different colours.
+							<p>
+							
+							<p>
+								Using <code>&lt;span class='arrow-primary' data-angle='90'&gt;&lt;/span&gt;</code> will render a blue arrow like this one:
+								<span class='arrow-primary' data-angle='90'></span>
+							<p>
+							
+							<p>Colours and sizes can be used in conjunction with each other too, so using <code>&lt;span class='arrow-success-large' data-angle='180'&gt;&lt;/span&gt;</code> will render a large green arrow like this one:
+								<span class='arrow-success-large' data-angle='180'></span>
+							<p>
+								
+							<h3>More Demos</h3>
+							
+							<p>
+								For more demos, see the Multi-Angle Demos and the Demos with Other Colours in the tabs above.
+							</p> 
+							
+							<p>
+								Thanks for trying out Bootstrap Arrows, and if you've any questions, send an email to hello [at] iarfhlaith dot com.
+							</p>
+							
+						</div>
+					</div>
+				
+				</div> <!--/guide-->
+				
+			</div> <!--/tab-content-->
+			
+			<!-- Footer -->
+			<div class='row'>
+				<div class='span12'>
+					<div class="divider"></div>
+					<p class='muted'>
+						<small>Bootstrap Arrows currently uses <a href='http://twitter.github.com/bootstrap/'>Bootstrap 2.1.1</a>. Built for sharing by <a href='http://iarfhlaith.com'>Iarfhlaith Kelly</a></small>
+					</p>
+				</div>
+			</div>
+		</div>
+		
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-arrows.js"></script>
+		
+		<script type="text/javascript">
+			$(function () {
+				
+				// Tabs
+				$('#tabs a').click(function (e) {
+	    			$(this).tab('show');
+	    			e.preventDefault();
+	    		});
+	    		
+	    		// Bootstrap Arrows
+				$('.arrow, [class^=arrow-]').bootstrapArrows();
+			
+			});
+			
+			// Google Analytics
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-35925129-1']);
+			_gaq.push(['_trackPageview']);
+		
+			(function() {
+			  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+		
+		</script>
+				
+	</body>
+</html>

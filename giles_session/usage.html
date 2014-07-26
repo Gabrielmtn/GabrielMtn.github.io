@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='utf-8'>
+		<title>Bootstrap Arrows - Installation and Usage</title>
+		<meta name='description' content='Bootstrap Arrows is a simple jQuery plugin and add-on to the popular Twitter Bootstrap framework to include the use of arrows at any angle in your UI designs.'>
+		<meta name='author' content='Iarfhlaith Kelly'>
+		
+		<link href='css/bootstrap.min.css' rel='stylesheet' type='text/css' media='screen' />
+		<link href='css/bootstrap-arrows.css' rel='stylesheet' type='text/css' media='screen' />
+		
+		<!-- Bootstrap Overrides -->
+		<style type="text/css">
+			.span2, .span3 { text-align:center }
+			.navbar .nav.pull-right {margin-top: 10px;}
+		</style>
+		
+	</head>
+	<body>
+		
+		<div class="navbar navbar-inverse navbar-fixed-top">
+	      <div class="navbar-inner">
+	        <div class="container">
+	          <a class="brand" href="index.html">Bootstrap Arrows</a>
+	          <ul class="nav">
+	          	<li><a href="index.html">Home</a></li>
+	            <li><a href="demo.html">Demo</a></li>
+	            <li><a href="http://bootstrap-arrows.iarfhlaith.com/bootstrap-arrows.zip">Download</a></li>
+	            <li class="active"><a href="usage.html">Installation and Usage</a></li>
+	          </ul>
+	          
+	          <ul class="nav pull-right">
+	          	<li class='pull-right'>
+	          		<a href="https://twitter.com/Iarfhlaith" class="twitter-follow-button" data-show-count="false">Follow @Iarfhlaith</a>
+	          		<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://bootstrap-arrows.iarfhlaith.com" data-text="Bootstrap Arrows" data-via="Iarfhlaith">Tweet</a>
+					<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>		
+				</li>
+	          </ul>
+	          
+	        </div>
+	      </div>
+	    </div>
+		
+		<div class='container'>
+
+					<div class='row'>
+						<div class='span12'>
+							
+							<div><br />&nbsp;<br />&nbsp;</div>
+							
+							<h2>Installation and Usage Guide</h2>
+							
+							<p class='lead'>
+								This guide tells you everything you need to know to install Bootstrap Arrows into your project
+								and get it up and running.
+							</p>
+							
+							<h3>Dependencies</h3>
+							
+							<p>
+								Bootstrap Arrows works in a restricted form independently of any 3<sup>rd</sup> party code. However, to use
+								the multi-angle feature, <a href='http://jquery.com'>jQuery</a> is required.
+							</p>
+							
+							<p>
+								Although Bootstrap Arrows matches the look and feel of Bootstrap's button colours and style
+								it does not actually have a dependancy on the <a href='http://twitter.github.com/bootstrap/'>Bootstrap framework</a>.
+							</p>
+							
+							<h3>Installation</h3>
+							
+							<p>
+								Installing is simple. Place the <code>bootstrap-arrows.js</code> file in the your preferred js directory. Most likely this will be
+								the same directory where you placed the jQuery and Bootstrap JavaScript files. This can be anywhere in your file structure but I recommend placing it in <code>/assets/js</code>.
+							</p>
+							
+							<p>
+								Next, place the <code>bootstrap-arrows.css</code> file in your CSS folder. This can also be anywhere but I recommend placing it in <code>/assets/css</code>.
+							</p>
+							
+							<p>
+								And finally put the <code>arrows.png</code> sprite image into your <code>image</code> folder. To save having to update the image reference in the <code>bootstrap-arrows.css</code> file
+								place the image in <code>/assets/img</code>.
+							<p>
+								
+							<p>
+								Reference the CSS within the <code>&lt;head&gt;</code> of your document,
+								like this <code>&lt;link href='/css/bootstrap-arrows.css' data-angle='stylesheet' type='text/css' /&gt;</code>
+							</p>
+							
+							<p>
+								Then reference your JavaScript files at the bottom of your document just above the <code>&lt;/html&gt;</code> tag.
+								With the jQuery and Bootstrap references already in place, add the reference to the <code>bootstrap-arrows.js</code> like this
+								<code>&lt;script type="text/javascript" src="js/bootstrap-arrows.js"&gt;&lt;/script&gt;</code> and you're ready to use it.
+								
+								
+							</p>	
+							
+							<h3>Usage</h3>
+							
+							<p>
+								Now that all the requirements are in place you're ready to use Bootstrap Arrows.
+							</p>
+							
+							<p>
+								Draw your first arrow with <code>&lt;span class='arrow'&gt;&lt;/span&gt;</code>
+							</p>
+							
+							<p>
+								You should see an arrow like this one: <span class='arrow'></span>
+							</p>
+							
+							<p>
+								If you need arrows that point in directons other than up, initialise the <code>bootstrap-arrows.js</code> jQuery plugin, which dynamically adds 
+								the CSS3 <code>rotate</code> transform attribute to specified arrows, allowing you to have each arrow
+								point at any angle from 0 to 360 degrees.
+							</p>
+							
+							<p>
+								Inside the <code>$(function () {</code> and <code>});</code> tags initialise the plugin with <code>$('.arrow, [class^=arrow-]').bootstrapArrows();</code>.
+							</p>
+							
+							<p>
+								Now you can point an arrow to any angle by specifying the angle inside the <code>data-angle</code> tag of the element. For instance,
+								<code>&lt;span class='arrow' data-angle='45'&gt;&lt;/span&gt;</code> will render the default grey arrow pointing to 45 degrees, like this one:
+								<span class='arrow' data-angle='45'></span>
+							</p>
+							
+							<p>
+								You can also use the larger arrow format: <code>&lt;span class='arrow-large' data-angle='45'&gt;&lt;/span&gt;</code> which will render an arrow like this one: 
+								<span class='arrow-large' data-angle='45'></span>
+							</p>
+							
+							<p>
+								Bootstrap supports the same type of formats as Bootstrap Alerts. So you can add
+								<code>-primary</code>, <code>-info</code>, <code>-success</code>,
+								<code>-warning</code>, <code>-danger</code>, and <code>-inverse</code> to any arrow to get different colours.
+							<p>
+							
+							<p>
+								Using <code>&lt;span class='arrow-primary' data-angle='90'&gt;&lt;/span&gt;</code> will render a blue arrow like this one:
+								<span class='arrow-primary' data-angle='90'></span>
+							<p>
+							
+							<p>Colours and sizes can be used in conjunction with each other too, so using <code>&lt;span class='arrow-success-large' data-angle='180'&gt;&lt;/span&gt;</code> will render a large green arrow like this one:
+								<span class='arrow-success-large' data-angle='180'></span>
+							<p>
+								
+							<h3>More Demos</h3>
+							
+							<p>
+								There are dozens of <a href='index.html#demo'>demos on the homepage</a>, multi-angle demos and demos with other colours.
+							</p> 
+							
+							<p>
+								Thanks for trying out Bootstrap Arrows, and if you've any questions, send an email to hello [at] iarfhlaith dot com.
+							</p>
+							
+						</div>
+					</div>
+			
+			<!-- Footer -->
+			<div class='row'>
+				<div class='span12'>
+					<div class="divider"></div>
+					<p class='muted'>
+						<small>Bootstrap Arrows currently uses <a href='http://twitter.github.com/bootstrap/'>Bootstrap 2.1.1</a>. Built for sharing by <a href='http://iarfhlaith.com'>Iarfhlaith Kelly</a></small>
+					</p>
+				</div>
+			</div>
+		</div>
+		
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-arrows.js"></script>
+		
+		<script type="text/javascript">
+			$(function () {
+	    		
+	    		// Bootstrap Arrows
+				$('.arrow, [class^=arrow-]').bootstrapArrows();
+			
+			});
+			
+			// Google Analytics
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-35925129-1']);
+			_gaq.push(['_trackPageview']);
+		
+			(function() {
+			  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+		
+		</script>
+				
+	</body>
+</html>
