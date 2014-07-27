@@ -1,23 +1,103 @@
-<!DOCTYPE html>
-<meta charset=utf-8>
-<title>Responsive Characters - Demonstrated via ASCII art</title>
-<!-- Definitely NOT a grotesque perversion of the HTML language: -->
-<meta name="viewport" content="width=device-width">
+<!DOCTYPE HTML>
+<html>
+<head>
+	<!-- 
+	If you're reading this, just note that it's a work in progress, and I'm adding some stuff to it. get in touch if you don't want to be confused as shit -->
+	
+	<meta name="viewport" content="width=device-width">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Responsive Characters - Demonstrated via ASCII art</title>
+	<link href="animate.css" rel="stylesheet">
+  	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script><script src="jquery.fittext.js"></script>
+  	<script src="jquery.lettering.js"></script>
+  	<link href='http://fonts.googleapis.com/css?family=Rokkitt' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="">
+	<style>
+	pre {font-size: 0.4vw;
+	 	margin-left: auto;
+	 	margin-right: auto;
+	 	margin: 0px 0px 0px 0px;
+	 	padding: 0px 0px 0px 0px;
+	 	text-align: center;
+	 	width: 95%;
+	
+	
+		}
+	
+	</style>
+	<script>
+	$(function () {
+    $('.tlt').textillate({
+  // the default selector to use when detecting multiple texts to animate
+  selector: '.texts',
 
-<style>
-pre {font-size: 0.4vw;
-	 margin-left: auto;
-	 margin-right: auto;
-	 margin: 0px 0px 0px 0px;
-	 padding: 0px 0px 0px 0px;
-	 text-align: center;
-	 width: 95%;
+  // enable looping
+  loop: false,
 
+  // sets the minimum display time for each text before it is replaced
+  minDisplayTime: 2000,
 
-	}
+  // sets the initial delay before starting the animation
+  // (note that depending on the in effect you may need to manually apply 
+  // visibility: hidden to the element before running this plugin)
+  initialDelay: 0,
 
-</style>
-<h2>This text isn't responsive, but the text below is! Zoom in and out to see it in action!</h2>
+  // set whether or not to automatically start animating
+  autoStart: true,
+
+  // custom set of 'in' effects. This effects whether or not the 
+  // character is shown/hidden before or after an animation  
+  inEffects: [],
+
+  // custom set of 'out' effects
+  outEffects: [ 'hinge' ],
+
+  // in animation settings
+  in: {
+    // set the effect name
+    effect: 'fadeInLeftBig',
+
+    // set the delay factor applied to each consecutive character
+    delayScale: 1.5,
+
+    // set the delay between each character
+    delay: 50,
+
+    // set to true to animate all the characters at the same time
+    sync: false,
+
+    // randomize the character sequence 
+    // (note that shuffle doesn't make sense with sync = true)
+    shuffle: false,
+
+    // reverse the character sequence 
+    // (note that reverse doesn't make sense with sync = true)
+    reverse: false,
+
+    // callback that executes once the animation has finished
+    callback: function () {}
+  },
+
+  // out animation settings.
+  out: {
+    effect: 'hinge',
+    delayScale: 1.5,
+    delay: 50,
+    sync: false,
+    shuffle: false,
+    reverse: false,
+    callback: function () {}
+  },
+
+  // callback that executes once textillate has finished 
+  callback: function () {}
+});	
+	})
+	</script>
+</head>
+<body>
+<h2 class="tlt">This text isn't responsive, but the text below is! Zoom in and out to see it in action!</h2>
 <pre>
 +~++===??III?+7?+++++~::===~:,,::,::::,,,,,,::::,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,:,,,::~~~~===++++??++????I=++I?I7I?+++=III??I~~~:::,,,,,,,,,,,,,,,,,,,:~+++++???IIII777$$$$$$$ZZZZZZZZZOOOOOOOOOOOZZZZZZZZZZZZZ$$$$$$$$$$$$$$$$7777IIII???+++===~~:,,,,,,,,,,,,,,,,,,,::::::::::::::::::::::::::::::::::::~~~:~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=~================================
 ~~+=+I++?++?+?I?+++=+~:~==::,,,::,::,,,,,,,,:::,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,::~~~~========+++++??????+????I?77?????+I7II?I~:~~::::,,,,,,,,,,,,,,,,,:,:~++++????IIII77$$$$$$$$ZZZZZZZZZOOOOOOZZZZZZZZZZZZ$$$$$$$$$$$$$$$$77777777IIIII??+++===~:,,,,,,,,,,,::::::::::::::::::::::::::::::::::::::::::~~:~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~================================
@@ -77,4 +157,6 @@ ZZZOZZOO$O=+DO8++888$8OZO87$$OO$888ZID88$7OO?O8OIOZ?===~==+?++++77I+=88I+78O8ZO$
 O8OOOOO87Z=+8D==8OZOO8ZZ88$O88Z888+IOZ7=O$IO8$88?O$++++++++++++=+==?II+?7=O88O=77++++=====+?I?III7$I?777?I??I?IO8Z7$IN?++?+OII??+++++=+$OZ$I=+=~~~~Z?+=~~=~=+==~=++=~:+O?=====O?++????+++=+~$888O??++?Z88OO888D8D8D8O$$78D8$8O8OZ788OOOOOO8O88$Z$77?I++Z7+88888888888888888888888888888ZZZ$$$$$$$ZO$II777$$$Z8OZII777$$$$?+++=??~~~+??+++~:~:~~~~~~~~~======++??7I?I7Z$7++==========~=====~~=====
 ZZZZZZOOIOI8Z8I=O8$8OOOOOZ$DOO7$88ZO7I??$ZO+~$8O8OI???+??++++???++==+++++?++7D7O7=+++++++=++++?I7+$I?I????++?+778$I7?O$==++?:7?~:=+~~+O7II?++++++?++OI+=~~===~==+O???+=+O77I7Z77OZ=+++++++=+=788I++++$88O8O888DDDDD$O$77DD8Z8888OO88OOOOO8888D77OZ77?I7$?+888888888888888888888888888DOZZZ$77$$7$$$ZOOOZ7$O8O8Z77III77I???++++++~==?7777?+~~~~~~===+++???II????7II?I7$Z7=+=======================
 </pre>
-
+	
+</body>
+</html>
