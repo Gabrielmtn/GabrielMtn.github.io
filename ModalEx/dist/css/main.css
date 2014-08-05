@@ -16,10 +16,6 @@ html {
     line-height: 1.4;
 }
 
-
-body{
-    cursor: url('/img/my-mouse-pointer.cur');
-}
 /*
  * Remove text-shadow in selection highlight: h5bp.com/i
  * These selection rule sets have to be separate.
@@ -95,54 +91,14 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
-.modal-dialog{
-top:90px;
-left:30%;
-position: relative;
-border-radius:0px;
-}
-
-.modal-text{
-
-color:#AEACAF;
-}
-
-.center-block {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
 
 
 
-.arrow_box {
-    position: relative;
-    background: #443D44;
-    border: 1px solid #443D44;
-}
-.arrow_box:after, .arrow_box:before {
-    bottom: 100%;
-    left: 50%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-}
 
-.arrow_box:after {
-    border-color: rgba(68, 61, 68, 0);
-    border-bottom-color: #443D44;
-    border-width: 30px;
-    margin-left: -30px;
-}
-.arrow_box:before {
-    border-color: rgba(68, 61, 68, 0);
-    border-bottom-color: #443D44;
-    border-width: 36px;
-    margin-left: -36px;
-}
+
+
+
+
 
 
 
