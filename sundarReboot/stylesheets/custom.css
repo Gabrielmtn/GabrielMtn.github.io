@@ -1,0 +1,129 @@
+*{
+
+	font-size: 1em;
+    font-family: "PT+Sans", serif;
+}
+
+.contact-button{
+
+  font-family:"PT+Sans";
+  color: #847981;
+  margin-left: auto;
+  margin-right: auto;
+  vertical-align: auto;
+  font-size: 20px;
+  padding: 10px 25px; 
+  border-radius: 0px;
+  border: 4px solid #847981;
+  background: #fffff;
+}
+    
+}
+
+.button p {
+
+    font-size: 25px;
+
+    line-height: 50px;
+
+    font-family: 'Trebuchet MS', sans-serif;
+
+}
+
+a {
+
+    text-decoration: none;
+
+    color: fff;
+
+}
+
+.button:hover {
+
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#b1432a), to(#d46d45));
+
+    background: -moz-linear-gradient(19% 75% 90deg, #d46d45, #b1432a);
+
+    border-top: solid 2px #b1432a;
+
+    border-bottom: solid 1px #e28d79;
+
+}
+
+.logo{
+
+    margin-top:9%;
+}
+
+.image-padding{
+    margin-top: 5%;
+    margin-bottom: 20px;
+
+}
+
+@media screen and (max-width: 800px) {
+    #mc-embedded-subscribe-form {
+    text-align: center;
+    
+    width: 100%;
+    margin-left: 0%;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 20px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    _display: inline;
+    _overflow: hidden;
+    _overflow-y: visible;
+}
+}
+.button-submit {
+    margin: 5px 0;
+    border: none;
+    height: 33px;
+    width: 110px;
+    font-family: "PT Sans", sans-serif;
+    font-size: 1.3em;
+    font-weight: bold;
+    letter-spacing: 1px;
+    background-color: #ff2f5c;
+    color: #fff;
+}
+.button-submit:hover {
+    background-color: #b21034;
+}
+.email {
+    margin: 5px 0;
+    width: 280px;
+    height: 27px;
+}
+
+
+#type {
+    margin: 5px 0;
+    height: 27px;
+    width: 287px;
+    border: solid #aaa 1px;
+}
+
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 0px; 
+    height: 0; 
+    overflow: hidden;
+}
+ 
+.video-container iframe,
+.video-container object,
+.video-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
