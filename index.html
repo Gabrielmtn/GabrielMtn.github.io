@@ -12,7 +12,13 @@
     <title>Gabriel Martin, Frontend code from the heart</title>
 
     <!-- Bootstrap Core CSS -->
+
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/animated.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+
+
+
 
     <!-- Custom CSS -->
     <link href="css/agency.css" rel="stylesheet">
@@ -21,7 +27,7 @@
     <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.css" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href='http://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
     <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -82,7 +88,14 @@
         <div class="container">
             <div class="intro-text">
                 <div class="intro-lead-in">Welcome to my portfolio!</div>
-                <div class="intro-heading">It's Nice To Meet You</div>
+                <div class="intro-heading">It's Nice To Meet 
+                   <span data-anijs="if: scroll, on: window, do: swing animated, before: scrollReveal">
+                       
+                    <span data-anijs="if: onRunFinished, on: $AniJSEventProvider, do: swing animated">You</span>
+                   </span> 
+                </div>
+
+
                 <a href="#me" class="page-scroll btn btn-xl">It is!? Why? <br>You don't even know me!</a>
             </div>
         </div>
@@ -95,34 +108,40 @@
                 <div class="col-lg-12 text-center">
                     <h2 class="section-heading">That's just who I am</h2>
                     <h3 class="section-subheading text-muted">I'm a frontend developer who works from the heart</h3>
-                    <a class="page-scroll"href="#portfolio"><img src="img/1408049116_299063.ico" alt="heart"></a>
+                    <a class="page-scroll heart" data-anijs="if: scroll, on: window, do: bounceIn animated, before: scrollReveal" href="#portfolio"><img src="img/1408244358_678087-heart.png" alt="heart"></a>
                     
                 </div>
             </div>
             <div class="row text-center">
+                    <div class="col-md-4">
+                <a class="page-scroll heart" href="#portfolio">
+                        <span class="fa-stack fa-4x" data-anijs="if: scroll, on: window, do: fadeInUp animated, before: scrollReveal">
+                            <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                            <i class="fa fa-users fa-stack-1x fa-inverse"></i>
+                </a>
+                        </span>
+                        <h4 class="service-heading" data-anijs="if: scroll, on: window, do: fadeInUp animated, before: scrollReveal">User-Centric Design</h4>
+                        <p class="text-muted"data-anijs="if: scroll, on: window, do: fadeInUp animated, before: scrollReveal">Working from the heart means building a design and development workflow around the user, listening, and iterating rapidly. Rinse, and repeat.</p>
+                    </div>
                 <div class="col-md-4">
-                    <span class="fa-stack fa-4x">
-                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                        <i class="fa fa-users fa-stack-1x fa-inverse"></i>
-                    </span>
-                    <h4 class="service-heading">User-Centric Design</h4>
-                    <p class="text-muted">Working from the heart means building a design and development workflow around the user, listening, and iterating rapidly. Rinse, and repeat.</p>
-                </div>
-                <div class="col-md-4">
-                    <span class="fa-stack fa-4x">
+                <a class="page-scroll heart" href="#portfolio">
+                    <span class="fa-stack fa-4x" data-anijs="if: scroll, on: window, do: fadeInUp animated, before: scrollReveal">
                         <i class="fa fa-circle fa-stack-2x text-primary"></i>
                         <i class="fa fa-file-code-o fa-stack-1x fa-inverse"></i>
+                </a>
                     </span>
-                    <h4 class="service-heading">UX / UI</h4>
-                    <p class="text-muted">I've gained a unique perspective on user experience and design by working with dozens of startups through my work at <a target="_blank" href="https://angel.co/entrepreneurial-advisory-network">The EAN.</a></p>
+                    <h4 class="service-heading" data-anijs="if: scroll, on: window, do: fadeInUp animated, before: scrollReveal">UX / UI</h4>
+                    <p class="text-muted" data-anijs="if: scroll, on: window, do: fadeInUp animated, before: scrollReveal">I've gained a unique perspective on user experience and design by working with dozens of startups through my work at <a target="_blank" href="https://angel.co/entrepreneurial-advisory-network">The EAN.</a></p>
                 </div>
                 <div class="col-md-4">
-                    <span class="fa-stack fa-4x">
+                <a class="page-scroll heart" href="#portfolio">
+                    <span class="fa-stack fa-4x" data-anijs="if: scroll, on: window, do: fadeInUp animated, before: scrollReveal">
                         <i class="fa fa-circle fa-stack-2x text-primary"></i>
                         <i class="fa fa-laptop fa-stack-1x fa-inverse"></i>
+                </a>
                     </span>
-                    <h4 class="service-heading">Responsive Design</h4>
-                    <p class="text-muted">I'm well versed with clean, responsive code, and passionate about creating an experience which can be enjoyed on any device.</p>
+                    <h4 class="service-heading" data-anijs="if: scroll, on: window, do: fadeInUp animated, before: scrollReveal">Responsive Design</h4>
+                    <p class="text-muted" data-anijs="if: scroll, on: window, do: fadeInUp animated, before: scrollReveal">I'm well versed with clean, responsive code, and passionate about creating an experience which can be enjoyed on any device.</p>
                 </div>
             </div>
         </div>
@@ -239,16 +258,16 @@
                 <div class="col-lg-12">
                     <ul class="timeline">
                         <li>
-                            <div class="timeline-image">
+                            <div class="timeline-image" data-anijs="if: scroll, on: window, do: flipInXg animated, before: scrollReveal" >
                                 <img class="img-circle img-responsive" src="img/1.jpg" alt="">
                             </div>
                             <div class="timeline-panel">
                                 <div class="timeline-heading">
-                                    <h4>2010-2011</h4>
-                                    <h4 class="subheading">My origin story</h4>
+                                    <h4 data-anijs="if: scroll, on: window, do: fadeIn animated, before: scrollReveal">2010-2011</h4>
+                                    <h4 class="subheading" data-anijs="if: scroll, on: window, do: fadeIn animated, before: scrollReveal">My origin story</h4>
                                 </div>
                                 <div class="timeline-body">
-                                    <p class="text-muted">I knew I wanted to change the world when I volunteered on a World Bank platform, supporting kids learning to be social entrepreneurs. It was an amazing experience! </p>
+                                    <p class="text-muted" data-anijs="if: scroll, on: window, do: fadeIn animated, before: scrollReveal">I knew I wanted to change the world when I volunteered on a World Bank platform, supporting kids learning to be social entrepreneurs. It was an amazing experience! </p>
                                 </div>
                             </div>
                         </li>
@@ -258,11 +277,11 @@
                             </div>
                             <div class="timeline-panel">
                                 <div class="timeline-heading">
-                                    <h4>2011-2012</h4>
-                                    <h4 class="subheading">Joining the startup community</h4>
+                                    <h4 data-anijs="if: scroll, on: window, do: fadeIn animated, before: scrollReveal">2011-2012</h4>
+                                    <h4 class="subheading" data-anijs="if: scroll, on: window, do: fadeIn animated, before: scrollReveal">Joining the startup community</h4>
                                 </div>
                                 <div class="timeline-body">
-                                    <p class="text-muted">Between starting my first startup, winning a World Bank grant, moving to Boston, and volunteering all over Cambridge, this was a busy couple of years! Also, I'm getting my feet wet with code!</p>
+                                    <p class="text-muted" data-anijs="if: scroll, on: window, do: fadeIn animated, before: scrollReveal">Between starting my first startup, winning a World Bank grant, moving to Boston, and volunteering all over Cambridge, this was a busy couple of years! Also, I'm getting my feet wet with code!</p>
                                 </div>
                             </div>
                         </li>
@@ -272,11 +291,11 @@
                             </div>
                             <div class="timeline-panel">
                                 <div class="timeline-heading">
-                                    <h4>2012-2013</h4>
-                                    <h4 class="subheading">Headfirst into code</h4>
+                                    <h4 data-anijs="if: scroll, on: window, do: fadeIn animated, before: scrollReveal">2012-2013</h4>
+                                    <h4 class="subheading" data-anijs="if: scroll, on: window, do: fadeIn animated, before: scrollReveal">Headfirst into code</h4>
                                 </div>
                                 <div class="timeline-body">
-                                    <p class="text-muted">This is the period I really dove into code. Between working on my second startup, using a LAMP stack, and going deeper on UI/UX and design, I grew into a frontend dev during this period!</p>
+                                    <p class="text-muted" data-anijs="if: scroll, on: window, do: fadeIn animated, before: scrollReveal">This is the period I really dove into code. Between working on my second startup, using a LAMP stack, and going deeper on UI/UX and design, I grew into a frontend dev during this period!</p>
                                 </div>
                             </div>
                         </li>
@@ -286,11 +305,11 @@
                             </div>
                             <div class="timeline-panel">
                                 <div class="timeline-heading">
-                                    <h4>2013-2014</h4>
-                                    <h4 class="subheading">Startup Institute and beyond!</h4>
+                                    <h4 data-anijs="if: scroll, on: window, do: fadeIn animated, before: scrollReveal">2013-2014</h4>
+                                    <h4 class="subheading" data-anijs="if: scroll, on: window, do: fadeIn animated, before: scrollReveal">Startup Institute and beyond!</h4>
                                 </div>
                                 <div class="timeline-body">
-                                    <p class="text-muted">After chosing to shutter my second startup, I attended Startup Institute to to go deeper on my existing skills, and to diversify them as well. Upon leaving, I felt more confident that I'd be changing the world with my code.</p>
+                                    <p class="text-muted" data-anijs="if: scroll, on: window, do: fadeIn animated, before: scrollReveal">After chosing to shutter my second startup, I attended Startup Institute to to go deeper on my existing skills, and to diversify them as well. Upon leaving, I felt more confident that I'd be changing the world with my code.</p>
                                 </div>
                             </div>
                         </li>
@@ -314,7 +333,7 @@
             
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <p class="large text-muted">My mission is to change the world with hard work, beautiful code, and by working from the heart. Further, I hope to continuously refine my ability to do these things.</p>
+                    <p class="mission large text-muted" data-anijs="if: scroll, on: window, do: fadeInUp animated, before: scrollReveal">My mission is to change the world with hard work, beautiful code, and by working from the heart. Further, I hope to continuously refine my ability to do these things.</p>
                 </div>
             </div>
         </div>
@@ -549,7 +568,7 @@
                             <h2>10 Apocalypse Predictions &amp; Scares</h2>
                             <p class="item-intro text-muted">A lighthearted timeline, and javascript experiment.</p>
                             <img class="img-responsive img-centered" src="img/dreams-preview.png" alt="">
-                            <p>This lighthearted timeline was build to be an informative and interesting look at history, and a way to promote the Startup Institute Student Expo. The <a href="http://gabrielmtn.github.io/timeline/index.html">timeline</a> is a one page webapp using the library Timeline.JS, built at the "knight lab" at NorthWestern University. It’s a beautiful, responsive library that’s designed with an eye to both mobile and desktop experiences.</p>
+                            <p>This lighthearted timeline was build to be an informative and interesting look at history, and a way to promote the Startup Institute Student Expo. The <a href="http://gabrielmtn.github.io/timeline/index.html">timeline</a> is a one page webapp using Timeline.JS, an open source project by the knight lab. It’s a beautiful, responsive library that’s designed with an eye to both mobile and desktop experiences.</p>
                             <p>You can build with the Timeline.JS library at the <a href="http://timeline.knightlab.com/">official page</a>.</p>
                             <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close Project</button>
                         </div>
@@ -576,6 +595,12 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="js/agency.js"></script>
+<!-- ScrollReveal Helper -->
+
+    
+    <script src="js/anijs-min.js"></script>
+    <script src="js/anijs-helper-scrollreveal-min.js"></script>
+
 
 </body>
 
