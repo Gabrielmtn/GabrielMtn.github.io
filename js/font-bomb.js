@@ -251,7 +251,7 @@ $('#font-bomb').on('click', function(event) {
         setTimeout(function() {
           _this.confirmation.className = '';
           return setTimeout(function() {
-            _this.confirmation.innerHTML = "If you think fontBomb is a blast, follow me on twitter <a href='http://www.twitter.com/plehoux'>@plehoux</a> for my next experiment!";
+            _this.confirmation.innerHTML = "Many thanks to <a href='http://www.twitter.com/plehoux'>@plehoux</a> for his awesome fontBomb.js! Follow him on Twitter!";
             _this.confirmation.className = 'show';
             return setTimeout(function() {
               return _this.confirmation.className = '';
