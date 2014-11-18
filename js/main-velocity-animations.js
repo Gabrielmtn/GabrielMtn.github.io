@@ -10,4 +10,8 @@ $("div.intro-heading").velocity({rotateX:[ "0" , "-14"], scale:[ "1" , "0.99"],o
 
 $(".btn-xl").velocity({rotateX:[ "0" , "-14"], scale:[ "1" , "0.99"],opacity:[ "0" , "0"] }, { duration: 750, delay: 0, easing : "linear"  });
 $(".btn-xl").velocity({rotateX:[ "0" , "-14"], scale:[ "1" , "0.99"],opacity:[ "1" , "0"] }, { duration: 950, delay: 750, easing : "linear"  });
+
+
+$("#habla_topbar_div").velocity({rotateX:[ "0" , "-14"], scale:[ "1" , "0.99"],opacity:[ "0" , "0"] }, { duration: 1250, delay: 0, easing : "linear"  });
+$("#habla_topbar_div").velocity({rotateX:[ "0" , "-14"], scale:[ "1" , "0.99"],opacity:[ "1" , "0"] }, { duration: 2950, delay: 1250, easing : "linear"  });
 });
