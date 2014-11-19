@@ -7,6 +7,16 @@
 .mission{
 	font-family: monospace;
 }
+.shadow {
+  width: 30px;
+  height: .85rem;
+  background: radial-gradient(closest-side, gainsboro, transparent);
+  opacity: 0;
+  margin-left: auto;
+  margin-right:auto;
+  
+}
+
 
 canvas#surface {
   width: 30px;

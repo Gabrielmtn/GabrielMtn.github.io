@@ -33,6 +33,39 @@ $("div.intro-heading").velocity({rotateX:[ "0" , "-14"], scale:[ "1" , "0.99"],o
 $(".btn-xl").velocity({rotateX:[ "0" , "-14"], backgroundColor: "#fed136",borderColor: "#fed136",color: "#000",opacity:[ "0" , "0"] }, { duration: 750, delay: 0, easing : "linear"  });
 $(".btn-xl").velocity({rotateX:[ "0" , "-14"], scale:[ "1" , "0.99"],opacity:[ "1" , "0"] }, { duration: 950, delay: 700, easing : "linear"  });
 
+$(".btn-xl").mousedown(function(){
+  $(this).velocity({
+    rotateX: "36deg",
+    scale:'0.77',
+    rotateY:"2deg",
+     
+  }, 150, "easeOut").velocity({
+    rotateX: "0deg",
+    rotateY:"0deg",
+    scale:"1",        
+    boxShadowBlur:"0",        
+    boxShadowSpread:"0%",
+
+  }, 200).velocity({
+    
+    rotateY:"0deg",
+    rotateY:"0deg",
+    // scale:"1",
+
+
+    
+  }, 225, "easeOutBounce").velocity("reverse", 250, "easeOutBounce");
+
+  $("+ .shadow", this).velocity({
+    translateY:"15",
+    translateX:"",
+    width:"25%",
+    height:"1rem",
+    // scale: "1.3",
+    opacity: "0.2",
+  }, 150).velocity("reverse", 250, "easeOutBounce");
+
+});
 // #  ███████╗ ██████╗ ███╗   ██╗████████╗      ██████╗  ██████╗ ███╗   ███╗██████╗     
 // #  ██╔════╝██╔═══██╗████╗  ██║╚══██╔══╝      ██╔══██╗██╔═══██╗████╗ ████║██╔══██╗    
 // #  █████╗  ██║   ██║██╔██╗ ██║   ██║   █████╗██████╔╝██║   ██║██╔████╔██║██████╔╝    
