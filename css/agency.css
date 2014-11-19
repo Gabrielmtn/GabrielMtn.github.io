@@ -137,6 +137,7 @@ fieldset[disabled] .btn-primary.active {
     border-color: #f6bf01;
     color: #fff;
     background-color: #fec503;
+
 }
 
 .btn-xl:active,
@@ -170,7 +171,7 @@ fieldset[disabled] .btn-xl.active {
 }
 
 .navbar-default {
-    border-color: transparent;
+    opacity: 1;
     background-color: #222;
 }
 
@@ -184,6 +185,9 @@ fieldset[disabled] .btn-xl.active {
 .navbar-default .navbar-brand:active,
 .navbar-default .navbar-brand.active {
     color: #fec503;
+    transition: background 2s;
+    -moz-transition: background 2s;
+    -webkit-transition: background 2s;
 }
 
 .navbar-default .navbar-collapse {
@@ -253,7 +257,7 @@ fieldset[disabled] .btn-xl.active {
 
     .navbar-default.navbar-shrink {
         padding: 10px 0;
-        background-color: #222;
+        background-color: black;
     }
 
     .navbar-default.navbar-shrink .navbar-brand {
@@ -263,7 +267,7 @@ fieldset[disabled] .btn-xl.active {
 
 header {
     text-align: center;
-    color: black;
+    color: #222;
     background-attachment: scroll;
     background-position: center center;
     background-repeat: none;
@@ -746,7 +750,7 @@ ul.social-buttons li a {
     font-size: 20px;
     line-height: 40px;
     outline: 0;
-    color: #fff;
+    color: #888888;
     background-color: #222;
     -webkit-transition: all .3s;
     -moz-transition: all .3s;
