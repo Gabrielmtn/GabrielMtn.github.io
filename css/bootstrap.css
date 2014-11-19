@@ -1210,7 +1210,7 @@ a.bg-danger:hover {
 .page-header {
   padding-bottom: 9px;
   margin: 40px 0 20px;
-  border-bottom: 1px solid #282828;
+  /*border-bottom: 1px solid #282828;*/
 }
 ul,
 ol {
@@ -2298,7 +2298,7 @@ legend {
   line-height: inherit;
   color: #888888;
   border: 0;
-  border-bottom: 1px solid #282828;
+  /*border-bottom: 1px solid #282828;*/
 }
 label {
   display: inline-block;
@@ -3610,7 +3610,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   max-width: none;
 }
 .nav-tabs {
-  border-bottom: 1px solid #282828;
+  border-bottom: 0px solid #282828;
 }
 .nav-tabs > li {
   float: left;
@@ -5167,7 +5167,7 @@ a.list-group-item-danger.active:focus {
   border-top: 0;
 }
 .panel-group .panel-footer + .panel-collapse .panel-body {
-  border-bottom: 1px solid #282828;
+  border-bottom: 0px solid #282828;
 }
 .panel-default {
   border-color: #282828;
@@ -6172,7 +6172,7 @@ button.close {
   }
 }
 .navbar {
-  border-bottom: 1px solid #282828;
+  border-bottom: 0px solid #282828;
 }
 .text-primary,
 .text-primary:hover {
