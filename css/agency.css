@@ -272,6 +272,7 @@ header {
     color: #222;
     min-height: 600px;
     max-height: 800px;
+    opacity: 0;
     background-attachment: scroll;
     background-position: center center;
     background-repeat: none;
