@@ -278,7 +278,7 @@ $("#surface").velocity({rotateX:[ "0" , "-14"], scale:[ "1" , "0.99"],opacity:[ 
 
 if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 $("#surface").velocity({translateY:"24"}, { duration: 0, delay: 0, easing : "linear"  });
-
+$("header").velocity({minHeight:"100%"}, { duration: 0, delay: 0, easing : "linear"  });
 }
 
 });
