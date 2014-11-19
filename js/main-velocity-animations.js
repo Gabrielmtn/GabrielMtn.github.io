@@ -31,18 +31,18 @@ $("#font-bomb").on('click', function(event) {
   $(this).html("Go back up, and click the text to blow the characters up!").velocity({
     translateY:"6",
     translateX:"",
-    padding:"10px",
-    paddingTop:"10px",
-    margin:"20px",
+    // padding:"10px",
+    // paddingTop:"10px",
+    // margin:"20px",
     scale: "1.1",
-    opacity: "1.2",
+    // opacity: "1.2",
   }, 800).velocity("reverse", 450, "easeOut");
   /* Act on the event */ 
   $("#made-with-love").velocity({
     
     translateY:"-55",
-    padding:"20px",
-    paddingTop:"40px",
+    // padding:"20px",
+    // paddingTop:"40px",
     margin:"20px",
   }, 100).velocity("reverse", 450, "easeOutBounce");
   /* Act on the event */
