@@ -69,12 +69,12 @@ h6 {
 }
 
 .btn-primary {
-    border-color: #fed136;
+    border-color: #eee;
     text-transform: uppercase;
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-weight: 700;
+    font-weight: 700; 
     color: #fff;
-    background-color: #fed136;
+    background-color: #eee;
 }
 
 .btn-primary:hover,
@@ -263,7 +263,7 @@ fieldset[disabled] .btn-xl.active {
 
 header {
     text-align: center;
-    color: #fff;
+    color: black;
     background-attachment: scroll;
     background-position: center center;
     background-repeat: none;

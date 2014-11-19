@@ -8,14 +8,6 @@
 	font-family: monospace;
 }
 
-#habla_oplink_a{
-
-	font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
-	text-decoration: bold;
-
-}
-
-
 footer div.container div.row div.col-md-4{
 
 	margin: 0px 0px 30px 0px;
@@ -32,6 +24,30 @@ footer div.container div.row div.col-md-4{
     }
 }
 
+
+nav.navbar{
+  opacity:"0.0";}
+
+.intro-lead-in{
+  opacity:"0.0";
+  color: black;
+
+}
+
+
+
+.intro-heading{
+  opacity:"0.0";
+  color: black;
+}
+
+
+.btn-xl{opacity:"0.0";
+color:black;
+background-color: black;
+border-color: black;}
+
+#habla_window_state_div{opacity:"0.0.0";}
 
 
 
