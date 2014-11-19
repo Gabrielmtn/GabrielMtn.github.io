@@ -1,6 +1,6 @@
 $(document).ready(function() {
   
-$("nav.navbar").velocity({rotateX:["0" , "-45"],rotateY:["0" , "-0.3"], scale:[ "1" , "0.97"],opacity:[ "1" , "0.60"] }, { duration: 540, easing : "linear"  }); 
+$("nav.navbar").velocity({rotateX:["0" , "-50"],rotateY:["0" , "-0.2"], scale:[ "1" , "0.97"],opacity:[ "1" , "0.60"] }, { duration: 500, easing : "linear"  }); 
 
 // $("div.intro-lead-in").velocity({color:"#ffffff" }, { duration: 10, delay: 0, easing : "linear"  });
 $("div.intro-lead-in").velocity({rotateX:["0" , "-14"],color:"#eee", scale:[ "1" , "0.99"],opacity:[ "0" , "0"] }, { duration: 480, delay: 0, easing : "linear"  });
