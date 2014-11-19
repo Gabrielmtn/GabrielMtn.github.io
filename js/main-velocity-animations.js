@@ -273,12 +273,25 @@ $(".icons").mousedown(function(){
 }
 
 ParticleAnimation();
-$("#surface").velocity({ backgroundColorAlpha: "1",translateY:"14",translateX:"-4",height:"40",width:"40",rotateX:[ "0" , "-14"], backgroundColor: "#fed136",borderColor: "#fed136",color: "#eee",opacity:[ "0" , "0"] }, { duration: 750, delay: 0, easing : "linear"  });
-$("#surface").velocity({rotateX:[ "0" , "-14"], scale:[ "1" , "0.99"],opacity:[ "1" , "0"] }, { duration: 950, delay: 700, easing : "linear"  });
+
+
 
 if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-$("#surface").velocity({height:"15",width:"15", translateY:"24"}, { duration: 0, delay: 0, easing : "linear"  });
-$("header").velocity({paddingBottom:"100px"}, { duration: 0, delay: 0, easing : "linear"  });
+$("#surface").velocity({scale:"0"},{ duration: 0, easing : "easeInBack"  }); 
+$('.navbar-brand').velocity({translateY:"-04"},{ duration: 0, easing : "easeInBack"  }); 
 }
+
+else{
+  // code to be executed if condition is false
+  
+$("#surface").velocity({ backgroundColorAlpha: "1",translateY:"14",translateX:"-4",height:"40",width:"40",rotateX:[ "0" , "-14"], backgroundColor: "#fed136",borderColor: "#fed136",color: "#eee",opacity:[ "0" , "0"] }, { duration: 750, delay: 0, easing : "linear"  });
+$("#surface").velocity({rotateX:[ "0" , "-14"], scale:[ "1" , "0.99"],opacity:[ "1" , "0"] }, { duration: 950, delay: 700, easing : "linear"  });
+}
+
+
+// $("#surface").velocity({height:"15",width:"15", translateY:"24"}, { duration: 0, delay: 0, easing : "linear"  });
+// $("header").velocity({paddingBottom:"100px"}, { duration: 0, delay: 0, easing : "linear"  });
+// $("header").velocity({paddingBottom:"100px"}, { duration: 0, delay: 0, easing : "linear"  });
+
 
 });
