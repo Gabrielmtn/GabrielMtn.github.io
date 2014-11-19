@@ -52,20 +52,23 @@ nav.navbar{
 
 .intro-lead-in{
   opacity:"0.0";
-  color: black;
+  color: rgba(250, 250, 256, 0.79);
 
 }
 
+header{
+  background-image: url(http://stereo-man.com/htgb/wp-content/uploads/2012/03/stary-night-gif.gif);
+}
 
 
 .intro-heading{
   opacity:"0.0";
-  color: black;
+  color: rgba(250, 250, 256, 0.79);
 }
 
 
 .btn-xl{opacity:"0.0";
-color:black;
+color:rgba(250, 250, 256, 0.79);
 background-color: black;
 border-color: black;}
 

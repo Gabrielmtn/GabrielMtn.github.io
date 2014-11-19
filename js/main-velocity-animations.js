@@ -21,12 +21,15 @@ $('.navbar-brand').velocity({translateY:"-20"},{ duration: 0, easing : "easeInBa
 // #  ╚═╝╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝        ╚═╝   ╚══════╝╚═╝  ╚═╝   ╚═╝   
 // #                                                                               
 // $("div.intro-lead-in").velocity({color:"#ffffff" }, { duration: 10, delay: 0, easing : "linear"  });
-$("div.intro-lead-in").velocity({rotateX:["0" , "-14"],color:"#eee", scale:[ "1" , "0.99"],opacity:[ "0" , "0"] }, { duration: 480, delay: 0, easing : "linear"  });
-$("div.intro-lead-in").velocity({rotateX:["0" , "-14"], scale:[ "1" , "0.99"],opacity:[ "1" , "0"] }, { duration: 800, delay: 500, easing : "linear"  });
+$("div.intro-lead-in").velocity({rotateX:["0" , "-14"],color:"#000", scale:[ "1" , "0.99"],opacity:[ "0" , "0"] }, { duration: 480, delay: 0, easing : "linear"  });
+$("div.intro-lead-in").velocity({rotateX:["0" , "-14"], scale:[ "1" , "0.99"],opacity:[ "1" , "0"] }, { duration: 1000, delay: 300, easing : "linear"  });
+
+$("header").velocity({color:"#000",opacity:[ "0" , "0"] }, { duration: 480, delay: 0, easing : "linear"  });
+$("header").velocity({rotateX:["0" , "-14"], scale:[ "1" , "0.99"],opacity:[ "1" , "0"] }, { duration: 800, delay: 500, easing : "linear"  });
 
 
 // $("div.intro-heading").velocity({color:"#ffffff" }, { duration: 10, delay: 0, easing : "linear"  });
-$("div.intro-heading").velocity({rotateX:[ "0" , "-14"], color:"#eee", scale:[ "1" , "0.99"],opacity:[ "0" , "0"] }, { duration: 480, delay: 0, easing : "linear"  });
+$("div.intro-heading").velocity({rotateX:[ "0" , "-14"], color:"#000", scale:[ "1" , "0.99"],opacity:[ "0" , "0"] }, { duration: 480, delay: 0, easing : "linear"  });
 $("div.intro-heading").velocity({rotateX:[ "0" , "-14"], scale:[ "1" , "0.99"],opacity:[ "1" , "0"] }, { duration: 800, delay: 500, easing : "linear"  });
 
 
@@ -34,14 +37,30 @@ $(".btn-xl").velocity({rotateX:[ "0" , "-14"], backgroundColor: "#fed136",border
 $(".btn-xl").velocity({rotateX:[ "0" , "-14"], scale:[ "1" , "0.99"],opacity:[ "1" , "0"] }, { duration: 950, delay: 700, easing : "linear"  });
 
 $(".btn-xl").mousedown(function(){
+  
+$(this).velocity({
+     
+  }, 250, "easeOut");
+
   $(this).velocity({
-    rotateX: "36deg",
-    scale:'0.77',
+    translateY:"12",
+borderRadius:"0.2em",
+    rotateX: "26deg",
+    scale:'0.97',
+    // width:'5%',
+    skewX:"-0.3",
+    // translateX:"147",
     rotateY:"2deg",
      
   }, 150, "easeOut").velocity({
+    translateY:"0",
     rotateX: "0deg",
+borderRadius:"0em",
+translateX:"0",
     rotateY:"0deg",
+    // width:"10%",
+
+    skewX:"0",
     scale:"1",        
     boxShadowBlur:"0",        
     boxShadowSpread:"0%",
@@ -57,13 +76,15 @@ $(".btn-xl").mousedown(function(){
   }, 225, "easeOutBounce").velocity("reverse", 250, "easeOutBounce");
 
   $("+ .shadow", this).velocity({
-    translateY:"15",
-    translateX:"",
-    width:"25%",
-    height:"1rem",
+    translateY:"14",
+    // skewX:"-3",
+    // translateX:"6",
+    // translateX:"38",
+    width:"6%",
+    height:".7rem",
     // scale: "1.3",
-    opacity: "0.2",
-  }, 150).velocity("reverse", 250, "easeOutBounce");
+    opacity: "0.4",
+  }, 180).velocity("reverse", 180, "easeOutBounce");
 
 });
 // #  ███████╗ ██████╗ ███╗   ██╗████████╗      ██████╗  ██████╗ ███╗   ███╗██████╗     
