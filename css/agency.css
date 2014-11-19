@@ -69,12 +69,12 @@ h6 {
 }
 
 .btn-primary {
-    border-color: #eee;
+    border-color: rgba(34%, 32%, 35%, 1);
     text-transform: uppercase;
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     font-weight: 700; 
     color: #fff;
-    background-color: #eee;
+    background-color: rgba(34%, 32%, 35%, 1)
 }
 
 .btn-primary:hover,
@@ -172,7 +172,8 @@ fieldset[disabled] .btn-xl.active {
 
 .navbar-default {
     opacity: 1;
-    background-color: #222;
+            background-color: black;
+
 }
 
 .navbar-default .navbar-brand {
@@ -238,14 +239,14 @@ fieldset[disabled] .btn-xl.active {
     .navbar-default {
         padding: 25px 0;
         border: 0;
-        background-color: transparent;
+        background-color: black;
         -webkit-transition: padding .3s;
         -moz-transition: padding .3s;
         transition: padding .3s;
     }
 
     .navbar-default .navbar-brand {
-        font-size: 2em;
+        font-size: 2.2em;
         -webkit-transition: all .3s;
         -moz-transition: all .3s;
         transition: all .3s;
@@ -261,7 +262,7 @@ fieldset[disabled] .btn-xl.active {
     }
 
     .navbar-default.navbar-shrink .navbar-brand {
-        font-size: 1.5em;
+        font-size: 1.6em;
     }
 }
 
