@@ -6,7 +6,7 @@ $(document).ready(function() {
 // #  ██║ ╚████║██║  ██║ ╚████╔╝       ██║  ██║██║ ╚████║██║██║ ╚═╝ ██║██║  ██║   ██║   ██║╚██████╔╝██║ ╚████║███████║    
 // #  ╚═╝  ╚═══╝╚═╝  ╚═╝  ╚═══╝        ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝     ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝    
 // #                                                                                                                        
-$("nav.navbar").velocity({translateY:"2",rotateX:["0" , "90deg"],width:["100%","190%"],rotateY:["0" , "-0.9"], scale:[ "1" , "0.91"],opacity:[ "1" , "0.30"] }, { duration: 650, easing : "easeInBack"  }); 
+$("nav.navbar").velocity({translateY:"-20",rotateX:["0" , "100deg"],width:["100%","190%"],rotateY:["0" , "-0.2"], scale:[ "1" , "0.99"],opacity:[ "1" , "0.30"] }, { duration: 650, easing : "easeInBack"  }); 
 $('.navbar-brand').velocity({translateY:"-20"},{ duration: 0, easing : "easeInBack"  }); 
 
 
