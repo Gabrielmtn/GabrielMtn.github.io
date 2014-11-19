@@ -30,7 +30,7 @@ $("div.intro-heading").velocity({rotateX:[ "0" , "-14"], color:"#eee", scale:[ "
 $("div.intro-heading").velocity({rotateX:[ "0" , "-14"], scale:[ "1" , "0.99"],opacity:[ "1" , "0"] }, { duration: 800, delay: 500, easing : "linear"  });
 
 
-$(".btn-xl").velocity({rotateX:[ "0" , "-14"], backgroundColor: "#fed136",borderColor: "#fed136",color: "#eee",opacity:[ "0" , "0"] }, { duration: 750, delay: 0, easing : "linear"  });
+$(".btn-xl").velocity({rotateX:[ "0" , "-14"], backgroundColor: "#fed136",borderColor: "#fed136",color: "#000",opacity:[ "0" , "0"] }, { duration: 750, delay: 0, easing : "linear"  });
 $(".btn-xl").velocity({rotateX:[ "0" , "-14"], scale:[ "1" , "0.99"],opacity:[ "1" , "0"] }, { duration: 950, delay: 700, easing : "linear"  });
 
 // #  ███████╗ ██████╗ ███╗   ██╗████████╗      ██████╗  ██████╗ ███╗   ███╗██████╗     
