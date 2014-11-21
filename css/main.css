@@ -17,7 +17,6 @@
   
 }
 
-
 canvas#surface {
   width: 30px;
   height: 30px;
@@ -50,6 +49,10 @@ footer div.container div.row div.col-md-4{
 nav.navbar{
   opacity:"0.0";}
 
+
+.navbar a{
+  color: #000;
+}
 .intro-lead-in{
   opacity:"0.0";
   color: rgba(250, 250, 256, 0.75);
@@ -64,7 +67,8 @@ header{
   /*background-image: url(http://www.zoom-comics.com/wp-content/uploads/sites/36/2011/01/calvin-and-hobbes-look-at-the-stars.jpg);*/
   max-height: 790px;
   padding-bottom: 50px;
- margin-top: -50px
+  margin-top: -50px
+
 }
 
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
@@ -74,7 +78,7 @@ header{
     padding-top: 5px;  
   }
 .navbar-brand {
-
+  color: black;
   padding-top: 5px;
   margin-top: 5px;
 }
