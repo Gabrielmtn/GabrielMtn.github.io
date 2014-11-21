@@ -7,8 +7,8 @@ $(document).ready(function() {
 // #  ╚═╝  ╚═══╝╚═╝  ╚═╝  ╚═══╝        ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝     ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝    
 // #                                                                                                                        
 $("nav.navbar").velocity({translateY:["-20","-40"],rotateX:["0" , "100deg"],width:["100%","100%"],rotateY:["0" , "-0.2"], scale:[ "1" , "0.99"],opacity:[ "1" , "0.30"] }, { duration: 550, delay:20, easing : "linear"  }); 
-$('.navbar-brand').velocity({color:"#fed136"},{ duration: 0, delay:10, easing : "easeInBack"  }); 
-$('#nav a').velocity({color:"#fff"},{ duration: 0, delay:10, easing : "easeInBack"  }); 
+$('.navbar-brand').velocity({color:"#fed136"},{ duration: 5, delay:15, easing : "easeInBack"  }); 
+$('.navbar-default .nav li a').velocity({color:"#fff"},{ duration: 5, delay:15, easing : "easeInBack"  }); 
 
 
 ; 
