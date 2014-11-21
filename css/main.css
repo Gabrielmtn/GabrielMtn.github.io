@@ -63,16 +63,17 @@ header{
   /*background-image: url(http://38.media.tumblr.com/8cb9cf74762d03261ef29abd96e6c692/tumblr_ncc5wgBKTa1tjsogwo1_500.gif);*/
   /*background-image: url(http://www.zoom-comics.com/wp-content/uploads/sites/36/2011/01/calvin-and-hobbes-look-at-the-stars.jpg);*/
   max-height: 790px;
-  padding-bottom: 50px;
  margin-top: -50px
+  padding-bottom: 50px;
 }
 
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
 header{
 
-    margin-top:0px;
-   padding-bottom: 0px;
-   min-height: 600;
+  padding-bottom: 0px;
+  margin-top:0px;
+  padding-bottom: 0px;
+  min-height: 680;
   max-height: 790px;
   }
 }
