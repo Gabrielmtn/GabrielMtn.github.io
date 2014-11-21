@@ -7,7 +7,7 @@ $(document).ready(function() {
 // #  ╚═╝  ╚═══╝╚═╝  ╚═╝  ╚═══╝        ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝     ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝    
 // #                                                                                                                        
 $("nav.navbar").velocity({translateY:"-20",rotateX:["0" , "100deg"],width:["100%","190%"],rotateY:["0" , "-0.2"], scale:[ "1" , "0.99"],opacity:[ "1" , "0.30"] }, { duration: 450, easing : "linear"  }); 
-$('.navbar-brand').velocity({translateY:"0"},{ duration: 0, easing : "easeInBack"  }); 
+// $('.navbar-brand').velocity({translateY:"0"},{ duration: 0, easing : "easeInBack"  }); 
 
 
 ; 
