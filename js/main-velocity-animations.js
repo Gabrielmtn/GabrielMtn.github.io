@@ -278,7 +278,7 @@ ParticleAnimation();
 
 if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 $("#surface").velocity({scale:"0"},{ duration: 0, easing : "easeInBack"  }); 
-// $('.navbar-brand').velocity({translateY:"-5"},{ duration: 0, easing : "easeInBack"  }); 
+$('.navbar-brand÷').velocity({translateY:"-15"},{ duration: 0, easing : "easeInBack"  }); 
 $('#big-heart-link').prop('href', '#icon1');
 }
 
