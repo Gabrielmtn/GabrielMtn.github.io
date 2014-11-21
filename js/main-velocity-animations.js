@@ -7,7 +7,7 @@ $(document).ready(function() {
 // #  ╚═╝  ╚═══╝╚═╝  ╚═╝  ╚═══╝        ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝     ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝    
 // #                                                                                                                        
 $("nav.navbar").velocity({translateY:"-20",rotateX:["0" , "100deg"],width:["100%","190%"],rotateY:["0" , "-0.2"], scale:[ "1" , "0.99"],opacity:[ "1" , "0.30"] }, { duration: 450, easing : "linear"  }); 
-$('.navbar-brand').velocity({translateY:"6"},{ duration: 0, easing : "easeInBack"  }); 
+// $('.navbar-brand').velocity({translateY:"6"},{ duration: 0, easing : "easeInBack"  }); 
 
 
 ; 
@@ -278,7 +278,7 @@ ParticleAnimation();
 
 if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 $("#surface").velocity({scale:"0"},{ duration: 0, easing : "easeInBack"  }); 
-$('.navbar-brand').velocity({translateY:"-5"},{ duration: 0, easing : "easeInBack"  }); 
+// $('.navbar-brand').velocity({translateY:"-5"},{ duration: 0, easing : "easeInBack"  }); 
 $('#big-heart-link').prop('href', '#icon1');
 }
 
