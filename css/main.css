@@ -72,6 +72,8 @@ header{
 
     margin-top:0px;
    padding-bottom: 0px;
+   min-height: 600;
+  max-height: 790px;
   }
 }
 
