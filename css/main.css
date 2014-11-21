@@ -57,7 +57,9 @@ nav.navbar{
 }
 
 header{
-  background-image: url(http://stereo-man.com/htgb/wp-content/uploads/2012/03/stary-night-gif.gif);
+  /*background-image: url(http://stereo-man.com/htgb/wp-content/uploads/2012/03/stary-night-gif.gif);*/
+  background-image: url(http://www.zoom-comics.com/wp-content/uploads/sites/36/2011/01/calvin-and-hobbes-look-at-the-stars.jpg);
+  max-height: 750px;
 }
 
 

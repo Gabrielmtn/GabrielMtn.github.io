@@ -21,7 +21,7 @@ $('.navbar-brand').velocity({translateY:"-10"},{ duration: 0, easing : "easeInBa
 // #  ╚═╝╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝        ╚═╝   ╚══════╝╚═╝  ╚═╝   ╚═╝   
 // #                                                                               
 // $("div.intro-lead-in").velocity({color:"#ffffff" }, { duration: 10, delay: 0, easing : "linear"  });
-$("div.intro-lead-in").velocity({rotateX:["0" , "-14"],color:"#000", scale:[ "1" , "0.99"],opacity:[ "0" , "0"] }, { duration: 480, delay: 0, easing : "linear"  });
+$("div.intro-lead-in").velocity({rotateX:["0" , "-14"],color:"#fff", scale:[ "1" , "0.99"],opacity:[ "0" , "0"] }, { duration: 480, delay: 0, easing : "linear"  });
 $("div.intro-lead-in").velocity({rotateX:["0" , "-14"], scale:[ "1" , "0.99"],opacity:[ "1" , "0"] }, { duration: 1000, delay: 300, easing : "linear"  });
 
 $("header").velocity({color:"#000",opacity:[ "0" , "0"] }, { duration: 480, delay: 0, easing : "linear"  });
@@ -29,7 +29,7 @@ $("header").velocity({rotateX:["0" , "-14"], scale:[ "1" , "0.99"],opacity:[ "1"
 
 
 // $("div.intro-heading").velocity({color:"#ffffff" }, { duration: 10, delay: 0, easing : "linear"  });
-$("div.intro-heading").velocity({rotateX:[ "0" , "-14"], color:"#000", scale:[ "1" , "0.99"],opacity:[ "0" , "0"] }, { duration: 480, delay: 0, easing : "linear"  });
+$("div.intro-heading").velocity({rotateX:[ "0" , "-14"], color:"#fff", scale:[ "1" , "0.99"],opacity:[ "0" , "0"] }, { duration: 480, delay: 0, easing : "linear"  });
 $("div.intro-heading").velocity({rotateX:[ "0" , "-14"], scale:[ "1" , "0.99"],opacity:[ "1" , "0"] }, { duration: 800, delay: 500, easing : "linear"  });
 
 
@@ -285,8 +285,8 @@ $('#big-heart-link').prop('href', '#icon1');
 else{
   // code to be executed if condition is false
   
-$("#surface").velocity({ backgroundColorAlpha: "1",translateY:"14",translateX:"-4",height:"40",width:"40",rotateX:[ "0" , "-14"], backgroundColor: "#fed136",borderColor: "#fed136",color: "#eee",opacity:[ "0" , "0"] }, { duration: 750, delay: 0, easing : "linear"  });
-$("#surface").velocity({rotateX:[ "0" , "-14"], scale:[ "1" , "0.99"],opacity:[ "1" , "0"] }, { duration: 950, delay: 700, easing : "linear"  });
+$("#surface").velocity({ backgroundColorAlpha: "1",translateY:"14",height:"40",width:"40",rotateX:[ "0" , "-14"], backgroundColor: "#fed136",borderColor: "#fed136",color: "#eee",opacity:[ "0" , "0"] }, { duration: 750, delay: 0, easing : "linear"  });
+$("#surface").velocity({translateX:[ "10"], scale:[ ".98" , "0.99"],opacity:[ "1" , "0"] }, { duration: 950, delay: 700, easing : "linear"  });
 }
 
 
