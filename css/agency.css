@@ -270,9 +270,8 @@ fieldset[disabled] .btn-xl.active {
 header {
     text-align: center;
     color: #222;
-    min-height: 580px;
-    max-height: 580px;
-    padding-bottom: 20px;
+    min-height: 600px;
+    max-height: 800px;
     opacity: 0;
     background-attachment: scroll;
     background-position: center center;
