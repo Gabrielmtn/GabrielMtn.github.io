@@ -27,7 +27,7 @@ $("div.intro-lead-in").velocity({rotateX:["0" , "-14"],color:"#fff", scale:[ "1"
 $("div.intro-lead-in").velocity({translateY:"-12",rotateX:["0" , "-14"], scale:[ "1" , "0.99"],opacity:[ "1" , "0"] }, { duration: 1000, delay: 300, easing : "linear"  });
 
 $("header").velocity({color:"#000",opacity:[ "0" , "0"] }, { duration: 480, delay: 0, easing : "linear"  });
-$("header").velocity({rotateX:["0" , "-14"], scale:[ "1" , "0.99"],opacity:[ "1" , "0"] }, { duration: 800, delay: 500, easing : "linear"  });
+$("header").velocity({opacity:[ "1" , "0"] }, { duration: 800, delay: 480, easing : "linear"  });
 
 
 // $("div.intro-heading").velocity({color:"#ffffff" }, { duration: 10, delay: 0, easing : "linear"  });
