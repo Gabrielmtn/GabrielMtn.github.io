@@ -14,7 +14,7 @@ body {
 }
 
 .text-primary {
-    color: #567EBB;
+    color: rgb(43, 76, 126);
 }
 
 p {
@@ -35,7 +35,7 @@ a.active {
 }
 
 a {
-    color: #567EBB;
+    color: rgb(43, 76, 126);
 }
 
 a:hover,
@@ -454,7 +454,7 @@ section h3.section-subheading {
     left: 40px;
     width: 2px;
     margin-left: -1.5px;
-    background-color: #f1f1f1;
+    background-color: #567EBB;
 }
 
 .timeline>li {
@@ -502,7 +502,7 @@ section h3.section-subheading {
     width: 80px;
     height: 80px;
     margin-left: 0;
-    border: 7px solid #f1f1f1;
+    border: 7px solid #567EBB;
     border-radius: 100%;
     text-align: center;
     color: #fff;
@@ -858,7 +858,7 @@ ul.social-buttons li a:active {
 
 ::selection {
     text-shadow: none;
-    background: #567EBB;
+    background: rgb(43, 76, 126);
 }
 
 img::selection {
