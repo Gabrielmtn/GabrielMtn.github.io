@@ -185,7 +185,7 @@ fieldset[disabled] .btn-xl.active {
 .navbar-default .navbar-brand:focus,
 .navbar-default .navbar-brand:active,
 .navbar-default .navbar-brand.active {
-    color: #fec503;
+    color: #2B4C7E;
     transition: background 2s;
     -moz-transition: background 2s;
     -webkit-transition: background 2s;
@@ -197,8 +197,8 @@ fieldset[disabled] .btn-xl.active {
 }
 
 .navbar-default .navbar-toggle {
-    border-color: #fed136;
-    background-color: #fed136;
+    border-color: #2B4C7E;
+    background-color: #2B4C7E;
 }
 
 .navbar-default .navbar-toggle .icon-bar {
@@ -207,7 +207,7 @@ fieldset[disabled] .btn-xl.active {
 
 .navbar-default .navbar-toggle:hover,
 .navbar-default .navbar-toggle:focus {
-    background-color: #fed136;
+    background-color: #2B4C7E;
 }
 
 .navbar-default .nav li a {
