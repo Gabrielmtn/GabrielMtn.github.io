@@ -4,8 +4,13 @@
    Author's custom styles
    ========================================================================== */
 
+#mission{
+  
+  background-color: #DCE0E6;
+}
+
 .mission{
-	font-family: monospace;
+  font-family: monospace;
 }
 .shadow {
   width: 30px;
