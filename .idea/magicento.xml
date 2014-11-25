@@ -8,6 +8,7 @@
     <option name="urlToMagento" value="" />
     <option name="packages" value="" />
     <option name="themes" value="" />
+    <option name="projectClosedCorrectly" value="false" />
     <option name="basicAuthUsername" value="" />
     <option name="basicAuthPassword" value="" />
   </component>
