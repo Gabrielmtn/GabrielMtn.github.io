@@ -898,10 +898,16 @@ body {
   margin-right:auto;
   
 }
+section#me{
+ background: linear-gradient(165deg, #1f1f20, #2b4c7e);
+background-size: 400% 400%;
+
+}
+
 
 canvas#surface {
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
 
 
 /*margin-left: 20%;
