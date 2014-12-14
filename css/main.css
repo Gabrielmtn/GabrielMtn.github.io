@@ -288,7 +288,7 @@ header {
 }
 
 header .intro-text {
-    padding-top: 100px;
+    padding-top: 200px;
     padding-bottom: 50px;
 }
 
@@ -311,7 +311,7 @@ header .intro-text .intro-heading {
 
 @media(min-width:768px) {
     header .intro-text {
-        padding-top: 300px;
+        padding-top: 200px;
         padding-bottom: 200px;
     }
 
@@ -356,6 +356,11 @@ section h3.section-subheading {
 @media(min-width:768px) {
     section {
         padding: 100px 0;
+    }
+}
+@media(max-width:768px) {
+    .navbar-brand {
+        padding-top: 25px;
     }
 }
 
@@ -949,14 +954,15 @@ nav.navbar{
 }
 
 header{
+
   /*background-image: url(http://stereo-man.com/htgb/wp-content/uploads/2012/03/stary-night-gif.gif);*/
     background-image: url(http://i.imgur.com/87Ie2nd.gif);
     
   /*background-image: url(http://38.media.tumblr.com/8cb9cf74762d03261ef29abd96e6c692/tumblr_ncc5wgBKTa1tjsogwo1_500.gif);*/
   /*background-image: url(http://www.zoom-comics.com/wp-content/uploads/sites/36/2011/01/calvin-and-hobbes-look-at-the-stars.jpg);*/
-  max-height: 790px;
-  padding-bottom: 50px;
-  margin-top: -50px
+  min-height: 790px;
+  padding-bottom: 100px;
+  /*margin-top: -50px*/
 
 }
 

@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Gabriel Martin, Frontend code from the heart</title>
+
+    <!-- Bootstrap Core CSS -->
+
+    <!-- <link href="css/animated.css" rel="stylesheet"> -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- <link href="css/font-awesome.css" rel="stylesheet" type="text/css"> -->
+
+
+
+
+    <!-- Custom CSS -->
+    <!-- <link href="css/agency.css" rel="stylesheet"> -->
+    <link href="css/main.css" rel="stylesheet">
+    <link href="css/introjs.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+</head>
+
+<body id="page-top" class="index">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">Gabriel Martin</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#me">Who I am</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#portfolio">Portfolio</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#about">About</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#mission">mission</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="intro-text">
+                <div  class="intro-lead-in">Welcome to a clone of my portfolio!</div>
+                <div data-step="1" data-intro="This is called intro.js! <br> <br> Nevermind any bugs, this was just a quick way to demo the idea" class="intro-heading">I had an idea, and build it out over the weekend</span>
+                </div>
+
+    
+                <a onclick="javascript:introJs().start();" class="btn btn-xl buttonWidth">Weekend project? <br> I love you too! Show me!<br></a>
+                <div class="shadow"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- me Section -->
+    <section id="me">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 data-step="2" data-intro="Intro.js could provide an engaging way to help users!" class="wow fadeInUp  section-heading">Yay intro.js!</h2>
+                    <h3 class="wow fadeInUp  section-subheading text-muted">I'm a frontend developer who works from the heart</h3>
+                    <a id="big-heart-link" class="wow animated-longer flipInY page-scroll" href="#portfolio">
+                    <img id="big-heart"src="img/1408244358_678087-heart.png" alt="heart"></a>
+                    
+                </div>
+            </div>
+            <div class="row text-center">
+                    <div id="icon1" class="wow fadeInUp col-md-4">
+                        <a class="page-scroll" href="#portfolio">
+
+                            <span class="fa-stack fa-4x icons" >
+                                <i class="fa fa-circle fa-stack-2x text-primary icons"></i>
+                                <i class="fa fa-users fa-stack-1x fa-inverse icons"></i>
+                            </span>
+                        </a>
+                        <h4 class="service-heading" >User-Centric Design</h4>
+                        <p class="text-muted">Working from the heart means building a design and development workflow around the user, listening, and iterating rapidly. Rinse, and repeat.</p>
+                    </div>
+
+                    <div class="wow fadeInUp col-md-4">
+                        <a class="page-scroll" href="#portfolio">
+
+                            <span class="fa-stack fa-4x icons" >
+                                <i class="fa fa-circle fa-stack-2x text-primary icons"></i>
+                                <i class="fa fa-file-code-o fa-stack-1x fa-inverse icons"></i>
+                            </span>
+                        </a>
+                       <h4 data-step="3" data-intro="Each page could have a 'show me how' button! <br><br> Alternately, we could use cookies to fire the intro tour on first visits, and have the 'show me how' button as well!" class="service-heading" >UX / UI / Interaction</h4>
+                       <p class="text-muted" >I bring a unique perspective on user experience and design by working with dozens of startups through my work at <a target="_blank" href="https://angel.co/entrepreneurial-advisory-network">The EAN.</a></p>
+                    </div>
+                    
+                    <div class="wow fadeInUp col-md-4">
+                        <a class="page-scroll" href="#portfolio">
+
+                            <span class="fa-stack fa-4x icons" >
+                                <i class="fa fa-circle fa-stack-2x text-primary icons"></i>
+                                <i class="fa fa-laptop fa-stack-1x fa-inverse icons"></i>
+                            </span>
+                        </a>
+                        <h4 class="service-heading" >Responsive Design</h4>
+                        <p class="text-muted">I'm well versed with clean, responsive code, and passionate about creating an experience which can be enjoyed on any device.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Grid Section -->
+    <section id="portfolio" class="bg-darkest-gray">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Portfolio</h2>
+                    <h3 class="section-subheading text-muted">Code as a means of communication</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="wow fadeIn animated-longer animated-longer col-md-4 col-sm-6 portfolio-item">
+                    <a href="#portfolioModal6" class="portfolio-link" data-toggle="modal">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content">
+                                <i class="fa fa-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img src="img/dreams.png" class="img-responsive" alt="">
+                    </a>
+                    <div class="portfolio-caption">
+                        <h4 class="text-muted">Apocalypse Timeline</h4>
+                        <p class="text-muted">Data / Experience Design</p>
+                    </div>
+                </div>
+                <div class="wow fadeIn animated-longer col-md-4 col-sm-6 portfolio-item">
+                    <a href="#portfolioModal2" class="portfolio-link" data-toggle="modal">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content">
+                                <i class="fa fa-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img src="img/startup-framework.png" class="img-responsive" alt="">
+                    </a>
+                    <div class="portfolio-caption">
+                        <h4 class="text-muted">Game Show Network</h4>
+                        <p class="text-muted">Interaction Design</p>
+                    </div>
+                </div>
+                <div class="wow fadeIn animated-longer col-md-4 col-sm-6 portfolio-item">
+                    <a href="#portfolioModal5" class="portfolio-link" data-toggle="modal">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content">
+                                <i class="fa fa-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img src="img/escape.png" class="img-responsive" alt="">
+                    </a>
+                    <div class="portfolio-caption">
+                        <h4 class="text-muted">Artist's Portfolio App</h4>
+                        <p class="text-muted">iPad webapp</p>
+                    </div>
+                </div>
+                <div class="wow fadeIn animated-longer col-md-4 col-sm-6 portfolio-item">
+                    <a href="#portfolioModal3" class="portfolio-link" data-toggle="modal">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content">
+                                <i class="fa fa-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img src="img/treehouse.png" class="img-responsive" alt="">
+                    </a>
+                    <div class="portfolio-caption">
+                        <h4 class="text-muted">Animated 3D CSS Cubes</h4>
+                        <p class="text-muted">Web experiment</p>
+                    </div>
+                </div>
+                <div class="wow fadeIn animated-longer col-md-4 col-sm-6 portfolio-item">
+                    <a href="#portfolioModal4" class="portfolio-link" data-toggle="modal">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content">
+                                <i class="fa fa-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img src="img/WetTidyCrossbill.gif" class="img-responsive" alt="">
+                    </a>
+                    <div class="portfolio-caption">
+                        <h4 class="text-muted">Laughter through code</h4>
+                        <p class="text-muted">Experience Design</p>
+                    </div>
+                </div>
+                <div class="wow fadeIn animated-longer col-md-4 col-sm-6 portfolio-item">
+                    <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content">
+                                <i class="fa fa-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img src="img/roundicons.png" class="img-responsive" alt="">
+                    </a>
+                    <div class="portfolio-caption">
+                        <h4 class="text-muted">Interactive Map</h4>
+                        <p class="text-muted">Experience Design</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">About</h2>
+                    <h3 class="section-subheading text-muted">My adventure so far</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="timeline">
+                        <li>
+                            <div class="timeline-image">
+                                <img class="img-circle img-responsive" src="img/1.jpg" alt="">
+                            </div>
+                            <div class="wow fadeInLeft timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4>2010-2011</h4>
+                                    <h4 class="subheading">My origin story</h4>
+                                </div>
+                                <div class="timeline-body">
+                                    <p class="text-muted">I knew I wanted to change the world when I volunteered on a World Bank platform, supporting kids learning to be social entrepreneurs. It was an amazing experience! </p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="timeline-inverted">
+                            <div class="timeline-image">
+                                <img class="img-circle img-responsive" src="img/2.jpg" alt="">
+                            </div>
+                            <div class="wow fadeInRight timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4>2011-2012</h4>
+                                    <h4 class="subheading">Joining the startup community</h4>
+                                </div>
+                                <div class="timeline-body">
+                                    <p class="text-muted">Between starting my first startup, winning a World Bank grant, moving to Boston, and volunteering all over Cambridge, this was a busy couple of years! Also, I'm getting my feet wet with code!</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="timeline-image">
+                                <img class="img-circle img-responsive" src="img/3.jpg" alt="">
+                            </div>
+                            <div data-wow-offset="-30" class="wow fadeInLeft timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4>2012-2013</h4>
+                                    <h4 class="subheading">Headfirst into code</h4>
+                                </div>
+                                <div class="timeline-body">
+                                    <p class="text-muted">This is the period I really dove into code. Between working on my second startup, using a LAMP stack, and going deeper on UI/UX and design, I grew into a frontend dev during this period!</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="timeline-inverted">
+                            <div class="timeline-image">
+                                <img class="img-circle img-responsive" src="img/4.jpg" alt="">
+                            </div>
+                            <div data-wow-offset="-30" class="wow fadeInRight timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4>2013-2014</h4>
+                                    <h4 class="subheading">Startup Institute and beyond!</h4>
+                                </div>
+                                <div class="timeline-body">
+                                    <p class="text-muted">After chosing to shutter my second startup, I attended Startup Institute to to go deeper on my existing skills, and to diversify them as well. Upon leaving, I felt more confident that I'd be changing the world with my code.</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="timeline-inverted">
+                            <div class="timeline-image">
+                                <h4>Be  A Part
+                                    <br>Of My
+                                    <br>Story!</h4>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="mission" class="bg-light-gray">
+        <div class="container">
+            
+            
+            <div class="row">
+                <div data-step="4" data-intro="Thus, no modals, and support whenever you need it!" class="col-lg-8 col-lg-offset-2 text-center">
+                    <p class="wow fadeInUp mission large text-muted">My mission is to change the world with hard work, beautiful code, and by working from the heart. Further, I hope to continuously refine my ability to do these things.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Clients Aside -->
+
+    <section id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 data-step="5" data-intro="What do you think? " class="section-heading">Contact Me</h2>
+                    <h3 class="section-subheading text-muted">Get in touch to learn more!</h3>
+                </div>
+            </div>
+            <div class="row">
+                
+                            <div class="col-lg-12 text-center">
+                                <div id="success"></div>
+                                <a href="mailto:GabrielMtn+github@gmail.com">
+                                    <button type="button" class="btn btn-xl">Send Message</button>
+                                </a>
+                                    
+                            </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="made-with-love">
+                        Made with <span class="bounceIn animated infinite">♥</span> by <a href="https://twitter.com/GabrielMtn">@GabrielMtn</a>.
+                    </div>
+                    <div id='font-bomb' >
+                        Seen enough? Click to turn your mouse clicks into bombs! <span class="bombpulse bounceIn animated infinite">                     <canvas id="surface"></canvas>
+                    </div>
+            </div>
+                <div class="col-md-12">
+                    <ul class="list-inline social-buttons">
+                        <li><a href="https://twitter.com/gabrielmtn"><i class="fa fa-twitter"></i></a>
+                        </li>
+                        <li><a href="https://www.facebook.com/Gabriel.PM.M"><i class="fa fa-facebook"></i></a>
+                        </li>
+                        <li><a href="https://www.linkedin.com/in/gabrielmtn"><i class="fa fa-linkedin"></i></a>
+                        </li>
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+    </footer>
+
+    <!-- Portfolio Modals -->
+    <!-- Use the modals below to showcase details about your portfolio projects! -->
+
+    <!-- Portfolio Modal 1 -->
+    <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                            <!-- Project Details Go Here -->
+                            <h2>My "Oddysey"</h2>
+                            <p class="item-intro text-muted">Using javascript to document my journey</p>
+                            <img class="img-responsive" src="img/roundicons-free.png" alt="">
+                            <p><a href="http://gabrielmtn.github.io/oddysey/">This is an example </a>of the experiences I enjoy creating. To help people get to know me better, I built this interactive map of my experiences</p>
+                            <p>
+                                <strong>Want to design a similar experience?</strong>Thank to the CartoDB team's opensource project, you can! It's called <a href="http://cartodb.github.io/odyssey.js/">Odyssey.JS</a>.</p>
+                            <ul class="list-inline">
+                                <li>Date: July 2014</li>
+                                
+                                <li>Category: Experience Design</li>
+                            </ul>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close Project</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Portfolio Modal 2 -->
+    <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                            <h2>Game Show Network Games</h2>
+                            <p class="item-intro text-muted">A user centric development experience.</p>
+                            <img class="img-responsive img-centered" src="img/startup-framework-preview.png" alt="">
+                            <p><a href="http://gsngames.com">The Game Show Network</a> needed to update their website, "GSNGames.com" but also update the feeling it gave visitors with animation that say fun! Understanding their requirements, while working at Trellis Boston as lead UI/UX engineer and consultant
+ I determined that exciting, engaging animations were just what their Wordpress platform needed to engage their visitors effectively.</p><p>I'm very proud to feature the work I did for them, as they're a well known brand who aligned perfectly with the interaction design I love doing</p>
+                                
+                            
+                            <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close Project</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Portfolio Modal 3 -->
+    <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                            <!-- Project Details Go Here -->
+                            <h2>CSS3 Animated Cubes</h2>
+                            <p class="item-intro text-muted">Fun with Javascript and CSS3</p>
+                            <img class="img-responsive img-centered" src="img/treehouse-preview.png" alt="">
+                            <p>Using HexaFlip, an open source library, I built out a unique implementation of the cubes, where I allowed the users to flip the letters around, but eventually reset them.</p>
+                            <p>While it was once of my favorite projects, it was also one of my shortest to complete. You can check it out right<a href="http://gabrielmtn.github.io/cube-demo/"> here</a>.</p>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close Project</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Portfolio Modal 4 -->
+    <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                            <!-- Project Details Go Here -->
+                            <h2>Code as comic relief</h2>
+                            <p class="item-intro text-muted">Sometimes you just need to make em' laugh!</p>
+                            <img class="img-responsive img-centered" src="img/whose-line-dance-gif.gif" alt="">
+                            <p>One of my favorite things to do is make people laugh. Sometimes you just need the right method, and knowing how to code can come in very handy for that. Recently, when a friend was feeling down, I took the opportunity to put a smile on their face, using a simple embed process, and Github pages: <a href="http://gabrielmtn.github.io/aroundtheworld/">as seen here (turn up the volume, and enjoy)</a> and <a href="http://gabrielmtn.github.io/charleston/">here</a>. Having the ability to rapidly deploy websites is something I revel in, and I took the opportunity once again recently, during my classmates' "Turn down for what" craze, though needless to say, <a href="http://gabrielmtn.github.io/hwat/"> I took a slightly different approach.</a></p>
+                            <p>You can clone the code I used to make these pages on <a href="https://github.com/Gabrielmtn/GabrielMtn.github.io/tree/master/charleston">my public Github page</a>.</p>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close Project</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Portfolio Modal 5 -->
+    <div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                            <!-- Project Details Go Here -->
+                            <h2>Artist's custom presentation</h2>
+                            <p class="item-intro text-muted">An exercise in content, and experience design.</p>
+                            <img class="img-responsive img-centered" src="img/escape-preview.png" alt="">
+                            <p>Working with an artist whose work was primarily sold at events meant building a tool for him to display his custom work. Using  <a href="http://projectanonymask.com/#/i-loading-experiment">his iPad webapp, </a>the artist was able to engage and entertain passers-by through an iPad with the experience running near his work area. By leveraging his existing following, we ran analytics on his most popular pieces, and built them into an Impress.JS presentation.</p>
+                            <p>Check out the <a href="http://projectanonymask.com/#/i-loading-experiment">presentation, </a>or experiment with the Impress.JS library at <a href="bartaz.github.io/impress.js//">the official website</a>.</p>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close Project</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Portfolio Modal 6 -->
+    <div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                            <!-- Project Details Go Here -->
+                            <h2>10 Apocalypse Predictions &amp; Scares</h2>
+                            <p class="item-intro text-muted">A lighthearted timeline, and javascript experiment.</p>
+                            <img class="img-responsive img-centered" src="img/dreams-preview.png" alt="">
+                            <p>This lighthearted timeline was build to be an informative and interesting look at history, and a way to promote the Startup Institute Student Expo. <a href="http://gabrielmtn.github.io/timeline/index.html">The timeline</a> is a one page webapp using Timeline.JS, an open source project by the knight lab. It’s a beautiful, responsive library that’s designed with an eye to both mobile and desktop experiences.</p>
+                            <p>You can build with the Timeline.JS library at the <a href="http://timeline.knightlab.com/">official page</a>.</p>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close Project</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery Version 1.11.0 -->
+    <script src="js/jquery-1.11.0.js"></script>
+    <script src="http://cdn.jsdelivr.net/intro.js/1.0.0/intro.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="http://cdn.jsdelivr.net/velocity/1.1.0/velocity.min.js"></script>
+    <script src="js/main-velocity-animations.js"></script>
+    <script src="js/wow.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="js/classie.js"></script>
+    <script src="js/cbpAnimatedHeader.js"></script>
+
+    <!-- Contact Form JavaScript -->
+
+
+    <!-- Custom Theme JavaScript -->
+    <script src="js/agency.js"></script>
+<!-- ScrollReveal Helper -->
+
+    
+    <script src="js/anijs-min.js"></script>
+     <script src="js/anijs-helper-scrollreveal-min.js"></script>
+
+    <script src="js/font-bomb.js" type="text/javascript"></script>
+    <script>
+        new WOW().init();
+    </script>
+
+</body>
+
+</html>
