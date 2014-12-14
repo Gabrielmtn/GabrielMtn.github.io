@@ -904,7 +904,7 @@ body {
   
 }
 section#me{
- background: linear-gradient(0deg,  #1F1F20, #202125, #202429, #21262E, #212833, #222A38, #232C3C, #232F41, #243146, #24334A);
+ background: linear-gradient(10deg,  #1F1F20, #222A38, #232C3C, #232F41, #243146, #24334A);
 background-size: 200% 200%;
 
 }

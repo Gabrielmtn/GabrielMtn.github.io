@@ -21,10 +21,10 @@ $('.navbar-default .nav li a').velocity({color:"#fff"},{ duration: 5, delay:15, 
 // #  ██║██║ ╚████║   ██║   ██║  ██║╚██████╔╝       ██║   ███████╗██╔╝ ██╗   ██║   
 // #  ╚═╝╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝        ╚═╝   ╚══════╝╚═╝  ╚═╝   ╚═╝   
 // #                                                                               
-$("section#me").velocity({backgroundPositionX:"40%",backgroundPositionY:"0%"}, { duration: 8000, delay: 0, easing : "linear"  })
-.velocity({backgroundPositionX:"61%",backgroundPositionY:"100%"}, { duration: 8480, delay: 0, easing : "linear"  })
+$("section#me").velocity({backgroundPositionX:"40%",backgroundPositionY:"0%"}, { duration: 6000, delay: 0, easing : "linear"  })
+.velocity({backgroundPositionX:"61%",backgroundPositionY:"100%"}, { duration: 6480, delay: 0, easing : "linear"  })
 .velocity({backgroundPositionX:"40%",backgroundPositionY:"0%"}, { duration: 5480, delay: 0, easing : "linear"  })
-.velocity({backgroundPositionX:"61%",backgroundPositionY:"100%"}, { duration: 8480, delay: 2000, easing : "linear"  })
+.velocity({backgroundPositionX:"61%",backgroundPositionY:"100%"}, { duration: 6480, delay: 2000, easing : "linear"  })
 .velocity({backgroundPositionX:"40%",backgroundPositionY:"0%"}, { duration: 5000, delay: 0, easing : "linear"  });
 
 // $("div.intro-lead-in").velocity({color:"#ffffff" }, { duration: 10, delay: 0, easing : "linear"  });
