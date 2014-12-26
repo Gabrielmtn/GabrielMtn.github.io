@@ -910,17 +910,6 @@ background-size: 200% 200%;
 }
 
 
-canvas#surface {
-  width: 32px;
-  height: 32px;
-
-
-/*margin-left: 20%;
-  padding: 5px;*/
-}
-.canvas-wrapper {
- 
-}
 
 footer div.container div.row div.col-md-4{
 
