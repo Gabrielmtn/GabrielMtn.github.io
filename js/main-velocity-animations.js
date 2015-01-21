@@ -28,12 +28,12 @@ $('.navbar-default .nav li a').velocity({color:"#fff"},{ duration: 5, delay:15, 
 // .velocity({backgroundPositionX:"40%",backgroundPositionY:"0%"}, { duration: 000, delay: 0, easing : "linear"  });
 
 // $("div.intro-lead-in").velocity({color:"#ffffff" }, { duration: 10, delay: 0, easing : "linear"  });
-$("div.intro-lead-in").velocity({rotateX:["0" , "-14"],color:"#fff", scale:[ "1" , "0.99"],opacity:[ "0" , "0"] }, { duration: 480, delay: 0, easing : "linear"  });
-$("div.intro-lead-in").velocity({translateY:"-12",rotateX:["0" , "-14"], scale:[ "1" , "0.99"],opacity:[ "1" , "0"] }, { duration: 1000, delay: 300, easing : "linear"  });
+// $("div.intro-lead-in").velocity({rotateX:["0" , "-14"],color:"#fff", scale:[ "1" , "0.99"],opacity:[ "0" , "0"] }, { duration: 480, delay: 0, easing : "linear"  });
+// $("div.intro-lead-in").velocity({translateY:"-12",rotateX:["0" , "-14"], scale:[ "1" , "0.99"],opacity:[ "1" , "0"] }, { duration: 1000, delay: 300, easing : "linear"  });
 
 $("header").velocity({translateY:"-100" });
-$("header").velocity({color:"#000",opacity:[ "0" , "0"] }, { duration: 480, delay: 0, easing : "linear"  });
-$("header").velocity({opacity:[ "1" , "0"] }, { duration: 800, delay: 480, easing : "linear"  });
+// $("header").velocity({color:"#000",opacity:[ "0" , "0"] }, { duration: 480, delay: 0, easing : "linear"  });
+// $("header").velocity({opacity:[ "1" , "0"] }, { duration: 800, delay: 480, easing : "linear"  });
 
 
 // $("div.intro-heading").velocity({color:"#ffffff" }, { duration: 10, delay: 0, easing : "linear"  });
