@@ -1,0 +1,12 @@
+.media-image > a > img{
+ padding: 10px;
+ border-radius: 2px;
+ border: 1px solid grey;	
+ border-spacing: 10px;
+
+}
+body,html, .storyjs-timeline, .storyjs-embed, .vco-storyjs,.vco-storyjs blockquote, .vco-storyjs blockquote p {
+	background-color: whitesmoke !important;
+	margin: 0;
+	
+}
