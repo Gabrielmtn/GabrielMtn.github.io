@@ -5,6 +5,11 @@
  border-spacing: 10px;
 
 }
+
+.vco-loading-icon{
+height: 32px;
+width: 32px;
+}
 body,html, .storyjs-timeline, .storyjs-embed, .vco-storyjs,.vco-storyjs blockquote, .vco-storyjs blockquote p {
 	background-color: whitesmoke !important;
 	margin: 0;
