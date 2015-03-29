@@ -1,0 +1,48 @@
+{
+  "name": "react-pixi",
+  "version": "0.4.0",
+  "homepage": "https://github.com/Izzimach/react-pixi",
+  "authors": [
+    "Gary Haussmann <gary@interstellarechidna.com>"
+  ],
+  "description": "Control pixi graphics using React",
+  "main": "build/react-pixi.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "examples",
+    "src",
+    "test",
+    "tests",
+    "gulpfile.js",
+    "index.html",
+    "package.json",
+    "vendor",
+    "docs",
+    "NOTICE",
+    "README.md"
+  ],
+  "moduleType": [
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "react",
+    "pixi"
+  ],
+  "license": "AP2",
+  "dependencies": {
+    "pixi.js": "~2.2.5"
+  },
+  "_release": "0.4.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.4.0",
+    "commit": "daebc96842190143c48539e55ff60690150e9aec"
+  },
+  "_source": "git://github.com/Izzimach/react-pixi.git",
+  "_target": "~0.4.0",
+  "_originalSource": "react-pixi",
+  "_direct": true
+}
