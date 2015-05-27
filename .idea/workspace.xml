@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0d167d92-d6b6-4379-a735-c85413773428" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reanimate/README.md" afterPath="$PROJECT_DIR$/reanimate/README.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reanimate/index.html" afterPath="$PROJECT_DIR$/reanimate/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reanimate/reanimate.css" afterPath="$PROJECT_DIR$/reanimate/reanimate.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reanimate/reanimate.min.css" afterPath="$PROJECT_DIR$/reanimate/reanimate.min.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reanimate/style.css" afterPath="$PROJECT_DIR$/reanimate/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="GabrielMtn.github.io.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -32,20 +27,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/reanimate/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.125" vertical-offset="1275" max-vertical-offset="1995">
-              <caret line="98" column="189" selection-start-line="98" selection-start-column="189" selection-end-line="98" selection-end-column="189" />
+            <state vertical-scroll-proportion="0.2826087" vertical-offset="1290" max-vertical-offset="1980">
+              <caret line="99" column="0" selection-start-line="99" selection-start-column="0" selection-end-line="99" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/reanimate/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.021770682" vertical-offset="0" max-vertical-offset="689">
+            <state vertical-scroll-proportion="-0.6" vertical-offset="0" max-vertical-offset="105">
               <caret line="1" column="17" selection-start-line="1" selection-start-column="17" selection-end-line="1" selection-end-column="17" />
               <folding />
             </state>
@@ -99,8 +94,8 @@
         <option value="$PROJECT_DIR$/reanimate/reanimate.css" />
         <option value="$PROJECT_DIR$/reanimate/reanimate.min.css" />
         <option value="$PROJECT_DIR$/reanimate/style.css" />
-        <option value="$PROJECT_DIR$/reanimate/index.html" />
         <option value="$PROJECT_DIR$/reanimate/README.md" />
+        <option value="$PROJECT_DIR$/reanimate/index.html" />
       </list>
     </option>
   </component>
@@ -467,18 +462,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/reanimate/index.html">
+    <entry file="file://$PROJECT_DIR$/reanimate/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.125" vertical-offset="1275" max-vertical-offset="1995">
-          <caret line="98" column="189" selection-start-line="98" selection-start-column="189" selection-end-line="98" selection-end-column="189" />
+        <state vertical-scroll-proportion="-0.6" vertical-offset="0" max-vertical-offset="105">
+          <caret line="1" column="17" selection-start-line="1" selection-start-column="17" selection-end-line="1" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/reanimate/README.md">
+    <entry file="file://$PROJECT_DIR$/reanimate/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.021770682" vertical-offset="0" max-vertical-offset="689">
-          <caret line="1" column="17" selection-start-line="1" selection-start-column="17" selection-end-line="1" selection-end-column="17" />
+        <state vertical-scroll-proportion="0.2826087" vertical-offset="1290" max-vertical-offset="1980">
+          <caret line="99" column="0" selection-start-line="99" selection-start-column="0" selection-end-line="99" selection-end-column="0" />
           <folding />
         </state>
       </provider>
