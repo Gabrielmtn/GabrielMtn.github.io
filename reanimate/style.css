@@ -193,7 +193,7 @@ html {
 \*-----------------------------------*/
 
 .site__header {
-  -webkit-animation: bounceInUp 1s;
+  -webkit-animation: bounceInUpSmall 1s;
 }
 
   .site__title {
