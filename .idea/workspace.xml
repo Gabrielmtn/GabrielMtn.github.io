@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0d167d92-d6b6-4379-a735-c85413773428" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reanimate/index.html" afterPath="$PROJECT_DIR$/reanimate/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reanimate/style.css" afterPath="$PROJECT_DIR$/reanimate/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="GabrielMtn.github.io.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -29,11 +27,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/reanimate/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="23.75" vertical-offset="795" max-vertical-offset="1980">
-              <caret line="15" column="37" selection-start-line="15" selection-start-column="37" selection-end-line="15" selection-end-column="37" />
+            <state vertical-scroll-proportion="0.2826087" vertical-offset="0" max-vertical-offset="1980">
+              <caret line="13" column="34" selection-start-line="13" selection-start-column="34" selection-end-line="13" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -49,10 +47,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="style.css" pinned="false" current-in-tab="true">
+      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/reanimate/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.33333334" vertical-offset="2696" max-vertical-offset="3660">
+            <state vertical-scroll-proportion="-8.481482" vertical-offset="2696" max-vertical-offset="3660">
               <caret line="195" column="36" selection-start-line="195" selection-start-column="36" selection-end-line="195" selection-end-column="36" />
               <folding />
             </state>
@@ -96,8 +94,8 @@
         <option value="$PROJECT_DIR$/reanimate/README.md" />
         <option value="$PROJECT_DIR$/reanimate/reanimate.css" />
         <option value="$PROJECT_DIR$/reanimate/reanimate.min.css" />
-        <option value="$PROJECT_DIR$/reanimate/index.html" />
         <option value="$PROJECT_DIR$/reanimate/style.css" />
+        <option value="$PROJECT_DIR$/reanimate/index.html" />
       </list>
     </option>
   </component>
@@ -456,10 +454,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/reanimate/index.html">
+    <entry file="file://$PROJECT_DIR$/reanimate/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="23.75" vertical-offset="795" max-vertical-offset="1980">
-          <caret line="15" column="37" selection-start-line="15" selection-start-column="37" selection-end-line="15" selection-end-column="37" />
+        <state vertical-scroll-proportion="-8.481482" vertical-offset="2696" max-vertical-offset="3660">
+          <caret line="195" column="36" selection-start-line="195" selection-start-column="36" selection-end-line="195" selection-end-column="36" />
           <folding />
         </state>
       </provider>
@@ -472,10 +470,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/reanimate/style.css">
+    <entry file="file://$PROJECT_DIR$/reanimate/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334" vertical-offset="2696" max-vertical-offset="3660">
-          <caret line="195" column="36" selection-start-line="195" selection-start-column="36" selection-end-line="195" selection-end-column="36" />
+        <state vertical-scroll-proportion="0.2826087" vertical-offset="0" max-vertical-offset="1980">
+          <caret line="13" column="34" selection-start-line="13" selection-start-column="34" selection-end-line="13" selection-end-column="34" />
           <folding />
         </state>
       </provider>
