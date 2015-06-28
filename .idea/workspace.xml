@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0d167d92-d6b6-4379-a735-c85413773428" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reanimate/style.css" afterPath="$PROJECT_DIR$/reanimate/style.css" />
-    </list>
+    <list default="true" id="0d167d92-d6b6-4379-a735-c85413773428" name="Default" comment="" />
     <ignored path="GabrielMtn.github.io.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
