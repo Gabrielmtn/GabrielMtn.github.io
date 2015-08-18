@@ -1,0 +1,333 @@
+html {
+	height: 100%;
+	margin: 0;
+}
+body {
+	background: #2980b9;
+	background: black;
+	font-size: 2px;
+}
+* {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.main {
+	max-width: 100%;
+	margin: 0 auto;
+	text-align: center;
+}
+.geom, .geom-2 {
+	position: relative;
+	overflow: hidden;
+	margin: 0 auto;
+	width: 220em;
+	height: 220em;
+	border: 2em solid white;
+	display: inline-block;
+	margin: 5em;
+
+}
+
+
+
+@-webkit-keyframes TURNgeom1 {
+	0% {
+		transform: translateX(100%px)rotateX(35deg) rotateZ(-90deg)scale(1.1);
+	}
+	22.5% {
+		transform: translateX(-100%) rotateZ(90deg)skewX(3deg) skewY(3deg) scale(0.9);
+	}
+	45% {
+		transform: translateY(-100%) rotateX(15deg)skewX(-3deg) skewY(-3deg) translateZ(-100px) rotateZ(0deg) scale(1);
+		
+	}
+	65% {
+		transform: translateX(100%) rotateZ(-90deg)skewX(3deg) skewY(3deg) scale(0.9);
+	}
+	75% {
+		transform: translateY(0deg)rotateZ(45deg) skewX(0deg) skewY(0deg)scale(1.1);
+	}
+
+	110% {
+		transform: translateY(0deg)rotateZ(0deg) scale(1.1);
+	}
+}
+@-moz-keyframes TURNgeom1 {
+	0% {
+		transform: translateX(100%px)rotateX(35deg) rotateZ(-90deg)scale(1.1);
+	}
+	22.5% {
+		transform: translateX(-100%) rotateZ(90deg)skewX(3deg) skewY(3deg) scale(0.9);
+	}
+	45% {
+		transform: translateY(-100%) rotateX(15deg)skewX(-3deg) skewY(-3deg) translateZ(-100px) rotateZ(0deg) scale(1);
+		
+	}
+	65% {
+		transform: translateX(100%) rotateZ(-90deg)skewX(3deg) skewY(3deg) scale(0.9);
+	}
+	75% {
+		transform: translateY(0deg)rotateZ(45deg) skewX(0deg) skewY(0deg)scale(1.1);
+	}
+
+	110% {
+		transform: translateY(0deg)rotateZ(0deg) scale(1.1);
+	}
+}
+@-keyframes TURNgeom1 {
+	0% {
+		transform: translateX(100%px)rotateX(35deg) rotateZ(-90deg)scale(1.1);
+	}
+	22.5% {
+		transform: translateX(-100%) rotateZ(90deg)skewX(3deg) skewY(3deg) scale(0.9);
+	}
+	45% {
+		transform: translateY(-100%) rotateX(15deg)skewX(-3deg) skewY(-3deg) translateZ(-100px) rotateZ(0deg) scale(1);
+		
+	}
+	65% {
+		transform: translateX(100%) rotateZ(-90deg)skewX(3deg) skewY(3deg) scale(0.9);
+	}
+	75% {
+		transform: translateY(0deg)rotateZ(45deg) skewX(0deg) skewY(0deg)scale(1.1);
+	}
+
+	110% {
+		transform: translateY(0deg)rotateZ(0deg) scale(1.1);
+	}
+}
+
+
+
+.geom1, .geom2, .geom3, .geom4, .geom5, .geom6, .geom7, .geom8, .geom9, .geom10, .geom11, .geom12, .geom13, .geom14, .geom15, .geom16, .geom17, .geom18, .geom19, .geom20, .geom21, .geom22, .geom23, .geom24, .geom25 {
+	position: absolute;
+	right: 0;
+	top: 0;
+	opacity: 0.8;
+	bottom: 0;
+	left: 0;
+	margin: auto;
+	overflow: hidden;
+	-webkit-animation: TURNgeom1 5s ease-in-out infinite;
+	-moz-animation: TURNgeom1 5s ease-in-out infinite;
+	-o-animation: TURNgeom1 5s ease-in-out infinite;
+	animation: TURNgeom1 5s ease-in-out infinite;
+	anim
+}
+.geom1, .geom3, .geom5, .geom7, .geom9, .geom11, .geom13, .geom15, .geom17, .geom19, .geom21, .geom23, .geom25 {
+	background: black;
+}
+.geom, .geom2, .geom4, .geom6, .geom8, .geom10, .geom12, .geom14, .geom16, .geom18, .geom20, .geom22, .geom24 {
+	background: #911410;
+
+}
+.geom-2 .geom1, .geom-2 .geom3, .geom-2 .geom5, .geom-2 .geom7, .geom-2 .geom9, .geom-2 .geom11, .geom-2 .geom13, .geom-2 .geom15, .geom-2 .geom17, .geom-2 .geom19, .geom-2 .geom21, .geom-2 .geom23, .geom-2 .geom25, .geom-2 .geom2, .geom-2 .geom4, .geom-2 .geom6, .geom-2 .geom8, .geom-2 .geom10, .geom-2 .geom12, .geom-2 .geom14, .geom-2 .geom16, .geom-2 .geom18, .geom-2 .geom20, .geom-2 .geom22, .geom-2 .geom24 {
+
+	/*box-shadow: 0px 0px 3px 2px rgba(255, 255, 255, 0.8) inset;*/
+	border: 1px solid rgba(255, 255, 255, 0.8);
+	background: none
+}
+.geom1 {
+	width: 190em;
+	height: 190em;
+	-webkit-animation-delay: 0s;
+	-moz-animation-delay: 0s;
+	-o-animation-delay: 0s;
+	animation-delay: 0s;
+}
+.geom2 {
+	width: 185em;
+	height: 185em;
+	-webkit-animation-delay: 0.05s;
+	-moz-animation-delay: 0.05s;
+	-o-animation-delay: 0.05s;
+	animation-delay: 0.05s;
+}
+.geom3 {
+	width: 170em;
+	height: 170em;
+
+	-webkit-animation-delay: 0.1s;
+	-moz-animation-delay: 0.1s;
+	-o-animation-delay: 0.1s;
+	animation-delay: 0.1s;
+}
+.geom4 {
+	width: 160em;
+	height: 160em;
+	-webkit-animation-delay: 0.15s;
+	-moz-animation-delay: 0.15s;
+	-o-animation-delay: 0.15s;
+	animation-delay: 0.15s;
+}
+.geom5 {
+	width: 150em;
+	height: 150em;
+	-webkit-animation-delay: 0.2s;
+	-moz-animation-delay: 0.2s;
+	-o-animation-delay: 0.2s;
+	animation-delay: 0.2s;
+}
+.geom6 {
+	width: 140em;
+	height: 140em;
+	-webkit-animation-delay: 0.25s;
+	-moz-animation-delay: 0.25s;
+	-o-animation-delay: 0.25s;
+	animation-delay: 0.25s;
+}
+.geom7 {
+	width: 130em;
+	height: 130em;
+	-webkit-animation-delay: 0.3s;
+	-moz-animation-delay: 0.3s;
+	-o-animation-delay: 0.3s;
+	animation-delay: 0.3s;
+}
+.geom8 {
+	width: 120em;
+	height: 120em;
+	-webkit-animation-delay: 0.35s;
+	-moz-animation-delay: 0.35s;
+	-o-animation-delay: 0.35s;
+	animation-delay: 0.35s;
+}
+.geom9 {
+	width: 110em;
+	height: 110em;
+	-webkit-animation-delay: 0.4s;
+	-moz-animation-delay: 0.4s;
+	-o-animation-delay: 0.4s;
+	animation-delay: 0.4s;
+}
+.geom10 {
+	width: 100em;
+	height: 100em;
+	-webkit-animation-delay: 0.45s;
+	-moz-animation-delay: 0.45s;
+	-o-animation-delay: 0.45s;
+	animation-delay: 0.45s;
+}
+.geom11 {
+	width: 90em;
+	height: 90em;
+	-webkit-animation-delay: 0.5s;
+	-moz-animation-delay: 0.5s;
+	-o-animation-delay: 0.5s;
+	animation-delay: 0.5s;
+}
+.geom12 {
+	width: 80em;
+	height: 80em;
+	-webkit-animation-delay: 0.55s;
+	-moz-animation-delay: 0.55s;
+	-o-animation-delay: 0.55s;
+	animation-delay: 0.55s;
+}
+.geom13 {
+	width: 70em;
+	height: 70em;
+	-webkit-animation-delay: 0.6s;
+	-moz-animation-delay: 0.6s;
+	-o-animation-delay: 0.6s;
+	animation-delay: 0.6s;
+}
+.geom14 {
+	width: 60em;
+	height: 60em;
+	-webkit-animation-delay: 0.65s;
+	-moz-animation-delay: 0.65s;
+	-o-animation-delay: 0.65s;
+	animation-delay: 0.65s;
+}
+.geom15 {
+	width: 55em;
+	height: 55em;
+	-webkit-animation-delay: 0.7s;
+	-moz-animation-delay: 0.7s;
+	-o-animation-delay: 0.7s;
+	animation-delay: 0.7s;
+}
+.geom16 {
+	width: 50em;
+	height: 50em;
+	-webkit-animation-delay: 0.75s;
+	-moz-animation-delay: 0.75s;
+	-o-animation-delay: 0.75s;
+	animation-delay: 0.75s;
+}
+.geom17 {
+	width: 45em;
+	height: 45em;
+	-webkit-animation-delay: 0.8s;
+	-moz-animation-delay: 0.8s;
+	-o-animation-delay: 0.8s;
+	animation-delay: 0.8s;
+}
+.geom18 {
+	width: 40em;
+	height: 40em;
+	-webkit-animation-delay: 0.85s;
+	-moz-animation-delay: 0.85s;
+	-o-animation-delay: 0.85s;
+	animation-delay: 0.85s;
+}
+.geom19 {
+	width: 35em;
+	height: 35em;
+	-webkit-animation-delay: 0.9s;
+	-moz-animation-delay: 0.9s;
+	-o-animation-delay: 0.9s;
+	animation-delay: 0.9s;
+}
+.geom20 {
+	width: 30em;
+	height: 30em;
+	-webkit-animation-delay: 0.95s;
+	-moz-animation-delay: 0.95s;
+	-o-animation-delay: 0.95s;
+	animation-delay: 0.95s;
+}
+.geom21 {
+	width: 25em;
+	height: 25em;
+	-webkit-animation-delay: 1.0s;
+	-moz-animation-delay: 1.0s;
+	-o-animation-delay: 1.0s;
+	animation-delay: 1.0s;
+}
+.geom22 {
+	width: 20em;
+	height: 20em;
+	-webkit-animation-delay: 1.05s;
+	-moz-animation-delay: 1.05s;
+	-o-animation-delay: 1.05s;
+	animation-delay: 1.05s;
+}
+.geom23 {
+	width: 15em;
+	height: 15em;
+	-webkit-animation-delay: 1.10s;
+	-moz-animation-delay: 1.10s;
+	-o-animation-delay: 1.10s;
+	animation-delay: 1.10s;
+}
+.geom24 {
+	width: 10em;
+	height: 10em;
+	-webkit-animation-delay: 1.15s;
+	-moz-animation-delay: 1.15s;
+	-o-animation-delay: 1.15s;
+	animation-delay: 1.15s;
+}
+.geom25 {
+	width: 5.2em;
+	height: 5.2em;
+	border-radius: 100px;
+	background: #900290;
+	-webkit-animation-delay: 1.20s;
+	-moz-animation-delay: 1.20s;
+	-o-animation-delay: 1.20s;
+	animation-delay: 1.20s;
+}
