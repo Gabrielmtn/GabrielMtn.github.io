@@ -393,8 +393,25 @@ iPad 3
 
     .footer-row{
         position: absolute;
-        padding-top: 4em;
+        padding-top: 3em;
         height: 130px;
+    }
+
+    .form-signin .form-control {
+        position: relative;
+        height: 60px;
+        margin: 0 auto;
+        font-size: 20px;
+        text-indent: 15px;
+        min-width: 500px!important;
+    }
+
+    .sign-up-button{
+        height: 60px;
+        margin: 0 auto;
+        font-size: 20px;
+        text-indent: 15px;
+        min-width: 500px!important;
     }
 
     .responsive-header{
