@@ -397,6 +397,11 @@ iPad 3
         height: 130px;
     }
 
+    .form-signin {
+        max-width: 500px;
+        padding-top: 15px;
+    }
+
     .form-signin .form-control {
         position: relative;
         height: 60px;
@@ -437,9 +442,7 @@ iPad 3
         padding-top: 120px;
     }
 
-    .form-signin * {
-        
-    }
+
 
 
 }
