@@ -1,7 +1,40 @@
 
 /* iPhone 4 ----------- */
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 2) {
-    /* Styles */
+    body {
+        margin-bottom: 15%;
+    }
+
+    .footer-row {
+        position: absolute;
+        bottom: 0;
+        line-height: 1;
+        padding-top: 4em;
+        height: 15%;
+    }
+
+    .responsive-header {
+        padding-top: 110px !important;
+        font-size: 2.5em !important;
+
+    }
+
+    .responsive-text {
+        font-size: 2.4em !important;
+    }
+
+    .jumbotron {
+        min-height: 450px;
+    }
+
+    .help-number {
+        line-height: 2;
+    }
+
+    .responsive-input-text {
+        font-size: 2.4em !important;
+        padding-top: 120px;
+    }
 }
 
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 2) {
@@ -43,7 +76,40 @@
 
 /* iPhone 5 ----------- */
 @media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2) {
-    /* Styles */
+    body {
+        margin-bottom: 15%;
+    }
+
+    .footer-row {
+        position: absolute;
+        bottom: 0;
+        line-height: 1;
+        padding-top: 4em;
+        height: 15%;
+    }
+
+    .responsive-header {
+        padding-top: 110px !important;
+        font-size: 2.5em !important;
+
+    }
+
+    .responsive-text {
+        font-size: 2.4em !important;
+    }
+
+    .jumbotron {
+        min-height: 450px;
+    }
+
+    .help-number {
+        line-height: 2;
+    }
+
+    .responsive-input-text {
+        font-size: 2.4em !important;
+        padding-top: 120px;
+    }
 }
 
 @media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2) {
