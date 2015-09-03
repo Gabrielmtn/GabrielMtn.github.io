@@ -374,12 +374,12 @@ iPad 3
     }
 
     .responsive-header{
-        padding-top:110px;
-        font-size: 2.5em;
+        padding-top:110px!important;
+        font-size: 2.5em!important;
 
     }
     .responsive-text {
-        font-size: 1.4em;
+        font-size: 1.4em!important;
     }
 
 
