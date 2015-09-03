@@ -26,6 +26,7 @@ button {
 
 .footer-row {
     text-align: center;
+    position: absolute;
     width: 100%;
     height: 100px;
     bottom: 0;
@@ -390,6 +391,10 @@ iPad 3
     .responsive-input-text{
         font-size: 1.4em!important;
         padding-top: 120px;
+    }
+
+    .form-signin * {
+        
     }
 
 
