@@ -359,7 +359,9 @@ input {
         line-height:2;
     }
 
-
+    .responsive-input-text{
+        font-size: 1.2em;
+    }
 
 }
 /**********
@@ -391,6 +393,9 @@ iPad 3
         line-height:2;
     }
 
+    .responsive-input-text{
+        font-size: 1.2em;
+    }
 
 
 }
