@@ -338,8 +338,18 @@ input {
     .footer-row{
         position: absolute;
         padding-top: 5em;
-        height: 20%;
+        height: 17%;
     }
+
+    .responsive-text {
+        font-size: 1.4em;
+    }
+
+    .jumbotron{
+            min-height: 450px;
+    }
+
+
 }
 /**********
 iPad 3
@@ -351,4 +361,14 @@ iPad 3
         padding-top: 5em;
         height: 20%;
     }
+
+    .responsive-text {
+        font-size: 1.4em;
+    }
+
+    .jumbotron{
+            min-height: 450px;
+    }
+
+
 }
