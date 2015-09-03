@@ -23,13 +23,6 @@ button {
     border-radius: 0;
 }
 
-.equal-home {
-    background-image: url(Equal%20Housing%20Vector%20Smart%20Object.png);
-    height: 20px;
-    width: 20px;
-    background: no-repeat;
-    border: 0;
-}
 
 .footer-row {
     text-align: center;
@@ -360,7 +353,7 @@ input {
     }
 
     .responsive-input-text{
-        font-size: 1.2em;
+        font-size: 1.4em!important;
         padding-top: 120px;
     }
 
@@ -395,9 +388,41 @@ iPad 3
     }
 
     .responsive-input-text{
-        font-size: 1.2em;
+        font-size: 1.4em!important;
         padding-top: 120px;
     }
 
 
+}
+
+/* Smartphones (portrait) ----------- */
+@media only screen and (max-width : 320px) {
+    .footer-row{
+        position: absolute;
+        padding-top: 4em;
+        height: 15%;
+    }
+
+    .responsive-header{
+        padding-top:110px!important;
+        font-size: 2.5em!important;
+
+    }
+    .responsive-text {
+        font-size: 1.4em!important;
+    }
+
+
+    .jumbotron{
+        min-height: 450px;
+    }
+
+    .help-number {
+        line-height:2;
+    }
+
+    .responsive-input-text{
+        font-size: 1.4em!important;
+        padding-top: 120px;
+    }
 }
