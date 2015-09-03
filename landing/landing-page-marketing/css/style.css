@@ -5,6 +5,8 @@ body {
     font-family: 'Open Sans', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    display: table;
+    width: 100%;
 }
 
 button {
@@ -29,7 +31,6 @@ button {
     position: relative;
     width: 100%;
     height: 100px;
-    display: block;
     bottom: 0;
     background-color: #fff;
     padding-top: 2em;
@@ -219,14 +220,6 @@ input {
     height: 15px;
 }
 
-    .wrap {
-min-height: 100%;
-    height: auto;
-    /* Negative indent footer by its height */
-    margin: 0 auto -140px;
-    /* Pad bottom by footer height */
-    padding: 0 0 140px;
-}
 
 @-moz-keyframes bounce {
      0%, 20%, 50%, 80%, 100% {
@@ -343,7 +336,7 @@ min-height: 100%;
 @media only screen  and (min-width : 1224px) {
     .footer-row{
 
-        
+
     }
 }
 
@@ -351,7 +344,7 @@ min-height: 100%;
 @media only screen  and (min-width : 1824px) {
     .footer-row{
 
-        
+
     }
 }
 
@@ -392,6 +385,12 @@ iPad 3
 **********/
 
 @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) and (-webkit-min-device-pixel-ratio : 2) {
+
+
+    body{
+        margin-bottom: 15%;
+    }
+
     .footer-row{
         position: absolute;
         padding-top: 4em;
@@ -434,6 +433,10 @@ iPad 3
 }
 
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) and (orientation : portrait) and (-webkit-min-device-pixel-ratio : 2) {
+    body{
+        margin-bottom: 15%;
+    }
+
     .footer-row{
         position: absolute;
         padding-top: 4em;
@@ -470,6 +473,10 @@ iPad 3
 }
 
 @media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){
+    body{
+        margin-bottom: 15%;
+    }
+
     .footer-row{
         position: absolute;
         padding-top: 4em;
@@ -506,6 +513,10 @@ iPad 3
 }
 
 @media only screen and (min-device-width: 375px) and (max-device-height: 667px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){
+    body{
+        margin-bottom: 15%;
+    }
+
     .footer-row{
         position: absolute;
         padding-top: 4em;
@@ -542,6 +553,10 @@ iPad 3
 }
 
 @media only screen and (min-device-width: 414px) and (max-device-height: 736px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){
+    body{
+        margin-bottom: 15%;
+    }
+
     .footer-row{
         position: absolute;
         padding-top: 4em;
@@ -578,6 +593,10 @@ iPad 3
 }
 
 @media only screen and (min-device-width: 320px) and (max-device-height: 640px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){
+    body{
+        margin-bottom: 15%;
+    }
+
     .footer-row{
         position: absolute;
         padding-top: 4em;
@@ -614,6 +633,10 @@ iPad 3
 }
 
 @media only screen and (min-device-width: 320px) and (max-device-height: 640px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 3){
+    body{
+        margin-bottom: 15%;
+    }
+
     .footer-row{
         position: absolute;
         padding-top: 4em;
@@ -650,6 +673,10 @@ iPad 3
 }
 
 @media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 3){
+    body{
+        margin-bottom: 15%;
+    }
+
     .footer-row{
         position: absolute;
         padding-top: 4em;
@@ -678,4 +705,17 @@ iPad 3
         font-size: 1.4em!important;
         padding-top: 120px;
     }
+}
+
+
+@media only screen and (min-height : 830px) {
+    /* Styles */
+.footer-row{
+
+    position: absolute;
+    display: table-row;
+    height: 100px;
+    width: 100%;
+    bottom: 0;
+}
 }
