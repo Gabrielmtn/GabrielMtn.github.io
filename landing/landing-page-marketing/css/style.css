@@ -416,6 +416,7 @@ iPad 3
         margin: 0 auto;
         font-size: 20px;
         text-indent: 15px;
+        padding-top: 30px;
         min-width: 500px !important;
     }
 
@@ -444,7 +445,7 @@ iPad 3
     }
 
     .responsive-footer-copy {
-        margin-bottom: 30px;
+        line-height: 1;
     }
 
 }
