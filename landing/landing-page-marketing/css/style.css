@@ -331,13 +331,30 @@ min-height: 100%;
         margin-top: 70px;
     }
 }
-
+/*2x sprites*/
 @media only screen and (-webkit-min-device-pixel-ratio:2), only screen and (min--moz-device-pixel-ratio:2), only screen and (moz-min-device-pixel-ratio:2), only screen and (-o-min-device-pixel-ratio:2/1), only screen and (min-device-pixel-ratio:2), only screen and (min-resolution:192dpi), only screen and (min-resolution:2dppx) {
     .sprites {
         background: url(../img/sprites-2x.png) no-repeat;
         background-size: 193px auto
     }
 }
+
+
+@media only screen  and (min-width : 1224px) {
+    .footer-row{
+
+        
+    }
+}
+
+/* Large screens ----------- */
+@media only screen  and (min-width : 1824px) {
+    .footer-row{
+
+        
+    }
+}
+
 
 @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) {
     .footer-row{
