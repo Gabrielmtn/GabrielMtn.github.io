@@ -353,7 +353,7 @@ input {
     .footer-row{
         position: absolute;
         padding-top: 4em;
-        height: 15%;
+        height: 130px;
     }
 
     .responsive-header{
@@ -394,7 +394,7 @@ iPad 3
     .footer-row{
         position: absolute;
         padding-top: 4em;
-        height: 15%;
+        height: 130px;
     }
 
     .responsive-header{
@@ -714,7 +714,7 @@ iPad 3
 
     position: absolute;
     display: table-row;
-    height: 100px;
+    height: 130px;
     width: 100%;
     bottom: 0;
 }
