@@ -337,17 +337,28 @@ input {
 @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) {
     .footer-row{
         position: absolute;
-        padding-top: 5em;
-        height: 17%;
+        padding-top: 4em;
+        height: 15%;
     }
 
+    .responsive-header{
+        padding-top:110px;
+        font-size: 2.5em;
+
+    }
     .responsive-text {
         font-size: 1.4em;
     }
 
+
     .jumbotron{
             min-height: 450px;
     }
+
+    .help-number {
+        line-height:2;
+    }
+
 
 
 }
@@ -358,17 +369,28 @@ iPad 3
 @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) and (-webkit-min-device-pixel-ratio : 2) {
     .footer-row{
         position: absolute;
-        padding-top: 5em;
-        height: 20%;
+        padding-top: 4em;
+        height: 15%;
     }
 
+    .responsive-header{
+        padding-top:110px;
+        font-size: 2.5em;
+
+    }
     .responsive-text {
         font-size: 1.4em;
     }
 
+
     .jumbotron{
             min-height: 450px;
     }
+
+    .help-number {
+        line-height:2;
+    }
+
 
 
 }
