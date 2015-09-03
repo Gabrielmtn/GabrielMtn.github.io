@@ -1,0 +1,30 @@
+.body-content{
+
+    background-color: #ffffff;
+}
+
+.thank-you-header{
+    background: #003366;
+    height: 80px;
+}
+
+.thank-you-img{
+
+    width: 50%;
+
+}
+
+
+.green-check {
+
+    height: 80px;
+    width: 80px;
+    display: inline;
+
+}
+
+.thank-you-header-text{
+    background: #F6F7FB;
+    text-align: left;
+
+}
