@@ -361,6 +361,7 @@ input {
 
     .responsive-input-text{
         font-size: 1.2em;
+        padding-top: 120px;
     }
 
 }
@@ -395,6 +396,7 @@ iPad 3
 
     .responsive-input-text{
         font-size: 1.2em;
+        padding-top: 120px;
     }
 
 
