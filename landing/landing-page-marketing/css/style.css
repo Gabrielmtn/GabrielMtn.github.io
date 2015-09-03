@@ -333,3 +333,29 @@ input {
         background-size: 193px auto
     }
 }
+
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) {
+    .footer-row{
+        position: absolute;
+        padding-top: 5em;
+        height: 20%;
+    }
+}
+/**********
+iPad 3
+**********/
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : landscape) and (-webkit-min-device-pixel-ratio : 2) {
+    .footer-row{
+        position: absolute;
+        padding-top: 5em;
+        height: 20%;
+    }
+}
+
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) and (-webkit-min-device-pixel-ratio : 2) {
+    .footer-row{
+        position: absolute;
+        padding-top: 5em;
+        height: 20%;
+    }
+}
