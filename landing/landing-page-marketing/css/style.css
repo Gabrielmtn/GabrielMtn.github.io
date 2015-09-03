@@ -25,7 +25,6 @@ button {
     border-radius: 0;
 }
 
-
 .footer-row {
     text-align: center;
     position: relative;
@@ -88,9 +87,11 @@ button {
     text-align: right;
     white-space: nowrap;
 }
-.header-row{
+
+.header-row {
     margin-top: -30px;
 }
+
 .help-number:after {
     content: "Need Help? Call us at 1-800-EASTERN (327-8376)";
 }
@@ -161,13 +162,14 @@ input {
 .scroll-prompt {
     margin-top: 60px;
 }
-.scroll-prompt > p{
+
+.scroll-prompt > p {
     font-size: 14px;
 }
 
 .scroll-text {
 
-    margin-bottom: 5px!important;
+    margin-bottom: 5px !important;
 
 }
 
@@ -208,11 +210,13 @@ input {
     text-indent: -9999px;
     overflow: hidden
 }
+
 .sprites.logo {
     background-position: 0 0;
     width: 193px;
     height: 27px
 }
+
 .sprites.equal-lender {
     background-position: 0 -27px;
     border: 0px;
@@ -220,21 +224,21 @@ input {
     height: 15px;
 }
 
-
 @-moz-keyframes bounce {
-     0%, 20%, 50%, 80%, 100% {
-         -moz-transform: translateY(0);
-         transform: translateY(0);
-     }
-     40% {
-         -moz-transform: translateY(11px);
-         transform: translateY(11px);
-     }
-     60% {
-         -moz-transform: translateY(5px);
-         transform: translateY(5px);
-     }
- }
+    0%, 20%, 50%, 80%, 100% {
+        -moz-transform: translateY(0);
+        transform: translateY(0);
+    }
+    40% {
+        -moz-transform: translateY(11px);
+        transform: translateY(11px);
+    }
+    60% {
+        -moz-transform: translateY(5px);
+        transform: translateY(5px);
+    }
+}
+
 @-webkit-keyframes bounce {
     0%, 20%, 50%, 80%, 100% {
         -webkit-transform: translateY(0);
@@ -249,6 +253,7 @@ input {
         transform: translateY(5px);
     }
 }
+
 @keyframes bounce {
     0%, 20%, 50%, 80%, 100% {
         -moz-transform: translateY(0);
@@ -276,16 +281,16 @@ input {
     animation: bounce ease-in-out 2s 3s 3;
 }
 
-
 @media screen and (max-width: 800px) {
     .footer-row {
         position: relative;
     }
 
-    .header-row{
+    .header-row {
 
         margin-top: -20px;
     }
+
     .help-number:before {
         font-family: FontAwesome;
         content: "\f095";
@@ -293,8 +298,6 @@ input {
         right: 140px;
         top: 18px;
     }
-
-
 
     .help-number:after {
         display: block;
@@ -324,74 +327,71 @@ input {
         margin-top: 70px;
     }
 }
+
 /*2x sprites*/
-@media only screen and (-webkit-min-device-pixel-ratio:2), only screen and (min--moz-device-pixel-ratio:2), only screen and (moz-min-device-pixel-ratio:2), only screen and (-o-min-device-pixel-ratio:2/1), only screen and (min-device-pixel-ratio:2), only screen and (min-resolution:192dpi), only screen and (min-resolution:2dppx) {
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (moz-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
     .sprites {
         background: url(../img/sprites-2x.png) no-repeat;
         background-size: 193px auto
     }
 }
 
-
-@media only screen  and (min-width : 1224px) {
-    .footer-row{
-
+@media only screen  and (min-width: 1224px) {
+    .footer-row {
 
     }
 }
 
 /* Large screens ----------- */
-@media only screen  and (min-width : 1824px) {
-    .footer-row{
-
+@media only screen  and (min-width: 1824px) {
+    .footer-row {
 
     }
 }
 
-
-@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) {
-    .footer-row{
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+    .footer-row {
         position: absolute;
         padding-top: 4em;
         height: 130px;
     }
 
-    .responsive-header{
-        padding-top:110px;
+    .responsive-header {
+        padding-top: 110px;
         font-size: 2.5em;
 
     }
+
     .responsive-text {
         font-size: 1.4em;
     }
 
-
-    .jumbotron{
-            min-height: 450px;
+    .jumbotron {
+        min-height: 450px;
     }
 
     .help-number {
-        line-height:2;
+        line-height: 2;
     }
 
-    .responsive-input-text{
-        font-size: 1.4em!important;
+    .responsive-input-text {
+        font-size: 1.4em !important;
         padding-top: 120px;
     }
 
 }
+
 /**********
 iPad 3
 **********/
 
-@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) and (-webkit-min-device-pixel-ratio : 2) {
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 2) {
 
-
-    body{
+    body {
         margin-bottom: 15%;
     }
 
-    .footer-row{
+    .footer-row {
         position: absolute;
         padding-top: 3em;
         height: 130px;
@@ -408,334 +408,335 @@ iPad 3
         margin: 0 auto;
         font-size: 20px;
         text-indent: 15px;
-        min-width: 500px!important;
+        min-width: 500px !important;
     }
 
-    .sign-up-button{
+    .sign-up-button {
         height: 60px;
         margin: 0 auto;
         font-size: 20px;
         text-indent: 15px;
-        min-width: 500px!important;
+        min-width: 500px !important;
     }
 
-    .responsive-header{
-        padding-top:110px!important;
-        font-size: 2.5em!important;
+    .responsive-header {
+        padding-top: 110px !important;
+        font-size: 2.5em !important;
 
     }
+
     .responsive-text {
-        font-size: 1.4em!important;
+        font-size: 1.4em !important;
+        padding-bottom: 20px;
     }
 
-
-    .jumbotron{
-            min-height: 450px;
+    .jumbotron {
+        min-height: 450px;
     }
 
     .help-number {
-        line-height:2;
+        line-height: 2;
     }
 
-    .responsive-input-text{
-        font-size: 1.4em!important;
-        padding-top: 120px;
+    .responsive-input-text {
+        font-size: 1.4em !important;
+        padding-top: 60px !important;
     }
 
-
-
+    .responsive-footer-copy {
+        margin-bottom: 30px;
+    }
 
 }
 
 /* iPhone 4 ----------- */
-@media only screen and (min-device-width : 320px) and (max-device-width : 480px) and (orientation : landscape) and (-webkit-min-device-pixel-ratio : 2) {
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 2) {
     /* Styles */
 }
 
-@media only screen and (min-device-width : 320px) and (max-device-width : 480px) and (orientation : portrait) and (-webkit-min-device-pixel-ratio : 2) {
-    body{
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 2) {
+    body {
         margin-bottom: 15%;
     }
 
-    .footer-row{
+    .footer-row {
         position: absolute;
         padding-top: 4em;
         height: 15%;
     }
 
-    .responsive-header{
-        padding-top:110px!important;
-        font-size: 2.5em!important;
+    .responsive-header {
+        padding-top: 110px !important;
+        font-size: 2.5em !important;
 
     }
+
     .responsive-text {
-        font-size: 1.4em!important;
+        font-size: 1.4em !important;
     }
 
-
-    .jumbotron{
-            min-height: 450px;
+    .jumbotron {
+        min-height: 450px;
     }
 
     .help-number {
-        line-height:2;
+        line-height: 2;
     }
 
-    .responsive-input-text{
-        font-size: 1.4em!important;
+    .responsive-input-text {
+        font-size: 1.4em !important;
         padding-top: 120px;
     }
 }
 
 /* iPhone 5 ----------- */
-@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 2){
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2) {
     /* Styles */
 }
 
-@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){
-    body{
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2) {
+    body {
         margin-bottom: 15%;
     }
 
-    .footer-row{
+    .footer-row {
         position: absolute;
         padding-top: 4em;
         height: 15%;
     }
 
-    .responsive-header{
-        padding-top:110px!important;
-        font-size: 2.5em!important;
+    .responsive-header {
+        padding-top: 110px !important;
+        font-size: 2.5em !important;
 
     }
+
     .responsive-text {
-        font-size: 1.4em!important;
+        font-size: 1.4em !important;
     }
 
-
-    .jumbotron{
-            min-height: 450px;
+    .jumbotron {
+        min-height: 450px;
     }
 
     .help-number {
-        line-height:2;
+        line-height: 2;
     }
 
-    .responsive-input-text{
-        font-size: 1.4em!important;
+    .responsive-input-text {
+        font-size: 1.4em !important;
         padding-top: 120px;
     }
 }
 
 /* iPhone 6 ----------- */
-@media only screen and (min-device-width: 375px) and (max-device-height: 667px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 2){
+@media only screen and (min-device-width: 375px) and (max-device-height: 667px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2) {
     /* Styles */
 }
 
-@media only screen and (min-device-width: 375px) and (max-device-height: 667px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){
-    body{
+@media only screen and (min-device-width: 375px) and (max-device-height: 667px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2) {
+    body {
         margin-bottom: 15%;
     }
 
-    .footer-row{
+    .footer-row {
         position: absolute;
         padding-top: 4em;
         height: 15%;
     }
 
-    .responsive-header{
-        padding-top:110px!important;
-        font-size: 2.5em!important;
+    .responsive-header {
+        padding-top: 110px !important;
+        font-size: 2.5em !important;
 
     }
+
     .responsive-text {
-        font-size: 1.4em!important;
+        font-size: 1.4em !important;
     }
 
-
-    .jumbotron{
-            min-height: 450px;
+    .jumbotron {
+        min-height: 450px;
     }
 
     .help-number {
-        line-height:2;
+        line-height: 2;
     }
 
-    .responsive-input-text{
-        font-size: 1.4em!important;
+    .responsive-input-text {
+        font-size: 1.4em !important;
         padding-top: 120px;
     }
 }
 
 /* iPhone 6+ ----------- */
-@media only screen and (min-device-width: 414px) and (max-device-height: 736px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 2){
+@media only screen and (min-device-width: 414px) and (max-device-height: 736px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2) {
     /* Styles */
 }
 
-@media only screen and (min-device-width: 414px) and (max-device-height: 736px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){
-    body{
+@media only screen and (min-device-width: 414px) and (max-device-height: 736px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2) {
+    body {
         margin-bottom: 15%;
     }
 
-    .footer-row{
+    .footer-row {
         position: absolute;
         padding-top: 4em;
         height: 15%;
     }
 
-    .responsive-header{
-        padding-top:110px!important;
-        font-size: 2.5em!important;
+    .responsive-header {
+        padding-top: 110px !important;
+        font-size: 2.5em !important;
 
     }
+
     .responsive-text {
-        font-size: 1.4em!important;
+        font-size: 1.4em !important;
     }
 
-
-    .jumbotron{
-            min-height: 450px;
+    .jumbotron {
+        min-height: 450px;
     }
 
     .help-number {
-        line-height:2;
+        line-height: 2;
     }
 
-    .responsive-input-text{
-        font-size: 1.4em!important;
+    .responsive-input-text {
+        font-size: 1.4em !important;
         padding-top: 120px;
     }
 }
 
 /* Samsung Galaxy S3 ----------- */
-@media only screen and (min-device-width: 320px) and (max-device-height: 640px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 2){
+@media only screen and (min-device-width: 320px) and (max-device-height: 640px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2) {
     /* Styles */
 }
 
-@media only screen and (min-device-width: 320px) and (max-device-height: 640px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){
-    body{
+@media only screen and (min-device-width: 320px) and (max-device-height: 640px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2) {
+    body {
         margin-bottom: 15%;
     }
 
-    .footer-row{
+    .footer-row {
         position: absolute;
         padding-top: 4em;
         height: 15%;
     }
 
-    .responsive-header{
-        padding-top:110px!important;
-        font-size: 2.5em!important;
+    .responsive-header {
+        padding-top: 110px !important;
+        font-size: 2.5em !important;
 
     }
+
     .responsive-text {
-        font-size: 1.4em!important;
+        font-size: 1.4em !important;
     }
 
-
-    .jumbotron{
-            min-height: 450px;
+    .jumbotron {
+        min-height: 450px;
     }
 
     .help-number {
-        line-height:2;
+        line-height: 2;
     }
 
-    .responsive-input-text{
-        font-size: 1.4em!important;
+    .responsive-input-text {
+        font-size: 1.4em !important;
         padding-top: 120px;
     }
 }
 
 /* Samsung Galaxy S4 ----------- */
-@media only screen and (min-device-width: 320px) and (max-device-height: 640px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 3){
+@media only screen and (min-device-width: 320px) and (max-device-height: 640px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 3) {
     /* Styles */
 }
 
-@media only screen and (min-device-width: 320px) and (max-device-height: 640px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 3){
-    body{
+@media only screen and (min-device-width: 320px) and (max-device-height: 640px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 3) {
+    body {
         margin-bottom: 15%;
     }
 
-    .footer-row{
+    .footer-row {
         position: absolute;
         padding-top: 4em;
         height: 15%;
     }
 
-    .responsive-header{
-        padding-top:110px!important;
-        font-size: 2.5em!important;
+    .responsive-header {
+        padding-top: 110px !important;
+        font-size: 2.5em !important;
 
     }
+
     .responsive-text {
-        font-size: 1.4em!important;
+        font-size: 1.4em !important;
     }
 
-
-    .jumbotron{
-            min-height: 450px;
+    .jumbotron {
+        min-height: 450px;
     }
 
     .help-number {
-        line-height:2;
+        line-height: 2;
     }
 
-    .responsive-input-text{
-        font-size: 1.4em!important;
+    .responsive-input-text {
+        font-size: 1.4em !important;
         padding-top: 120px;
     }
 }
 
 /* Samsung Galaxy S5 ----------- */
-@media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 3){
+@media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 3) {
     /* Styles */
 }
 
-@media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 3){
-    body{
+@media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 3) {
+    body {
         margin-bottom: 15%;
     }
 
-    .footer-row{
+    .footer-row {
         position: absolute;
         padding-top: 4em;
         height: 15%;
     }
 
-    .responsive-header{
-        padding-top:110px!important;
-        font-size: 2.5em!important;
+    .responsive-header {
+        padding-top: 110px !important;
+        font-size: 2.5em !important;
 
     }
+
     .responsive-text {
-        font-size: 1.4em!important;
+        font-size: 1.4em !important;
     }
 
-
-    .jumbotron{
-            min-height: 450px;
+    .jumbotron {
+        min-height: 450px;
     }
 
     .help-number {
-        line-height:2;
+        line-height: 2;
     }
 
-    .responsive-input-text{
-        font-size: 1.4em!important;
+    .responsive-input-text {
+        font-size: 1.4em !important;
         padding-top: 120px;
     }
 }
 
-
-@media only screen and (min-height : 830px) {
+@media only screen and (min-height: 830px) {
     /* Styles */
-.footer-row{
+    .footer-row {
 
-    position: absolute;
-    display: table-row;
-    height: 130px;
-    width: 100%;
-    bottom: 0;
-}
+        position: absolute;
+        display: table-row;
+        height: 130px;
+        width: 100%;
+        bottom: 0;
+    }
 }
