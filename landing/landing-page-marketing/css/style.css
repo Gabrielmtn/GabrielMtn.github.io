@@ -82,7 +82,7 @@ button {
 .help-number {
     font-size: 16px;
     color: rgb(255, 255, 255);
-    line-height: 0.5;
+    line-height: 2.5;
     min-width: 90px;
     text-align: right;
     white-space: nowrap;
@@ -290,7 +290,7 @@ input {
 
     .header-row {
 
-        margin-top: -20px;
+        margin-top: -15px;
     }
 
     .help-number:before {
@@ -298,16 +298,16 @@ input {
         content: "\f095";
         position: absolute;
         right: 140px;
-        top: 18px;
+        bottom: 0px;
     }
 
     .help-number:after {
         display: block;
-        line-height: 3;
+        line-height: 2.2;
         padding-right: 15px;
         width: 150px;
         float: right;
-        height: 40px;
+        height: 35px;
         font-size: 14px;
         content: "1-800-327-8376";
         background-color: rgba(255, 255, 255, 0.1);
@@ -451,6 +451,7 @@ iPad 3
     }
 
 }
+
 
 
 @media only screen and (min-height: 830px) {
