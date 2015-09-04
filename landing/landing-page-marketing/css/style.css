@@ -121,7 +121,7 @@ input {
     position: relative;
     display: inline-block;
     width: 100%;
-    min-height: 400px;
+    min-height: 340px;
     height: 26%;
     color: #fff;
 
@@ -140,8 +140,8 @@ input {
     right: 0;
     bottom: 0;
     left: 0;
-    background-image: linear-gradient(to bottom right, #003366, #003366);
-    opacity: .7;
+    background-image: linear-gradient(to bottom right, #202123, #202123);
+    opacity: .5;
 }
 
 .jumbotron h2 {
@@ -157,7 +157,7 @@ input {
 
 .jumbotron p {
     font-size: 18px;
-    color: #c4ccd6;
+    color: #d5dce4;
     z-index: 3;
 }
 
