@@ -9,7 +9,7 @@
     }
 
     .content-bg{
-        padding-top: 13%;
+        padding-top: 15%;
     }
 
     .footer-row {
@@ -37,6 +37,51 @@
         font-size: 1.2em;
     }
 
+      .help-number:before {
+        font-family: FontAwesome;
+        content: "\f095";
+        position: absolute;
+        right: 140px;
+        bottom: 0px;
+    }
+
+    .help-number:after {
+        display: block;
+        line-height: 2.2;
+        padding-right: 15px;
+        width: 150px;
+        float: right;
+        height: 35px;
+        font-size: 14px;
+        content: "1-800-327-8376";
+        background-color: rgb(255, 255, 255);
+        background-color: rgba(255, 255, 255, 0.1);
+        border-color: #fff;
+        border-width: 2px;
+        color: #fff;
+        border-radius: 4px;
+        transition: border-color .25s linear, background-color .25s linear;
+
+    }
+
+    .thank-you-copy{
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
+
+    .thank-you-copy h3{
+        padding-top: 30px;
+    }
+    .thank-you-image{
+        max-width: 100%;
+    }
+
+    .banking-sign-up-btn{
+        height: 66px;
+        width: 80%;
+        font-size: 23px;
+    }
+
     .sign-up-button {
 
         height: 100px;
@@ -54,7 +99,7 @@
     }
 
     .responsive-text {
-        font-size: 1.8em !important;
+        font-size: 1.7em !important;
         padding-bottom: 20px;
     }
 
@@ -66,10 +111,12 @@
         line-height: 2;
     }
 
+
+
     .responsive-input-text {
         font-size: 1.9em !important;
         padding-top: 60px !important;
-
+        padding-bottom: 30px;
     }
 
     .responsive-footer-copy {
@@ -104,6 +151,23 @@
         text-indent: 15px;
         min-width: 500px !important;
     }
+    .thank-you-copy{
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
+
+    .thank-you-copy h3{
+        padding-top: 30px;
+    }
+    .thank-you-image{
+        max-width: 100%;
+    }
+
+    .banking-sign-up-btn{
+        height: 66px;
+        width: 80%;
+        font-size: 23px;
+    }
 
     .sign-up-button {
         height: 60px;
@@ -121,7 +185,7 @@
     }
 
     .responsive-text {
-        font-size: 1.8em !important;
+        font-size: 1.7em !important;
         padding-bottom: 20px;
     }
 
@@ -133,10 +197,12 @@
         line-height: 2;
     }
 
+
+
     .responsive-input-text {
         font-size: 1.9em !important;
         padding-top: 60px !important;
-
+        padding-bottom: 30px;
     }
 
     .responsive-footer-copy {
@@ -152,7 +218,7 @@
     }
 
     .content-bg{
-        padding-top: 13%;
+        padding-top: 15%;
     }
 
     .footer-row {
@@ -180,6 +246,51 @@
         font-size: 1.2em;
     }
 
+      .help-number:before {
+        font-family: FontAwesome;
+        content: "\f095";
+        position: absolute;
+        right: 140px;
+        bottom: 0px;
+    }
+
+    .help-number:after {
+        display: block;
+        line-height: 2.2;
+        padding-right: 15px;
+        width: 150px;
+        float: right;
+        height: 35px;
+        font-size: 14px;
+        content: "1-800-327-8376";
+        background-color: rgb(255, 255, 255);
+        background-color: rgba(255, 255, 255, 0.1);
+        border-color: #fff;
+        border-width: 2px;
+        color: #fff;
+        border-radius: 4px;
+        transition: border-color .25s linear, background-color .25s linear;
+
+    }
+
+    .thank-you-copy{
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
+
+    .thank-you-copy h3{
+        padding-top: 30px;
+    }
+    .thank-you-image{
+        max-width: 100%;
+    }
+
+    .banking-sign-up-btn{
+        height: 66px;
+        width: 80%;
+        font-size: 23px;
+    }
+
     .sign-up-button {
 
         height: 100px;
@@ -197,7 +308,7 @@
     }
 
     .responsive-text {
-        font-size: 1.8em !important;
+        font-size: 1.7em !important;
         padding-bottom: 20px;
     }
 
@@ -209,10 +320,12 @@
         line-height: 2;
     }
 
+
+
     .responsive-input-text {
         font-size: 1.9em !important;
         padding-top: 60px !important;
-
+        padding-bottom: 30px;
     }
 
     .responsive-footer-copy {
@@ -231,7 +344,7 @@
     }
 
     .content-bg{
-        padding-top: 13%;
+        padding-top: 15%;
     }
 
     .footer-row {
@@ -254,9 +367,52 @@
         min-width: 600px !important;
     }
 
-    .help-number:after{
 
+
+      .help-number:before {
+        font-family: FontAwesome;
+        content: "\f095";
+        position: absolute;
+        right: 130px;
+        bottom: 0px;
+    }
+
+    .help-number:after {
+        display: block;
+        line-height: 2.2;
+        padding-right: 15px;
+        width: 150px;
+        float: right;
+        height: 35px;
         font-size: 1.2em;
+        content: "1-800-327-8376";
+        background-color: rgb(255, 255, 255);
+        background-color: rgba(255, 255, 255, 0.1);
+        border-color: #fff;
+        border-width: 2px;
+        color: #fff;
+        
+        border-radius: 4px;
+        transition: border-color .25s linear, background-color .25s linear;
+
+    }
+
+    .thank-you-copy{
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
+
+    .thank-you-copy h3{
+        padding-top: 30px;
+    }
+    .thank-you-image{
+        max-width: 100%;
+    }
+
+    .banking-sign-up-btn{
+        height: 66px;
+        width: 80%;
+        font-size: 23px;
     }
 
     .sign-up-button {
@@ -276,7 +432,7 @@
     }
 
     .responsive-text {
-        font-size: 1.8em !important;
+        font-size: 1.7em !important;
         padding-bottom: 20px;
     }
 
@@ -288,10 +444,12 @@
         line-height: 2;
     }
 
+
+
     .responsive-input-text {
         font-size: 1.9em !important;
         padding-top: 60px !important;
-
+        padding-bottom: 30px;
     }
 
     .responsive-footer-copy {
@@ -310,7 +468,7 @@
     }
 
     .content-bg{
-        padding-top: 13%;
+        padding-top: 15%;
     }
 
     .footer-row {
@@ -338,6 +496,51 @@
         font-size: 1.2em;
     }
 
+      .help-number:before {
+        font-family: FontAwesome;
+        content: "\f095";
+        position: absolute;
+        right: 140px;
+        bottom: 0px;
+    }
+
+    .help-number:after {
+        display: block;
+        line-height: 2.2;
+        padding-right: 15px;
+        width: 150px;
+        float: right;
+        height: 35px;
+        font-size: 14px;
+        content: "1-800-327-8376";
+        background-color: rgb(255, 255, 255);
+        background-color: rgba(255, 255, 255, 0.1);
+        border-color: #fff;
+        border-width: 2px;
+        color: #fff;
+        border-radius: 4px;
+        transition: border-color .25s linear, background-color .25s linear;
+
+    }
+
+    .thank-you-copy{
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
+
+    .thank-you-copy h3{
+        padding-top: 30px;
+    }
+    .thank-you-image{
+        max-width: 100%;
+    }
+
+    .banking-sign-up-btn{
+        height: 66px;
+        width: 80%;
+        font-size: 23px;
+    }
+
     .sign-up-button {
 
         height: 100px;
@@ -355,7 +558,7 @@
     }
 
     .responsive-text {
-        font-size: 1.8em !important;
+        font-size: 1.7em !important;
         padding-bottom: 20px;
     }
 
@@ -367,10 +570,12 @@
         line-height: 2;
     }
 
+
+
     .responsive-input-text {
         font-size: 1.9em !important;
         padding-top: 60px !important;
-
+        padding-bottom: 30px;
     }
 
     .responsive-footer-copy {
@@ -389,7 +594,7 @@
     }
 
     .content-bg{
-        padding-top: 13%;
+        padding-top: 15%;
     }
 
     .footer-row {
@@ -417,6 +622,51 @@
         font-size: 1.2em;
     }
 
+      .help-number:before {
+        font-family: FontAwesome;
+        content: "\f095";
+        position: absolute;
+        right: 140px;
+        bottom: 0px;
+    }
+
+    .help-number:after {
+        display: block;
+        line-height: 2.2;
+        padding-right: 15px;
+        width: 150px;
+        float: right;
+        height: 35px;
+        font-size: 14px;
+        content: "1-800-327-8376";
+        background-color: rgb(255, 255, 255);
+        background-color: rgba(255, 255, 255, 0.1);
+        border-color: #fff;
+        border-width: 2px;
+        color: #fff;
+        border-radius: 4px;
+        transition: border-color .25s linear, background-color .25s linear;
+
+    }
+
+    .thank-you-copy{
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
+
+    .thank-you-copy h3{
+        padding-top: 30px;
+    }
+    .thank-you-image{
+        max-width: 100%;
+    }
+
+    .banking-sign-up-btn{
+        height: 66px;
+        width: 80%;
+        font-size: 23px;
+    }
+
     .sign-up-button {
 
         height: 100px;
@@ -434,7 +684,7 @@
     }
 
     .responsive-text {
-        font-size: 1.8em !important;
+        font-size: 1.7em !important;
         padding-bottom: 20px;
     }
 
@@ -446,10 +696,12 @@
         line-height: 2;
     }
 
+
+
     .responsive-input-text {
         font-size: 1.9em !important;
         padding-top: 60px !important;
-
+        padding-bottom: 30px;
     }
 
     .responsive-footer-copy {
@@ -468,7 +720,7 @@
     }
 
     .content-bg{
-        padding-top: 13%;
+        padding-top: 15%;
     }
 
     .footer-row {
@@ -496,6 +748,51 @@
         font-size: 1.2em;
     }
 
+      .help-number:before {
+        font-family: FontAwesome;
+        content: "\f095";
+        position: absolute;
+        right: 140px;
+        bottom: 0px;
+    }
+
+    .help-number:after {
+        display: block;
+        line-height: 2.2;
+        padding-right: 15px;
+        width: 150px;
+        float: right;
+        height: 35px;
+        font-size: 14px;
+        content: "1-800-327-8376";
+        background-color: rgb(255, 255, 255);
+        background-color: rgba(255, 255, 255, 0.1);
+        border-color: #fff;
+        border-width: 2px;
+        color: #fff;
+        border-radius: 4px;
+        transition: border-color .25s linear, background-color .25s linear;
+
+    }
+
+    .thank-you-copy{
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
+
+    .thank-you-copy h3{
+        padding-top: 30px;
+    }
+    .thank-you-image{
+        max-width: 100%;
+    }
+
+    .banking-sign-up-btn{
+        height: 66px;
+        width: 80%;
+        font-size: 23px;
+    }
+
     .sign-up-button {
 
         height: 100px;
@@ -513,7 +810,7 @@
     }
 
     .responsive-text {
-        font-size: 1.8em !important;
+        font-size: 1.7em !important;
         padding-bottom: 20px;
     }
 
@@ -525,10 +822,12 @@
         line-height: 2;
     }
 
+
+
     .responsive-input-text {
         font-size: 1.9em !important;
         padding-top: 60px !important;
-
+        padding-bottom: 30px;
     }
 
     .responsive-footer-copy {
@@ -547,7 +846,7 @@
     }
 
     .content-bg{
-        padding-top: 13%;
+        padding-top: 15%;
     }
 
     .footer-row {
@@ -575,6 +874,51 @@
         font-size: 1.2em;
     }
 
+      .help-number:before {
+        font-family: FontAwesome;
+        content: "\f095";
+        position: absolute;
+        right: 140px;
+        bottom: 0px;
+    }
+
+    .help-number:after {
+        display: block;
+        line-height: 2.2;
+        padding-right: 15px;
+        width: 150px;
+        float: right;
+        height: 35px;
+        font-size: 14px;
+        content: "1-800-327-8376";
+        background-color: rgb(255, 255, 255);
+        background-color: rgba(255, 255, 255, 0.1);
+        border-color: #fff;
+        border-width: 2px;
+        color: #fff;
+        border-radius: 4px;
+        transition: border-color .25s linear, background-color .25s linear;
+
+    }
+
+    .thank-you-copy{
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
+
+    .thank-you-copy h3{
+        padding-top: 30px;
+    }
+    .thank-you-image{
+        max-width: 100%;
+    }
+
+    .banking-sign-up-btn{
+        height: 66px;
+        width: 80%;
+        font-size: 23px;
+    }
+
     .sign-up-button {
 
         height: 100px;
@@ -592,7 +936,7 @@
     }
 
     .responsive-text {
-        font-size: 1.8em !important;
+        font-size: 1.7em !important;
         padding-bottom: 20px;
     }
 
@@ -604,10 +948,12 @@
         line-height: 2;
     }
 
+
+
     .responsive-input-text {
         font-size: 1.9em !important;
         padding-top: 60px !important;
-
+        padding-bottom: 30px;
     }
 
     .responsive-footer-copy {

@@ -1,5 +1,9 @@
-.body-content{
+body{
+    background-color: #fff;
+}
 
+.body-content{
+    margin: 25px;
     background-color: #ffffff;
 }
 
@@ -16,10 +20,19 @@
     color: #FFF;
 }
 
+.container-full{
+    background-color: #F6F7FB;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0;
+}
+
+
 .body-content{
     min-height: 80%;
     padding-bottom: 80px;
 }
+
 
 .footer-row{
     margin-top: 0px;
@@ -35,20 +48,22 @@
     display: inline;
     margin-right: 10px;
     margin-top: 35px;
+    margin-left: 30px;
+    margin-top: 45px;
 }
 
 
 .thank-you-header{
     background: #003366;
     height: 70px;
-    padding: 20px 5%;
+    padding: 20px 20px;
 
 }
 
 .thank-you-image{
     padding-top: 20px;
-    margin: 0 auto;
-    max-width: 500px;
+    margin: 25px auto;
+    max-width: 501px;
 }
 
 .thank-you-footer-row{
@@ -64,17 +79,29 @@
 }
 
 .thank-you-header-text{
-    background: #F6F7FB;
+    /*background: #F6F7FB;*/
     padding: 30px 5px;
     margin-left: 30px;
     text-align: left;
 }
 
-@media only screen and (max-width: 510px) {
+
+.thank-you-wrapper{
+
+}
+
+.row-margin-fix{
+    padding: 0;
+    background-color: #F6F7FB;
+
+
+}
+@media only screen and (max-width: 710px) {
     .green-check{
         height: 65px;
         width: 65px;
         margin-top: 30px;
+        margin-left: 0;
     }
 
   h3{
@@ -86,6 +113,49 @@
   }
   .thank-you-header-text {
 
-      padding: 10px 5px;
+      padding:  5px  5px  5px 25px;
   }
+  
+  .banking-sign-up-btn{
+      width: 80%;
+  }
+
+    .thank-you-header{
+        padding: 20px 0px;
+    }
 }
+
+
+@media only screen and (min-width: 910px) {
+    .green-check{
+        height: 80px;
+        width: 80px;
+        display: inline;
+        margin-right: 10px;
+        margin-top: 35px;
+        margin-left: 60px;
+        margin-top: 35px;
+    }
+
+
+    .thank-you-image{
+        max-width: 501px;
+        padding-top: 0;
+
+    }
+  h3 {
+      font-size: 23px;
+  }
+
+  h4{
+      font-size: 20px;
+  }
+  .thank-you-header-text {
+
+      padding: 30px 45px;
+  }
+
+
+}
+
+

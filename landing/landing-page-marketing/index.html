@@ -4,11 +4,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Email Sign-Up</title>
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/query-style.css">
-    <link rel="stylesheet" href="css/font-awesome-phone.css">
+    <!--<link rel="stylesheet" href="css/normalize.css">-->
+    <!--<link rel="stylesheet" href="css/bootstrap.min.css">-->
+    <!--<link rel="stylesheet" href="css/style.css">-->
+    <!--<link rel="stylesheet" href="css/query-style.css">-->
+    <!--<link rel="stylesheet" href="css/font-awesome-phone.css">-->
+    <link rel="stylesheet" href="css/tidy.css">
+
 </head>
 <body>
 <div class="jumbotron">
@@ -42,7 +44,7 @@
             </div>
         </div>
 
-        <form class="form-signin" method="post" action="http://pages.email1.easternbank.com/buckslip/">
+        <form id="form-validation"  class="form-signin" method="post" action="http://pages.email1.easternbank.com/buckslip/">
             <input name="EmailAddress" type="email" id="inputEmail" class="form-control"
                    placeholder="Enter Your Email address" required autofocus="" autocomplete="off">
             <input name="VIP_Code"type="text"
@@ -67,5 +69,28 @@
         <p class="responsive-footer-copy">&copy; 2015 Eastern Bank. All rights reserved.</p>
     </div>
 </div>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.h5validate.js"></script>
+<script>
+    $(document).ready(function () {
+
+        // test for html5 form validation
+        function hasFormValidation() {
+
+            return (typeof document.createElement( 'input' ).checkValidity == 'function');
+
+        };
+
+        if( hasFormValidation() ) {
+            return false
+        }
+        else{
+            $('#form-validation').h5Validate();
+        };
+
+    });
+</script>
+
 </body>
 </html>
