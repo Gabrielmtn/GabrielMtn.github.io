@@ -4,15 +4,15 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Email Sign-Up</title>
-    <!--<link rel="stylesheet" href="css/normalize.css">-->
-    <!--<link rel="stylesheet" href="css/bootstrap.min.css">-->
-    <!--<link rel="stylesheet" href="css/style.css">-->
-    <!--<link rel="stylesheet" href="css/query-style.css">-->
-    <!--<link rel="stylesheet" href="css/font-awesome-phone.css">-->
-    <link rel="stylesheet" href="css/tidy.css">
-
+    <!--<link rel="stylesheet" href="css/tidy.css">-->
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/query-style.css">
+    <link rel="stylesheet" href="css/font-awesome-phone.css">
 </head>
 <body>
+
 <div class="jumbotron">
     <div class="container">
         <div class="row header-row">
@@ -45,13 +45,16 @@
         </div>
 
         <form id="form-validation"  class="form-signin" method="post" action="http://pages.email1.easternbank.com/buckslip/">
-            <input name="EmailAddress" type="email" id="inputEmail" class="h5-email form-control"
+            <div class="form-group">
+                <span id="inputEmailErrorLabel" class="label label-danger hidden">Please enter a valid email address</span>
+            <input name="EmailAddress" type="email" id="inputEmail" class="form-control"
                    placeholder="Enter Your Email address" required autofocus="" autocomplete="off">
+            </div>
             <input name="VIP_Code"type="text"
                    class="form-control" placeholder="Enter Your VIP code" required
                    autocomplete="off">
             <input name="FormID" type="hidden" value="Buckslip"/>
-            <button type="submit" class="btn btn-block btn-default btn-success sign-up-button">SIGN ME UP FOR
+            <button id="submit-button" type="submit" class="btn btn-block btn-default btn-success sign-up-button">SIGN ME UP FOR
                 NOTIFICATIONS
             </button>
         </form>
@@ -70,5 +73,63 @@
     </div>
 </div>
 
+
+
+<script src="js/jquery.min.js"></script>
+<script>
+    var email = document.getElementById('inputEmail');
+    console.log('email global is', email);
+
+    $('#submit-button').on('click', function(){
+
+        var pattern = new RegExp(/^[a-zA-Z0-9\.\_\-\+]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/);
+        console.log('getting in function ', pattern.test(email.value));
+
+        if (email.value && pattern.test(email.value)) {
+            return email.value && pattern.test(email.value);
+        } else {
+            $('.form-group').addClass('has-error');
+            $('#inputEmail').addClass('invalid');
+            $('#inputEmailErrorLabel').removeClass('hidden');
+
+            email.focus;
+            return false;
+        };
+
+    });
+
+    $("#inputEmail").on("input", function() {
+        var pattern = new RegExp(/^[a-zA-Z0-9\.\_\-\+]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/);
+        if (email.value && pattern.test(email.value)){
+            $('#inputEmailErrorLabel').addClass('hidden');
+            $('.form-group').removeClass('has-error');
+            $('#inputEmail').removeClass('invalid');
+        }
+
+    });
+
+
+
+
+
+
+</script>
+<!-- Google Tag Manager -->
+
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-562VKT"
+
+                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+
+        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+
+})(window,document,'script','dataLayer','GTM-562VKT');</script>
+
+<!-- End Google Tag Manager -->
 </body>
 </html>
