@@ -70,27 +70,5 @@
     </div>
 </div>
 
-<script src="js/jquery.min.js"></script>
-<script src="js/jquery.h5validate.js"></script>
-<script>
-    $(document).ready(function () {
-
-        // test for html5 form validation
-        function hasFormValidation() {
-
-            return (typeof document.createElement( 'input' ).checkValidity == 'function');
-
-        };
-
-        if( hasFormValidation() ) {
-            return false
-        }
-        else{
-            $('#inputEmail').h5Validate();
-        };
-
-    });
-</script>
-
 </body>
 </html>
