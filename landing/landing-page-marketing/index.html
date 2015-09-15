@@ -80,7 +80,7 @@
     var email = document.getElementById('inputEmail');
     console.log('email global is', email);
 
-    $('#submit-button').on('click', function(){
+    $('#submit-button').on('keyUp', function(){
 
         var pattern = new RegExp(/^[a-zA-Z0-9\.\_\-\+]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/);
         console.log('getting in function ', pattern.test(email.value));
