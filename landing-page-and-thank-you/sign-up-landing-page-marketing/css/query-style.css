@@ -1126,8 +1126,14 @@ iPad 3
 
     .jumbotron {
         min-height: 450px;
-        background-size: auto;
-        background-position: cover cover;
+        background: url(../img/sunglasses-hand-smartphone-desk.jpg) no-repeat center center; 
+        background-image: url(../img/sunglasses-hand-smartphone-desk.jpg);
+        background-repeat: no-repeat;
+        background-position: center center;
+       -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
     }
 
     .help-number {
