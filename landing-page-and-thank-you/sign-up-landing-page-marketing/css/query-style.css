@@ -616,8 +616,7 @@ iPad 3
     .jumbotron {
         background-position: center center;
         background: url(../img/sunglasses-hand-smartphone-desk.jpg);
-        background-size: cover;
-        -webkit-background-size: cover;
+        background-size: auto auto;
     }
 }
 @media only screen and (min-device-width:320px) and (max-device-height:640px) and (orientation:portrait) and (-webkit-device-pixel-ratio:2) {
@@ -705,8 +704,7 @@ iPad 3
     .jumbotron {
         background: url(../img/sunglasses-hand-smartphone-desk.jpg);
         background-position: center center;
-        background-size: cover;
-        -webkit-background-size: cover;
+        background-size: auto auto;
         min-height: 450px;
     }
     .help-number {
@@ -728,8 +726,7 @@ iPad 3
     .jumbotron {
         background-position: center center;
         background: url(../img/sunglasses-hand-smartphone-desk.jpg);
-        background-size: cover;
-        -webkit-background-size: cover;
+        background-size: auto auto;
     }
 }
 @media only screen and (min-device-width:320px) and (max-device-height:640px) and (orientation:portrait) and (-webkit-device-pixel-ratio:3) {
@@ -817,8 +814,7 @@ iPad 3
     .jumbotron {
         background: url(../img/sunglasses-hand-smartphone-desk.jpg);
         background-position: center center;
-        background-size: cover;
-        -webkit-background-size: cover;
+        background-size: auto auto;
         min-height: 450px;
     }
     .help-number {
@@ -840,8 +836,7 @@ iPad 3
      .jumbotron {
         background-position: center center;
         background: url(../img/sunglasses-hand-smartphone-desk.jpg);
-        background-size: cover;
-        -webkit-background-size: cover;
+        background-size: auto auto;
     }
 }
 @media only screen and (min-device-width:360px) and (max-device-height:640px) and (orientation:portrait) and (-webkit-device-pixel-ratio:3) {
@@ -929,8 +924,7 @@ iPad 3
     .jumbotron {
         background: url(../img/sunglasses-hand-smartphone-desk.jpg);
         background-position: center center;
-        background-size: cover;
-        -webkit-background-size: cover;
+        background-size: auto auto;
         min-height: 450px;
     }
     .help-number {
