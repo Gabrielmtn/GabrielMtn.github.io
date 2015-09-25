@@ -1024,7 +1024,6 @@ iPad 3
 @media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 3){
     /* Styles */
 }
-
 @media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 3){
     body {
         margin-bottom: 0%;
@@ -1127,6 +1126,8 @@ iPad 3
 
     .jumbotron {
         min-height: 450px;
+        background-size: auto;
+        background-position: cover cover;
     }
 
     .help-number {
