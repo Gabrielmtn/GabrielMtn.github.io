@@ -897,6 +897,18 @@ iPad 3
 /* Samsung Galaxy S4 ----------- */
 @media only screen and (min-device-width: 320px) and (max-device-height: 640px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 3){
     /* Styles */
+    .jumbotron{
+
+     min-height: 450px;
+        background: url(../img/sunglasses-hand-smartphone-desk.jpg) no-repeat center center; 
+        background-image: url(../img/sunglasses-hand-smartphone-desk.jpg);
+        background-repeat: no-repeat;
+        background-position: center center;
+       -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+}
 }
 
 @media only screen and (min-device-width: 320px) and (max-device-height: 640px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 3){
@@ -1023,6 +1035,18 @@ iPad 3
 /* Samsung Galaxy S5 ----------- */
 @media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 3){
     /* Styles */
+     .jumbotron{
+        
+     min-height: 450px;
+        background: url(../img/sunglasses-hand-smartphone-desk.jpg) no-repeat center center; 
+        background-image: url(../img/sunglasses-hand-smartphone-desk.jpg);
+        background-repeat: no-repeat;
+        background-position: center center;
+       -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+}
 }
 @media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 3){
     body {
