@@ -614,9 +614,10 @@ iPad 3
 
     /* Styles */
     .jumbotron {
+        background-position: center center;
         background: url(../img/sunglasses-hand-smartphone-desk.jpg);
-        background-size: contain;
-        -webkit-background-size: contain;
+        background-size: cover;
+        -webkit-background-size: cover;
     }
 }
 @media only screen and (min-device-width:320px) and (max-device-height:640px) and (orientation:portrait) and (-webkit-device-pixel-ratio:2) {
@@ -703,8 +704,9 @@ iPad 3
     }
     .jumbotron {
         background: url(../img/sunglasses-hand-smartphone-desk.jpg);
-        background-size: contain;
-        -webkit-background-size: contain;
+        background-position: center center;
+        background-size: cover;
+        -webkit-background-size: cover;
         min-height: 450px;
     }
     .help-number {
@@ -723,6 +725,12 @@ iPad 3
 @media only screen and (min-device-width:320px) and (max-device-height:640px) and (orientation:landscape) and (-webkit-device-pixel-ratio:3) {
 
     /* Styles */
+    .jumbotron {
+        background-position: center center;
+        background: url(../img/sunglasses-hand-smartphone-desk.jpg);
+        background-size: cover;
+        -webkit-background-size: cover;
+    }
 }
 @media only screen and (min-device-width:320px) and (max-device-height:640px) and (orientation:portrait) and (-webkit-device-pixel-ratio:3) {
     body {
@@ -807,6 +815,10 @@ iPad 3
         padding-bottom: 20px;
     }
     .jumbotron {
+        background: url(../img/sunglasses-hand-smartphone-desk.jpg);
+        background-position: center center;
+        background-size: cover;
+        -webkit-background-size: cover;
         min-height: 450px;
     }
     .help-number {
@@ -825,6 +837,12 @@ iPad 3
 @media only screen and (min-device-width:360px) and (max-device-height:640px) and (orientation:landscape) and (-webkit-device-pixel-ratio:3) {
 
     /* Styles */
+     .jumbotron {
+        background-position: center center;
+        background: url(../img/sunglasses-hand-smartphone-desk.jpg);
+        background-size: cover;
+        -webkit-background-size: cover;
+    }
 }
 @media only screen and (min-device-width:360px) and (max-device-height:640px) and (orientation:portrait) and (-webkit-device-pixel-ratio:3) {
     body {
@@ -909,6 +927,10 @@ iPad 3
         padding-bottom: 20px;
     }
     .jumbotron {
+        background: url(../img/sunglasses-hand-smartphone-desk.jpg);
+        background-position: center center;
+        background-size: cover;
+        -webkit-background-size: cover;
         min-height: 450px;
     }
     .help-number {
