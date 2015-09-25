@@ -1,10 +1,14 @@
-@media screen and (max-width:800px) {
+
+@media screen and (max-width: 800px) {
     .footer-row {
         position: relative;
     }
+
     .header-row {
+
         margin-top: -15px;
     }
+
     .help-number:before {
         font-family: FontAwesome;
         content: "\f095";
@@ -12,6 +16,7 @@
         right: 140px;
         bottom: 0px;
     }
+
     .help-number:after {
         display: block;
         line-height: 2.2;
@@ -27,74 +32,94 @@
         color: #fff;
         border-radius: 4px;
         transition: border-color .25s linear, background-color .25s linear;
+
     }
+
     .help-number:hover:after {
+
         border-color: #ffffff;
         background: #5f8e2f;
     }
+
     .scroll-prompt {
         margin-top: 70px;
     }
 }
 
 /*2x sprites*/
-@media only screen and (-webkit-min-device-pixel-ratio:2), only screen and (min--moz-device-pixel-ratio:2), only screen and (moz-min-device-pixel-ratio:2), only screen and (-o-min-device-pixel-ratio:2/1), only screen and (min-device-pixel-ratio:2), only screen and (min-resolution:192dpi), only screen and (min-resolution:2dppx) {
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (moz-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
     .sprites {
         background: url(../img/sprites-2x.png) no-repeat;
         background-size: 193px auto
     }
 }
-@media only screen  and (min-width:1224px) {
+
+@media only screen  and (min-width: 1224px) {
     .footer-row {
+
     }
 }
 
 /* Large screens ----------- */
-@media only screen  and (min-width:1824px) {
+@media only screen  and (min-width: 1824px) {
     .footer-row {
+
     }
 }
-@media only screen and (min-device-width:768px) and (max-device-width:1024px) and (orientation:portrait) {
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
     .footer-row {
         position: absolute;
         padding-top: 4em;
         height: 130px;
     }
+
     .responsive-header {
         padding-top: 110px;
         font-size: 2.5em;
+
     }
+
     .responsive-text {
         font-size: 1.4em;
     }
+
     .jumbotron {
         min-height: 450px;
     }
+
     .help-number {
         line-height: 2;
     }
+
     .responsive-input-text {
         font-size: 1.4em !important;
         padding-top: 120px;
     }
+
 }
 
 /**********
 iPad 3
 **********/
-@media only screen and (min-device-width:768px) and (max-device-width:1024px) and (orientation:portrait) and (-webkit-min-device-pixel-ratio:2) {
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 2) {
+
     body {
         margin-bottom: 0%;
     }
+
     .footer-row {
         position: absolute;
         padding-top: 3em;
         height: 130px;
     }
+
     .form-signin {
         max-width: 500px;
         padding-top: 15px;
     }
+
     .form-signin .form-control {
         position: relative;
         height: 60px;
@@ -103,6 +128,7 @@ iPad 3
         text-indent: 15px;
         min-width: 500px !important;
     }
+
     .sign-up-button {
         height: 60px;
         margin: 0 auto;
@@ -111,30 +137,42 @@ iPad 3
         margin-top: 30px;
         min-width: 500px !important;
     }
+
     .responsive-header {
         padding-top: 110px !important;
         font-size: 2.5em !important;
+
     }
+
     .responsive-text {
         font-size: 1.4em !important;
         padding-bottom: 20px;
     }
+
     .jumbotron {
         min-height: 450px;
     }
+
     .help-number {
         line-height: 2;
     }
+
     .responsive-input-text {
         font-size: 1.4em !important;
         padding-top: 60px !important;
     }
+
     .responsive-footer-copy {
         line-height: 1;
     }
+
 }
-@media only screen and (min-height:830px) {
+
+
+
+@media only screen and (min-height: 830px) {
     .footer-row {
+
         position: absolute;
         display: table-row;
         height: 130px;
@@ -143,25 +181,33 @@ iPad 3
     }
 }
 
+
+
 /* iPhone 4 ----------- */
-@media only screen and (min-device-width:320px) and (max-device-width:480px) and (orientation:landscape) and (-webkit-min-device-pixel-ratio:2) {
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) and (orientation : landscape) and (-webkit-min-device-pixel-ratio : 2) {
+
 }
-@media only screen and (min-device-width:320px) and (max-device-width:480px) and (orientation:portrait) and (-webkit-min-device-pixel-ratio:2) {
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) and (orientation : portrait) and (-webkit-min-device-pixel-ratio : 2) {
     body {
         margin-bottom: 0%;
     }
-    .content-bg {
+
+    .content-bg{
         padding-top: 0%;
     }
+
     .footer-row {
         position: absolute;
         margin: 0px auto;
         bottom: 0px;
     }
+
     .form-signin {
         max-width: 600px;
         padding-top: 15px;
     }
+
     .form-signin .form-control {
         position: relative;
         height: 100px;
@@ -170,16 +216,20 @@ iPad 3
         text-indent: 15px;
         min-width: 600px !important;
     }
-    .help-number:after {
+
+    .help-number:after{
+
         font-size: 1.2em;
     }
-    .help-number:before {
+
+      .help-number:before {
         font-family: FontAwesome;
         content: "\f095";
         position: absolute;
         right: 140px;
         bottom: 0px;
     }
+
     .help-number:after {
         display: block;
         line-height: 2.2;
@@ -196,23 +246,29 @@ iPad 3
         color: #fff;
         border-radius: 4px;
         transition: border-color .25s linear, background-color .25s linear;
+
     }
-    .thank-you-copy {
+
+    .thank-you-copy{
         margin-top: 40px;
         margin-bottom: 40px;
     }
-    .thank-you-copy h3 {
+
+    .thank-you-copy h3{
         padding-top: 30px;
     }
-    .thank-you-image {
+    .thank-you-image{
         max-width: 100%;
     }
-    .banking-sign-up-btn {
+
+    .banking-sign-up-btn{
         height: 66px;
         width: 80%;
         font-size: 23px;
     }
+
     .sign-up-button {
+
         height: 100px;
         margin: 0 auto;
         font-size: 2em;
@@ -220,44 +276,58 @@ iPad 3
         margin-top: 30px;
         min-width: 600px !important;
     }
+
     .responsive-header {
         padding-top: 110px !important;
         font-size: 2.7em !important;
+
     }
+
     .responsive-text {
         font-size: 1.7em !important;
         padding-bottom: 20px;
     }
+
     .jumbotron {
         min-height: 450px;
     }
+
     .help-number {
         line-height: 2;
     }
+
+
+
     .responsive-input-text {
         font-size: 1.9em !important;
         padding-top: 60px !important;
+
     }
+
     .responsive-footer-copy {
         line-height: 1;
     }
 }
 
 /* iPhone 5 ----------- */
-@media only screen and (min-device-width:320px) and (max-device-height:568px) and (orientation:landscape) and (-webkit-device-pixel-ratio:2) {
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 2){
     body {
         z-index: 1;
     }
+
     .footer-row {
         position: relative;
         margin: 0px auto 0px;
         bottom: 0px;
         height: 100px;
     }
+
+
     .form-signin {
         max-width: 500px;
         padding-top: 15px;
     }
+
     .form-signin .form-control {
         position: relative;
         height: 60px;
@@ -266,21 +336,24 @@ iPad 3
         text-indent: 15px;
         min-width: 500px !important;
     }
-    .thank-you-copy {
+    .thank-you-copy{
         margin-top: 40px;
         margin-bottom: 40px;
     }
-    .thank-you-copy h3 {
+
+    .thank-you-copy h3{
         padding-top: 30px;
     }
-    .thank-you-image {
+    .thank-you-image{
         max-width: 100%;
     }
-    .banking-sign-up-btn {
+
+    .banking-sign-up-btn{
         height: 66px;
         width: 80%;
         font-size: 23px;
     }
+
     .sign-up-button {
         height: 60px;
         margin: 0 auto;
@@ -289,44 +362,61 @@ iPad 3
         margin-top: 30px;
         min-width: 500px !important;
     }
+
     .responsive-header {
         padding-top: 110px !important;
         font-size: 2.7em !important;
+
     }
+
     .responsive-text {
         font-size: 1.7em !important;
         padding-bottom: 20px;
     }
+
     .jumbotron {
         min-height: 450px;
     }
+
     .help-number {
         line-height: 2;
     }
+
+
+
     .responsive-input-text {
         font-size: 1.9em !important;
         padding-top: 60px !important;
+
     }
+
     .responsive-footer-copy {
         line-height: 1;
     }
+
+
 }
-@media only screen and (min-device-width:320px) and (max-device-height:568px) and (orientation:portrait) and (-webkit-device-pixel-ratio:2) {
+
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){
     body {
         margin-bottom: 0%;
     }
-    .content-bg {
+
+    .content-bg{
         padding-top: 0%;
     }
+
     .footer-row {
         position: absolute;
         margin: 0px auto;
         bottom: 0px;
     }
+
     .form-signin {
         max-width: 600px;
         padding-top: 15px;
     }
+
     .form-signin .form-control {
         position: relative;
         height: 100px;
@@ -335,16 +425,20 @@ iPad 3
         text-indent: 15px;
         min-width: 600px !important;
     }
-    .help-number:after {
+
+    .help-number:after{
+
         font-size: 1.2em;
     }
-    .help-number:before {
+
+      .help-number:before {
         font-family: FontAwesome;
         content: "\f095";
         position: absolute;
         right: 140px;
         bottom: 0px;
     }
+
     .help-number:after {
         display: block;
         line-height: 2.2;
@@ -361,23 +455,29 @@ iPad 3
         color: #fff;
         border-radius: 4px;
         transition: border-color .25s linear, background-color .25s linear;
+
     }
-    .thank-you-copy {
+
+    .thank-you-copy{
         margin-top: 40px;
         margin-bottom: 40px;
     }
-    .thank-you-copy h3 {
+
+    .thank-you-copy h3{
         padding-top: 30px;
     }
-    .thank-you-image {
+    .thank-you-image{
         max-width: 100%;
     }
-    .banking-sign-up-btn {
+
+    .banking-sign-up-btn{
         height: 66px;
         width: 80%;
         font-size: 23px;
     }
+
     .sign-up-button {
+
         height: 100px;
         margin: 0 auto;
         font-size: 2em;
@@ -385,50 +485,64 @@ iPad 3
         margin-top: 30px;
         min-width: 600px !important;
     }
+
     .responsive-header {
         padding-top: 110px !important;
         font-size: 2.7em !important;
+
     }
+
     .responsive-text {
         font-size: 1.7em !important;
         padding-bottom: 20px;
     }
+
     .jumbotron {
         min-height: 450px;
     }
+
     .help-number {
         line-height: 2;
     }
+
+
+
     .responsive-input-text {
         font-size: 1.9em !important;
         padding-top: 60px !important;
+
     }
+
     .responsive-footer-copy {
         line-height: 1;
     }
 }
 
 /* iPhone 6 ----------- */
-@media only screen and (min-device-width:375px) and (max-device-height:667px) and (orientation:landscape) and (-webkit-device-pixel-ratio:2) {
-
+@media only screen and (min-device-width: 375px) and (max-device-height: 667px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 2){
     /* Styles */
 }
-@media only screen and (min-device-width:375px) and (max-device-height:667px) and (orientation:portrait) and (-webkit-device-pixel-ratio:2) {
+
+@media only screen and (min-device-width: 375px) and (max-device-height: 667px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){
     body {
         margin-bottom: 0%;
     }
-    .content-bg {
+
+    .content-bg{
         padding-top: 0%;
     }
+
     .footer-row {
         position: absolute;
         margin: 0px auto;
         bottom: 0px;
     }
+
     .form-signin {
         max-width: 600px;
         padding-top: 15px;
     }
+
     .form-signin .form-control {
         position: relative;
         height: 100px;
@@ -437,13 +551,17 @@ iPad 3
         text-indent: 15px;
         min-width: 600px !important;
     }
-    .help-number:before {
+
+
+
+      .help-number:before {
         font-family: FontAwesome;
         content: "\f095";
         position: absolute;
         right: 130px;
         bottom: 0px;
     }
+
     .help-number:after {
         display: block;
         line-height: 2.2;
@@ -458,25 +576,32 @@ iPad 3
         border-color: #fff;
         border-width: 2px;
         color: #fff;
+        
         border-radius: 4px;
         transition: border-color .25s linear, background-color .25s linear;
+
     }
-    .thank-you-copy {
+
+    .thank-you-copy{
         margin-top: 40px;
         margin-bottom: 40px;
     }
-    .thank-you-copy h3 {
+
+    .thank-you-copy h3{
         padding-top: 30px;
     }
-    .thank-you-image {
+    .thank-you-image{
         max-width: 100%;
     }
-    .banking-sign-up-btn {
+
+    .banking-sign-up-btn{
         height: 66px;
         width: 80%;
         font-size: 23px;
     }
+
     .sign-up-button {
+
         height: 100px;
         margin: 0 auto;
         font-size: 2em;
@@ -484,50 +609,64 @@ iPad 3
         margin-top: 30px;
         min-width: 600px !important;
     }
+
     .responsive-header {
         padding-top: 110px !important;
         font-size: 2.7em !important;
+
     }
+
     .responsive-text {
         font-size: 1.7em !important;
         padding-bottom: 20px;
     }
+
     .jumbotron {
         min-height: 450px;
     }
+
     .help-number {
         line-height: 2;
     }
+
+
+
     .responsive-input-text {
         font-size: 1.9em !important;
         padding-top: 60px !important;
+
     }
+
     .responsive-footer-copy {
         line-height: 1;
     }
 }
 
 /* iPhone 6+ ----------- */
-@media only screen and (min-device-width:414px) and (max-device-height:736px) and (orientation:landscape) and (-webkit-device-pixel-ratio:2) {
-
+@media only screen and (min-device-width: 414px) and (max-device-height: 736px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 2){
     /* Styles */
 }
-@media only screen and (min-device-width:414px) and (max-device-height:736px) and (orientation:portrait) and (-webkit-device-pixel-ratio:2) {
+
+@media only screen and (min-device-width: 414px) and (max-device-height: 736px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){
     body {
         margin-bottom: 0%;
     }
-    .content-bg {
+
+    .content-bg{
         padding-top: 0%;
     }
+
     .footer-row {
         position: absolute;
         margin: 0px auto;
         bottom: 0px;
     }
+
     .form-signin {
         max-width: 600px;
         padding-top: 15px;
     }
+
     .form-signin .form-control {
         position: relative;
         height: 100px;
@@ -536,16 +675,20 @@ iPad 3
         text-indent: 15px;
         min-width: 600px !important;
     }
-    .help-number:after {
+
+    .help-number:after{
+
         font-size: 1.2em;
     }
-    .help-number:before {
+
+      .help-number:before {
         font-family: FontAwesome;
         content: "\f095";
         position: absolute;
         right: 140px;
         bottom: 0px;
     }
+
     .help-number:after {
         display: block;
         line-height: 2.2;
@@ -562,23 +705,29 @@ iPad 3
         color: #fff;
         border-radius: 4px;
         transition: border-color .25s linear, background-color .25s linear;
+
     }
-    .thank-you-copy {
+
+    .thank-you-copy{
         margin-top: 40px;
         margin-bottom: 40px;
     }
-    .thank-you-copy h3 {
+
+    .thank-you-copy h3{
         padding-top: 30px;
     }
-    .thank-you-image {
+    .thank-you-image{
         max-width: 100%;
     }
-    .banking-sign-up-btn {
+
+    .banking-sign-up-btn{
         height: 66px;
         width: 80%;
         font-size: 23px;
     }
+
     .sign-up-button {
+
         height: 100px;
         margin: 0 auto;
         font-size: 2em;
@@ -586,55 +735,64 @@ iPad 3
         margin-top: 30px;
         min-width: 600px !important;
     }
+
     .responsive-header {
         padding-top: 110px !important;
         font-size: 2.7em !important;
+
     }
+
     .responsive-text {
         font-size: 1.7em !important;
         padding-bottom: 20px;
     }
+
     .jumbotron {
         min-height: 450px;
     }
+
     .help-number {
         line-height: 2;
     }
+
+
+
     .responsive-input-text {
         font-size: 1.9em !important;
         padding-top: 60px !important;
+
     }
+
     .responsive-footer-copy {
         line-height: 1;
     }
 }
 
 /* Samsung Galaxy S3 ----------- */
-@media only screen and (min-device-width:320px) and (max-device-height:640px) and (orientation:landscape) and (-webkit-device-pixel-ratio:2) {
-
+@media only screen and (min-device-width: 320px) and (max-device-height: 640px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 2){
     /* Styles */
-    .jumbotron {
-        background-position: center center;
-        background: url(../img/sunglasses-hand-smartphone-desk.jpg);
-        background-size: auto auto;
-    }
 }
-@media only screen and (min-device-width:320px) and (max-device-height:640px) and (orientation:portrait) and (-webkit-device-pixel-ratio:2) {
+
+@media only screen and (min-device-width: 320px) and (max-device-height: 640px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){
     body {
         margin-bottom: 0%;
     }
-    .content-bg {
+
+    .content-bg{
         padding-top: 0%;
     }
+
     .footer-row {
         position: absolute;
         margin: 0px auto;
         bottom: 0px;
     }
+
     .form-signin {
         max-width: 600px;
         padding-top: 15px;
     }
+
     .form-signin .form-control {
         position: relative;
         height: 100px;
@@ -643,16 +801,20 @@ iPad 3
         text-indent: 15px;
         min-width: 600px !important;
     }
-    .help-number:after {
+
+    .help-number:after{
+
         font-size: 1.2em;
     }
-    .help-number:before {
+
+      .help-number:before {
         font-family: FontAwesome;
         content: "\f095";
         position: absolute;
         right: 140px;
         bottom: 0px;
     }
+
     .help-number:after {
         display: block;
         line-height: 2.2;
@@ -669,23 +831,29 @@ iPad 3
         color: #fff;
         border-radius: 4px;
         transition: border-color .25s linear, background-color .25s linear;
+
     }
-    .thank-you-copy {
+
+    .thank-you-copy{
         margin-top: 40px;
         margin-bottom: 40px;
     }
-    .thank-you-copy h3 {
+
+    .thank-you-copy h3{
         padding-top: 30px;
     }
-    .thank-you-image {
+    .thank-you-image{
         max-width: 100%;
     }
-    .banking-sign-up-btn {
+
+    .banking-sign-up-btn{
         height: 66px;
         width: 80%;
         font-size: 23px;
     }
+
     .sign-up-button {
+
         height: 100px;
         margin: 0 auto;
         font-size: 2em;
@@ -693,58 +861,64 @@ iPad 3
         margin-top: 30px;
         min-width: 600px !important;
     }
+
     .responsive-header {
         padding-top: 110px !important;
         font-size: 2.7em !important;
+
     }
+
     .responsive-text {
         font-size: 1.7em !important;
         padding-bottom: 20px;
     }
+
     .jumbotron {
-        background: url(../img/sunglasses-hand-smartphone-desk.jpg);
-        background-position: center center;
-        background-size: auto auto;
         min-height: 450px;
     }
+
     .help-number {
         line-height: 2;
     }
+
+
+
     .responsive-input-text {
         font-size: 1.9em !important;
         padding-top: 60px !important;
+
     }
+
     .responsive-footer-copy {
         line-height: 1;
     }
 }
 
 /* Samsung Galaxy S4 ----------- */
-@media only screen and (min-device-width:320px) and (max-device-height:640px) and (orientation:landscape) and (-webkit-device-pixel-ratio:3) {
-
+@media only screen and (min-device-width: 320px) and (max-device-height: 640px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 3){
     /* Styles */
-    .jumbotron {
-        background-position: center center;
-        background: url(../img/sunglasses-hand-smartphone-desk.jpg);
-        background-size: auto auto;
-    }
 }
-@media only screen and (min-device-width:320px) and (max-device-height:640px) and (orientation:portrait) and (-webkit-device-pixel-ratio:3) {
+
+@media only screen and (min-device-width: 320px) and (max-device-height: 640px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 3){
     body {
         margin-bottom: 0%;
     }
-    .content-bg {
+
+    .content-bg{
         padding-top: 0%;
     }
+
     .footer-row {
         position: absolute;
         margin: 0px auto;
         bottom: 0px;
     }
+
     .form-signin {
         max-width: 600px;
         padding-top: 15px;
     }
+
     .form-signin .form-control {
         position: relative;
         height: 100px;
@@ -753,16 +927,20 @@ iPad 3
         text-indent: 15px;
         min-width: 600px !important;
     }
-    .help-number:after {
+
+    .help-number:after{
+
         font-size: 1.2em;
     }
-    .help-number:before {
+
+      .help-number:before {
         font-family: FontAwesome;
         content: "\f095";
         position: absolute;
         right: 140px;
         bottom: 0px;
     }
+
     .help-number:after {
         display: block;
         line-height: 2.2;
@@ -779,23 +957,29 @@ iPad 3
         color: #fff;
         border-radius: 4px;
         transition: border-color .25s linear, background-color .25s linear;
+
     }
-    .thank-you-copy {
+
+    .thank-you-copy{
         margin-top: 40px;
         margin-bottom: 40px;
     }
-    .thank-you-copy h3 {
+
+    .thank-you-copy h3{
         padding-top: 30px;
     }
-    .thank-you-image {
+    .thank-you-image{
         max-width: 100%;
     }
-    .banking-sign-up-btn {
+
+    .banking-sign-up-btn{
         height: 66px;
         width: 80%;
         font-size: 23px;
     }
+
     .sign-up-button {
+
         height: 100px;
         margin: 0 auto;
         font-size: 2em;
@@ -803,58 +987,64 @@ iPad 3
         margin-top: 30px;
         min-width: 600px !important;
     }
+
     .responsive-header {
         padding-top: 110px !important;
         font-size: 2.7em !important;
+
     }
+
     .responsive-text {
         font-size: 1.7em !important;
         padding-bottom: 20px;
     }
+
     .jumbotron {
-        background: url(../img/sunglasses-hand-smartphone-desk.jpg);
-        background-position: center center;
-        background-size: auto auto;
         min-height: 450px;
     }
+
     .help-number {
         line-height: 2;
     }
+
+
+
     .responsive-input-text {
         font-size: 1.9em !important;
         padding-top: 60px !important;
+
     }
+
     .responsive-footer-copy {
         line-height: 1;
     }
 }
 
 /* Samsung Galaxy S5 ----------- */
-@media only screen and (min-device-width:360px) and (max-device-height:640px) and (orientation:landscape) and (-webkit-device-pixel-ratio:3) {
-
+@media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 3){
     /* Styles */
-     .jumbotron {
-        background-position: center center;
-        background: url(../img/sunglasses-hand-smartphone-desk.jpg);
-        background-size: auto auto;
-    }
 }
-@media only screen and (min-device-width:360px) and (max-device-height:640px) and (orientation:portrait) and (-webkit-device-pixel-ratio:3) {
+
+@media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 3){
     body {
         margin-bottom: 0%;
     }
-    .content-bg {
+
+    .content-bg{
         padding-top: 0%;
     }
+
     .footer-row {
         position: absolute;
         margin: 0px auto;
         bottom: 0px;
     }
+
     .form-signin {
         max-width: 600px;
         padding-top: 15px;
     }
+
     .form-signin .form-control {
         position: relative;
         height: 100px;
@@ -863,16 +1053,20 @@ iPad 3
         text-indent: 15px;
         min-width: 600px !important;
     }
-    .help-number:after {
+
+    .help-number:after{
+
         font-size: 1.2em;
     }
-    .help-number:before {
+
+      .help-number:before {
         font-family: FontAwesome;
         content: "\f095";
         position: absolute;
         right: 140px;
         bottom: 0px;
     }
+
     .help-number:after {
         display: block;
         line-height: 2.2;
@@ -889,23 +1083,29 @@ iPad 3
         color: #fff;
         border-radius: 4px;
         transition: border-color .25s linear, background-color .25s linear;
+
     }
-    .thank-you-copy {
+
+    .thank-you-copy{
         margin-top: 40px;
         margin-bottom: 40px;
     }
-    .thank-you-copy h3 {
+
+    .thank-you-copy h3{
         padding-top: 30px;
     }
-    .thank-you-image {
+    .thank-you-image{
         max-width: 100%;
     }
-    .banking-sign-up-btn {
+
+    .banking-sign-up-btn{
         height: 66px;
         width: 80%;
         font-size: 23px;
     }
+
     .sign-up-button {
+
         height: 100px;
         margin: 0 auto;
         font-size: 2em;
@@ -913,27 +1113,34 @@ iPad 3
         margin-top: 30px;
         min-width: 600px !important;
     }
+
     .responsive-header {
         padding-top: 110px !important;
         font-size: 2.7em !important;
+
     }
+
     .responsive-text {
         font-size: 1.7em !important;
         padding-bottom: 20px;
     }
+
     .jumbotron {
-        background: url(../img/sunglasses-hand-smartphone-desk.jpg);
-        background-position: center center;
-        background-size: auto auto;
         min-height: 450px;
     }
+
     .help-number {
         line-height: 2;
     }
+
+
+
     .responsive-input-text {
         font-size: 1.9em !important;
         padding-top: 60px !important;
+
     }
+
     .responsive-footer-copy {
         line-height: 1;
     }
