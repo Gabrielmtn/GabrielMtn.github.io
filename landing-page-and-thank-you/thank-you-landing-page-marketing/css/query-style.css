@@ -845,7 +845,7 @@ iPad 3
   }
 
  h4{
-      font-size: 20px;
+      font-size: 30px;
     }
     .thank-you-image{
         max-width: 100%;
@@ -853,8 +853,8 @@ iPad 3
 
     .banking-sign-up-btn{
         height: 66px;
-        width: 80%;
-        font-size: 23px;
+        width: 100%;
+        font-size: 30px;
     }
 
     .sign-up-button {
