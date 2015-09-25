@@ -132,9 +132,9 @@ input {
 
 
 .jumbotron {
-    background-image: url(../img/sunglasses-hand-smartphone-desk.jpg);
+    background: url(../img/sunglasses-hand-smartphone-desk.jpg);
     background-size: cover;
-    background-position: center;
+    background-position: center center;
     position: relative;
     display: inline-block;
     width: 100%;
