@@ -1,0 +1,301 @@
+@import url(//fonts.googleapis.com/css?family=Open+Sans);
+
+body {
+    background-color: #F6F7FB;
+    font-family: 'Open Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: table;
+    width: 100%;
+}
+
+button {
+    color: rgb(255, 255, 255);
+    height: 50px;
+    text-transform: uppercase;
+}
+
+.content-bg {
+    border-color: rgb(228, 232, 235);
+    background-color: #F6F7FB;
+    height: 25%;
+}
+
+.btn-success {
+    border-radius: 0;
+}
+
+.footer-row {
+    text-align: center;
+    position: relative;
+    width: 100%;
+    height: 100px;
+    bottom: 0;
+    background-color: #fff;
+    padding-top: 2em;
+    margin-top: 40px;
+    border-top: 1px solid #d9dde0;
+}
+
+.form-control {
+    position: relative;
+    font-size: 16px;
+    border-radius: 2px;
+    min-width: 400px;
+    max-width: 400px;
+    height: 50px;
+}
+
+.form-signin {
+    max-width: 425px;
+    padding: 15px;
+    margin: 0 auto;
+    box-shadow: none;
+}
+
+.form-signin .form-control {
+    position: relative;
+    height: auto;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+
+.form-signin input[type="email"] {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="text"] {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.help-number {
+    font-size: 16px;
+    color: rgb(255, 255, 255);
+    line-height: 2.5;
+    min-width: 90px;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.header-row {
+    margin-top: -30px;
+}
+
+.help-number:after {
+    content: "Need Help? Call us at 1-800-EASTERN (327-8376)";
+}
+
+i {
+    display: inline-block;
+}
+
+input {
+    box-shadow: none;
+    font-size: 18px;
+}
+
+.input-text-prompt {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.502);
+    line-height: 1.333;
+    padding-top: 2%;
+    color: rgb(32, 33, 35);
+    font-weight: 400;
+}
+
+.invalid::-webkit-input-placeholder {
+    color: #a94442;
+}
+
+.invalid:-moz-placeholder { /* Firefox 18- */
+    color: #a94442;
+}
+
+.invalid::-moz-placeholder {  /* Firefox 19+ */
+    color: #a94442;
+}
+
+.invalid:-ms-input-placeholder {
+    color: #a94442;
+}
+
+
+.jumbotron {
+    background-image: url(../img/sunglasses-hand-smartphone-desk.jpg);
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    min-height: 340px;
+    height: 26%;
+    color: #fff;
+
+    /*background-color: rgba(0, 51, 102 0.7);*/
+
+    /*background-blend-mode: multiply;*/
+}
+
+.jumbotron:before {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: linear-gradient(to bottom right, #202123, #202123);
+    opacity: .5;
+}
+
+.jumbotron h2 {
+    font-size: 30px;
+    color: rgb(255, 255, 255);
+    line-height: 1.2;
+    text-align: center;
+    margin-top: 0;
+    font-weight: bold;
+    padding-top: 10%;
+    z-index: 3;
+}
+
+.jumbotron p {
+    font-size: 18px;
+    color: #d5dce4;
+    z-index: 3;
+}
+
+.scroll-prompt {
+    margin-top: 60px;
+}
+
+.scroll-prompt > p {
+    font-size: 14px;
+}
+
+.scroll-text {
+
+    margin-bottom: 5px !important;
+
+}
+
+.sign-up-button-wrapper {
+    padding-left: 0;
+}
+
+.sign-up-button {
+    border-radius: 2px;
+    margin-top: 23px;
+    background-color: #5f8e2f;
+    border-color: #5f8e2f;
+    transition: all 0.3s linear;
+    min-width: 400px;
+    max-width: 400px;
+    font-weight: bold;
+}
+
+.sign-up-button:hover {
+    border-color: #538123;
+    background-color: #538123;
+}
+
+.sign-up-button:focus {
+    border-color: #5f8e2f;
+    background-color: #5f8e2f;
+}
+
+.smaller-logo {
+    background-position: 0 0;
+    width: 193px;
+    height: 27px
+}
+
+.sprites {
+    display: inline-block;
+    background: url(../img/sprites.png) no-repeat;
+    text-indent: -9999px;
+    overflow: hidden
+}
+
+.sprites.logo {
+    background-position: 0 0;
+    width: 193px;
+    height: 27px
+}
+
+.sprites.equal-lender {
+    background-position: 0 -27px;
+    border: 0px;
+    width: 20px;
+    height: 15px;
+}
+
+@-moz-keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        -moz-transform: translateY(0);
+        transform: translateY(0);
+    }
+    40% {
+        -moz-transform: translateY(11px);
+        transform: translateY(11px);
+    }
+    60% {
+        -moz-transform: translateY(5px);
+        transform: translateY(5px);
+    }
+}
+
+@-webkit-keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+    }
+    40% {
+        -webkit-transform: translateY(11px);
+        transform: translateY(11px);
+    }
+    60% {
+        -webkit-transform: translateY(5px);
+        transform: translateY(5px);
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        -moz-transform: translateY(0);
+        -ms-transform: translateY(0);
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+    }
+    40% {
+        -moz-transform: translateY(11px);
+        -ms-transform: translateY(11px);
+        -webkit-transform: translateY(11px);
+        transform: translateY(11px);
+    }
+    60% {
+        -moz-transform: translateY(5px);
+        -ms-transform: translateY(5px);
+        -webkit-transform: translateY(5px);
+        transform: translateY(5px);
+    }
+}
+
+.bounce {
+    -moz-animation: bounce ease-in-out 2s 3s 3;
+    -webkit-animation: bounce ease-in-out 2s 3s 3;
+    animation: bounce ease-in-out 2s 3s 3;
+}
