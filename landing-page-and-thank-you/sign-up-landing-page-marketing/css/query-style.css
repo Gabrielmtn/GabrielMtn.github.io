@@ -1037,7 +1037,7 @@ iPad 3
     /* Styles */
      .jumbotron{
         
-     min-height: 450px;
+        min-height: 350px;
         background: url(../img/sunglasses-hand-smartphone-desk.jpg) no-repeat center center; 
         background-image: url(../img/sunglasses-hand-smartphone-desk.jpg);
         background-repeat: no-repeat;
