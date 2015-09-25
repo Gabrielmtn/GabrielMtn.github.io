@@ -837,11 +837,15 @@ iPad 3
     .thank-you-copy{
         margin-top: 40px;
         margin-bottom: 40px;
-        font-size: 2em;
     }
 
     .thank-you-copy h3{
         padding-top: 30px;
+      font-size: 33px;
+  }
+
+ h4{
+      font-size: 20px;
     }
     .thank-you-image{
         max-width: 100%;
