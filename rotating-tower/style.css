@@ -1,22 +1,17 @@
 html {
 	height: 100%;
-	margin: 0;
 }
 body {
-	background: #2980b9;
 	background: black;
 	font-size: 2px;
 }
-* {
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-}
+
 .main {
 	max-width: 100%;
 	margin: 0 auto;
 	text-align: center;
 }
+
 .geom, .geom-2 {
 	position: relative;
 	overflow: hidden;
@@ -32,72 +27,92 @@ body {
 
 
 @-webkit-keyframes TURNgeom1 {
-	0% {
-		transform: translateX(100%px)rotateX(35deg) rotateZ(-90deg)scale(1.1);
+	
+	12% {
+		transform: translateX(-100%) rotateZ(90deg)skewX(3deg) skewY(3deg) scale(0.9)rotateY(-5deg) rotateZ(15deg);
 	}
-	22.5% {
-		transform: translateX(-100%) rotateZ(90deg)skewX(3deg) skewY(3deg) scale(0.9);
-	}
-	45% {
-		transform: translateY(-100%) rotateX(15deg)skewX(-3deg) skewY(-3deg) translateZ(-100px) rotateZ(0deg) scale(1);
+	24% {
+		transform: scale(0.8) translateY(-110%) rotateX(15deg)skewX(-2deg) skewY(-2deg) translateZ(-100px) rotateZ(0deg)  perspective(57px);
 		
 	}
-	65% {
-		transform: translateX(100%) rotateZ(-90deg)skewX(3deg) skewY(3deg) scale(0.9);
+	36% {
+		transform: translateX(100%) rotateZ(-90deg)skewX(3deg) skewY(3deg) scale(0.9)  perspective(37px) rotateZ(55deg);
 	}
-	75% {
-		transform: translateY(0deg)rotateZ(45deg) skewX(0deg) skewY(0deg)scale(1.1);
+	48% {
+		transform: translateY(0deg)rotateZ(45deg) skewX(0deg) skewY(0deg)scale(1.1) perspective(-27px);
 	}
 
-	110% {
-		transform: translateY(0deg)rotateZ(0deg) scale(1.1);
+	60% {
+		transform: translateY(0deg)rotateZ(0deg) scale(0.7) perspective(-47px) rotateY(5deg);
+	}
+
+	65% {
+		transform: translateY(80%) rotateZ(-90deg)skewX(3deg) skewY(3deg) scale(0.8)  perspective(37px) rotateZ(55deg);
+	
+	}
+    85% {
+		transform: translateY(0%) rotateZ(10deg)rotateY(30deg)skewX(2deg) skewY(2deg) scale(0.1)  perspective(-90px);
+	
 	}
 }
 @-moz-keyframes TURNgeom1 {
-	0% {
-		transform: translateX(100%px)rotateX(35deg) rotateZ(-90deg)scale(1.1);
+	
+	12% {
+		transform: translateX(-100%) rotateZ(-45deg)skewX(3deg) skewY(3deg) scale(0.9) perspective(17px) rotateZ(15deg);
 	}
-	22.5% {
-		transform: translateX(-100%) rotateZ(90deg)skewX(3deg) skewY(3deg) scale(0.9);
-	}
-	45% {
-		transform: translateY(-100%) rotateX(15deg)skewX(-3deg) skewY(-3deg) translateZ(-100px) rotateZ(0deg) scale(1);
+	24% {
+		transform: scale(0.8) translateY(-110%) rotateX(15deg)skewX(-2deg) skewY(-2deg) translateZ(-100px) rotateZ(0deg)  perspective(57px);
 		
 	}
-	65% {
-		transform: translateX(100%) rotateZ(-90deg)skewX(3deg) skewY(3deg) scale(0.9);
+	36% {
+		transform: translateX(100%) rotateZ(-90deg)skewX(3deg) skewY(3deg) scale(0.9)  perspective(37px) rotateZ(55deg) ;
 	}
-	75% {
-		transform: translateY(0deg)rotateZ(45deg) skewX(0deg) skewY(0deg)scale(1.1);
+	48% {
+		transform: translateY(0deg)rotateZ(45deg) skewX(0deg) skewY(0deg)scale(1.1) perspective(-27px);
 	}
 
-	110% {
-		transform: translateY(0deg)rotateZ(0deg) scale(1.1);
+	60% {
+		transform: translateY(0deg)rotateZ(0deg) scale(0.7) perspective(-47px) rotateY(5deg);
+	}
+
+	65% {
+		transform: translateY(80%) rotateZ(-90deg)skewX(3deg) skewY(3deg) scale(0.8)  perspective(37px) rotateZ(55deg);
+	
+	}
+    85% {
+		transform: translateY(0%) rotateZ(10deg)rotateY(30deg)skewX(2deg) skewY(2deg) scale(0.1)  perspective(-90px);
+	
 	}
 }
-@-keyframes TURNgeom1 {
-	0% {
-		transform: translateX(100%px)rotateX(35deg) rotateZ(-90deg)scale(1.1);
+@keyframes TURNgeom1 {
+	
+	12% {
+		transform: translateX(-100%) rotateZ(-45deg)skewX(3deg) skewY(3deg) scale(0.9) perspective(17px) rotateZ(15deg);
 	}
-	22.5% {
-		transform: translateX(-100%) rotateZ(90deg)skewX(3deg) skewY(3deg) scale(0.9);
-	}
-	45% {
-		transform: translateY(-100%) rotateX(15deg)skewX(-3deg) skewY(-3deg) translateZ(-100px) rotateZ(0deg) scale(1);
+	24% {
+		transform: scale(0.8) translateY(-110%) rotateX(15deg)skewX(-2deg) skewY(-2deg) translateZ(-100px) rotateZ(0deg)  perspective(57px);
 		
 	}
-	65% {
-		transform: translateX(100%) rotateZ(-90deg)skewX(3deg) skewY(3deg) scale(0.9);
+	36% {
+		transform: translateX(100%) rotateZ(-90deg)skewX(3deg) skewY(3deg) scale(0.9)  perspective(37px) rotateZ(55deg);
 	}
-	75% {
-		transform: translateY(0deg)rotateZ(45deg) skewX(0deg) skewY(0deg)scale(1.1);
+	48% {
+		transform: translateY(0deg)rotateZ(45deg) skewX(0deg) skewY(0deg)scale(1.1) perspective(-27px);
 	}
 
-	110% {
-		transform: translateY(0deg)rotateZ(0deg) scale(1.1);
+	60% {
+		transform: translateY(0deg)rotateZ(0deg) scale(0.7) perspective(-47px) rotateY(5deg);
+	}
+
+	65% {
+		transform: translateY(80%) rotateZ(-90deg)skewX(3deg) skewY(3deg) scale(0.8)  perspective(37px) rotateZ(55deg);
+	
+	}
+    85% {
+		transform: translateY(0%) rotateZ(10deg)rotateY(-45deg)skewX(3deg) skewY(2deg) sca7e(0.1)  perspective(-90px);
+	
 	}
 }
-
 
 
 .geom1, .geom2, .geom3, .geom4, .geom5, .geom6, .geom7, .geom8, .geom9, .geom10, .geom11, .geom12, .geom13, .geom14, .geom15, .geom16, .geom17, .geom18, .geom19, .geom20, .geom21, .geom22, .geom23, .geom24, .geom25 {
@@ -109,11 +124,17 @@ body {
 	left: 0;
 	margin: auto;
 	overflow: hidden;
+	border-radius: 50%;
 	-webkit-animation: TURNgeom1 5s ease-in-out infinite;
 	-moz-animation: TURNgeom1 5s ease-in-out infinite;
 	-o-animation: TURNgeom1 5s ease-in-out infinite;
 	animation: TURNgeom1 5s ease-in-out infinite;
-	anim
+	backface-visibility: visible;
+   perspective-origin: 150% 150%;
+   transform-style: preserve-3d;
+   -webkit-backface-visibility: visible;
+   -webkit-perspective-origin: 150% 150%;
+   -webkit-transform-style: preserve-3d;
 }
 .geom1, .geom3, .geom5, .geom7, .geom9, .geom11, .geom13, .geom15, .geom17, .geom19, .geom21, .geom23, .geom25 {
 	background: black;
@@ -121,13 +142,9 @@ body {
 .geom, .geom2, .geom4, .geom6, .geom8, .geom10, .geom12, .geom14, .geom16, .geom18, .geom20, .geom22, .geom24 {
 	background: #911410;
 
-}
-.geom-2 .geom1, .geom-2 .geom3, .geom-2 .geom5, .geom-2 .geom7, .geom-2 .geom9, .geom-2 .geom11, .geom-2 .geom13, .geom-2 .geom15, .geom-2 .geom17, .geom-2 .geom19, .geom-2 .geom21, .geom-2 .geom23, .geom-2 .geom25, .geom-2 .geom2, .geom-2 .geom4, .geom-2 .geom6, .geom-2 .geom8, .geom-2 .geom10, .geom-2 .geom12, .geom-2 .geom14, .geom-2 .geom16, .geom-2 .geom18, .geom-2 .geom20, .geom-2 .geom22, .geom-2 .geom24 {
 
-	/*box-shadow: 0px 0px 3px 2px rgba(255, 255, 255, 0.8) inset;*/
-	border: 1px solid rgba(255, 255, 255, 0.8);
-	background: none
 }
+
 .geom1 {
 	width: 190em;
 	height: 190em;
