@@ -2,3 +2,4 @@
 # Read about how to use .gitignore: https://help.github.com/articles/ignoring-files
 .idea/
 .DS_Store
+/rotating-tower/config.codekit
