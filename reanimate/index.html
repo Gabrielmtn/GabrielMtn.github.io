@@ -1,126 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>ReAnimate.css</title>
+  <title>ngReAnimate.css</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="initial-scale=1, minimal-ui" />
 
   <link rel="dns-prefetch" href="//fonts.googleapis.com" />
   <link rel="dns-prefetch" href="//code.jquery.com" />
 
-  <link href='//fonts.googleapis.com/css?family=Roboto:400,100,400italic,700italic,700' rel='stylesheet' type='text/css'>
+  <!-- <link href='//fonts.googleapis.com/css?family=Roboto:400,100,400italic,700italic,700' rel='stylesheet' type='text/css'> -->
 
   <link rel="stylesheet" href="reanimate.css" />
   <link rel="stylesheet" href="style.css" />
 </head>
-<body class="animated fadeInUpSmall">
-<header class="site__header island">
-  <div class="wrap">
-   <span id="animationSandbox" style="display: block;"><h1 class="site__title mega"><span class="re-hue">Re</span>Animate<span class="re-hue">.css</span></h1></span>
-    <span class="beta subhead">For your consideration: </span><br/> <br/>
-    <span class="beta subhead">The missing "small" type for Animate.css</span>
-    <br/><br/>
-    <span class="beta extra subhead">(as well as iteration and timing concepts)</span>
+<body class="animated fadeInUpSmall" ng-app="app">
+<reanimate></reanimate>
 
-  </div>
-</header><!-- /.site__header -->
-
-<main class="site__content island" role="content">
-  <div class="wrap">
-    <p>
-      <select class="input input--dropdown js--animations">
-
-
-
-        <optgroup label="Bouncing Entrances">
-          <option value="bounceInSmall">bounceInSmall</option>
-          <option value="bounceInDownSmall">bounceInDownSmall</option>
-          <option value="bounceInLeftSmall">bounceInLeftSmall</option>
-          <option value="bounceInRightSmall">bounceInRightSmall</option>
-          <option value="bounceInUpSmall">bounceInUpSmall</option>
-        </optgroup>
-
-        <optgroup label="Bouncing Exits">
-          <option value="bounceOutSmall">bounceOutSmall</option>
-          <option value="bounceOutDownSmall">bounceOutDownSmall</option>
-          <option value="bounceOutLeftSmall">bounceOutLeftSmall</option>
-          <option value="bounceOutRightSmall">bounceOutRightSmall</option>
-          <option value="bounceOutUpSmall">bounceOutUpSmall</option>
-        </optgroup>
-
-        <optgroup label="Fading Entrances">
-          <option value="fadeInDownSmall">fadeInDownSmall</option>
-          <option value="fadeInLeftSmall">fadeInLeftSmall</option>
-          <option value="fadeInRightSmall">fadeInRightSmall</option>
-          <option value="fadeInUpSmall">fadeInUpSmall</option>
-        </optgroup>
-
-        <optgroup label="Fading Exits">
-          <option value="fadeOutDownSmall">fadeOutDownSmall</option>
-          <option value="fadeOutLeftSmall">fadeOutLeftSmall</option>
-          <option value="fadeOutRightSmall">fadeOutRightSmall</option>
-          <option value="fadeOutUpSmall">fadeOutUpSmall</option>
-        </optgroup>
-
-        <optgroup label="New Ideas">
-          <option value="flash2x">flash2x</option>
-          <option value="flash3x">flash3x</option>
-          <option value="pulse2x">pulse2x</option>
-          <option value="pulse3x">pulse3x</option>
-          <option value="pulseBig">pulseBig</option>
-          <option value="pulseSmall">pulseSmall</option>
-          <option value="tiltBack">tiltBack</option>
-          <option value="tiltBackBig">tiltBackBig</option>
-          <option value="tiltForward">tiltForward</option>
-          <option value="tiltForwardBig">tiltForwardBig</option>
-          <option value="nodYes">nodYes</option>
-          <option value="nodNo">nodNo</option>
-        </optgroup>
-
-        <optgroup label="rotates">
-          <option value="rotate">rotate</option>
-          <option value="rotateSmall">rotateSmall</option>
-          <option value="rotateReverse">rotateReverse</option>
-          <option value="rotateReverseSmall">rotateReverseSmall</option>
-        </optgroup>
-
-      </select>
-
-      <button class="butt js--triggerAnimation">Animate it</button>
-    </p>
-    <hr />
-    <!--#  ████████╗ ██████╗ ██████╗  ██████╗-->
-    <!--#  ╚══██╔══╝██╔═══██╗██╔══██╗██╔═══██╗-->
-    <!--#     ██║   ██║   ██║██║  ██║██║   ██║-->
-    <!--#     ██║   ██║   ██║██║  ██║██║   ██║-->
-    <!--#     ██║   ╚██████╔╝██████╔╝╚██████╔╝-->
-    <!--#     ╚═╝    ╚═════╝ ╚═════╝  ╚═════╝-->
-    <!--#-->
-    <p class="meta"><a href="https://raw.githubusercontent.com/Gabrielmtn/GabrielMtn.github.io/master/reanimate/reanimate.css" download="animate.css">Download ReAnimate.css</a> or <a href="//github.com/Gabrielmtn/GabrielMtn.github.io/tree/master/reanimate">View on GitHub</a></p>
-  </div>
-</main><!-- /.site__content -->
-
-<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
-<script>
-  function testAnim(x) {
-    $('#animationSandbox').removeClass().addClass(x + ' animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
-      $(this).removeClass();
-    });
-  };
-
-  $(document).ready(function(){
-    $('.js--triggerAnimation').click(function(){
-      var anim = $('.js--animations').val();
-      testAnim(anim);
-    });
-
-    $('.js--animations').change(function(){
-      var anim = $(this).val();
-      testAnim(anim);
-    });
-  });
-
-</script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+<script src="components/reanimate/reanimate.directive.js" charset="utf-8"></script>
 
 </body>
 </html>

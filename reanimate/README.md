@@ -1,2 +1,2 @@
-# ReAnimate.css
-*Work in progress
+# ngReanimate
+Angular version of reanimate by GabrielMtn
