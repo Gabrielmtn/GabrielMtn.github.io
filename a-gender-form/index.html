@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>a gender form</title>
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/typeahead.css">
+  <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/typeahead.bundle.min.js"></script>
+  <script type="text/javascript" src="js/form.js"></script>
+</head>
+<body class="container">
+<header class="page-header">
+  <h1>a simple friggin gender form</h1>
+  <p>done right cuz you cissies sure couldn't [<a href="https://github.com/garbados/a-gender-form">src</a>]</p>
+</header>
+<section>
+  <div class="row">
+    <div class="col-xs-12">
+      <p>Enter your gender! If it resembles any preloaded in 'genders.txt' it will be provided as a dropdown option. You can enter
+      any string, though; we're not here to police you.</p>
+    </div>
+  </div>
+  <form class="row gender">
+    <div class="form-group col-xs-4">
+      <label class="sr-only" for="gender">what's ur friggin gender</label>
+      <input class="typeahead form-control" type="text" id="gender" placeholder="what's ur friggin gender">
+    </div>
+    <button class="col-xs-8 btn btn-default" type="submit">Submit Gender For Approval</button>
+  </form>
+  <div class="row">
+    <div class="col-xs-12">
+      <p class="well bg-success gender-approved text-center" style="display:none;">GENDER APPROVED</p>
+    </div>
+  </div>
+</section>
+</body>
+</html>
