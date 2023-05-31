@@ -6,8 +6,8 @@
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="icon" type="image/x-icon" href="http://cartodb.github.io/odyssey.js/sandbox/favicon.png">
-  <link rel="icon" type="image/png" href="http://cartodb.github.io/odyssey.js/sandbox/favicon.png">
+  <link rel="icon" type="image/x-icon" href="https://cartodb.github.io/odyssey.js/sandbox/favicon.png">
+  <link rel="icon" type="image/png" href="https://cartodb.github.io/odyssey.js/sandbox/favicon.png">
 
   <link rel="stylesheet" href="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/themes/css/cartodb.css">
   <link rel="stylesheet" href="https://cartodb.github.io/odyssey.js/sandbox/css/slides.css">
@@ -29,7 +29,7 @@
 
   <div id="credits">
     <span class="title" id="title">My oddysey</span>
-    <span class="author"><strong id="author">By Gabriel using</strong> <a href="http://cartodb.github.io/odyssey.js/">Odyssey.js</a><span>
+    <span class="author"><strong id="author">By Gabriel using</strong> <a href="https://cartodb.github.io/odyssey.js/">Odyssey.js</a><span>
   </span></span></div>
 
   <script src="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/cartodb.js"></script>
@@ -113,7 +113,7 @@
       init: function() {
         var seq = O.Triggers.Sequential();
 
-        var baseurl = this.baseurl = 'http://{s}.api.cartocdn.com/base-light/{z}/{x}/{y}.png';
+        var baseurl = this.baseurl = 'https://{s}.api.cartocdn.com/base-light/{z}/{x}/{y}.png';
         var map = this.map = L.map('map').setView([0, 0.0], 4);
         var basemap = this.basemap = L.tileLayer(baseurl, {
           attribution: 'data OSM - map CartoDB'
@@ -143,12 +143,12 @@
         this.story.clear();
 
         if (this.baseurl && (this.baseurl !== actions.global.baseurl)) {
-          this.baseurl = actions.global.baseurl || 'http://0.api.cartocdn.com/base-light/{z}/{x}/{y}.png';
+          this.baseurl = actions.global.baseurl || 'https://0.api.cartocdn.com/base-light/{z}/{x}/{y}.png';
 
           this.basemap.setUrl(this.baseurl);
         }
 
-        if (this.cartoDBLayer && ("http://"+self.cartoDBLayer.options.user_name+".cartodb.com/api/v2/viz/"+self.cartoDBLayer.options.layer_definition.stat_tag+"/viz.json" !== actions.global.vizjson)) {
+        if (this.cartoDBLayer && ("https://"+self.cartoDBLayer.options.user_name+".cartodb.com/api/v2/viz/"+self.cartoDBLayer.options.layer_definition.stat_tag+"/viz.json" !== actions.global.vizjson)) {
           this.map.removeLayer(this.cartoDBLayer);
 
           this.cartoDBLayer = null;
@@ -311,7 +311,7 @@ It became a lot harder to get into the city, but we were closing in on our goal.
 
 (Bedford is actually the home of the oldest known flag in the United States, check it out below)
 
-![Bedford](http://www.bedfordlibrary.net/images/flag-fr.gif)
+![Bedford](https://www.bedfordlibrary.net/images/flag-fr.gif)
 
 #An End, A Beginning
 ```
