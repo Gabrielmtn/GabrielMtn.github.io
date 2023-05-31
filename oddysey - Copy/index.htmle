@@ -27,7 +27,7 @@
   </div>
 
   <div id="credits">
-    <span class="title" id="title">Healing oddysey</span>
+    <span class="title" id="title">My oddysey</span>
     <span class="author"><strong id="author">By Gabriel using</strong> <a href="http://cartodb.github.io/odyssey.js/">Odyssey.js</a><span>
   </span></span></div>
 
@@ -253,7 +253,7 @@
 -author: "Gabriel Martin"
 ```
 
-# Meet healer
+#It Was A Dark And Stormy Night...
 ```
 L.marker([37.7620, -122.4385]).actions.addRemove(S.map)
 L.marker([36.3018, -80.1453]).actions.addRemove(S.map)
@@ -261,20 +261,29 @@ L.marker([36.3018, -80.1453]).actions.addRemove(S.map)
 - zoom: 7
 ```
 
-Hey there based on some of what you told me, these options could be right! 
+Hi, I'm Gabriel, I'm building cool stuff during my time at Startup Institute.
+
+For this entry, here's the story of where I've been so far!
 
 
-# See healer options
+This is where I was born, Winston-Salem, North Carolina. Typically, we like BBQ, tea, and good music. But something was missing... 
+
+
+#The Startup Bug Bites!
 ```
 L.marker([42.4921, -71.1138]).actions.addRemove(S.map)
 - center: [42.2560, -71.1722]
 - zoom: 9
 ```
 
-Lorem ipsum dolor sit amet consectetur adipisicing, elit. Officiis corporis assumenda aut quasi ipsum unde, voluptatibus ullam cum nulla dolor. 
+Eventually, I was bitten by the startup bug.
+
+I really wanted to help people, so I dropped out, and moved in with my cofounder to the Boston area, in a city called Medford.
+
+Together we founded Organism, designed to help early stage entrepreneurs develop the network, resources and process they needed!
 
 
-# Meet healer
+#Working and volunteering in Cambridge!
 ```
 L.marker([42.3679, -71.1468]).actions.addRemove(S.map)
 - center: [42.3634, -71.0685]
@@ -283,34 +292,50 @@ L.marker([42.3355, -71.0424]).actions.addRemove(S.map)
 L.marker([42.3750, -71.1269]).actions.addRemove(S.map)
 ```
 
-Lorem ipsum dolor sit amet consectetur adipisicing, elit. Officiis corporis assumenda aut quasi ipsum unde, voluptatibus ullam cum nulla dolor. 
+While working on Organism, I also worked in Cambridge to make ends meet.
 
-# Meet healer
+I used that time  as my chance to volunteer at amazing places like MIT, MassChallenge, and the Cambridge Innovation Center.
+
+
+#We move to Bedford, MA!
 ```
 L.marker([42.5159, -71.3177]).actions.addRemove(S.map)
 - center: [42.5217, -71.3150]
 - zoom: 9
 ```
 
-Lorem ipsum dolor sit amet consectetur adipisicing, elit. Officiis corporis assumenda aut quasi ipsum unde, voluptatibus ullam cum nulla dolor. 
+While working on Organism, my co-founder Geoff and I moved to Bedford.
 
-# Meet healer
+It became a lot harder to get into the city, but we were closing in on our goal.
+
+(Bedford is actually the home of the oldest known flag in the United States, check it out below)
+
+![Bedford](http://www.bedfordlibrary.net/images/flag-fr.gif)
+
+#An End, A Beginning
 ```
 - center: [42.6552, -71.2958]
 - zoom: 9
 L.marker([42.6572, -71.2958]).actions.addRemove(S.map)
 ```
 
-Lorem ipsum dolor sit amet consectetur adipisicing, elit. Officiis corporis assumenda aut quasi ipsum unde, voluptatibus ullam cum nulla dolor. 
-# Meet healer
+Eventually, after the stress of repeatedly running into roadblocks with Organism, Geoff and I parted ways in early 2013.
+
+However, I had just brought on a new advisor out in Denver, who saw my work and was enthusiastic about the potential of us working together on a prototype he'd developed with Denver University  
+
+#Lessons best learned early 
 ```
 L.marker([39.8634, -104.8535]).actions.addRemove(S.map)
 - center: [39.8117, -104.8398]
 - zoom: 9
 ```
-Lorem ipsum dolor sit amet consectetur adipisicing, elit. Officiis corporis assumenda aut quasi ipsum unde, voluptatibus ullam cum nulla dolor. 
+While there's plenty to say, this experience is best kept succinct. 
 
-# Meet healer
+Lesson One: When it comes to finances, clarify everything, even if it seems too obvious to need clarification. In other words, trust but verify.
+
+Lesson Two: Don't give anyone else the kill switch. If someone else's exit from a company forces yours as well, be wary.
+
+#Onwards and upwards
 ```
 L.marker([42.3386, -71.0637]).actions.addRemove(S.map)
 - center: [42.3386, -71.0637]
@@ -320,7 +345,11 @@ L.marker([42.3386, -71.0637]).actions.addRemove(S.map)
 
 
 
-Lorem ipsum dolor sit amet consectetur adipisicing, elit. Officiis corporis assumenda aut quasi ipsum unde, voluptatibus ullam cum nulla dolor. 
+As of June 23rd I officially shed the "founder blues" and became a student at  [Startup Institute](startupinstitute.com). I'm on my way to learning how to use all of the crazy experiences I've had to be a kickass startup team member and frontend developer.
+
+Reach out to me at <Gabrielmtn@gmail.com>
+
+I love meeting new people!
 
 Cheers!
 </script></body></html>
