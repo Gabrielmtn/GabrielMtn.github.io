@@ -540,7 +540,7 @@ header {
     max-height: 800px;
     opacity: 0;
     background-attachment: scroll;
-    background-position: center center;
+    background-position: bottom;
     background-repeat: none;
     -webkit-background-size: cover;
     -moz-background-size: cover;
