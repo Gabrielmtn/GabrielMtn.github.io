@@ -143,6 +143,71 @@
                 font-size: 1.4rem;
             }
         }
+
+        @media (max-width: 600px) {
+            :root {
+                --base-font-size: 15px;
+                --reading-line-length: 45ch;
+            }
+
+            body {
+                padding: 1rem;
+                line-height: 1.5;
+            }
+            
+            .quote-container {
+                padding: 1.5rem 1rem;
+                margin: 1rem 0;
+            }
+
+            blockquote {
+                /* Ensure comfortable reading width on mobile */
+                max-width: 45ch;
+                /* Slightly tighter line height for smaller screens */
+                line-height: 1.4;
+                /* Adjust font size for mobile */
+                font-size: 1.25rem;
+                text-align: left;
+            }
+
+            .blurb {
+                padding: 1.25rem;
+                text-align: left;
+                /* Ensure comfortable reading width */
+                max-width: 45ch;
+                line-height: 1.5;
+            }
+
+            .attribution {
+                text-align: left;
+                margin: 1rem 0;
+            }
+            
+            /* Increase touch target size */
+            .email-link {
+                padding: 0.875rem 1.75rem;
+                width: 100%;
+                box-sizing: border-box;
+                text-align: center;
+            }
+        }
+
+        /* Special handling for very small screens */
+        @media (max-width: 350px) {
+            :root {
+                --base-font-size: 14px;
+                --reading-line-length: 40ch;
+            }
+
+            .quote-container {
+                padding: 1rem 0.75rem;
+            }
+
+            blockquote {
+                font-size: 1.15rem;
+            }
+        }
+        
     </style>
 </head>
 <body>
@@ -162,9 +227,8 @@
 
         <section class="blurb" aria-label="About Me">
             <h1 class="visually-hidden">About Gabriel Martin</h1>
-            <p>Hi, I'm Gabriel, this is what I can bring to a team.</p>
-            <p>To design exceptional digital experiences, I focus on fostering true synthesis across development, design, and UX. My expertise in these disciplines helps produce truly meaningful convergence of skills and perspectives, guided by user research, and synthesized to achieve the highest levels of both functionality and user satisfaction. </p>
-         <p>Let's work together to bring your vision to life and create something remarkable.</p>
+            <p>Hi, I'm Gabriel, the quote above is how I aspire to deliver value within a team.</p>
+            <p>To design exceptional digital experiences, one must go outside of their own domain, seeking to promote a synthesis between design, engineering, and users' voices. My expertise in these disciplines helps produce meaningful convergence of skills and perspectives, guided by user research, to achieve the highest levels of both functionality and user satisfaction.</p>
             
             <a href="mailto:GabrielMartinUI+github@gmail.com" 
                class="email-link"
