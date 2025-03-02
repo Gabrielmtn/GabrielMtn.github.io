@@ -1,0 +1,814 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PTP vs Standard Timing Visualization</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #0a0a0a;
+            color: #f0f0f0;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        h1, h2, h3 {
+            color: #4a9df8;
+            text-align: center;
+        }
+        
+        .visualization {
+            margin: 20px 0;
+            border: 1px solid #333;
+            border-radius: 5px;
+            background-color: #111;
+            padding: 10px;
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+        }
+        
+        .metrics {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .metric-card {
+            flex: 1;
+            min-width: 200px;
+            background-color: #1a1a1a;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        
+        .metric-title {
+            font-size: 14px;
+            color: #aaa;
+            margin-bottom: 5px;
+        }
+        
+        .metric-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+        }
+        
+        .ptp-value { color: #4a9df8; }
+        .std-value { color: #f85a5a; }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            background-color: #2a2a2a;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #3a3a3a;
+        }
+        
+        .active {
+            background-color: #4a9df8;
+        }
+        
+        .slider-container {
+            width: 100%;
+            margin: 10px 0;
+            padding: 0 20px;
+        }
+        
+        .slider {
+            width: 100%;
+            margin: 10px 0;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            border-radius: 50%;
+            opacity: 1;
+        }
+        
+        .ptp-particle {
+            background-color: rgba(74, 157, 248, 0.8);
+            box-shadow: 0 0 6px #4a9df8;
+        }
+        
+        .std-particle {
+            background-color: rgba(248, 90, 90, 0.8);
+            box-shadow: 0 0 6px #f85a5a;
+            width: 6px;
+            height: 6px;
+        }
+        
+        .timeline {
+            position: relative;
+            height: 80px;
+            margin: 40px 0;
+            border: 1px solid #333;
+            background-color: #111;
+            overflow: hidden;
+        }
+        
+        .timeline-marker {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .timeline-event {
+            position: absolute;
+            height: 20px;
+            top: 30px;
+            border-radius: 50%;
+        }
+        
+        .ptp-event {
+            width: 1px;
+            background-color: rgba(74, 157, 248, 0.8);
+            box-shadow: 0 0 6px #4a9df8;
+        }
+        
+        .std-event {
+            width: 8px;
+            background-color: rgba(248, 90, 90, 0.8);
+            box-shadow: 0 0 6px #f85a5a;
+        }
+        
+        .legend {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 0 15px;
+        }
+        
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+            border-radius: 50%;
+        }
+        
+        .ptp-color {
+            background-color: #4a9df8;
+            box-shadow: 0 0 6px #4a9df8;
+        }
+        
+        .std-color {
+            background-color: #f85a5a;
+            box-shadow: 0 0 6px #f85a5a;
+        }
+        
+        .scale-visualization {
+            position: relative;
+            height: 60px;
+            margin: 30px 0;
+            background-color: #111;
+            overflow: hidden;
+            padding: 10px;
+        }
+        
+        .scale-bar {
+            position: absolute;
+            height: 20px;
+            top: 20px;
+        }
+        
+        .scale-label {
+            position: absolute;
+            font-size: 12px;
+            color: #ccc;
+        }
+        
+        .compare-container {
+            display: flex;
+            margin: 20px 0;
+        }
+        
+        .compare-box {
+            flex: 1;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 0 10px;
+        }
+        
+        .ptp-box {
+            background-color: rgba(74, 157, 248, 0.1);
+            border: 1px solid rgba(74, 157, 248, 0.3);
+        }
+        
+        .std-box {
+            background-color: rgba(248, 90, 90, 0.1);
+            border: 1px solid rgba(248, 90, 90, 0.3);
+        }
+        
+        /* History slider styles */
+        .history-slider-container {
+            margin: 40px 0;
+            padding: 20px;
+            background-color: #1a1a1a;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .history-display {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .history-top, .history-bottom {
+            position: relative;
+            height: 60px;
+        }
+        
+        .history-label {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        
+        .history-date {
+            font-size: 14px;
+            color: #aaa;
+            margin-bottom: 10px;
+        }
+        
+        .history-bar {
+            height: 20px;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        
+        .ptp-history {
+            background-color: rgba(74, 157, 248, 0.6);
+            border: 1px solid #4a9df8;
+            width: 3.57%; /* Starting at exactly 90/2520 * 100% = 3.57% */
+        }
+        
+        .ibkr-history {
+            background-color: rgba(248, 90, 90, 0.6);
+            border: 1px solid #f85a5a;
+            width: 3.57%; /* Exactly equal to minimum PTP size */
+            transform-origin: left;
+            animation: none; /* Initially no pulse */
+            box-shadow: 0 0 10px rgba(248, 90, 90, 0.8);
+        }
+        
+        @keyframes pulse {
+            0% { transform: scaleX(1); }
+            50% { transform: scaleX(1.07); }
+            100% { transform: scaleX(1); }
+        }
+        
+        .history-slider-wrapper {
+            position: relative;
+            padding: 0 10px;
+            margin-top: 40px;
+        }
+        
+        .history-slider {
+            width: 100%;
+            height: 6px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: linear-gradient(to right, #f85a5a, #4a9df8);
+            outline: none;
+            border-radius: 3px;
+        }
+        
+        .history-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #fff;
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        }
+        
+        .history-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #fff;
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        }
+        
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            color: #aaa;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>DataBento vs IBKR Feed Comparison</h1>
+        
+        <div class="metrics">
+            <div class="metric-card">
+                <div class="metric-title">DataBento Speed</div>
+                <div class="metric-value ptp-value">19.2 million ticks/second</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">IBKR Feed Resolution</div>
+                <div class="metric-value std-value">200 milliseconds</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">Speed Ratio</div>
+                <div class="metric-value">3,840,000:1</div>
+            </div>
+        </div>
+        
+        <h2>Real-time Visualization</h2>
+        <p style="text-align:center">Each particle represents a timing event</p>
+        
+        <div class="controls">
+            <button id="startBtn">Start</button>
+            <button id="pauseBtn">Pause</button>
+            <button id="resetBtn">Reset</button>
+        </div>
+        
+        <div class="slider-container">
+            <label for="speedSlider">Visualization Speed: <span id="speedValue">0.5x</span></label>
+            <input type="range" id="speedSlider" class="slider" min="0.1" max="10" step="0.1" value="0.5">
+        </div>
+        
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color ptp-color"></div>
+                <span>DataBento (19.2M ticks/sec)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color std-color"></div>
+                <span>IBKR Feed (200ms)</span>
+            </div>
+        </div>
+        
+        <div class="visualization" id="mainViz">
+            <!-- Particles will be generated here -->
+        </div>
+        
+        <div class="actual-rate-label">
+            *This doesn't actually visualize 19.2M ticks per second, this is only ~<span id="actualRateValue">600</span> ticks/second. 
+            19.2M per sec would look like <span id="toggleBlueBtn" style="color: #4a9df8; text-decoration: underline; cursor: pointer;">this</span>
+        </div>
+        
+        <h2>Time Scale Comparison</h2>
+        
+        <div class="scale-visualization">
+            <div class="scale-bar" style="width: 100%; background-color: rgba(248, 90, 90, 0.3); border: 1px solid #f85a5a;">
+                <div class="scale-label" style="top: -20px; left: 0;">0ms</div>
+                <div class="scale-label" style="top: -20px; left: 50%;">100ms</div>
+                <div class="scale-label" style="top: -20px; right: 0;">200ms (IBKR Feed)</div>
+            </div>
+            <div class="scale-bar" style="width: 0.005%; background-color: rgba(74, 157, 248, 0.8); border: 1px solid #4a9df8;">
+                <div class="scale-label" style="top: 25px; left: 0;">52µs (DataBento)</div>
+            </div>
+        </div>
+        
+        <p style="text-align:center">Note: The DataBento bar represents the average time between ticks (52µs). This is still tiny compared to IBKR's 200ms resolution!</p>
+        
+        <h2>Historical Data Access Comparison</h2>
+        
+        <div class="history-slider-container">
+            <div class="history-display">
+                <div class="history-top">
+                    <div class="history-label">PTP System Historical Data: <span id="ptpDaysLabel">2520</span> days</div>
+                    <div class="history-date" id="ptpDate">March 2, 2018</div>
+                    <div class="history-bar ptp-history"></div>
+                </div>
+                
+                <div class="history-bottom">
+                    <div class="history-label">IBKR Feed Historical Data: <span id="ibkrDaysLabel">90</span> days</div>
+                    <div class="history-date" id="ibkrDate">December 2, 2024</div>
+                    <div class="history-bar ibkr-history"></div>
+                </div>
+            </div>
+            
+            <div class="history-slider-wrapper">
+                <input type="range" id="historySlider" class="history-slider" min="90" max="2520" value="90" step="10">
+                <div class="slider-labels">
+                    <span>90 days</span>
+                    <span>1 year</span>
+                    <span>3 years</span>
+                    <span>5 years</span>
+                    <span>7 years</span>
+                </div>
+            </div>
+        </div>
+        
+                        <h2>During One 60 FPS Frame (16.7ms)</h2>
+        
+        <div class="compare-container">
+            <div class="compare-box ptp-box">
+                <h3>DataBento System</h3>
+                <p>During a single frame:</p>
+                <ul>
+                    <li>320,640 market ticks</li>
+                    <li>Nanosecond-precision timestamps</li>
+                    <li>Sub-microsecond cross-venue accuracy with PTP</li>
+                    <li>6.1µs normalization</li>
+                    <li>Sub-millisecond latency to public cloud</li>
+                </ul>
+            </div>
+            </div>
+            <div class="compare-box std-box">
+                <h3>IBKR Feed (200ms)</h3>
+                <p>During a single frame:</p>
+                <ul>
+                    <li>Less than 0.1 timing events (can't even detect a single frame)</li>
+                    <li>Unable to track intraframe market movements</li>
+                    <li>12 frames pass between market data updates</li>
+                    <li>Latency-sensitive trading strategies limited by feed speed</li>
+                </ul>
+            </div>
+        </div>
+        
+        <h2>Timeline View (1 second)</h2>
+        
+        <div class="timeline" id="timeline">
+            <div class="timeline-marker" id="timeMarker" style="left: 0;"></div>
+            <!-- Events will be generated here -->
+        </div>
+        
+        <div class="actual-rate-label timeline-note">
+            *Timeline shows only 600 ticks of the actual 19.2M per second. If each tick was 3 pixels wide, a monitor would need to be <span id="monitorLength">50,000</span> feet long (9.5 miles!) to display all ticks for one second.
+        </div>
+        
+        <script>
+            // Constants and configurations
+            const NS_TO_MS = 1e-6; // Conversion from nanoseconds to milliseconds
+            const DATABENTO_TICKS_PER_SECOND = 19.2e6; // 19.2 million ticks per second
+            const DATABENTO_TIME_PER_TICK_MS = 1000 / DATABENTO_TICKS_PER_SECOND; // ~0.052ms per tick
+            const IBKR_RESOLUTION_MS = 200; // 200 milliseconds for IBKR feed
+            const IBKR_RESOLUTION_NS = IBKR_RESOLUTION_MS * 1e6; // Convert to nanoseconds
+            
+            // For visualization purposes, we'll simulate at a scaled rate
+            // In reality, we would have millions of PTP events per second
+            const VISUALIZATION_SCALE = 1000; // 1000x slower than reality for visualization
+            
+            // State variables
+            let animationId = null;
+            let isRunning = false;
+            let lastTimestamp = 0;
+            let elapsedTime = 0;
+            let simulationSpeed = 0.5;
+            let totalParticlesGenerated = 0;
+            let lastParticleCount = 0;
+            let lastCountTime = 0;
+            let actualRateValue = document.getElementById('actualRateValue');
+            
+            // Get DOM elements
+            const mainViz = document.getElementById('mainViz');
+            const timelineEl = document.getElementById('timeline');
+            const timeMarker = document.getElementById('timeMarker');
+            const startBtn = document.getElementById('startBtn');
+            const pauseBtn = document.getElementById('pauseBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const speedSlider = document.getElementById('speedSlider');
+            const speedValue = document.getElementById('speedValue');
+            
+            // Initialize timeline events
+            function initializeTimeline() {
+                timelineEl.innerHTML = '';
+                timelineEl.appendChild(timeMarker);
+                
+                // Add IBKR events (every 200ms)
+                for (let i = 0; i < 5; i++) {
+                    const stdEvent = document.createElement('div');
+                    stdEvent.className = 'timeline-event std-event';
+                    stdEvent.style.left = `${i * 20}%`;
+                    timelineEl.appendChild(stdEvent);
+                }
+                
+                // Add DataBento tick events
+                // In reality, there would be 19.2 million events per second
+                // We'll add representative ones for visibility
+                // Doubling the number of blue ticks from 300 to 600
+                for (let i = 0; i < 600; i++) {
+                    const databentoEvent = document.createElement('div');
+                    databentoEvent.className = 'timeline-event ptp-event';
+                    databentoEvent.style.left = `${i * 0.165}%`;
+                    timelineEl.appendChild(databentoEvent);
+                }
+            }
+            
+            // Reset the visualization
+            function resetVisualization() {
+                // Clear particles
+                mainViz.innerHTML = '';
+                elapsedTime = 0;
+                lastTimestamp = 0;
+                timeMarker.style.left = '0';
+                
+                // Re-initialize timeline
+                initializeTimeline();
+            }
+            
+            // Generate a DataBento tick particle with proper fade
+            function generatePTPParticle() {
+                const particle = document.createElement('div');
+                particle.className = 'particle ptp-particle';
+                
+                // Set initial opacity
+                particle.style.opacity = '1';
+                
+                // Random position
+                const x = Math.random() * mainViz.offsetWidth;
+                const y = Math.random() * mainViz.offsetHeight;
+                
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+                
+                // Force browser to establish the initial state
+                void particle.offsetWidth;
+                
+                // Add to visualization
+                mainViz.appendChild(particle);
+                
+                // Schedule fade out to start immediately
+                requestAnimationFrame(() => {
+                    // This ensures the transition is applied
+                    particle.style.transition = 'opacity 1s linear';
+                    particle.style.opacity = '0';
+                });
+                
+                // Remove from DOM after fade completes
+                setTimeout(() => {
+                    if (particle.parentNode === mainViz) {
+                        mainViz.removeChild(particle);
+                    }
+                }, 1000); // Remove after 1 second (the fade duration)
+            }
+            
+            // Generate an IBKR feed event particle with proper fade
+            function generateStdParticle() {
+                const particle = document.createElement('div');
+                particle.className = 'particle std-particle';
+                
+                // Set initial opacity
+                particle.style.opacity = '1';
+                
+                // Random position
+                const x = Math.random() * mainViz.offsetWidth;
+                const y = Math.random() * mainViz.offsetHeight;
+                
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+                
+                // Force browser to establish the initial state
+                void particle.offsetWidth;
+                
+                // Add to visualization
+                mainViz.appendChild(particle);
+                
+                // Schedule fade out to start immediately
+                requestAnimationFrame(() => {
+                    // This ensures the transition is applied
+                    particle.style.transition = 'opacity 1s linear';
+                    particle.style.opacity = '0';
+                });
+                
+                // Remove from DOM after fade completes
+                setTimeout(() => {
+                    if (particle.parentNode === mainViz) {
+                        mainViz.removeChild(particle);
+                    }
+                }, 1000); // Remove after 1 second (the fade duration)
+            }
+            
+            // Animation loop
+            function animateEvents(timestamp) {
+                if (!isRunning) return;
+                
+                if (!lastTimestamp) {
+                    lastTimestamp = timestamp;
+                }
+                
+                const deltaTime = (timestamp - lastTimestamp) * simulationSpeed;
+                lastTimestamp = timestamp;
+                
+                elapsedTime += deltaTime;
+                
+                // Update timeline marker
+                const markerPosition = (elapsedTime / 1000) % 100; // Looping over 1 second
+                timeMarker.style.left = `${markerPosition}%`;
+                
+                // Generate DataBento ticks (scaled down for visualization)
+                // In reality, we would generate 19.2 million per second
+                // For visualization, we'll generate a few per frame
+                const databentoTicksPerFrame = 20; // Adjusted for better visibility
+                for (let i = 0; i < databentoTicksPerFrame; i++) {
+                    generatePTPParticle();
+                    totalParticlesGenerated++;
+                }
+                
+                // Update actual rate counter every second
+                if (performance.now() - lastCountTime > 1000) {
+                    const particlesPerSecond = Math.round((totalParticlesGenerated - lastParticleCount) * (1000 / (performance.now() - lastCountTime)));
+                    actualRateValue.textContent = particlesPerSecond;
+                    
+                    lastParticleCount = totalParticlesGenerated;
+                    lastCountTime = performance.now();
+                }
+                
+                // Generate IBKR feed particles (every 200ms)
+                if (Math.floor((elapsedTime - deltaTime) / IBKR_RESOLUTION_MS) !== 
+                    Math.floor(elapsedTime / IBKR_RESOLUTION_MS)) {
+                    generateStdParticle();
+                }
+                
+                // Clean up any particles that might be lingering (safety check)
+                if (mainViz.children.length > 100) {
+                    const oldParticles = Array.from(mainViz.children).filter(el => 
+                        el.classList.contains('particle') && 
+                        !el.style.opacity // Only remove particles that aren't fading
+                    );
+                    
+                    // Remove oldest particles if we have too many
+                    for (let i = 0; i < oldParticles.length - 50; i++) {
+                        if (oldParticles[i].parentNode === mainViz) {
+                            mainViz.removeChild(oldParticles[i]);
+                        }
+                    }
+                }
+                
+                animationId = requestAnimationFrame(animateEvents);
+            }
+            
+            // Event handlers
+            startBtn.addEventListener('click', () => {
+                if (!isRunning) {
+                    isRunning = true;
+                    lastTimestamp = 0;
+                    animationId = requestAnimationFrame(animateEvents);
+                    startBtn.classList.add('active');
+                    pauseBtn.classList.remove('active');
+                }
+            });
+            
+            pauseBtn.addEventListener('click', () => {
+                if (isRunning) {
+                    isRunning = false;
+                    if (animationId) {
+                        cancelAnimationFrame(animationId);
+                    }
+                    startBtn.classList.remove('active');
+                    pauseBtn.classList.add('active');
+                }
+            });
+            
+            resetBtn.addEventListener('click', () => {
+                isRunning = false;
+                if (animationId) {
+                    cancelAnimationFrame(animationId);
+                }
+                resetVisualization();
+                startBtn.classList.remove('active');
+                pauseBtn.classList.remove('active');
+            });
+            
+            speedSlider.addEventListener('input', () => {
+                simulationSpeed = parseFloat(speedSlider.value);
+                speedValue.textContent = `${simulationSpeed.toFixed(1)}x`;
+            });
+            
+            // Initialize
+            function initialize() {
+                resetVisualization();
+                startBtn.click(); // Auto-start
+            }
+            
+            // History slider functionality
+            const historySlider = document.getElementById('historySlider');
+            const ptpDaysLabel = document.getElementById('ptpDaysLabel');
+            const ibkrDaysLabel = document.getElementById('ibkrDaysLabel');
+            const ptpDate = document.getElementById('ptpDate');
+            const ibkrDate = document.getElementById('ibkrDate');
+            const ptpHistory = document.querySelector('.ptp-history');
+            const ibkrHistory = document.querySelector('.ibkr-history');
+            
+            // Format date function
+            function formatDate(daysAgo) {
+                const today = new Date("2025-03-02"); // Current date from the page
+                const targetDate = new Date(today);
+                targetDate.setDate(today.getDate() - daysAgo);
+                
+                return targetDate.toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                });
+            }
+            
+            // Update history display based on slider value
+            function updateHistoryDisplay() {
+                const days = parseInt(historySlider.value);
+                
+                // Update PTP display (full range)
+                ptpDaysLabel.textContent = days;
+                ptpDate.textContent = formatDate(days);
+                ptpHistory.style.width = (days / 2520 * 100) + '%';
+                
+                // Update IBKR display (max 90 days)
+                ibkrDaysLabel.textContent = "90"; // Always show 90
+                ibkrDate.textContent = formatDate(90); // Always show 90 days ago date
+                
+                // If trying to go beyond 90 days, add pulsing effect
+                if (days > 90) {
+                    ibkrHistory.style.animation = "pulse 2s infinite ease-in-out";
+                    ibkrDate.style.color = '#f85a5a'; // Highlight in red
+                    ibkrDaysLabel.style.color = '#f85a5a'; // Highlight in red
+                } else {
+                    ibkrHistory.style.animation = "none"; // No pulse at 90 days
+                    ibkrDate.style.color = '#aaa';
+                    ibkrDaysLabel.style.color = '';
+                }
+                
+                // IBKR history is fixed at 90 days (matches PTP at 90 days)
+                ibkrHistory.style.width = "3.57%"; // Exactly matching minimum PTP size
+            }
+            
+            // Set up event listener for the slider
+            historySlider.addEventListener('input', updateHistoryDisplay);
+            
+            // Joke button functionality - single toggle element
+            const toggleBlueBtn = document.getElementById('toggleBlueBtn');
+            
+            // Ensure initial styling is applied correctly
+            toggleBlueBtn.style.color = '#4a9df8';
+            toggleBlueBtn.style.textDecoration = 'underline';
+            toggleBlueBtn.style.cursor = 'pointer';
+            
+            const originalBgColor = mainViz.style.backgroundColor || '#111';
+            let isBlueBackground = false;
+            
+            toggleBlueBtn.addEventListener('click', () => {
+                if (!isBlueBackground) {
+                    // Change to blue background and show "undo"
+                    mainViz.style.backgroundColor = 'rgba(74, 157, 248, 0.8)';
+                    toggleBlueBtn.textContent = 'undo';
+                    toggleBlueBtn.style.color = '#f85a5a';
+                } else {
+                    // Change back to original and show "this"
+                    mainViz.style.backgroundColor = originalBgColor;
+                    toggleBlueBtn.textContent = 'this';
+                    toggleBlueBtn.style.color = '#4a9df8';
+                }
+                
+                isBlueBackground = !isBlueBackground;
+            });
+            
+            // Initialize everything
+            function initialize() {
+                resetVisualization();
+                updateHistoryDisplay(); // Initialize history display
+                startBtn.click(); // Auto-start
+            }
+            
+            // Start when loaded
+            window.addEventListener('load', initialize);
+        </script>
+    </div>
+</body>
+</html>
