@@ -81,26 +81,31 @@
 
   /* ─────────── STUDY ─────────── */
   .study {
-    display: block;
-    text-decoration: none;
-    color: inherit;
     padding: clamp(2.5rem, 6vw, 3.5rem) 0;
     border-top: 1px solid var(--rule);
     position: relative;
-    transition: padding 0.2s ease;
   }
   .study:last-of-type {
     border-bottom: 1px solid var(--rule);
   }
-  .study:hover .study-read,
-  .study:focus-visible .study-read {
+  .study-client a {
+    text-decoration: none;
+    color: inherit;
+  }
+  .study-client a::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+  }
+  .study:hover .study-arrow {
+    transform: translateX(4px);
     color: var(--ink);
   }
-  .study:hover .study-read::after,
-  .study:focus-visible .study-read::after {
-    transform: translateX(4px);
-  }
-  .study:focus-visible {
+  .study-client a:focus-visible {
     outline: 2px solid var(--ink);
     outline-offset: 4px;
   }
@@ -123,11 +128,6 @@
     font-size: 1.5rem;
     color: var(--ink-muted);
     transition: transform 0.2s ease, color 0.2s ease;
-  }
-  .study:hover .study-arrow,
-  .study:focus-visible .study-arrow {
-    transform: translateX(4px);
-    color: var(--ink);
   }
   .study-axis {
     font-family: var(--font-mono);
@@ -247,68 +247,68 @@
 
       <header>
         <span class="hero-label">Case studies · 2010–2026</span>
-        <h1>Three projects from <em>Sixteen years at the intersection.</em></h1>
+        <h1>Three projects from sixteen years at the intersection.</h1>
         <p class="framing">
           I'm a designer who codes, and an accessibility specialist who works at the engineering layer. I enjoy work that sits where those overlap: designing for how users actually think, validating a standard in code before I design against it, and building compliance into designs from the start rather than bolting it on after QA.
         </p>
       </header>
 
       <!-- ─────────── 01 · VIRGIN PULSE ─────────── -->
-      <a class="study" href="./detail.html#virgin" aria-label="Read case study: Virgin Pulse">
+      <article class="study">
         <div class="study-top">
           <span class="study-no">№ 01</span>
           <span class="study-axis">View case study</span>
           <span class="study-arrow" aria-hidden="true">→</span>
         </div>
 
-        <h2 class="study-client">Virgin Pulse</h2>
+        <h2 class="study-client"><a href="./virgin-pulse/" aria-label="Virgin Pulse case study">Virgin Pulse</a></h2>
         <p class="study-meta">Enterprise Wellness ·  2021–2023 ·  UX Design Engineer</p>
 
         <blockquote class="study-quote">We don't control how content is consumed. Users do.</blockquote>
         <span class="study-cite">— Andrés Galante</span>
 
         <p class="study-blurb">Started with a Section 508 requirement for a Bank of America contract. Built a proof-of-concept using fluid layouts and relative units that became the standard operating procedure for 300+ engineers. Trained 400+ people across engineering, design, and product.</p>
-      </a>
+      </article>
 
       <!-- ─────────── 02 · PUTNAM ─────────── -->
-      <a class="study" href="./detail.html#putnam" aria-label="Read case study: Putnam Investments">
+      <article class="study">
         <div class="study-top">
           <span class="study-no">№ 02</span>
           <span class="study-axis">View case study</span>
           <span class="study-arrow" aria-hidden="true">→</span>
         </div>
 
-        <h2 class="study-client">Putnam Investments</h2>
+        <h2 class="study-client"><a href="./putnam/" aria-label="Putnam Investments case study">Putnam Investments</a></h2>
         <p class="study-meta">Financial Services ·  2017 ·  Accessibility Engineer</p>
 
         <blockquote class="study-quote">Build the consistency keyboard users need, first.</blockquote>
-        <span class="study-cite">— working principle</span>
+        <span class="study-cite">— Working principle</span>
 
-        <p class="study-blurb">Rebuilt dozens of interactive components (combobox, menu, dialog, disclosure) by implementing the WAI-ARIA spec directly and testing in JAWS and NVDA. Shipped in 2017, before the patterns were consolidated into a single authoring guide — combobox was still being reworked at the time.</p>
-      </a>
+        <p class="study-blurb">Rebuilt dozens of interactive components (combobox, menu, dialog, disclosure) by reading the ARIA spec directly and validating in JAWS and NVDA. Every component shipped with predictable keyboard interaction and correct state announcements.</p>
+      </article>
 
       <!-- ─────────── 03 · AKAMAI ─────────── -->
-      <a class="study" href="./detail.html#akamai" aria-label="Read case study: Akamai Technologies">
+      <article class="study">
         <div class="study-top">
           <span class="study-no">№ 03</span>
           <span class="study-axis">View case study</span>
           <span class="study-arrow" aria-hidden="true">→</span>
         </div>
 
-        <h2 class="study-client">Akamai Technologies</h2>
-        <p class="study-meta">Infosec / Federal Cloud ·  2019 ·  Sr. UI/UX Developer</p>
+        <h2 class="study-client"><a href="./akamai/" aria-label="Akamai Technologies case study">Akamai Technologies</a></h2>
+        <p class="study-meta">Infosec / Federal Cloud ·  2019 ·  Sr. UI/UX Developer & Designer</p>
 
         <blockquote class="study-quote">Design for the mental model, not the domain.</blockquote>
-        <span class="study-cite">— working principle</span>
+        <span class="study-cite">— Working principle</span>
 
         <p class="study-blurb">Ran contextual inquiry with eight team members from compliance, engineering, and management. Built a FedRAMP remediation tool through three rounds of prototyping that worked for all three groups without favoring one perspective over the others.</p>
-      </a>
+      </article>
 
     </main>
 
     <footer class="site-foot">
       <p class="foot-cta">
-        Hiring for a senior role? <a href="mailto:Gabriel@GabrielMartin.dev">Get in touch</a>.
+        Hiring for a senior role? <a href="mailto:gabriel@gabrielmartin.dev">Get in touch</a>.
       </p>
       <address class="foot-meta">
         <span>Gabriel Martin</span>
