@@ -1,0 +1,130 @@
+/* ═══════════════════════════════════════════════════════
+   SHARED STYLES
+   Gabriel Martin Case Studies
+   ═══════════════════════════════════════════════════════ */
+
+:root {
+  --paper: #F4EFE2;
+  --paper-deep: #ECE5D4;
+  --ink: #1A1918;
+  --ink-muted: #181717;
+  --ink-faint: #e4d5bb;
+  --rule: #CFC7B5;
+
+  --font-display: 'Lora', Georgia, 'Times New Roman', serif;
+  --font-body:    'Lora', Georgia, 'Times New Roman', serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --measure: 64ch;
+  --nav-h: 72px;
+}
+
+/* ─────────── RESET ─────────── */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { 
+  scroll-behavior: smooth;
+  font-size: 17px;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-variation-settings: "opsz" 14, "SOFT" 30;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+
+/* ─────────── LARGE SCREENS ─────────── */
+@media (min-width: 1600px) {
+  html {
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 2000px) {
+  html {
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 2800px) {
+  html {
+    font-size: 22px;
+  }
+}
+
+/* ─────────── FOCUS STYLES ─────────── */
+*:focus {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* ─────────── SKIP LINK ─────────── */
+.skip { position: absolute; left: -9999px; }
+.skip:focus {
+  left: 1rem; top: 1rem;
+  background: var(--ink); color: var(--paper);
+  padding: 0.6rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  z-index: 100;
+  outline: 2px solid var(--paper);
+  outline-offset: -4px;
+}
+
+/* ─────────── FOOTER ─────────── */
+.site-foot {
+  padding-top: 3rem;
+  display: grid;
+  gap: 1.5rem;
+}
+.foot-cta {
+  font-family: var(--font-display);
+  font-variation-settings: "opsz" 48, "SOFT" 40, "wght" 400;
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
+  letter-spacing: -0.015em;
+  margin: 0;
+  line-height: 1.2;
+}
+.foot-cta a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+  transition: border-color 0.15s ease;
+}
+.foot-cta a:hover, .foot-cta a:focus-visible {
+  border-bottom-color: var(--ink);
+}
+.foot-meta {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.foot-meta .sep { color: var(--ink-faint); }
+
+/* ─────────── PRINT ─────────── */
+@media print {
+  body { background: white; color: black; font-size: 11pt; }
+}

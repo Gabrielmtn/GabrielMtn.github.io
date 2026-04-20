@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Studies — Gabriel Martin</title>
+<meta name="description" content="Three case studies in accessibility-led UX practice — Virgin Pulse, Putnam Investments, Akamai Technologies.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./styles.css">
+<style>
+  /* Index-specific color overrides */
+  :root {
+    --ink-muted: #605C54;
+    --ink-faint: #736E63;
+  }
+
+  .wrap {
+    max-width: 48rem;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4.5rem) clamp(1.5rem, 5vw, 2.5rem);
+  }
+
+  /* ─────────── TOP ─────────── */
+  .back {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: clamp(3rem, 8vw, 5rem);
+    border-bottom: 1px solid transparent;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .back:hover, .back:focus-visible {
+    color: var(--ink);
+    border-bottom-color: var(--ink);
+  }
+
+  /* ─────────── HERO ─────────── */
+  .hero-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 2rem;
+    display: block;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-variation-settings: "opsz" 144, "SOFT" 30, "wght" 300;
+    font-size: clamp(2.5rem, 7vw, 4.75rem);
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+    margin: 0 0 2.5rem;
+    max-width: 14ch;
+  }
+  h1 em {
+    font-style: italic;
+    font-variation-settings: "opsz" 144, "SOFT" 100, "wght" 300;
+  }
+
+  .framing {
+    font-family: var(--font-display);
+    font-variation-settings: "opsz" 24, "SOFT" 50, "wght" 400;
+    font-size: clamp(1.1rem, 2.2vw, 1.3rem);
+    line-height: 1.55;
+    max-width: 52ch;
+    color: var(--ink);
+    margin: 0 0 clamp(4rem, 10vw, 6rem);
+  }
+  .framing em {
+    font-style: italic;
+    color: var(--ink-muted);
+    font-variation-settings: "opsz" 24, "SOFT" 100, "wght" 400;
+  }
+
+  /* ─────────── STUDY ─────────── */
+  .study {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    padding: clamp(2.5rem, 6vw, 3.5rem) 0;
+    border-top: 1px solid var(--rule);
+    position: relative;
+    transition: padding 0.2s ease;
+  }
+  .study:last-of-type {
+    border-bottom: 1px solid var(--rule);
+  }
+  .study:hover .study-read,
+  .study:focus-visible .study-read {
+    color: var(--ink);
+  }
+  .study:hover .study-read::after,
+  .study:focus-visible .study-read::after {
+    transform: translateX(4px);
+  }
+  .study:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 4px;
+  }
+
+  .study-top {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 1.5rem;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  .study-no {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+  }
+  .study-arrow {
+    font-size: 1.5rem;
+    color: var(--ink-muted);
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+  .study:hover .study-arrow,
+  .study:focus-visible .study-arrow {
+    transform: translateX(4px);
+    color: var(--ink);
+  }
+  .study-axis {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    text-align: right;
+    text-decoration: underline;
+    text-decoration-color: #2563EB;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+
+  .study-client {
+    font-family: var(--font-display);
+    font-variation-settings: "opsz" 72, "SOFT" 40, "wght" 400;
+    font-size: clamp(1.75rem, 4.5vw, 2.75rem);
+    letter-spacing: -0.025em;
+    margin: 0 0 0.4rem;
+    line-height: 1.1;
+  }
+  .study-meta {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin: 0 0 2rem;
+  }
+
+  .study-quote {
+    font-family: var(--font-display);
+    font-variation-settings: "opsz" 48, "SOFT" 60, "wght" 400;
+    font-style: italic;
+    font-size: clamp(1.2rem, 2.6vw, 1.5rem);
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    margin: 0 0 0.6rem;
+    padding-left: 1.2rem;
+    border-left: 2px solid var(--rule);
+    max-width: 42ch;
+    color: var(--ink);
+  }
+  .study-cite {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    display: block;
+    margin: 0 0 2rem;
+    padding-left: 1.2rem;
+  }
+
+  .study-blurb {
+    font-size: 1.02rem;
+    line-height: 1.55;
+    max-width: 56ch;
+    margin: 0 0 1.75rem;
+    color: var(--ink);
+  }
+
+  .study-read {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    transition: color 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+  }
+  .study-read::after {
+    content: "→";
+    transition: transform 0.2s ease;
+    display: inline-block;
+  }
+
+  /* Footer styles in shared stylesheet */
+
+  /* ─────────── RESPONSIVE ─────────── */
+  @media (max-width: 560px) {
+    .study-top {
+      grid-template-columns: auto auto;
+      gap: 1rem;
+    }
+    .study-arrow {
+      grid-column: 2 / 3;
+      grid-row: 1 / 2;
+      justify-self: end;
+    }
+    .study-axis {
+      grid-column: 1 / 3;
+      grid-row: 2 / 3;
+      text-align: left;
+      margin-top: 0.5rem;
+    }
+  }
+
+  /* ─────────── PRINT ─────────── */
+  @media print {
+    .back, .study-read { display: none; }
+    .study { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+  <a href="#main" class="skip">Skip to content</a>
+
+  <div class="wrap">
+
+    <a href="/" class="back">← gabrielmartin.dev</a>
+
+    <main id="main">
+
+      <header>
+        <span class="hero-label">Case studies · 2010–2026</span>
+        <h1>Three projects from <em>Sixteen years at the intersection.</em></h1>
+        <p class="framing">
+          I'm a designer who codes, and an accessibility specialist who works at the engineering layer. I enjoy work that sits where those overlap: designing for how users actually think, validating a standard in code before I design against it, and building compliance into designs from the start rather than bolting it on after QA.
+        </p>
+      </header>
+
+      <!-- ─────────── 01 · VIRGIN PULSE ─────────── -->
+      <a class="study" href="./detail.html#virgin" aria-label="Read case study: Virgin Pulse">
+        <div class="study-top">
+          <span class="study-no">№ 01</span>
+          <span class="study-axis">View case study</span>
+          <span class="study-arrow" aria-hidden="true">→</span>
+        </div>
+
+        <h2 class="study-client">Virgin Pulse</h2>
+        <p class="study-meta">Enterprise Wellness ·  2021–2023 ·  UX Design Engineer</p>
+
+        <blockquote class="study-quote">We don't control how content is consumed. Users do.</blockquote>
+        <span class="study-cite">— Andrés Galante</span>
+
+        <p class="study-blurb">Started with a Section 508 requirement for a Bank of America contract. Built a proof-of-concept using fluid layouts and relative units that became the standard operating procedure for 300+ engineers. Trained 400+ people across engineering, design, and product.</p>
+      </a>
+
+      <!-- ─────────── 02 · PUTNAM ─────────── -->
+      <a class="study" href="./detail.html#putnam" aria-label="Read case study: Putnam Investments">
+        <div class="study-top">
+          <span class="study-no">№ 02</span>
+          <span class="study-axis">View case study</span>
+          <span class="study-arrow" aria-hidden="true">→</span>
+        </div>
+
+        <h2 class="study-client">Putnam Investments</h2>
+        <p class="study-meta">Financial Services ·  2017 ·  Accessibility Engineer</p>
+
+        <blockquote class="study-quote">Build the consistency keyboard users need, first.</blockquote>
+        <span class="study-cite">— working principle</span>
+
+        <p class="study-blurb">Rebuilt dozens of interactive components (combobox, menu, dialog, disclosure) by implementing the WAI-ARIA spec directly and testing in JAWS and NVDA. Shipped in 2017, before the patterns were consolidated into a single authoring guide — combobox was still being reworked at the time.</p>
+      </a>
+
+      <!-- ─────────── 03 · AKAMAI ─────────── -->
+      <a class="study" href="./detail.html#akamai" aria-label="Read case study: Akamai Technologies">
+        <div class="study-top">
+          <span class="study-no">№ 03</span>
+          <span class="study-axis">View case study</span>
+          <span class="study-arrow" aria-hidden="true">→</span>
+        </div>
+
+        <h2 class="study-client">Akamai Technologies</h2>
+        <p class="study-meta">Infosec / Federal Cloud ·  2019 ·  Sr. UI/UX Developer</p>
+
+        <blockquote class="study-quote">Design for the mental model, not the domain.</blockquote>
+        <span class="study-cite">— working principle</span>
+
+        <p class="study-blurb">Ran contextual inquiry with eight team members from compliance, engineering, and management. Built a FedRAMP remediation tool through three rounds of prototyping that worked for all three groups without favoring one perspective over the others.</p>
+      </a>
+
+    </main>
+
+    <footer class="site-foot">
+      <p class="foot-cta">
+        Hiring for a senior role? <a href="mailto:Gabriel@GabrielMartin.dev">Get in touch</a>.
+      </p>
+      <address class="foot-meta">
+        <span>Gabriel Martin</span>
+        <span class="sep">·</span>
+        <span>Boston, MA</span>
+        <span class="sep">·</span>
+        <span>2026</span>
+      </address>
+    </footer>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gabriel Martin — Case Studies</title>
+<meta name="description" content="Three case studies in accessibility-led UX design and engineering — Virgin Pulse, Putnam Investments, Akamai Technologies.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./styles.css">
+<style>
+  /* Detail-specific styles */
+
+  /* ─────────── STICKY NAV ─────────── */
+  .site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(244, 239, 226, 0.94);
+    backdrop-filter: saturate(140%) blur(10px);
+    -webkit-backdrop-filter: saturate(140%) blur(10px);
+    border-bottom: 1px solid var(--rule);
+    transition: transform 0.3s ease;
+  }
+  .site-nav.nav-hidden {
+    transform: translateY(-100%);
+  }
+  .site-nav-inner {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: clamp(0.35rem, 1vw, 0) clamp(1.25rem, 4vw, 2.5rem);
+    min-height: clamp(2.5rem, 6vw, 72px);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: clamp(1rem, 3vw, 2rem);
+  }
+  .brand {
+    font-family: var(--font-display);
+    font-variation-settings: "opsz" 24, "SOFT" 40, "wght" 500;
+    font-size: clamp(0.85rem, 2vw, 0.98rem);
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    text-decoration: none;
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .brand span {
+    font-style: italic;
+    font-variation-settings: "opsz" 24, "SOFT" 100, "wght" 400;
+    color: var(--ink-muted);
+    font-size: clamp(0.7rem, 1.8vw, 0.78rem);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* Tablist */
+  [role="tablist"] {
+    display: flex;
+    gap: 0;
+    justify-content: flex-end;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  [role="tablist"]::-webkit-scrollbar { display: none; }
+  [role="tab"] {
+    appearance: none;
+    background: transparent;
+    border: none;
+    padding: 0 clamp(0.8rem, 2vw, 1.25rem);
+    height: var(--nav-h);
+    font-family: var(--font-mono);
+    font-size: clamp(0.65rem, 1.5vw, 0.72rem);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    cursor: pointer;
+    position: relative;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    transition: color 0.15s ease;
+    flex-shrink: 0;
+  }
+  [role="tab"] .tab-no {
+    color: var(--ink-muted);
+    font-size: clamp(0.58rem, 1.3vw, 0.62rem);
+  }
+  [role="tab"]:hover { color: var(--ink); }
+  [role="tab"][aria-selected="true"] {
+    color: var(--ink);
+  }
+  [role="tab"][aria-selected="true"]::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 1.25rem;
+    right: 1.25rem;
+    height: 2px;
+    background: var(--ink);
+  }
+  [role="tab"]:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: -6px;
+  }
+
+  /* ─────────── WRAP ─────────── */
+  .wrap {
+    max-width: 68rem;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 5rem) clamp(1.5rem, 5vw, 3.5rem);
+  }
+
+  /* ─────────── TABPANEL ─────────── */
+  [role="tabpanel"] { outline: none; }
+  [role="tabpanel"][hidden] { display: none; }
+  [role="tabpanel"] {
+    animation: fade 0.4s ease;
+  }
+  @keyframes fade {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [role="tabpanel"] { animation: none; }
+    html { scroll-behavior: auto; }
+  }
+
+  /* ─────────── META STRIP (case #) ─────────── */
+  .meta-strip {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 4rem;
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .meta-strip .sep { color: var(--ink-muted); }
+  .meta-strip .no { color: var(--ink-muted); }
+
+  /* ─────────── HERO ─────────── */
+  .hero {
+    padding-bottom: 3.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .client-name {
+    font-family: var(--font-display);
+    font-variation-settings: "opsz" 144, "SOFT" 30, "wght" 300;
+    font-size: clamp(3rem, 9vw, 7rem);
+    line-height: 0.92;
+    letter-spacing: -0.035em;
+    margin: 0 0 1.5rem;
+  }
+  .client-role {
+    font-family: var(--font-display);
+    font-variation-settings: "opsz" 24, "SOFT" 50, "wght" 400;
+    font-style: italic;
+    font-size: 1.25rem;
+    color: var(--ink-muted);
+    margin: 0 0 2.5rem;
+  }
+  .hero-dek {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    padding-top: 2rem;
+    border-top: 1px solid var(--rule);
+  }
+  .hero-dek dt { color: var(--ink-muted); margin-bottom: 0.5em; font-weight: bold; }
+  .hero-dek dd { margin: 0; color: var(--ink); }
+
+  /* ─────────── SECTIONS ─────────── */
+  section {
+    padding: clamp(2rem, 5vw, 2rem) 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  section:nth-last-of-type(2) { border: none; }
+  section:last-of-type { border: none; }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 3rem;
+    display: block;
+  }
+
+  /* ─────────── THESIS ─────────── */
+  .thesis-quote {
+    font-family: var(--font-display);
+    font-variation-settings: "opsz" 96, "SOFT" 60, "wght" 300;
+    font-style: italic;
+    font-size: clamp(1.85rem, 4vw, 2.9rem);
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    max-width: 26ch;
+    margin: 0 0 2rem;
+    color: var(--ink);
+  }
+  .thesis-quote::before {
+    content: "\201C";
+    display: block;
+    font-size: 5em;
+    line-height: 0;
+    margin-bottom: -0.15em;
+    color: var(--ink-faint);
+    font-style: normal;
+    opacity: 0.4;
+  }
+  .thesis-cite {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 3.5rem;
+    display: block;
+  }
+  .thesis-body {
+    max-width: var(--measure);
+    font-size: 1.18rem;
+    line-height: 1.65;
+  }
+  .thesis-body p + p { margin-top: 1.3em; }
+
+  /* ─────────── ANATOMY / SPECTRUM ─────────── */
+  .anatomy-intro {
+    max-width: var(--measure);
+    margin-bottom: 3rem;
+    font-size: 1.08rem;
+    line-height: 1.6;
+  }
+  .anatomy {
+    padding: clamp(1.5rem, 4vw, 3rem);
+    margin: 0 0 2rem;
+    background: transparent;
+  }
+  .anatomy-title {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+  .anatomy-diagram {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    color: var(--ink);
+  }
+  .anatomy-caption {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    max-width: var(--measure);
+    line-height: 1.7;
+    margin-top: 1rem;
+  }
+
+  /* Virgin Pulse spectrum cards */
+  .spectrum {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    margin: 0 0 2rem;
+  }
+  .philosophy {
+    background: transparent;
+    border: 1px solid var(--rule);
+    padding: 1.5rem 1.25rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+  .philosophy.is-chosen {
+    background: var(--paper-deep);
+    border-color: var(--ink);
+  }
+  .philosophy-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .philosophy.is-chosen .philosophy-label { color: var(--ink); font-weight: 500; }
+  .philosophy-diagram { width: 100%; height: auto; display: block; }
+  .philosophy-note {
+    font-size: 0.92rem;
+    line-height: 1.4;
+    color: var(--ink-muted);
+    font-style: italic;
+    font-variation-settings: "opsz" 9, "SOFT" 50;
+    margin-top: auto;
+  }
+  .philosophy.is-chosen .philosophy-note { color: var(--ink); font-style: normal; font-weight: 500; }
+
+  /* Putnam keys */
+  .anatomy-keys {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem 2.5rem;
+    max-width: 640px;
+    margin: 2rem auto 0;
+    padding-top: 1.5rem;
+    border-top: 1px dotted var(--rule);
+  }
+  .anatomy-keys dt {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    padding: 0.15em 0.5em;
+    border: 1px solid var(--rule);
+    background: var(--paper-deep);
+    display: inline-block;
+    min-width: 3em;
+    text-align: center;
+    border-radius: 2px;
+  }
+  .anatomy-keys .key-row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.9rem;
+    align-items: center;
+  }
+  .anatomy-keys dd {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    color: var(--ink-muted);
+  }
+
+  /* ─────────── WORK ─────────── */
+  .work-title {
+    font-family: var(--font-display);
+    font-variation-settings: "opsz" 72, "SOFT" 40, "wght" 400;
+    font-size: clamp(1.6rem, 3.2vw, 2.25rem);
+    letter-spacing: -0.02em;
+    margin: 0 0 2.5rem;
+    max-width: 28ch;
+    line-height: 1.15;
+  }
+  .work-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-width: var(--measure);
+    counter-reset: workcount;
+  }
+  .work-list li {
+    counter-increment: workcount;
+    padding: 1.4rem 0 1.4rem 3rem;
+    border-top: 1px solid var(--rule);
+    position: relative;
+    font-size: 1.05rem;
+    line-height: 1.55;
+  }
+  .work-list li:last-child { border-bottom: 1px solid var(--rule); }
+  .work-list li::before {
+    content: "0" counter(workcount);
+    position: absolute;
+    left: 0;
+    top: 1.55rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    color: var(--ink-muted);
+  }
+
+  /* ─────────── OUTCOME ─────────── */
+  .outcomes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 1rem;
+  }
+  .outcome {
+    border-top: 1px solid var(--ink);
+    padding-top: 1rem;
+  }
+  .outcome-n {
+    font-family: var(--font-display);
+    font-variation-settings: "opsz" 144, "SOFT" 20, "wght" 300;
+    font-size: clamp(3rem, 6vw, 5rem);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    margin: 0 0 0.6rem;
+    display: block;
+  }
+  .outcome-l {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    line-height: 1.6;
+  }
+
+  /* ─────────── ARTIFACT ─────────── */
+  .artifact {
+    padding: clamp(2rem, 5vw, 3.5rem);
+    background: var(--paper-deep);
+    margin-top: 2rem;
+    max-width: var(--measure);
+  }
+  .artifact-kicker {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+  .artifact-title {
+    font-family: var(--font-display);
+    font-variation-settings: "opsz" 48, "SOFT" 40, "wght" 400;
+    font-size: 1.4rem;
+    letter-spacing: -0.015em;
+    margin: 0 0 1rem;
+    line-height: 1.25;
+  }
+  .artifact p { margin: 0 0 0.8em; font-size: 1rem; line-height: 1.55; }
+  .artifact p:last-child { margin-bottom: 0; }
+
+  /* ─────────── PAGER (prev/next between case studies) ─────────── */
+  .pager {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    padding-top: 3rem;
+    margin-top: 3rem;
+    border-top: 1px solid var(--rule);
+  }
+  .pager a, .pager span {
+    font-size: 1.4rem;
+    display: block;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .pager a { cursor: pointer; transition: opacity 0.15s ease; }
+  .pager a:hover { opacity: 1; }
+  .pager span { opacity: 0.89; cursor: default; cursor:pointer }
+  .pager .prev { text-align: left; }
+  .pager .next { text-align: right; }
+  .pager-label {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    display: block;
+    margin-bottom: 0.4em;
+  }
+  .pager-title {
+    font-family: var(--font-display);
+    font-variation-settings: "opsz" 36, "SOFT" 40, "wght" 400;
+    font-size: 1.3rem;
+    letter-spacing: -0.01em;
+  }
+
+  /* ─────────── FOOTER ─────────── */
+  .site-foot {
+    padding: 2.5rem clamp(1.5rem, 5vw, 3.5rem);
+    max-width: 72rem;
+    margin: 0 auto;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+  }
+
+  /* ─────────── GLOBAL FOCUS ─────────── */
+  :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+  /* ─────────── RESPONSIVE ─────────── */
+  @media (max-width: 960px) {
+    .site-nav-inner { 
+      grid-template-columns: 1fr; 
+      gap: 0.25rem; 
+      min-height: auto; 
+      padding: 0.5rem clamp(1.25rem, 4vw, 2.5rem) 0.25rem; 
+    }
+    .brand { padding: 0.25rem 0; font-size: 0.9rem; }
+    .brand span { font-size: 0.72rem; }
+    [role="tablist"] { 
+      justify-content: flex-start; 
+      margin: 0 -1rem; 
+      padding: 0.25rem 1rem; 
+    }
+    [role="tab"] { 
+      padding: 0.6rem 0.9rem; 
+      height: auto; 
+      font-size: 0.68rem;
+    }
+    [role="tab"] .tab-no { font-size: 0.6rem; }
+    [role="tab"][aria-selected="true"]::after { left: 0.9rem; right: 0.9rem; bottom: 0; }
+    .hero-dek { grid-template-columns: 1fr; gap: 1.25rem; }
+    .spectrum { grid-template-columns: repeat(2, 1fr); }
+    .outcomes { grid-template-columns: 1fr; gap: 1.5rem; }
+    .anatomy-keys { grid-template-columns: 1fr; }
+    .pager { grid-template-columns: 1fr; }
+    .pager .next { text-align: left; }
+  }
+  @media (max-width: 440px) {
+    .spectrum { grid-template-columns: 1fr; }
+    .site-foot { grid-template-columns: 1fr; }
+  }
+
+  /* ─────────── PRINT ─────────── */
+  @media print {
+    .site-nav, .skip, .pager { display: none !important; }
+    [role="tabpanel"][hidden] { display: block !important; }
+    [role="tabpanel"] { page-break-before: always; animation: none; }
+    [role="tabpanel"]:first-of-type { page-break-before: auto; }
+    section { page-break-inside: avoid; border-bottom: 1px solid #999; }
+    .artifact, .philosophy.is-chosen { background: #f2f2f2; }
+  }
+</style>
+</head>
+<body>
+  <a href="#main" class="skip">Skip to content</a>
+
+  <!-- ─────────────── STICKY NAV / TABLIST ─────────────── -->
+  <header class="site-nav">
+    <div class="site-nav-inner">
+      <a href="./index.html" class="brand" aria-label="Gabriel Martin, home">
+        Gabriel Martin <span>Case studies</span>
+      </a>
+      <ul role="tablist" aria-label="Case studies">
+        <li role="presentation">
+          <button role="tab" id="tab-virgin" aria-controls="panel-virgin" aria-selected="true" tabindex="0">
+            <span class="tab-no">01</span> Virgin Pulse
+          </button>
+        </li>
+        <li role="presentation">
+          <button role="tab" id="tab-putnam" aria-controls="panel-putnam" aria-selected="false" tabindex="-1">
+            <span class="tab-no">02</span> Putnam
+          </button>
+        </li>
+        <li role="presentation">
+          <button role="tab" id="tab-akamai" aria-controls="panel-akamai" aria-selected="false" tabindex="-1">
+            <span class="tab-no">03</span> Akamai
+          </button>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- ─────────────── PANEL 01 · VIRGIN PULSE ───────────── -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <div role="tabpanel" id="panel-virgin" aria-labelledby="tab-virgin" tabindex="0">
+      <div class="wrap">
+
+        <div class="meta-strip">
+          <span class="no">№ 01</span>
+          <span class="sep">/</span>
+          <span>Standards & Training</span>
+          <span class="sep">/</span>
+          <span>2021–2023</span>
+        </div>
+
+        <header class="hero">
+          <h1 class="client-name">Virgin Pulse</h1>
+          <p class="client-role">UX Design Engineer · Leading Accessibility Strategy</p>
+          <dl class="hero-dek">
+            <div><dt>Sector</dt><dd>Enterprise Wellness</dd></div>
+            <div><dt>Requirement</dt><dd>Section 508 / Bank of America</dd></div>
+            <div><dt>Scope</dt><dd>300+ engineers · org-wide SOP</dd></div>
+          </dl>
+        </header>
+
+        <section aria-labelledby="v-thesis">
+          <span class="section-label" id="v-thesis">The fundamental</span>
+          <blockquote class="thesis-quote">
+            We don't control how content is consumed. Users do.
+          </blockquote>
+          <span class="thesis-cite">Andrés Galante, <em>Accessible Font Sizing, Explained</em></span>
+          <div class="thesis-body">
+            <p>Virgin Pulse hired me into the product org for a specific reason: Bank of America, one of the biggest clients, had been promised Section 508 compliance, and the product and engineering orgs were struggling to find leadership internally. My background sits at the intersection of front-end engineering and accessibility, which is exactly where that problem lives.</p>
+            <p>The strategy was shift-left before shift-left existed. Instead of treating WCAG as a QA gate, we moved accessibility upstream into how features were designed, built, and reviewed. I worked directly with engineering and product leadership to define the standard, then with feature teams to make it real in their code. We designed annotation tools and training programs so teams could design for Reflow (1.4.10) and Resize Text (1.4.4), not treat it like an afterthought.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="v-spectrum">
+          <span class="section-label">The spectrum</span>
+          <h2 class="work-title" id="v-spectrum">Four approaches to responsive layout. Only one holds up when users zoom or resize.</h2>
+          <p class="anatomy-intro">This was a core element of our training. Most teams were shipping the fixed example, or at best the fluid example, and calling it responsive. The fourth is the one that meets WCAG and scales.</p>
+
+          <div class="spectrum" role="group" aria-label="Responsive layout philosophies">
+
+            <div class="philosophy">
+              <span class="philosophy-label">Fixed</span>
+              <svg class="philosophy-diagram" viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram showing fixed-width layout breaking at zoom with content overflow">
+                <rect x="8" y="10" width="104" height="24" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.35"/>
+                <rect x="20" y="16" width="80" height="3" fill="currentColor" opacity="0.55"/>
+                <rect x="20" y="22" width="60" height="3" fill="currentColor" opacity="0.55"/>
+                <rect x="30" y="42" width="60" height="24" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.35"/>
+                <rect x="20" y="48" width="80" height="3" fill="currentColor" opacity="0.55"/>
+                <rect x="20" y="54" width="60" height="3" fill="currentColor" opacity="0.55"/>
+                <line x1="30" y1="66" x2="90" y2="66" stroke="currentColor" stroke-dasharray="1.5 1.5" stroke-width="0.6" opacity="0.5"/>
+                <text x="60" y="78" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="4.5" fill="currentColor" opacity="0.6">overflow</text>
+                <rect x="48" y="82" width="24" height="12" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.35"/>
+                <rect x="20" y="86" width="80" height="3" fill="currentColor" opacity="0.55"/>
+              </svg>
+              <p class="philosophy-note">Pixel-set widths. Breaks at zoom. Overflows narrow viewports.</p>
+            </div>
+
+            <div class="philosophy">
+              <span class="philosophy-label">Fluid</span>
+              <svg class="philosophy-diagram" viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram showing fluid layout scaling continuously across viewport sizes">
+                <rect x="8" y="10" width="104" height="24" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.35"/>
+                <rect x="12" y="16" width="96" height="3" fill="currentColor" opacity="0.55"/>
+                <rect x="12" y="22" width="70" height="3" fill="currentColor" opacity="0.55"/>
+                <rect x="30" y="42" width="60" height="24" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.35"/>
+                <rect x="34" y="48" width="52" height="3" fill="currentColor" opacity="0.55"/>
+                <rect x="34" y="54" width="38" height="3" fill="currentColor" opacity="0.55"/>
+                <rect x="48" y="74" width="24" height="20" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.35"/>
+                <rect x="51" y="80" width="18" height="3" fill="currentColor" opacity="0.55"/>
+                <rect x="51" y="85" width="13" height="3" fill="currentColor" opacity="0.55"/>
+              </svg>
+              <p class="philosophy-note">Scales continuously. Typography breaks at extremes (lines too long, then too short).</p>
+            </div>
+
+            <div class="philosophy">
+              <span class="philosophy-label">Adaptive</span>
+              <svg class="philosophy-diagram" viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram showing adaptive layout jumping at preset breakpoints">
+                <rect x="8" y="10" width="104" height="24" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.35"/>
+                <rect x="12" y="16" width="96" height="3" fill="currentColor" opacity="0.55"/>
+                <rect x="12" y="22" width="70" height="3" fill="currentColor" opacity="0.55"/>
+                <rect x="30" y="42" width="60" height="24" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.35"/>
+                <rect x="34" y="48" width="52" height="3" fill="currentColor" opacity="0.55"/>
+                <rect x="34" y="54" width="38" height="3" fill="currentColor" opacity="0.55"/>
+                <rect x="48" y="74" width="24" height="20" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.35"/>
+                <rect x="52" y="80" width="16" height="3" fill="currentColor" opacity="0.55"/>
+                <rect x="52" y="85" width="11" height="3" fill="currentColor" opacity="0.55"/>
+                <line x1="0" y1="36" x2="120" y2="36" stroke="currentColor" stroke-dasharray="1 2" stroke-width="0.4" opacity="0.35"/>
+                <line x1="0" y1="68" x2="120" y2="68" stroke="currentColor" stroke-dasharray="1 2" stroke-width="0.4" opacity="0.35"/>
+              </svg>
+              <p class="philosophy-note">Jumps at preset breakpoints. Works fine in between but brittle at the thresholds.</p>
+            </div>
+
+            <div class="philosophy is-chosen">
+              <span class="philosophy-label">Fluid + Breakpoints</span>
+              <svg class="philosophy-diagram" viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram showing fluid layout within bands that reflows at breakpoint thresholds, the recommended approach">
+                <rect x="8" y="10" width="104" height="24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.7"/>
+                <rect x="12" y="16" width="96" height="3" fill="currentColor" opacity="0.75"/>
+                <rect x="12" y="22" width="76" height="3" fill="currentColor" opacity="0.75"/>
+                <rect x="30" y="42" width="60" height="24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.7"/>
+                <rect x="34" y="48" width="52" height="3" fill="currentColor" opacity="0.75"/>
+                <rect x="34" y="54" width="40" height="3" fill="currentColor" opacity="0.75"/>
+                <rect x="48" y="74" width="24" height="20" fill="none" stroke="currentColor" stroke-width="1" opacity="0.7"/>
+                <rect x="52" y="80" width="16" height="3" fill="currentColor" opacity="0.75"/>
+                <rect x="52" y="85" width="12" height="3" fill="currentColor" opacity="0.75"/>
+                <circle cx="8" cy="36" r="1.3" fill="currentColor"/>
+                <circle cx="30" cy="68" r="1.3" fill="currentColor"/>
+              </svg>
+              <p class="philosophy-note">Fluid within bands. Reflows at thresholds. The only approach that meets WCAG 1.4.10 acceptance criteria at all zoom levels.</p>
+            </div>
+
+          </div>
+          <p class="anatomy-caption">Diagram from the training deck <em>Engineering Responsiveness Concepts and Training</em>, delivered org-wide at Virgin Pulse.</p>
+        </section>
+
+        <section aria-labelledby="v-work">
+          <span class="section-label">The work</span>
+          <h2 class="work-title" id="v-work">Building the approach into standards, code, and training.</h2>
+          <ol class="work-list">
+            <li>Co-authored Virgin Pulse's WCAG AA strategy to meet the Section 508 requirement on the Bank of America contract, defining accessible patterns and component standards adopted organization-wide.</li>
+            <li>Led a proof of concept refactoring Angular micro-frontend templates and CSS to meet Reflow (1.4.10) and Resize Text (1.4.4). The approach was adopted as the engineering SOP across 300+ engineers.</li>
+            <li>Designed and delivered two accessibility training curricula (one for engineers, one for designers and product leads) built on relative units, fluid grids, and container-guided layout.</li>
+          </ol>
+        </section>
+
+        <section aria-labelledby="v-outcome">
+          <span class="section-label" id="v-outcome">Outcome</span>
+          <div class="outcomes">
+            <div class="outcome">
+              <span class="outcome-n">400+</span>
+              <span class="outcome-l">Engineers, designers, and PMs trained</span>
+            </div>
+            <div class="outcome">
+              <span class="outcome-n">300+</span>
+              <span class="outcome-l">Engineers operating on the new SOP</span>
+            </div>
+            <div class="outcome">
+              <span class="outcome-n">§508</span>
+              <span class="outcome-l">Enterprise contract requirement met</span>
+            </div>
+          </div>
+
+          <aside class="artifact">
+            <span class="artifact-kicker">Artifacts Upon Request</span>
+            <h3 class="artifact-title">Engineering Responsiveness: Concepts & Training</h3>
+            <p>The original workshop deck, still the reference for responsive and accessible front-end work across the Virgin Pulse engineering org. Covers WCAG principles, fluid grids, breakpoints as a last resort, relative units, Flexbox, and Grid.</p>
+          </aside>
+        </section>
+
+        <nav class="pager" aria-label="Case study navigation">
+          <span class="prev">
+            <span class="pager-label">—</span>
+          </span>
+          <a class="next" href="#putnam" data-tab="putnam" rel="next">
+            <span class="pager-label">Next · № 02</span>
+            <span class="pager-title">Putnam Investments →</span>
+          </a>
+        </nav>
+
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- ─────────────── PANEL 02 · PUTNAM ─────────────────── -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <div role="tabpanel" id="panel-putnam" aria-labelledby="tab-putnam" tabindex="0" hidden>
+      <div class="wrap">
+
+        <div class="meta-strip">
+          <span class="no">№ 02</span>
+          <span class="sep">/</span>
+          <span>Component & Craft</span>
+          <span class="sep">/</span>
+          <span>2017</span>
+        </div>
+
+        <header class="hero">
+          <h1 class="client-name">Putnam Investments</h1>
+          <p class="client-role">Accessibility Engineer ·  Component refactoring for WCAG AA compliance</p>
+          <dl class="hero-dek">
+            <div><dt>Sector</dt><dd>Financial Services</dd></div>
+            <div><dt>Standard</dt><dd>WCAG AA compliance</dd></div>
+            <div><dt>Scope</dt><dd>Combobox · Menus · Dialogs · Page flow</dd></div>
+          </dl>
+        </header>
+
+        <section aria-labelledby="p-thesis">
+          <span class="section-label" id="p-thesis">The Fundamental</span>
+          <blockquote class="thesis-quote">
+            Build the consistency keyboard users need, first.
+          </blockquote>
+          <span class="thesis-cite">Working principle</span>
+          <div class="thesis-body">
+            <p>This was a massive accessibility refactor for a financial services website. Dozens of interactive components (comboboxes, menus, dialogs, disclosure widgets) needed to be rebuilt from the ground up. This is where I learned how to build accessible components by reading WCAG documentation and understanding keyboard interaction patterns.</p>
+            <p>In 2017, the ARIA Authoring Practices Guide didn't exist in its current form. I worked directly from the ARIA spec and WCAG keyboard interaction patterns. Screen reader users are keyboard users first. They navigate with arrow keys, Enter, Escape, and Tab just like sighted keyboard users. I learned to implement the keyboard behavior first, then add ARIA roles to communicate state. Every component was tested in JAWS and NVDA before it shipped.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="p-anatomy">
+          <span class="section-label">The anatomy</span>
+          <h2 class="work-title" id="p-anatomy">A combobox, built from WCAG keyboard patterns.</h2>
+          <p class="anatomy-intro">I learned to build comboboxes by reading the WCAG keyboard interaction documentation. Despite the Authoring Practice Guide not existing yet, the patterns were clear: arrow keys navigate options, Enter selects, Escape closes and returns focus. I implemented the keyboard behavior first, then added ARIA roles to communicate state. This spec shows what that looked like.</p>
+
+          <figure class="anatomy" role="group" aria-label="Anatomy of an accessible combobox">
+            <figcaption class="anatomy-title">Fig. 01 · Combobox — roles, state, keyboard</figcaption>
+
+            <svg class="anatomy-diagram" viewBox="0 0 720 380" style="max-width: 720px;" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Technical diagram of accessible combobox showing ARIA roles, state attributes, and keyboard interaction patterns including arrow keys, Enter, Escape, Space, and Alt combinations">
+              <g font-family="JetBrains Mono, monospace" font-size="10" fill="currentColor">
+                <text x="8" y="82" opacity="0.9">role="combobox"</text>
+                <text x="8" y="98" opacity="0.65">aria-expanded="true"</text>
+                <text x="8" y="114" opacity="0.65">aria-controls="lb-1"</text>
+                <text x="8" y="130" opacity="0.65">aria-activedescendant="opt-2"</text>
+                <line x1="180" y1="98" x2="240" y2="98" stroke="currentColor" stroke-width="0.5" stroke-dasharray="1.5 1.5" opacity="0.55"/>
+              </g>
+
+              <g transform="translate(240, 80)">
+                <rect x="0" y="0" width="240" height="38" fill="none" stroke="currentColor" stroke-width="1"/>
+                <text x="14" y="24" font-family="Lora, serif" font-size="14" fill="currentColor" opacity="0.85">Equity Income</text>
+                <g transform="translate(210, 14)">
+                  <path d="M 0 3 L 6 11 L 12 3" stroke="currentColor" fill="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </g>
+                <text x="14" y="-8" font-family="JetBrains Mono, monospace" font-size="9" fill="currentColor" opacity="0.55">Label: Select a fund</text>
+              </g>
+
+              <g transform="translate(240, 128)">
+                <rect x="0" y="0" width="240" height="168" fill="none" stroke="currentColor" stroke-width="1"/>
+                <text x="14" y="22" font-family="Lora, serif" font-size="13" fill="currentColor" opacity="0.75">Growth Fund</text>
+                <rect x="0" y="32" width="240" height="30" fill="currentColor" opacity="0.08"/>
+                <rect x="0" y="32" width="3" height="30" fill="currentColor"/>
+                <text x="14" y="51" font-family="Lora, serif" font-size="13" fill="currentColor" font-weight="500">Equity Income</text>
+                <text x="14" y="80" font-family="Lora, serif" font-size="13" fill="currentColor" opacity="0.75">Global Bond</text>
+                <text x="14" y="107" font-family="Lora, serif" font-size="13" fill="currentColor" opacity="0.75">Small Cap Value</text>
+                <text x="14" y="134" font-family="Lora, serif" font-size="13" fill="currentColor" opacity="0.75">Dividend Income</text>
+                <text x="14" y="158" font-family="Lora, serif" font-size="12" fill="currentColor" opacity="0.55">International Equity</text>
+              </g>
+
+              <g font-family="JetBrains Mono, monospace" font-size="10" fill="currentColor">
+                <line x1="480" y1="140" x2="510" y2="140" stroke="currentColor" stroke-width="0.5" stroke-dasharray="1.5 1.5" opacity="0.55"/>
+                <text x="516" y="136" opacity="0.9">role="listbox"</text>
+                <text x="516" y="150" opacity="0.65">id="lb-1"</text>
+
+                <line x1="480" y1="175" x2="510" y2="175" stroke="currentColor" stroke-width="0.5" stroke-dasharray="1.5 1.5" opacity="0.55"/>
+                <text x="516" y="172" opacity="0.9">role="option"</text>
+                <text x="516" y="186" opacity="0.65">id="opt-2"</text>
+                <text x="516" y="200" opacity="0.65">aria-selected="true"</text>
+              </g>
+
+              <line x1="40" y1="325" x2="680" y2="325" stroke="currentColor" stroke-width="0.5" opacity="0.3"/>
+
+              <g transform="translate(40, 345)" font-family="JetBrains Mono, monospace" font-size="10" fill="currentColor">
+                <text x="0" y="-8" opacity="0.55">Keyboard · what a screen reader user expects</text>
+
+                <g transform="translate(0, 10)">
+                  <rect x="0" y="0" width="22" height="18" fill="none" stroke="currentColor" stroke-width="0.8" rx="2"/>
+                  <text x="11" y="13" text-anchor="middle" font-size="10">↓</text>
+                  <text x="30" y="13" opacity="0.75">collapsed: open, move to selected/first · expanded: next option</text>
+                </g>
+                <g transform="translate(0, 35)">
+                  <rect x="0" y="0" width="22" height="18" fill="none" stroke="currentColor" stroke-width="0.8" rx="2"/>
+                  <text x="11" y="13" text-anchor="middle" font-size="10">↑</text>
+                  <text x="30" y="13" opacity="0.75">collapsed: open, move to selected/last · expanded: previous option</text>
+                </g>
+                <g transform="translate(0, 60)">
+                  <rect x="0" y="0" width="22" height="18" fill="none" stroke="currentColor" stroke-width="0.8" rx="2"/>
+                  <text x="11" y="13" text-anchor="middle" font-size="10">↵</text>
+                  <text x="30" y="13" opacity="0.75">collapsed: open · expanded: select, close, return focus</text>
+                </g>
+                <g transform="translate(0, 85)">
+                  <rect x="0" y="0" width="32" height="18" fill="none" stroke="currentColor" stroke-width="0.8" rx="2"/>
+                  <text x="16" y="13" text-anchor="middle" font-size="9">Space</text>
+                  <text x="40" y="13" opacity="0.75">collapsed: open · expanded: select, close, return focus</text>
+                </g>
+                <g transform="translate(0, 110)">
+                  <rect x="0" y="0" width="28" height="18" fill="none" stroke="currentColor" stroke-width="0.8" rx="2"/>
+                  <text x="14" y="13" text-anchor="middle" font-size="9">Esc</text>
+                  <text x="36" y="13" opacity="0.75">close, return focus to combobox</text>
+                </g>
+                <g transform="translate(0, 135)">
+                  <rect x="0" y="0" width="42" height="18" fill="none" stroke="currentColor" stroke-width="0.8" rx="2"/>
+                  <text x="21" y="13" text-anchor="middle" font-size="8">Alt+↑</text>
+                  <text x="50" y="13" opacity="0.75">close, return focus without changing selection</text>
+                </g>
+              </g>
+            </svg>
+
+            <dl class="anatomy-keys">
+              <div class="key-row"><dt>⌂ / End</dt><dd>Jump to first / last option</dd></div>
+              <div class="key-row"><dt>A–Z</dt><dd>Type-ahead match (select-only pattern)</dd></div>
+              <div class="key-row"><dt>Tab</dt><dd>Never traps — moves past the collapsed combobox</dd></div>
+              <div class="key-row"><dt>Alt + ↓</dt><dd>Open listbox without moving selection</dd></div>
+            </dl>
+          </figure>
+          <p class="anatomy-caption">Component spec derived from the ARIA 1.0 / 1.1 specs and validated against JAWS and NVDA before ship. One of dozens in the Putnam refactor set.</p>
+        </section>
+
+        <section aria-labelledby="p-work">
+          <span class="section-label">The work</span>
+          <h2 class="work-title" id="p-work">Building from WCAG patterns, validating with real users.</h2>
+          <ol class="work-list">
+            <li>Started with WCAG keyboard interaction documentation for each component type. Implemented arrow key navigation, Enter/Escape behavior, and focus management exactly as the patterns specified. Added ARIA roles to communicate state to screen readers after the keyboard behavior was correct.</li>
+            <li>Treated page structure as a navigation system. Landmark regions, heading hierarchy, and tab order had to work together. A keyboard user's mental map depends on all three being consistent. Fix one in isolation and the others break.</li>
+            <li>Made focus management part of the component design. Dialogs return focus to the trigger on close. Composite widgets use roving tabindex. Modal focus traps are intentional and escapable. Tested every pattern by navigating with keyboard only before adding screen reader validation.</li>
+            <li>Validated every component in JAWS and NVDA before shipping. If the keyboard interaction was predictable, screen readers announced it correctly. If keyboard behavior was wrong, no amount of ARIA could fix it.</li>
+          </ol>
+        </section>
+
+        <section aria-labelledby="p-outcome">
+          <span class="section-label" id="p-outcome">Outcome</span>
+          <div class="outcomes">
+            <div class="outcome">
+              <span class="outcome-n">Dozens</span>
+              <span class="outcome-l">Components rebuilt from WCAG keyboard patterns</span>
+            </div>
+            <div class="outcome">
+              <span class="outcome-n">02</span>
+              <span class="outcome-l">Keyboard navigation tested, then validated in JAWS & NVDA</span>
+            </div>
+            <div class="outcome">
+              <span class="outcome-n">Pre-APG</span>
+              <span class="outcome-l">Built before APG existed, following WCAG patterns</span>
+            </div>
+          </div>
+
+          <aside class="artifact">
+            <span class="artifact-kicker">Artifact</span>
+            <h3 class="artifact-title">Component refactor set for Putnam web platform</h3>
+            <p>Interactive components (combobox, menu, dialog, disclosure) built by following WCAG keyboard interaction patterns and validated in JAWS and NVDA. Shipped in 2017 before the ARIA Authoring Practices Guide existed in its current form. The keyboard behavior matches what the APG now recommends because both follow the same WCAG foundation.</p>
+          </aside>
+        </section>
+
+        <nav class="pager" aria-label="Case study navigation">
+          <a class="prev" href="#virgin" data-tab="virgin" rel="prev">
+            <span class="pager-label">Prev · № 01</span>
+            <span class="pager-title">← Virgin Pulse</span>
+          </a>
+          <a class="next" href="#akamai" data-tab="akamai" rel="next">
+            <span class="pager-label">Next · № 03</span>
+            <span class="pager-title">Akamai Technologies →</span>
+          </a>
+        </nav>
+
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- ─────────────── PANEL 03 · AKAMAI ─────────────────── -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <div role="tabpanel" id="panel-akamai" aria-labelledby="tab-akamai" tabindex="0" hidden>
+      <div class="wrap">
+
+        <div class="meta-strip">
+          <span class="no">№ 03</span>
+          <span class="sep">/</span>
+          <span>Research & Velocity</span>
+          <span class="sep">/</span>
+          <span>2019</span>
+        </div>
+
+        <header class="hero">
+          <h1 class="client-name">Akamai Technologies</h1>
+          <p class="client-role">Sr. UI/UX Developer & Designer · Hybrid design/development role</p>
+          <dl class="hero-dek">
+            <div><dt>Sector</dt><dd>Infosec / Federal Cloud</dd></div>
+            <div><dt>Requirement</dt><dd>FedRAMP remediation tracker</dd></div>
+            <div><dt>Approach</dt><dd>Stakeholder collaboration · Design + build</dd></div>
+          </dl>
+        </header>
+
+        <section aria-labelledby="a-thesis">
+          <span class="section-label" id="a-thesis">The fundamental</span>
+          <blockquote class="thesis-quote">
+            Watch how people work, not just what they say.
+          </blockquote>
+          <span class="thesis-cite">Working principle</span>
+          <div class="thesis-body">
+            <p>This was my first hybrid design/development role. The team needed a FedRAMP remediation tracker, and three different groups would use it: compliance officers, security engineers, and managers. Each group had their own vocabulary and way of thinking about the work.</p>
+            <p>I spent time with eight stakeholders, watching how they actually did their jobs. The contextual inquiry showed that they all tracked the same vulnerabilities but talked about them completely differently. The design challenge was creating one tool that worked for all three groups without forcing anyone to learn a new way of thinking.</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="a-anatomy">
+          <span class="section-label">The anatomy</span>
+          <h2 class="work-title" id="a-anatomy">Understanding stakeholder needs through observation.</h2>
+          <p class="anatomy-intro">I embedded with compliance officers, engineers, and managers to understand how they worked. Each group used different terms for the same concepts. The card sorting exercise helped me see where their vocabularies overlapped and where they diverged. That informed the information architecture.</p>
+
+          <figure class="anatomy" role="group" aria-label="Three mental models converging into one information architecture">
+            <figcaption class="anatomy-title">Fig. 01 · Mental-model synthesis</figcaption>
+
+            <svg class="anatomy-diagram" viewBox="0 0 720 440" style="max-width: 760px;" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Synthesis diagram showing three role-specific mental models from compliance, engineering, and management converging into one shared information architecture for the remediation tracker">
+
+              <g font-family="JetBrains Mono, monospace" font-size="10" fill="currentColor">
+                <g transform="translate(30, 20)">
+                  <rect x="0" y="0" width="190" height="150" fill="none" stroke="currentColor" stroke-width="1" opacity="0.7"/>
+                  <text x="14" y="24" font-size="10" letter-spacing="1.4" opacity="0.85">COMPLIANCE</text>
+                  <text x="14" y="38" font-size="8" opacity="0.5">n=3</text>
+                  <line x1="14" y1="50" x2="176" y2="50" stroke="currentColor" stroke-width="0.4" opacity="0.3"/>
+                  <g font-family="Lora, serif" font-size="13" opacity="0.85">
+                    <text x="14" y="72">Controls</text>
+                    <text x="14" y="92">Frameworks</text>
+                    <text x="14" y="112">Evidence</text>
+                    <text x="14" y="132">SSPs</text>
+                  </g>
+                </g>
+
+                <g transform="translate(265, 20)">
+                  <rect x="0" y="0" width="190" height="150" fill="none" stroke="currentColor" stroke-width="1" opacity="0.7"/>
+                  <text x="14" y="24" font-size="10" letter-spacing="1.4" opacity="0.85">ENGINEERING</text>
+                  <text x="14" y="38" font-size="8" opacity="0.5">n=3</text>
+                  <line x1="14" y1="50" x2="176" y2="50" stroke="currentColor" stroke-width="0.4" opacity="0.3"/>
+                  <g font-family="Lora, serif" font-size="13" opacity="0.85">
+                    <text x="14" y="72">CVEs</text>
+                    <text x="14" y="92">Tickets</text>
+                    <text x="14" y="112">Fixes</text>
+                    <text x="14" y="132">Deploys</text>
+                  </g>
+                </g>
+
+                <g transform="translate(500, 20)">
+                  <rect x="0" y="0" width="190" height="150" fill="none" stroke="currentColor" stroke-width="1" opacity="0.7"/>
+                  <text x="14" y="24" font-size="10" letter-spacing="1.4" opacity="0.85">MANAGEMENT</text>
+                  <text x="14" y="38" font-size="8" opacity="0.5">n=2</text>
+                  <line x1="14" y1="50" x2="176" y2="50" stroke="currentColor" stroke-width="0.4" opacity="0.3"/>
+                  <g font-family="Lora, serif" font-size="13" opacity="0.85">
+                    <text x="14" y="72">Risk</text>
+                    <text x="14" y="92">Status</text>
+                    <text x="14" y="112">Timeline</text>
+                    <text x="14" y="132">Reports</text>
+                  </g>
+                </g>
+
+              </g>
+
+              <g stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.55">
+                <path d="M 125 170 Q 125 200 280 240" stroke-linecap="round"/>
+                <path d="M 360 170 L 360 240" stroke-linecap="round"/>
+                <path d="M 595 170 Q 595 200 440 240" stroke-linecap="round"/>
+                <path d="M 357 235 L 360 243 L 363 235" stroke-linejoin="round" stroke-linecap="round"/>
+              </g>
+
+              <g font-family="JetBrains Mono, monospace" font-size="9" fill="currentColor" opacity="0.55" letter-spacing="1.2">
+                <text x="360" y="215" text-anchor="middle">contextual inquiry · interviews · card sort</text>
+                <text x="360" y="228" text-anchor="middle">× 3 iterations</text>
+              </g>
+
+              <g transform="translate(80, 250)">
+                <rect x="0" y="0" width="560" height="170" fill="none" stroke="currentColor" stroke-width="1" opacity="0.85"/>
+                <rect x="0" y="0" width="560" height="28" fill="currentColor" opacity="0.07"/>
+                <text x="14" y="19" font-family="Lora, serif" font-size="12" fill="currentColor" font-weight="500">Remediation Tracker</text>
+                <text x="544" y="19" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="8.5" fill="currentColor" opacity="0.55">fedramp</text>
+
+                <g font-family="JetBrains Mono, monospace" font-size="10" fill="currentColor">
+                  <text x="20" y="52" letter-spacing="1.2" opacity="0.85">DASHBOARD</text>
+                  <text x="130" y="52" letter-spacing="1.2" opacity="0.85">REMEDIATION</text>
+                  <text x="260" y="52" letter-spacing="1.2" opacity="0.85">CONTROLS</text>
+                  <text x="360" y="52" letter-spacing="1.2" opacity="0.85">AUDIT TRAIL</text>
+                  <text x="475" y="52" letter-spacing="1.2" opacity="0.85">REPORTS</text>
+                  <line x1="130" y1="58" x2="220" y2="58" stroke="currentColor" stroke-width="1.2"/>
+                </g>
+
+                <line x1="0" y1="68" x2="560" y2="68" stroke="currentColor" stroke-width="0.4" opacity="0.3"/>
+
+                <g font-family="Lora, serif" font-size="12" fill="currentColor">
+                  <g opacity="0.85">
+                    <rect x="20" y="82" width="44" height="14" fill="none" stroke="currentColor" stroke-width="0.6"/>
+                    <text x="42" y="92" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8">HIGH</text>
+                    <text x="80" y="93">CVE-2019-0847 ·  platform-a</text>
+                    <text x="540" y="93" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="9" opacity="0.6">in progress</text>
+                  </g>
+                  <line x1="20" y1="104" x2="540" y2="104" stroke="currentColor" stroke-width="0.3" opacity="0.25"/>
+                  <g opacity="0.75">
+                    <rect x="20" y="112" width="44" height="14" fill="none" stroke="currentColor" stroke-width="0.6"/>
+                    <text x="42" y="122" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8">MED</text>
+                    <text x="80" y="123">CVE-2019-1122 ·  platform-b</text>
+                    <text x="540" y="123" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="9" opacity="0.6">triage</text>
+                  </g>
+                  <line x1="20" y1="134" x2="540" y2="134" stroke="currentColor" stroke-width="0.3" opacity="0.25"/>
+                  <g opacity="0.65">
+                    <rect x="20" y="142" width="44" height="14" fill="none" stroke="currentColor" stroke-width="0.6"/>
+                    <text x="42" y="152" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8">LOW</text>
+                    <text x="80" y="153">CVE-2019-2301 ·  platform-c</text>
+                    <text x="540" y="153" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="9" opacity="0.6">resolved</text>
+                  </g>
+                </g>
+              </g>
+
+              <g font-family="JetBrains Mono, monospace" font-size="8.5" fill="currentColor" opacity="0.5" letter-spacing="1.2">
+                <text x="360" y="435" text-anchor="middle">ONE TOOL · THREE VOCABULARIES</text>
+              </g>
+
+            </svg>
+          </figure>
+          <p class="anatomy-caption">Synthesis diagram showing three role-specific mental models feeding one shared IA. The wireframe above is representative of the shipped structure, not a screenshot.</p>
+        </section>
+
+        <section aria-labelledby="a-work">
+          <span class="section-label">The work</span>
+          <h2 class="work-title" id="a-work">Collaborating with stakeholders to design and build the tool.</h2>
+          <ol class="work-list">
+            <li>Spent time with eight stakeholders (three compliance officers, three security engineers, two managers) watching how they tracked vulnerabilities in their daily work. Observed first, asked questions second.</li>
+            <li>Built a custom card-sorting tool when procurement timelines would have delayed the project. Used it to understand how each group organized and labeled the same remediation concepts. The patterns showed where vocabularies aligned and where they conflicted.</li>
+            <li>Created three rounds of prototypes and tested them with the same eight stakeholders. Each iteration refined how the interface presented information to accommodate different mental models without forcing anyone to translate.</li>
+            <li>Designed and developed the tool in Ruby on Rails with ERB templates and JavaScript. The information architecture used terminology from all three groups, making the tool feel native to compliance, engineering, and management perspectives.</li>
+          </ol>
+        </section>
+
+        <section aria-labelledby="a-outcome">
+          <span class="section-label" id="a-outcome">Outcome</span>
+          <div class="outcomes">
+            <div class="outcome">
+              <span class="outcome-n">08</span>
+              <span class="outcome-l">Team members embedded & iterated with</span>
+            </div>
+            <div class="outcome">
+              <span class="outcome-n">03</span>
+              <span class="outcome-l">Iteration rounds with the operating team</span>
+            </div>
+            <div class="outcome">
+              <span class="outcome-n">FedRAMP</span>
+              <span class="outcome-l">vulnerability tracking tool deployed</span>
+            </div>
+          </div>
+
+          <aside class="artifact">
+            <span class="artifact-kicker">Artifact Upon Request</span>
+            <h3 class="artifact-title">Compliance vulnerability remediation tool wireframes</h3>
+            <p>A FedRAMP-compliant vulnerability tracker for government cloud platforms. Information architecture designed through stakeholder collaboration: contextual inquiry with eight team members, custom card sorting to understand mental models, and three rounds of prototype testing. Built in Ruby on Rails with ERB templates and JavaScript to serve compliance, engineering, and management users.</p>
+          </aside>
+        </section>
+
+        <nav class="pager" aria-label="Case study navigation">
+          <a class="prev" href="#putnam" data-tab="putnam" rel="prev">
+            <span class="pager-label">Prev · № 02</span>
+            <span class="pager-title">← Putnam Investments</span>
+          </a>
+          <span class="next">
+            <span class="pager-label">—</span>
+          </span>
+        </nav>
+
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="site-foot">
+    <p>Gabriel Martin  ·  Boston, MA  ·  2026</p>
+  </footer>
+
+<script>
+  (function () {
+    'use strict';
+
+    // Map of tab keys to IDs. Order matters for arrow-key navigation.
+    var tabs = [
+      { key: 'virgin',  tabId: 'tab-virgin',  panelId: 'panel-virgin',  hash: 'virgin'  },
+      { key: 'putnam',  tabId: 'tab-putnam',  panelId: 'panel-putnam',  hash: 'putnam'  },
+      { key: 'akamai',  tabId: 'tab-akamai',  panelId: 'panel-akamai',  hash: 'akamai'  }
+    ];
+
+    function getIndexByKey(key) {
+      for (var i = 0; i < tabs.length; i++) {
+        if (tabs[i].key === key) return i;
+      }
+      return -1;
+    }
+
+    function activate(key, options) {
+      options = options || {};
+      var idx = getIndexByKey(key);
+      if (idx === -1) idx = 0;
+
+      tabs.forEach(function (t, i) {
+        var tabEl = document.getElementById(t.tabId);
+        var panelEl = document.getElementById(t.panelId);
+        var isActive = (i === idx);
+
+        tabEl.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        tabEl.setAttribute('tabindex', isActive ? '0' : '-1');
+
+        if (isActive) {
+          panelEl.removeAttribute('hidden');
+        } else {
+          panelEl.setAttribute('hidden', '');
+        }
+      });
+
+      // Update URL hash without triggering jump
+      if (options.updateHash !== false) {
+        if (history.replaceState) {
+          history.replaceState(null, '', '#' + tabs[idx].hash);
+        } else {
+          location.hash = '#' + tabs[idx].hash;
+        }
+      }
+
+      if (options.focusTab) {
+        document.getElementById(tabs[idx].tabId).focus();
+      }
+
+      if (options.scrollTop) {
+        window.scrollTo({ top: 0, behavior: 'auto' });
+      }
+    }
+
+    // Click handlers for tabs
+    tabs.forEach(function (t) {
+      var el = document.getElementById(t.tabId);
+      el.addEventListener('click', function () {
+        activate(t.key, { scrollTop: true });
+      });
+    });
+
+    // Arrow-key navigation inside tablist (Left/Right + Home/End)
+    var tablist = document.querySelector('[role="tablist"]');
+    tablist.addEventListener('keydown', function (e) {
+      var target = e.target;
+      if (target.getAttribute('role') !== 'tab') return;
+
+      var currentIdx = -1;
+      for (var i = 0; i < tabs.length; i++) {
+        if (tabs[i].tabId === target.id) { currentIdx = i; break; }
+      }
+      if (currentIdx === -1) return;
+
+      var nextIdx = currentIdx;
+      var key = e.key;
+
+      if (key === 'ArrowRight') nextIdx = (currentIdx + 1) % tabs.length;
+      else if (key === 'ArrowLeft') nextIdx = (currentIdx - 1 + tabs.length) % tabs.length;
+      else if (key === 'Home') nextIdx = 0;
+      else if (key === 'End') nextIdx = tabs.length - 1;
+      else return;
+
+      e.preventDefault();
+      activate(tabs[nextIdx].key, { focusTab: true, scrollTop: true });
+    });
+
+    // Pager (prev/next) handlers
+    document.querySelectorAll('.pager a[data-tab]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        var key = a.getAttribute('data-tab');
+        activate(key, { scrollTop: true });
+      });
+    });
+
+    // Hash-based deep linking
+    function keyFromHash() {
+      var h = (location.hash || '').replace(/^#/, '');
+      return getIndexByKey(h) !== -1 ? h : null;
+    }
+
+    // Initial activation
+    var startKey = keyFromHash();
+    if (startKey) {
+      activate(startKey, { updateHash: false });
+    }
+
+    // Handle hash changes (back/forward nav)
+    window.addEventListener('hashchange', function () {
+      var k = keyFromHash();
+      if (k) activate(k, { updateHash: false, scrollTop: true });
+    });
+
+    // Auto-hide nav on scroll down, show on scroll up
+    var nav = document.querySelector('.site-nav');
+    var lastScrollY = window.scrollY;
+    var scrollThreshold = 10;
+    
+    window.addEventListener('scroll', function () {
+      var currentScrollY = window.scrollY;
+      
+      // Don't hide if we're at the top
+      if (currentScrollY < 100) {
+        nav.classList.remove('nav-hidden');
+        lastScrollY = currentScrollY;
+        return;
+      }
+      
+      // Check scroll direction
+      if (Math.abs(currentScrollY - lastScrollY) < scrollThreshold) {
+        return;
+      }
+      
+      if (currentScrollY > lastScrollY) {
+        // Scrolling down - hide nav
+        nav.classList.add('nav-hidden');
+      } else {
+        // Scrolling up - show nav
+        nav.classList.remove('nav-hidden');
+      }
+      
+      lastScrollY = currentScrollY;
+    });
+
+  }());
+</script>
+</body>
+</html>
