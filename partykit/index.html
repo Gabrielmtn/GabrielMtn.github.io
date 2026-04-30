@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Canvas Presence</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #0a0a0a; }
+    canvas { display: block; cursor: none; }
+    #info {
+      position: fixed; top: 16px; left: 16px;
+      color: #888; font: 14px/1.4 monospace;
+      pointer-events: none; z-index: 10;
+    }
+    #count {
+      position: fixed; top: 16px; right: 16px;
+      color: #fff; font: bold 18px/1 monospace;
+      pointer-events: none; z-index: 10;
+    }
+  </style>
+</head>
+<body>
+  <div id="info">move your mouse or touch</div>
+  <div id="count"></div>
+  <canvas id="canvas"></canvas>
+  <script>
+    const PARTYKIT_SERVER = "https://canvas-presence.gabrielmtn.partykit.dev";
+    const ROOM = "default";
+
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    const countEl = document.getElementById("count");
+
+    let W, H;
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener("resize", resize);
+
+    const myId = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2);
+    const myColor = "#" + Math.floor(Math.random() * 0xffffff).toString(16).padStart(6, "0");
+
+    const cursors = new Map();
+    cursors.set(myId, { id: myId, x: -100, y: -100, color: myColor });
+
+    const wsProtocol = "wss:";
+    const wsHost = new URL(PARTYKIT_SERVER).host;
+    const wsUrl = wsProtocol + "//" + wsHost + "/parties/cursor_party/" + ROOM + "/";
+
+    console.log("Connecting to:", wsUrl);
+    const ws = new WebSocket(wsUrl);
+
+    ws.onopen = () => console.log("Connected!");
+    ws.onclose = () => console.log("Disconnected");
+    ws.onerror = (e) => console.error("WS error", e);
+
+    ws.onmessage = (e) => {
+      const data = JSON.parse(e.data);
+      if (data.type === "state") {
+        data.cursors.forEach(c => cursors.set(c.id, c));
+      }
+      if (data.type === "cursor") {
+        cursors.set(data.cursor.id, data.cursor);
+      }
+      if (data.type === "leave") {
+        cursors.delete(data.id);
+      }
+    };
+
+    let lastSent = 0;
+    canvas.addEventListener("mousemove", (e) => {
+      const now = Date.now();
+      const myCursor = cursors.get(myId);
+      myCursor.x = e.clientX;
+      myCursor.y = e.clientY;
+      if (now - lastSent > 33) {
+        ws.send(JSON.stringify({ type: "cursor", id: myId, x: e.clientX, y: e.clientY, color: myColor }));
+        lastSent = now;
+      }
+    });
+
+    canvas.addEventListener("touchmove", (e) => {
+      e.preventDefault();
+      const touch = e.touches[0];
+      const now = Date.now();
+      const myCursor = cursors.get(myId);
+      myCursor.x = touch.clientX;
+      myCursor.y = touch.clientY;
+      if (now - lastSent > 33) {
+        ws.send(JSON.stringify({ type: "cursor", id: myId, x: touch.clientX, y: touch.clientY, color: myColor }));
+        lastSent = now;
+      }
+    }, { passive: false });
+
+    canvas.addEventListener("touchend", () => {
+      ws.send(JSON.stringify({ type: "leave", id: myId }));
+    });
+
+    function draw() {
+      ctx.fillStyle = "rgba(10, 10, 10, 0.15)";
+      ctx.fillRect(0, 0, W, H);
+
+      cursors.forEach((cursor) => {
+        const gradient = ctx.createRadialGradient(cursor.x, cursor.y, 0, cursor.x, cursor.y, 30);
+        gradient.addColorStop(0, cursor.color + "aa");
+        gradient.addColorStop(1, cursor.color + "00");
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(cursor.x, cursor.y, 30, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = cursor.color;
+        ctx.beginPath();
+        ctx.arc(cursor.x, cursor.y, 5, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "#ffffff88";
+        ctx.font = "11px monospace";
+        ctx.fillText(cursor.id.slice(0, 8), cursor.x + 12, cursor.y - 12);
+      });
+
+      countEl.textContent = cursors.size + " online";
+      requestAnimationFrame(draw);
+    }
+    draw();
+
+    window.addEventListener("beforeunload", () => {
+      ws.send(JSON.stringify({ type: "leave", id: myId }));
+    });
+  </script>
+</body>
+</html>
