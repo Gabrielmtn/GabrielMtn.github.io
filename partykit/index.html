@@ -3,20 +3,15 @@
   PARTYKIT CANVAS — Client (GitHub Pages)
   ============================================================
   Drop this into your GitHub Pages repo.
-
-  IMPORTANT: Change the `host` below to point at your
-  deployed PartyKit server (or keep localhost:1999 for dev).
+  Uses raw WebSocket — no external library needed.
   ============================================================
 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>PartyKit Canvas — Presence</title>
-
-  <!-- PartyKit client library (CDN) -->
-  <script src="https://unpkg.com/partysocket@0.0.20/dist/partysocket.js"></script>
 
   <style>
     /* ---------- RESET ---------- */
@@ -85,10 +80,10 @@
 
   <script>
     // ============================================================
-    //  CONFIG — change `host` when deploying
+    //  CONFIG
     // ============================================================
     const CONFIG = {
-      host: "canvas-presence.gabrielmtn.partykit.dev",
+      host:  "canvas-presence.gabrielmtn.partykit.dev",
       party: "cursor_party",
       room:  "lobby",
     };
@@ -96,8 +91,8 @@
     // ============================================================
     //  CANVAS SETUP
     // ============================================================
-    const canvas = document.getElementById("canvas");
-    const ctx    = canvas.getContext("2d");
+    const canvas  = document.getElementById("canvas");
+    const ctx     = canvas.getContext("2d");
     const countEl = document.getElementById("count");
 
     function resize() {
@@ -108,52 +103,34 @@
     resize();
 
     // ============================================================
-    //  CONNECT TO PARTYKIT
+    //  RAW WEBSOCKET (no PartySocket library needed)
     // ============================================================
-    const party = new PartySocket({
-      host:  CONFIG.host,
-      party: CONFIG.party,
-      room:  CONFIG.room,
-    });
+    const wsUrl = `wss://${CONFIG.host}/parties/${CONFIG.party}/${CONFIG.room}/`;
+    const ws    = new WebSocket(wsUrl);
+
+    console.log("Connecting to:", wsUrl);
+    ws.onopen   = () => console.log("Connected!");
+    ws.onclose  = () => console.log("Disconnected");
+    ws.onerror  = (e) => console.error("WS error", e);
+
+    // Unique client id + random color
+    const myId    = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2);
+    const myColor = "#" + Math.floor(Math.random() * 0xffffff).toString(16).padStart(6, "0");
+    let myName    = "Anonymous";
 
     // Local cursor state (all known cursors)
     const cursors = {};
 
     // ============================================================
-    //  SEND CURSOR POSITION
-    // ============================================================
-    let lastSent = { x: 0, y: 0 };
-
-    canvas.addEventListener("mousemove", (e) => {
-      const x = Math.round(e.clientX);
-      const y = Math.round(e.clientY);
-      if (x !== lastSent.x || y !== lastSent.y) {
-        lastSent = { x, y };
-        party.send(JSON.stringify({ type: "cursor", x, y }));
-      }
-    });
-
-    canvas.addEventListener("mouseleave", () => {
-      party.send(JSON.stringify({ type: "cursor", x: -1, y: -1 }));
-    });
-
-    // Touch support
-    canvas.addEventListener("touchmove", (e) => {
-      e.preventDefault();
-      const t = e.touches[0];
-      party.send(JSON.stringify({ type: "cursor", x: t.clientX, y: t.clientY }));
-    }, { passive: false });
-
-    canvas.addEventListener("touchend", () => {
-      party.send(JSON.stringify({ type: "cursor", x: -1, y: -1 }));
-    });
-
-    // ============================================================
     //  HANDLE INCOMING MESSAGES
     // ============================================================
-    party.onmessage = (e) => {
+    ws.onmessage = (e) => {
       const data = JSON.parse(e.data);
       switch (data.type) {
+        case "room-state":
+          // Full snapshot on connect
+          Object.values(data.cursors).forEach(c => cursors[c.id] = c);
+          break;
         case "cursor-move":
         case "cursor-update":
           cursors[data.cursor.id] = data.cursor;
@@ -164,21 +141,59 @@
         case "user-left":
           delete cursors[data.id];
           break;
-        case "room-state":
-          Object.assign(cursors, data.cursors);
-          break;
       }
       countEl.textContent = Object.keys(cursors).length;
     };
+
+    // ============================================================
+    //  SEND CURSOR POSITION
+    // ============================================================
+    let lastSent = 0;
+
+    function sendCursor(x, y) {
+      const now = Date.now();
+      if (now - lastSent > 33 && ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({
+          type:  "cursor",
+          id:    myId,
+          x, y,
+          color: myColor,
+          name:  myName,
+        }));
+        lastSent = now;
+      }
+    }
+
+    canvas.addEventListener("mousemove", (e) => {
+      sendCursor(e.clientX, e.clientY);
+    });
+
+    canvas.addEventListener("mouseleave", () => {
+      sendCursor(-1, -1);
+    });
+
+    // Touch support
+    canvas.addEventListener("touchmove", (e) => {
+      e.preventDefault();
+      const t = e.touches[0];
+      sendCursor(t.clientX, t.clientY);
+    }, { passive: false });
+
+    canvas.addEventListener("touchend", () => {
+      sendCursor(-1, -1);
+    });
 
     // ============================================================
     //  NAME FORM
     // ============================================================
     document.getElementById("name-form").addEventListener("submit", (e) => {
       e.preventDefault();
-      const name = document.getElementById("name-input").value.trim();
+      const input = document.getElementById("name-input");
+      const name  = input.value.trim();
       if (name) {
-        party.send(JSON.stringify({ type: "name", name }));
+        myName = name;
+        sendCursor(-1, -1); // triggers update with new name
+        input.value = "";
       }
     });
 
@@ -208,15 +223,31 @@
         ctx.arc(c.x, c.y, 5, 0, Math.PI * 2);
         ctx.fill();
 
+        // White highlight
+        ctx.fillStyle = "#ffffff55";
+        ctx.beginPath();
+        ctx.arc(c.x, c.y, 2.5, 0, Math.PI * 2);
+        ctx.fill();
+
         // Name label
+        const label = c.name || c.id.slice(0, 8);
         ctx.fillStyle = "#ffffffcc";
         ctx.font = "12px system-ui, sans-serif";
-        ctx.fillText(c.name, c.x + 12, c.y - 12);
+        ctx.fillText(label, c.x + 12, c.y - 12);
       }
 
       requestAnimationFrame(draw);
     }
     draw();
+
+    // ============================================================
+    //  CLEANUP ON UNLOAD
+    // ============================================================
+    window.addEventListener("beforeunload", () => {
+      if (ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({ type: "leave", id: myId }));
+      }
+    });
   </script>
 </body>
 </html>
