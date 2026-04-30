@@ -2,50 +2,158 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Canvas Presence</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Canvas Diorama</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { width: 100%; height: 100%; overflow: hidden; background: #0a0a0a; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #050508; }
     canvas { display: block; cursor: none; }
+
+    /* Diorama stage framing */
+    #stage {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #050508;
+    }
+
+    /* Rotate overlay for portrait devices */
+    #rotate-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: #050508;
+      color: #fff;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      font-family: monospace;
+      text-align: center;
+      padding: 24px;
+    }
+    #rotate-overlay svg {
+      width: 64px; height: 64px;
+      margin-bottom: 16px;
+      animation: rotate-hint 2s ease-in-out infinite;
+    }
+    @keyframes rotate-hint {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(90deg); }
+    }
+    #rotate-overlay p {
+      font-size: 16px;
+      color: #aaa;
+      line-height: 1.6;
+    }
+
+    /* UI overlays */
     #info {
       position: fixed; top: 16px; left: 16px;
-      color: #888; font: 14px/1.4 monospace;
+      color: #555; font: 12px/1.4 monospace;
       pointer-events: none; z-index: 10;
     }
     #count {
       position: fixed; top: 16px; right: 16px;
-      color: #fff; font: bold 18px/1 monospace;
+      color: #fff; font: bold 16px/1 monospace;
       pointer-events: none; z-index: 10;
+      text-shadow: 0 0 8px rgba(255,255,255,0.3);
     }
   </style>
 </head>
 <body>
-  <div id="info">move your mouse or touch</div>
+
+  <!-- Rotate prompt (shown on portrait) -->
+  <div id="rotate-overlay">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5">
+      <rect x="4" y="2" width="16" height="20" rx="2" />
+      <path d="M18 12a3 3 0 1 1-6 0" />
+      <path d="M12 15v-3" />
+      <path d="M15 13l-3-3-3 3" />
+    </svg>
+    <p>Please rotate your device<br />to landscape mode</p>
+  </div>
+
+  <div id="info">shared diorama space</div>
   <div id="count"></div>
-  <canvas id="canvas"></canvas>
+
+  <div id="stage">
+    <canvas id="canvas"></canvas>
+  </div>
+
   <script>
     const PARTYKIT_SERVER = "https://canvas-presence.gabrielmtn.partykit.dev";
     const ROOM = "default";
 
+    // === Virtual diorama dimensions (shared coordinate space) ===
+    const VW = 1920;  // virtual width
+    const VH = 1080;  // virtual height
+
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
     const countEl = document.getElementById("count");
+    const rotateOverlay = document.getElementById("rotate-overlay");
 
-    let W, H;
-    function resize() {
-      W = canvas.width = window.innerWidth;
-      H = canvas.height = window.innerHeight;
-    }
-    resize();
-    window.addEventListener("resize", resize);
+    // Letterbox state
+    let scale = 1, offsetX = 0, offsetY = 0;
+    let isLandscape = true;
 
     const myId = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2);
     const myColor = "#" + Math.floor(Math.random() * 0xffffff).toString(16).padStart(6, "0");
 
     const cursors = new Map();
-    cursors.set(myId, { id: myId, x: -100, y: -100, color: myColor });
+    cursors.set(myId, { id: myId, x: VW / 2, y: VH / 2, color: myColor });
 
+    // === Orientation detection ===
+    function checkOrientation() {
+      const landscape = window.innerWidth > window.innerHeight;
+      isLandscape = landscape;
+      rotateOverlay.style.display = landscape ? "none" : "flex";
+      if (landscape) resize();
+    }
+
+    window.addEventListener("orientationchange", () => setTimeout(checkOrientation, 300));
+    window.addEventListener("resize", () => {
+      if (isLandscape) resize();
+      else rotateOverlay.style.display = "flex";
+    });
+
+    // === Resize with letterboxing to preserve 16:9 ===
+    function resize() {
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const targetRatio = VW / VH;
+      const screenRatio = vw / vh;
+
+      if (screenRatio > targetRatio) {
+        // Screen is wider than 16:9 — height is limiting, pillarbox on sides
+        scale = vh / VH;
+        canvas.width = Math.floor(VW * scale);
+        canvas.height = vh;
+        offsetX = (vw - canvas.width) / 2;
+        offsetY = 0;
+      } else {
+        // Screen is taller than 16:9 — width is limiting, letterbox on top/bottom
+        scale = vw / VW;
+        canvas.width = vw;
+        canvas.height = Math.floor(VH * scale);
+        offsetX = 0;
+        offsetY = (vh - canvas.height) / 2;
+      }
+
+      // Position canvas centered in the viewport
+      canvas.style.position = "absolute";
+      canvas.style.left = offsetX + "px";
+      canvas.style.top = offsetY + "px";
+    }
+
+    checkOrientation();
+
+    // === WebSocket ===
     const wsProtocol = "wss:";
     const wsHost = new URL(PARTYKIT_SERVER).host;
     const wsUrl = wsProtocol + "//" + wsHost + "/parties/cursor_party/" + ROOM + "/";
@@ -70,57 +178,120 @@
       }
     };
 
-    let lastSent = 0;
-    canvas.addEventListener("mousemove", (e) => {
+    // === Screen → Virtual coordinate conversion ===
+    function screenToWorld(clientX, clientY) {
+      const wx = Math.max(0, Math.min(VW, (clientX - offsetX) / scale));
+      const wy = Math.max(0, Math.min(VH, (clientY - offsetY) / scale));
+      return { x: wx, y: wy };
+    }
+
+    // === World → Screen coordinate conversion (for rendering) ===
+    function worldToScreen(wx, wy) {
+      return { x: wx * scale, y: wy * scale };
+    }
+
+    // === Send cursor position ===
+    function sendCursor(wx, wy) {
       const now = Date.now();
-      const myCursor = cursors.get(myId);
-      myCursor.x = e.clientX;
-      myCursor.y = e.clientY;
-      if (now - lastSent > 33) {
-        ws.send(JSON.stringify({ type: "cursor", id: myId, x: e.clientX, y: e.clientY, color: myColor }));
+      if (now - lastSent > 33 && ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({ type: "cursor", id: myId, x: wx, y: wy, color: myColor }));
         lastSent = now;
       }
+    }
+
+    let lastSent = 0;
+
+    // === Mouse ===
+    canvas.addEventListener("mousemove", (e) => {
+      const world = screenToWorld(e.clientX, e.clientY);
+      const myCursor = cursors.get(myId);
+      if (myCursor) {
+        myCursor.x = world.x;
+        myCursor.y = world.y;
+      }
+      sendCursor(world.x, world.y);
     });
 
+    // === Touch ===
     canvas.addEventListener("touchmove", (e) => {
       if (e.preventDefault) e.preventDefault();
       const touch = e.touches[0];
-      const now = Date.now();
+      const world = screenToWorld(touch.clientX, touch.clientY);
       const myCursor = cursors.get(myId);
       if (myCursor) {
-        myCursor.x = touch.clientX;
-        myCursor.y = touch.clientY;
+        myCursor.x = world.x;
+        myCursor.y = world.y;
       }
-      if (now - lastSent > 33 && ws.readyState === WebSocket.OPEN) {
-        ws.send(JSON.stringify({ type: "cursor", id: myId, x: touch.clientX, y: touch.clientY, color: myColor }));
-        lastSent = now;
-      }
+      sendCursor(world.x, world.y);
     }, { passive: false });
 
-    // Note: touchend does NOT mean the user left — they just lifted their finger.
-    // Cleanup only happens on page unload or WebSocket close.
+    // === Draw diorama ===
+    let gridPhase = 0;
 
     function draw() {
-      ctx.fillStyle = "rgba(10, 10, 10, 0.15)";
-      ctx.fillRect(0, 0, W, H);
+      // Background — deep space gradient
+      const bg = ctx.createLinearGradient(0, 0, 0, canvas.height);
+      bg.addColorStop(0, "#0a0a1a");
+      bg.addColorStop(1, "#050508");
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Subtle grid for depth
+      gridPhase = (gridPhase + 0.001) % 2;
+      const gridSize = 60 * scale;
+      ctx.strokeStyle = "rgba(255, 255, 255, 0.03)";
+      ctx.lineWidth = 1;
+
+      for (let gx = 0; gx < canvas.width; gx += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(gx, 0);
+        ctx.lineTo(gx, canvas.height);
+        ctx.stroke();
+      }
+      for (let gy = 0; gy < canvas.height; gy += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(0, gy);
+        ctx.lineTo(canvas.width, gy);
+        ctx.stroke();
+      }
+
+      // Virtual world boundary (subtle frame)
+      ctx.strokeStyle = "rgba(255, 255, 255, 0.05)";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(1, 1, canvas.width - 2, canvas.height - 2);
+
+      // Draw cursors in world space
+      const glowSize = 30 * scale;
+      const dotSize = 5 * scale;
 
       cursors.forEach((cursor) => {
-        const gradient = ctx.createRadialGradient(cursor.x, cursor.y, 0, cursor.x, cursor.y, 30);
+        const pos = worldToScreen(cursor.x, cursor.y);
+
+        // Outer glow
+        const gradient = ctx.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, glowSize);
         gradient.addColorStop(0, cursor.color + "aa");
         gradient.addColorStop(1, cursor.color + "00");
         ctx.fillStyle = gradient;
         ctx.beginPath();
-        ctx.arc(cursor.x, cursor.y, 30, 0, Math.PI * 2);
+        ctx.arc(pos.x, pos.y, glowSize, 0, Math.PI * 2);
         ctx.fill();
 
+        // Core dot
         ctx.fillStyle = cursor.color;
         ctx.beginPath();
-        ctx.arc(cursor.x, cursor.y, 5, 0, Math.PI * 2);
+        ctx.arc(pos.x, pos.y, dotSize, 0, Math.PI * 2);
         ctx.fill();
 
+        // White highlight
+        ctx.fillStyle = "#ffffff66";
+        ctx.beginPath();
+        ctx.arc(pos.x, pos.y, dotSize * 0.5, 0, Math.PI * 2);
+        ctx.fill();
+
+        // ID label
         ctx.fillStyle = "#ffffff88";
-        ctx.font = "11px monospace";
-        ctx.fillText(cursor.id.slice(0, 8), cursor.x + 12, cursor.y - 12);
+        ctx.font = `${11 * scale}px monospace`;
+        ctx.fillText(cursor.id.slice(0, 8), pos.x + 12 * scale, pos.y - 12 * scale);
       });
 
       countEl.textContent = cursors.size + " online";
@@ -128,8 +299,11 @@
     }
     draw();
 
+    // === Cleanup ===
     window.addEventListener("beforeunload", () => {
-      ws.send(JSON.stringify({ type: "leave", id: myId }));
+      if (ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({ type: "leave", id: myId }));
+      }
     });
   </script>
 </body>
