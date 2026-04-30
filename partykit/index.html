@@ -83,13 +83,15 @@
     });
 
     canvas.addEventListener("touchmove", (e) => {
-      e.preventDefault();
+      if (e.preventDefault) e.preventDefault();
       const touch = e.touches[0];
       const now = Date.now();
       const myCursor = cursors.get(myId);
-      myCursor.x = touch.clientX;
-      myCursor.y = touch.clientY;
-      if (now - lastSent > 33) {
+      if (myCursor) {
+        myCursor.x = touch.clientX;
+        myCursor.y = touch.clientY;
+      }
+      if (now - lastSent > 33 && ws.readyState === WebSocket.OPEN) {
         ws.send(JSON.stringify({ type: "cursor", id: myId, x: touch.clientX, y: touch.clientY, color: myColor }));
         lastSent = now;
       }
