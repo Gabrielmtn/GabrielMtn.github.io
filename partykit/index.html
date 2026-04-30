@@ -95,9 +95,8 @@
       }
     }, { passive: false });
 
-    canvas.addEventListener("touchend", () => {
-      ws.send(JSON.stringify({ type: "leave", id: myId }));
-    });
+    // Note: touchend does NOT mean the user left — they just lifted their finger.
+    // Cleanup only happens on page unload or WebSocket close.
 
     function draw() {
       ctx.fillStyle = "rgba(10, 10, 10, 0.15)";
