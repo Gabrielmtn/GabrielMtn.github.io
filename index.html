@@ -1078,7 +1078,7 @@ function startGL() {
   new IntersectionObserver(([en]) => { visible = en.isIntersecting; visible ? wake() : sleep(); }).observe(wall);
   document.addEventListener('visibilitychange', () => document.hidden ? sleep() : wake());
 
-  measure(); build(true);
+  measure(); build(false); // badges load already hanging; no drop-in swing
   new ResizeObserver(() => {
     measure();
     const lay = layout();
