@@ -236,13 +236,13 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
 /* ---------- data (from the Senior UX Design Engineer resume) ---------- */
 const DEFAULTS = [
-  { id: 'paypal', org: 'PayPal', sub: 'Incubator with Wellist', role: 'Hybrid UX Design / Developer', start: '12/2014', end: '01/2015',
+  { id: 'paypal', org: 'PayPal', logo: 'img/badges/paypal.png', sub: 'Incubator with Wellist', role: 'Hybrid UX Design / Developer', start: '12/2014', end: '01/2015',
     designList: ["Interaction Design", "Responsive Design", "Stakeholder Interviewing"], buildList: ["Gulp/SASS Build Refactor", "Responsive Refactor", "UI Template Rewrite"],
     color: '#003087', band: '#009cde', band2: '#012169', strap: '#001c54',
     design: ['Researched and applied UX concepts for the aging user archetype most likely to use the tool'],
     build: ['Rebuilt the Gulp, Sass and Compass build system and refactored the authoring SCSS to match',
       'Fixed the responsive bugs that were blocking product demos on mobile'] },
-  { id: 'akamai', org: 'Akamai', sub: 'Technologies', role: 'Hybrid UX Design / Developer', start: '03/2019', end: '09/2019',
+  { id: 'akamai', org: 'Akamai', logo: 'img/badges/akamai.png', sub: '', role: 'Hybrid UX Design / Developer', start: '03/2019', end: '09/2019',
     designList: ["Information Architecture", "Contextual Inquiry", "Card Sorting"], buildList: ["Rails/ERB UI Build", "REST API Front End", "Custom Card-Sort Tool"],
     color: '#0d0f12', band: '#0096d6', band2: '#f28a1a', strap: '#0d0f12', strapInk: '#f28a1a',
     design: ['Information architecture research, wireframing and UI/UX design for the infosec team',
@@ -250,13 +250,13 @@ const DEFAULTS = [
     build: ['Built an internal FedRAMP vulnerability tracker in Ruby on Rails, ERB and JavaScript',
       'Greenfield front-end development against a REST API',
       'Built a card sorting tool from scratch to skip a procurement cycle'] },
-  { id: 'pearson', org: 'Pearson', sub: 'Education', role: 'Senior UI/UX Developer', start: '01/2018', end: '12/2018',
+  { id: 'pearson', org: 'Pearson', logo: 'img/badges/pearson.png', sub: '', role: 'Senior UI/UX Developer', start: '01/2018', end: '12/2018',
     designList: ["Platform Redesign", "Stakeholder Collaboration", "Section 508 UX"], buildList: ["Angular UI Development", "MathJax/MathML Rendering", "Chrome OS PWA"],
     color: '#2b1660', band: '#b18cf2', band2: '#5b2bb5', strap: '#1c0d45',
     design: ['Redesigned a complex education platform with stakeholders during its rebuild'],
     build: ['Built interface and experience work in Angular, MathJax and MathML for educational content',
       'Shipped the rebuild as a Chrome OS PWA under extensive Section 508 requirements'] },
-  { id: 'virginpulse', org: 'Virgin Pulse', sub: '', role: 'Hybrid UX Design / Developer', start: '07/2021', end: '02/2023',
+  { id: 'virginpulse', org: 'Virgin Pulse', logo: 'img/badges/virginpulse.png', sub: '', role: 'Hybrid UX Design / Developer', start: '07/2021', end: '02/2023',
     designList: ["Design Workshops", "Wireframing", "Accessibility Curricula"], buildList: ["Micro-frontend POCs", "WCAG Reflow Refactor", "Component Library"],
     color: '#d81e2c', band: '#ffe1dc', band2: '#8f0f1b', strap: '#8f0f1b',
     design: ['Led workshops, wireframing and UX design for multiple product teams',
@@ -413,7 +413,15 @@ function drawFront(b, i, cv) {
   c.fillStyle = b.band; c.fillRect(64, 204, TW - 128, 6);
   c.fillStyle = buildColor(b); c.fillRect(TW / 2, 204, TW / 2 - 64, 6);
 
-  // organization, fitted to two lines
+  // logo on a white plate when we have one; otherwise the organization name set in type
+  if (b.logoImg) {
+    const pY = 230, pH = b.sub ? 320 : 360, pad = 40;
+    rr(c, 52, pY, TW - 104, pH, 26); c.fillStyle = '#ffffff'; c.fill();
+    const bw = TW - 104 - pad * 2, bh = pH - pad * 2, k = Math.min(bw / b.logoImg.width, bh / b.logoImg.height);
+    const lw = b.logoImg.width * k, lh = b.logoImg.height * k;
+    c.drawImage(b.logoImg, 52 + pad + (bw - lw) / 2, pY + pad + (bh - lh) / 2, lw, lh);
+    if (b.sub) { c.textBaseline = 'top'; c.textAlign = 'left'; c.fillStyle = ink; c.font = `500 50px ${BODY}`; c.globalAlpha = 0.85; c.fillText(b.sub, 60, pY + pH + 22); c.globalAlpha = 1; }
+  } else {
   stretch(c, 'expanded');
   let size = 176, lines = [];
   for (; size >= 80; size -= 4) {
@@ -424,6 +432,7 @@ function drawFront(b, i, cv) {
   let y = 236; lines.forEach(l => { c.fillText(l, 58, y); y += size * 0.94; });
   stretch(c, 'normal');
   if (b.sub) { c.font = `500 52px ${BODY}`; c.globalAlpha = 0.8; c.fillText(b.sub, 64, y + 8); c.globalAlpha = 1; }
+  }
 
   // name on one line beside the seal
   c.textAlign = 'left'; c.textBaseline = 'alphabetic'; c.fillStyle = ink;
@@ -613,7 +622,8 @@ $('v-design').addEventListener('click', () => setView(false));
 $('v-build').addEventListener('click', () => setView(true));
 
 /* ---------- boot ---------- */
-await Promise.all(data.flatMap(b => [loadImg(b.frontSrc).then(im => b.frontImg = im), loadImg(b.backSrc).then(im => b.backImg = im)]));
+await Promise.all(data.flatMap(b => [loadImg(b.frontSrc).then(im => b.frontImg = im), loadImg(b.backSrc).then(im => b.backImg = im),
+  loadImg(b.logo).then(im => b.logoImg = im)]));
 renderList();
 
 function renderSwagList() {
