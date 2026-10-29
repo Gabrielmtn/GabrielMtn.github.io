@@ -1,237 +1,1121 @@
-
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Gabriel's professional profile and contact information">
-    <title>What I do Page - Gabriel Martin</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary-color: #2563eb;
-            --primary-hover: #1d4ed8;
-            --text-color: #1a202c;
-            --background-color: #f8f9fa;
-            --quote-background: #ffffff;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Gabriel Martin · Senior UX Design Engineer</title>
+<meta name="description" content="Gabriel Martin is a Boston-area Senior UX Design Engineer with 15 years across UX design, front-end engineering, accessibility and user research.">
+<meta name="theme-color" content="#13171a">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  /* Layout: a full-bleed wall the badges hang on, a quiet control rail underneath.
+     Design view shows the badges; Build view x-rays them to show the solver. */
+  :root {
+    --wall: #13171a;
+    --panel: #1a1f22;
+    --ink: #e7ebe9;
+    --muted: #9aa39f;
+    --line: #2d3437;
+    --accent: #8ea4ff;
+    --accent-ink: #0b1020;
+    --shadow-strength: 0.5;
+    color-scheme: dark;
+    --f-display: "Anybody", "Arial Black", "Helvetica Neue", sans-serif;
+    --f-body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  }
 
-        body {
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Georgia', serif;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
-            color: var(--text-color);
-            background-color: var(--background-color);
-        }
+  * { box-sizing: border-box; }
+  body { background: var(--wall); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.5; }
+  .gutter { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .inner { max-width: 1180px; margin: 0 auto; }
 
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation: none !important;
-                transition: none !important;
-            }
-        }
+  .top { padding-block: 40px 8px; }
+  .top .inner { display: flex; flex-wrap: wrap; gap: 20px 40px; align-items: end; justify-content: space-between; }
+  .intro { min-width: 0; flex: 1 1 520px; }
+  .eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
+  h1 { font-family: var(--f-display); font-stretch: 125%; font-weight: 850; font-size: clamp(40px, 7vw, 84px); line-height: 0.92; letter-spacing: -0.01em; margin: 0; text-wrap: balance; }
+  .lede { max-width: 60ch; color: var(--muted); margin: 14px 0 0; font-size: 17px; }
 
-        .visually-hidden {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            border: 0;
-        }
+  .views { display: inline-flex; border: 1px solid var(--ink); border-radius: 999px; padding: 3px; gap: 2px; }
+  .views button { border: 0; padding: 9px 16px; }
+  .views button[aria-pressed="true"] { background: var(--ink); color: var(--wall); }
 
-        main {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 80vh;
-            text-align: center;
-            padding: 1rem;
-        }
+  .wall { position: relative; height: clamp(520px, 82vh, 880px); overflow: hidden; }
+  /* under 700px the badges hang in two staggered rows, so the wall grows with the width */
+  @media (max-width: 699px) { .wall { height: clamp(700px, 240vw, 1150px); } }
+  .wall canvas { display: block; width: 100%; height: 100%; touch-action: pan-y; }
+  .hint { position: absolute; bottom: 14px; left: max(16px, env(safe-area-inset-left, 0px)); font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0; pointer-events: none; }
+  .fallback { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 24px; color: var(--muted); margin: 0; }
+  .hud { position: absolute; bottom: 14px; right: max(16px, env(safe-area-inset-right, 0px)); max-width: min(360px, calc(100% - 32px));
+    font-family: var(--f-mono); font-size: 11.5px; line-height: 1.55; color: var(--ink); background: color-mix(in srgb, var(--wall) 82%, transparent);
+    border: 1px solid var(--accent); border-radius: 6px; padding: 10px 12px; pointer-events: none; }
+  .hud dl { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 2px 12px; margin: 0; }
+  .hud dt { color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; }
+  .hud dd { margin: 0; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+  @media (max-width: 699px) { .hud { top: 12px; bottom: auto; } }
 
-        .quote-container {
-            margin: 2rem 0;
-            padding: 2rem;
-            position: relative;
-            border-left: 5px solid var(--primary-color);
-            background-color: var(--quote-background);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
+  .rail { padding-block: 28px 72px; border-top: 1px solid var(--line); }
+  .rail .inner { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 56px; align-items: start; }
+  @media (max-width: 820px) { .rail .inner { grid-template-columns: minmax(0, 1fr); gap: 40px; } }
+  h2 { font-family: var(--f-display); font-stretch: 112%; font-weight: 750; font-size: 22px; margin: 0 0 14px; }
 
-        blockquote {
-            font-size: 1.8rem;
-            font-style: italic;
-            margin: 0;
-            padding: 0;
-        }
+  .list { list-style: none; margin: 0; padding: 0; }
+  .list li { display: grid; grid-template-columns: 12px minmax(0, 1fr) auto auto; gap: 14px; align-items: center; padding: 14px 0; border-top: 1px solid var(--line); }
+  .list li:last-child { border-bottom: 1px solid var(--line); }
+  .sw { width: 12px; height: 32px; border-radius: 3px; }
+  .who { min-width: 0; }
+  .who strong { display: block; font-weight: 600; font-size: 17px; }
+  .who span { display: block; color: var(--muted); font-size: 14px; overflow-wrap: anywhere; }
 
-        .quote-mark {
-            font-size: 4rem;
-            position: absolute;
-            left: 0.5rem;
-            top: -1rem;
-            color: var(--primary-color);
-            opacity: 0.2;
-            aria-hidden="true"
-        }
+  button { font-family: var(--f-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink); background: transparent; border: 1px solid var(--ink); border-radius: 999px; padding: 8px 14px; cursor: pointer; white-space: nowrap; }
+  button:hover { background: var(--panel); }
+  button.on { background: var(--ink); color: var(--wall); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
-        .attribution {
-            font-size: 1.2rem;
-            margin-top: 1rem;
-            margin-bottom: 2rem;
-        }
+  .editor { display: grid; gap: 18px; }
+  .ed-head { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: end; justify-content: space-between; }
+  .ed-head h2 { margin: 0; }
+  .grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  @media (max-width: 520px) { .grid2 { grid-template-columns: minmax(0, 1fr); } }
+  .field { display: grid; gap: 6px; min-width: 0; align-content: start; }
+  label, legend { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  label span { text-transform: none; letter-spacing: 0; font-family: var(--f-body); font-size: 13px; }
+  input[type="text"], select, textarea { width: 100%; font: 15px/1.4 var(--f-body); color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; }
+  textarea { resize: vertical; }
+  .ed-head .field { min-width: 200px; }
+  .colors { display: flex; flex-wrap: wrap; gap: 20px; }
+  .colors .field { grid-template-columns: auto auto; align-items: center; gap: 10px; }
+  input[type="color"] { width: 44px; height: 32px; padding: 2px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); cursor: pointer; }
+  fieldset { border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px 16px; margin: 0; display: grid; gap: 12px; min-width: 0; }
+  fieldset p { margin: 0; color: var(--muted); font-size: 14px; }
+  input[type="file"] { font: 14px var(--f-body); color: var(--muted); max-width: 100%; }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  #ed-status { font-size: 14px; color: var(--muted); }
+  .tip { position: absolute; left: 0; top: 0; transform: translate(-50%, calc(-100% - 10px)); background: var(--ink); color: var(--wall);
+    font-family: var(--f-body); font-size: 14px; line-height: 1.35; padding: 8px 12px; border-radius: 8px; pointer-events: none; white-space: nowrap;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25); }
+  .tip strong { display: block; font-weight: 600; }
+  .tip span { display: block; font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.8; }
+  .tip::after { content: ""; position: absolute; left: 50%; bottom: -5px; width: 10px; height: 10px; background: var(--ink); transform: translateX(-50%) rotate(45deg); }
+  .rail h2.later { margin-top: 36px; }
+  .pin { width: 22px; height: 22px; border-radius: 50%; box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.2); }
+  .swag-list li { grid-template-columns: 22px minmax(0, 1fr); }
+  .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-        a {
-            color: var(--primary-color);
-            text-decoration: underline;
-            padding: 0.2rem;
-            border-radius: 3px;
-        }
+  html { background: var(--wall); }
+  body { margin: 0; }
+  .skip { position: absolute; left: 12px; top: -60px; z-index: 20; background: var(--accent); color: var(--accent-ink); padding: 10px 14px; border-radius: 6px; font-weight: 600; text-decoration: none; }
+  .skip:focus { top: 12px; }
 
-        a:hover, a:focus {
-            color: var(--primary-hover);
-            text-decoration: underline double;
-            outline: 2px solid var(--primary-color);
-            outline-offset: 2px;
-        }
+  /* keyboard / screen-reader controls for the wall */
+  .controls { padding-block: 14px 8px; }
+  .controls .inner { display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: center; }
+  .controls h2 { font-size: 13px; font-family: var(--f-mono); font-stretch: 100%; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 0; }
+  .chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips li { display: inline-flex; align-items: center; gap: 10px; padding: 5px 5px 5px 12px; border: 1px solid var(--line); border-radius: 999px; }
+  .chips .sw { width: 10px; height: 22px; }
+  .chips .who strong { font-size: 15px; display: inline; }
+  .chips .who span { display: none; }
+  .chips button { padding: 6px 12px; }
 
-        .blurb {
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 1.5rem;
-            background-color: var(--quote-background);
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .email-link {
-            display: inline-block;
-            margin-top: 1.5rem;
-            padding: 0.75rem 1.5rem;
-            background-color: var(--primary-color);
-            color: white;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .email-link:hover, .email-link:focus {
-            background-color: var(--primary-hover);
-            color: white;
-            outline: 3px solid var(--primary-color);
-            outline-offset: 2px;
-        }
-
-        .email-link:focus:not(:focus-visible) {
-            outline: none;
-        }
-
-        .email-link i {
-            margin-right: 0.5rem;
-        }
-
-        
-
-        @media (max-width: 600px) {
-            :root {
-                --base-font-size: 15px;
-                --reading-line-length: 45ch;
-            }
-
-            body {
-                padding: 1rem;
-                line-height: 1.5;
-            }
-            
-            .quote-container {
-                padding: 1.5rem 1rem;
-                margin: 1rem 0;
-            }
-
-            blockquote {
-                /* Ensure comfortable reading width on mobile */
-                 max-width: 90vw;
-                /* Slightly tighter line height for smaller screens */
-                line-height: 1.4;
-                /* Adjust font size for mobile */
-                font-size: 1.0rem;
-                text-align: left;
-            }
-
-            .blurb {
-                font-size:0.9rem;
-                padding: 1.25rem;
-                text-align: left;
-                /* Ensure comfortable reading width */
-                max-width: 45ch;
-                line-height: 1.5;
-            }
-
-            .attribution {
-                text-align: left;
-                margin: 1rem 0;
-            }
-            
-            /* Increase touch target size */
-            .email-link {
-                padding: 0.875rem 1.75rem;
-                width: 100%;
-                box-sizing: border-box;
-                text-align: center;
-            }
-        }
-
-        /* Special handling for very small screens */
-        @media (max-width: 350px) {
-            :root {
-                --base-font-size: 14px;
-                --reading-line-length: 40ch;
-            }
-
-            .quote-container {
-                padding: 1rem 0.75rem;
-            }
-
-            blockquote {
-                font-size: 1.15rem;
-            }
-        }
-        
-    </style>
+  /* about: the previous homepage content, on the same dark ground */
+  .about { padding-block: 72px 96px; border-top: 1px solid var(--line); }
+  .about .inner { max-width: 760px; display: grid; gap: 40px; }
+  .quote-container { margin: 0; padding: 32px 32px 24px 40px; position: relative; border-left: 4px solid var(--accent); background: var(--panel); border-radius: 0 10px 10px 0; }
+  .quote-mark { font-family: var(--f-display); font-size: 96px; line-height: 1; position: absolute; left: 14px; top: -10px; color: var(--accent); opacity: 0.35; }
+  blockquote { font-size: clamp(19px, 2.4vw, 24px); line-height: 1.55; font-style: italic; margin: 0; color: var(--ink); text-wrap: pretty; }
+  .attribution { font-size: 17px; margin-top: 18px; color: var(--muted); }
+  .about a { color: var(--accent); text-underline-offset: 3px; }
+  .about a:hover { text-decoration-thickness: 2px; }
+  .about h2 { font-size: clamp(26px, 4vw, 34px); margin: 0 0 6px; }
+  .blurb { font-size: 18px; line-height: 1.65; color: var(--ink); max-width: 64ch; }
+  .blurb p { margin: 0 0 16px; color: #cfd6d2; }
+  .email-link { display: inline-flex; align-items: center; gap: 10px; margin-top: 10px; padding: 14px 24px; background: var(--accent); color: var(--accent-ink) !important; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 16px; }
+  .email-link:hover { filter: brightness(1.08); }
+  @media (max-width: 600px) { .email-link { width: 100%; justify-content: center; } .quote-container { padding: 28px 18px 18px 26px; } }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
 </head>
 <body>
-    <main id="main-content">
-        <div class="quote-container" role="region" aria-label="Featured Quote">
-            <span class="quote-mark" aria-hidden="true">"</span>
-            <blockquote>
-                In my experience, projects almost always ship because one single person makes them ship. To be clear, that person doesn't write all the code or do all the work, and I'm not saying the project could ship without an entire team behind it. But it's really important that one person on the project has an end-to-end understanding of the whole thing: how it hangs together technically, and what product or business purpose it serves.
-            </blockquote>
-            <footer class="attribution">
-                — <cite><a href="https://www.seangoedecke.com/how-to-ship/" 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          aria-label="Read more about Sean Goedecke and his comments"> Sean Goedecke </a></cite>
-            </footer>
-        </div>
+<a class="skip" href="#about">Skip to about</a>
 
-        <section class="blurb" aria-label="About Me">
-            <h1 class="visually-hidden">About Gabriel Martin</h1>
-            <p>Hi, I'm Gabriel, the quote above is how I aspire to deliver value within a team.</p>
-            <p>I bring 15 years of experience across UX disciplines, engineering, design, and user research. This variety of experiences helps me bring diverse perspectives and expertise together, understand user and business needs, and have the technical and design chops to help teams transform complex challenges into elegant solutions that users love.</p>
-            <p>  I believe the secret is to use that experience to be a bridging force within cross-disciplinary teams, so we can represent the best of all of our vision, to set our sights on delivering technically robust, intuitive to use, and accessible products for all.  </p>
-            </p>
-            <br>
-            <a href="mailto:Gabriel@GabrielMartin.dev" 
-               class="email-link"
-               aria-label="Send email to Gabriel Martin">
-                <i class="fas fa-envelope" aria-hidden="true"></i>
-                <span>Get in touch</span>
-            </a>
-        </section>
-    </main>
+<header class="top gutter">
+  <div class="inner">
+    <div class="intro">
+      <p class="eyebrow">Senior UX Design Engineer</p>
+      <h1>Gabriel Martin</h1>
+      <p class="lede">Fifteen years across design and engineering, one badge per job. Each badge splits the work in two: UX design on the left of the band, UX engineering on the right. Tap a badge to flip it, or switch to Build view to see how this page works.</p>
+    </div>
+    <div class="views" role="group" aria-label="Wall view">
+      <button type="button" id="v-design" aria-pressed="true">Design view</button>
+      <button type="button" id="v-build" aria-pressed="false">Build view</button>
+    </div>
+  </div>
+</header>
+
+<section class="wall" id="wall" aria-label="Hanging badges. Use the badge list below to flip them with a keyboard.">
+  <canvas id="c" aria-hidden="true"></canvas>
+  <p class="hint" id="hint">Drag to swing · Tap to flip</p>
+  <div class="tip" id="tip" hidden aria-hidden="true"><strong id="tip-name"></strong><span id="tip-when"></span></div>
+  <div class="hud" id="hud" hidden>
+    <dl>
+      <dt>Render</dt><dd>three.js r170 · WebGL2 · canvas textures</dd>
+      <dt>Solver</dt><dd>Hand-written XPBD, 480 Hz substeps</dd>
+      <dt>Strap</dt><dd><span id="hud-n">4</span> Verlet ropes × 8 nodes</dd>
+      <dt>Card</dt><dd>Rigid body with an inverse-inertia tensor</dd>
+      <dt>Frame</dt><dd id="hud-ms">–</dd>
+      <dt>A11y</dt><dd>Canvas is aria-hidden; the list below is the real control</dd>
+    </dl>
+  </div>
+  <p class="fallback" id="fallback" hidden>This browser couldn’t start WebGL, so the badges can’t hang here. The list below still works.</p>
+</section>
+
+<section class="controls gutter" aria-label="Badge controls">
+  <div class="inner">
+    <h2>Badges</h2>
+    <ul class="chips list" id="list"></ul>
+    <p class="sr-only" id="live" aria-live="polite"></p>
+    <h2 class="sr-only">Volunteer</h2>
+    <ul class="sr-only" id="swag-list"></ul>
+  </div>
+</section>
+
+<main id="about" class="about gutter">
+  <div class="inner">
+    <div class="quote-container" role="region" aria-label="Featured quote">
+      <span class="quote-mark" aria-hidden="true">“</span>
+      <blockquote>
+        In my experience, projects almost always ship because one single person makes them ship. To be clear, that person doesn't write all the code or do all the work, and I'm not saying the project could ship without an entire team behind it. But it's really important that one person on the project has an end-to-end understanding of the whole thing: how it hangs together technically, and what product or business purpose it serves.
+      </blockquote>
+      <footer class="attribution">— <cite><a href="https://www.seangoedecke.com/how-to-ship/" target="_blank" rel="noopener noreferrer">Sean Goedecke</a></cite></footer>
+    </div>
+
+    <section class="blurb" aria-labelledby="about-h">
+      <h2 id="about-h">About Gabriel Martin</h2>
+      <p>Hi, I'm Gabriel, the quote above is how I aspire to deliver value within a team.</p>
+      <p>I bring 15 years of experience across UX disciplines, engineering, design, and user research. This variety of experiences helps me bring diverse perspectives and expertise together, understand user and business needs, and have the technical and design chops to help teams transform complex challenges into elegant solutions that users love.</p>
+      <p>I believe the secret is to use that experience to be a bridging force within cross-disciplinary teams, so we can represent the best of all of our vision, to set our sights on delivering technically robust, intuitive to use, and accessible products for all.</p>
+      <a href="mailto:Gabriel@GabrielMartin.dev" class="email-link"><i class="fas fa-envelope" aria-hidden="true"></i><span>Get in touch</span></a>
+    </section>
+  </div>
+</main>
+
+<script type="module">
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+/* ---------- data (from the Senior UX Design Engineer resume) ---------- */
+const DEFAULTS = [
+  { id: 'paypal', org: 'PayPal', sub: 'Incubator with Wellist', role: 'Hybrid UX Design / Developer', start: '12/2014', end: '01/2015',
+    designList: ["Interaction Design", "Responsive Design", "Stakeholder Interviewing"], buildList: ["Gulp/SASS Build Refactor", "Responsive Refactor", "UI Template Rewrite"],
+    color: '#003087', band: '#009cde', band2: '#012169', strap: '#001c54',
+    design: ['Researched and applied UX concepts for the aging user archetype most likely to use the tool'],
+    build: ['Rebuilt the Gulp, Sass and Compass build system and refactored the authoring SCSS to match',
+      'Fixed the responsive bugs that were blocking product demos on mobile'] },
+  { id: 'akamai', org: 'Akamai', sub: 'Technologies', role: 'Hybrid UX Design / Developer', start: '03/2019', end: '09/2019',
+    designList: ["Information Architecture", "Contextual Inquiry", "Card Sorting"], buildList: ["Rails/ERB UI Build", "REST API Front End", "Custom Card-Sort Tool"],
+    color: '#0d0f12', band: '#0096d6', band2: '#f28a1a', strap: '#0d0f12', strapInk: '#f28a1a',
+    design: ['Information architecture research, wireframing and UI/UX design for the infosec team',
+      'Ran contextual inquiry with 8 participants, then reworked the IA around the team’s mental model'],
+    build: ['Built an internal FedRAMP vulnerability tracker in Ruby on Rails, ERB and JavaScript',
+      'Greenfield front-end development against a REST API',
+      'Built a card sorting tool from scratch to skip a procurement cycle'] },
+  { id: 'pearson', org: 'Pearson', sub: 'Education', role: 'Senior UI/UX Developer', start: '01/2018', end: '12/2018',
+    designList: ["Platform Redesign", "Stakeholder Collaboration", "Section 508 UX"], buildList: ["Angular UI Development", "MathJax/MathML Rendering", "Chrome OS PWA"],
+    color: '#2b1660', band: '#b18cf2', band2: '#5b2bb5', strap: '#1c0d45',
+    design: ['Redesigned a complex education platform with stakeholders during its rebuild'],
+    build: ['Built interface and experience work in Angular, MathJax and MathML for educational content',
+      'Shipped the rebuild as a Chrome OS PWA under extensive Section 508 requirements'] },
+  { id: 'virginpulse', org: 'Virgin Pulse', sub: '', role: 'Hybrid UX Design / Developer', start: '07/2021', end: '02/2023',
+    designList: ["Design Workshops", "Wireframing", "Accessibility Curricula"], buildList: ["Micro-frontend POCs", "WCAG Reflow Refactor", "Component Library"],
+    color: '#d81e2c', band: '#ffe1dc', band2: '#8f0f1b', strap: '#8f0f1b',
+    design: ['Led workshops, wireframing and UX design for multiple product teams',
+      'Designed and taught two accessibility curricula reaching 400+ people'],
+    build: ['Led proofs of concept refactoring AngularJS micro-frontend templates and CSS to meet WCAG Reflow and Resize',
+      'Trained 300+ engineers and 50+ product colleagues on the new approach',
+      'Built and maintained the production front-end component library'] },
+];
+const STORE = 'badge-drawer-v8';
+const clone = o => JSON.parse(JSON.stringify(o));
+function loadData() {
+  try {
+    const raw = localStorage.getItem(STORE);
+    if (!raw) return null;
+    const saved = JSON.parse(raw);
+    return DEFAULTS.map(d => ({ ...clone(d), ...(saved.find(s => s.id === d.id) || {}) }));
+  } catch { return null; }
+}
+const data = clone(DEFAULTS);
+data.forEach(b => { b.face = 0; });
+
+function save() {
+  const strip = keepImages => data.map(({ frontImg, backImg, face, ...rest }) =>
+    keepImages ? rest : { ...rest, frontSrc: undefined, backSrc: undefined });
+  try { localStorage.setItem(STORE, JSON.stringify(strip(true))); return 'Saved in this browser.'; }
+  catch {
+    try { localStorage.setItem(STORE, JSON.stringify(strip(false))); return 'Saved, but the photos were too large to keep after reload.'; }
+    catch { return 'Changes apply now but can’t be saved in this browser.'; }
+  }
+}
+function loadImg(src) { return new Promise(r => { if (!src) return r(null); const i = new Image(); i.onload = () => r(i); i.onerror = () => r(null); i.src = src; }); }
+
+/* ---------- volunteer pin-back buttons ---------- */
+const SWAG = [
+  { id: 'mit-t0', name: 'MIT t=0', big: ['t=0'], small: 'MIT', ring: 'MIT · T=0 · VOLUNTEER · ', color: '#a31f34', when: '' },
+  { id: 'masschallenge', name: 'MassChallenge', big: ['Mass', 'Challenge'], small: '', ring: 'MASSCHALLENGE · VOLUNTEER · ', color: '#ffb31a', when: '' },
+  { id: 'startup-institute', name: 'Startup Institute', big: ['Startup', 'Institute'], small: '', ring: 'STARTUP INSTITUTE · VOLUNTEER · ', color: '#173a5e', when: '' },
+  { id: 'cssconf', name: 'CSSconf', big: ['{ }'], small: 'CSSconf', ring: 'CSSCONF · VOLUNTEER · ', color: '#e8459b', when: '' },
+  { id: 'resilient-coders', name: 'Resilient Coders', big: ['Resilient', 'Coders'], small: '', ring: 'RESILIENT CODERS · VOLUNTEER · ', color: '#0f8b8d', when: '' },
+];
+const SWAG_STORE = 'badge-drawer-swag-v1';
+try { const w = JSON.parse(localStorage.getItem(SWAG_STORE) || '{}'); SWAG.forEach(s => { if (w[s.id]) s.when = w[s.id]; }); } catch {}
+function saveSwag() { try { localStorage.setItem(SWAG_STORE, JSON.stringify(Object.fromEntries(SWAG.map(s => [s.id, s.when])))); } catch {} }
+const swagWhen = s => s.when ? `Volunteered · ${s.when}` : 'Volunteered';
+
+/* ---------- color helpers ---------- */
+function rgb(hex) { const h = hex.replace('#', ''); return [0, 2, 4].map(k => parseInt(h.slice(k, k + 2), 16)); }
+function lum(hex) { return rgb(hex).map(v => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; })
+  .reduce((a, v, k) => a + v * [0.2126, 0.7152, 0.0722][k], 0); }
+function contrast(a, b) { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return (x + 0.05) / (y + 0.05); }
+function inkOn(hex) { return contrast(hex, '#ffffff') >= contrast(hex, '#14171a') ? '#ffffff' : '#14171a'; }
+function shade(hex, amt) { const t = amt < 0 ? 0 : 255, p = Math.abs(amt);
+  return '#' + rgb(hex).map(v => Math.round(v + (t - v) * p).toString(16).padStart(2, '0')).join(''); }
+const buildColor = b => b.band2 || shade(b.band, -0.32);
+
+/* dates: "MM/YYYY" */
+function parseMY(s) { const m = /^\s*(\d{1,2})\s*\/\s*(\d{4})\s*$/.exec(s || ''); return m ? { m: +m[1], y: +m[2] } : null; }
+function fmtRange(b) {
+  const a = parseMY(b.start), z = parseMY(b.end);
+  if (!a && !z) return '';
+  if (a && z) return a.y === z.y ? String(a.y) : `${a.y}–${z.y}`;
+  return a ? `${a.y}–present` : String(z.y);
+}
+function tenure(b) {
+  const a = parseMY(b.start), z = parseMY(b.end); if (!a || !z) return '';
+  const n = (z.y - a.y) * 12 + (z.m - a.m) + 1; if (n <= 0) return '';
+  const y = Math.floor(n / 12), mo = n % 12;
+  return [y ? `${y} yr` : '', mo ? `${mo} mo` : ''].filter(Boolean).join(' ');
+}
+
+/* ---------- card textures ---------- */
+const DISPLAY = '"Anybody", "Arial Black", sans-serif';
+const BODY = '"Instrument Sans", system-ui, sans-serif';
+const MONO = '"IBM Plex Mono", ui-monospace, monospace';
+const TW = 1024, TH = 1536;
+
+function wrap(c, text, maxW) {
+  const words = String(text).split(/\s+/).filter(Boolean); const lines = []; let cur = '';
+  for (const w of words) { const t = cur ? cur + ' ' + w : w;
+    if (c.measureText(t).width > maxW && cur) { lines.push(cur); cur = w; } else cur = t; }
+  if (cur) lines.push(cur); return lines;
+}
+function rr(c, x, y, w, h, r) { c.beginPath(); c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r);
+  c.arcTo(x + w, y + h, x, y + h, r); c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath(); }
+function cover(c, img, W, H) { const s = Math.max(W / img.width, H / img.height);
+  c.drawImage(img, (W - img.width * s) / 2, (H - img.height * s) / 2, img.width * s, img.height * s); }
+function stretch(c, v) { try { c.fontStretch = v; } catch {} }
+
+function topLabels(c, i, right, ink) {
+  // Sits above the slot punch (which starts ~85px down), so long date ranges don't run into it.
+  c.save(); c.fillStyle = ink; c.globalAlpha = 0.72; c.font = `500 34px ${MONO}`; c.textBaseline = 'alphabetic';
+  c.textAlign = 'left'; c.fillText(`No. ${String(i + 1).padStart(2, '0')}`, 64, 62);
+  c.textAlign = 'right'; c.fillText(right, TW - 64, 62); c.restore();
+}
+
+// Security-print details: guilloché lines, microprinted edges, a holographic seal.
+function guilloche(c, x, y, w, h, color, alpha, seed) {
+  c.save(); c.beginPath(); c.rect(x, y, w, h); c.clip();
+  c.strokeStyle = color; c.globalAlpha = alpha; c.lineWidth = 1.6;
+  for (let k = 0; k < 28; k++) {
+    c.beginPath();
+    for (let s = 0; s <= 240; s++) {
+      const t = s / 240, px = x + t * w;
+      const py = y + h * 0.5 + Math.sin(t * Math.PI * 6 + k * 0.23 + seed) * h * 0.3 * Math.cos(t * Math.PI * 2 + k * 0.11)
+        + (k - 14) * h * 0.011;
+      s ? c.lineTo(px, py) : c.moveTo(px, py);
+    }
+    c.stroke();
+  }
+  c.restore();
+}
+function microtext(c, b, ink) {
+  const unit = `${(b.org || '').toUpperCase()} · GABRIEL MARTIN · ALUMNI · `;
+  c.save(); c.fillStyle = ink; c.globalAlpha = 0.34; c.font = `500 17px ${MONO}`; c.textBaseline = 'middle';
+  for (const [x, rot] of [[26, -Math.PI / 2], [TW - 26, Math.PI / 2]]) {
+    c.save(); c.translate(x, TH / 2); c.rotate(rot);
+    const w = c.measureText(unit).width; let s = -TH / 2 + 40;
+    while (s < TH / 2 - 40) { c.fillText(unit, s, 0); s += w; }
+    c.restore();
+  }
+  c.restore();
+}
+const SEAL = { x: 868, y: 772, r: 92 };
+function seal(c, ink) {
+  const { x, y, r } = SEAL;
+  c.save();
+  let g;
+  try { g = c.createConicGradient(0, x, y); ['#ff9ad5', '#ffe58a', '#9dffc4', '#8fd3ff', '#c7a6ff', '#ff9ad5'].forEach((col, k, a) => g.addColorStop(k / (a.length - 1), col)); }
+  catch { g = c.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, '#e9f7ff'); g.addColorStop(1, '#c7a6ff'); }
+  c.beginPath(); c.arc(x, y, r, 0, 7); c.fillStyle = g; c.fill();
+  c.strokeStyle = 'rgba(20,23,26,0.35)'; c.lineWidth = 2;
+  for (const rr2 of [r - 8, r - 40]) { c.beginPath(); c.arc(x, y, rr2, 0, 7); c.stroke(); }
+  c.lineWidth = 1.4;
+  for (let k = 0; k < 36; k++) { const a = k / 36 * Math.PI * 2; c.beginPath();
+    c.moveTo(x + Math.cos(a) * 18, y + Math.sin(a) * 18); c.quadraticCurveTo(x + Math.cos(a + 0.5) * 40, y + Math.sin(a + 0.5) * 40, x + Math.cos(a + 0.9) * (r - 42), y + Math.sin(a + 0.9) * (r - 42)); c.stroke(); }
+  c.fillStyle = 'rgba(20,23,26,0.7)'; c.font = `600 15px ${MONO}`; c.textAlign = 'center'; c.textBaseline = 'middle';
+  const ring = 'BADGE DRAWER · ALUMNI · BADGE DRAWER · ALUMNI · ';
+  [...ring].forEach((ch, k) => { const a = k / ring.length * Math.PI * 2 - Math.PI / 2;
+    c.save(); c.translate(x + Math.cos(a) * (r - 24), y + Math.sin(a) * (r - 24)); c.rotate(a + Math.PI / 2); c.fillText(ch, 0, 0); c.restore(); });
+  c.restore();
+}
+
+function drawFront(b, i, cv) {
+  cv.width = TW; cv.height = TH; const c = cv.getContext('2d');
+  c.fillStyle = b.color; c.fillRect(0, 0, TW, TH);
+  if (b.frontImg) { cover(c, b.frontImg, TW, TH); return; }
+  const ink = inkOn(b.color);
+  const g = c.createLinearGradient(0, 0, TW, TH);
+  g.addColorStop(0, 'rgba(255,255,255,0.10)'); g.addColorStop(0.5, 'rgba(255,255,255,0)'); g.addColorStop(1, 'rgba(0,0,0,0.08)');
+  c.fillStyle = g; c.fillRect(0, 0, TW, TH);
+  guilloche(c, 40, 214, TW - 80, 440, ink, 0.07, i * 1.7);
+  microtext(c, b, ink);
+  topLabels(c, i, 'ALUMNI', ink);
+  c.fillStyle = b.band; c.fillRect(64, 204, TW - 128, 6);
+  c.fillStyle = buildColor(b); c.fillRect(TW / 2, 204, TW / 2 - 64, 6);
+
+  // organization, fitted to two lines
+  stretch(c, 'expanded');
+  let size = 176, lines = [];
+  for (; size >= 80; size -= 4) {
+    c.font = `850 ${size}px ${DISPLAY}`; lines = wrap(c, b.org || ' ', TW - 128);
+    if (lines.length <= 2 && lines.every(l => c.measureText(l).width <= TW - 128)) break;
+  }
+  c.textBaseline = 'top'; c.textAlign = 'left'; c.fillStyle = ink;
+  let y = 236; lines.forEach(l => { c.fillText(l, 58, y); y += size * 0.94; });
+  stretch(c, 'normal');
+  if (b.sub) { c.font = `500 52px ${BODY}`; c.globalAlpha = 0.8; c.fillText(b.sub, 64, y + 8); c.globalAlpha = 1; }
+
+  // name on one line beside the seal
+  c.textAlign = 'left'; c.textBaseline = 'alphabetic'; c.fillStyle = ink;
+  const nameW = SEAL.x - SEAL.r - 64 - 36;
+  let ns = 84; for (; ns > 56; ns -= 2) { c.font = `600 ${ns}px ${BODY}`; if (c.measureText('Gabriel Martin').width <= nameW) break; }
+  c.fillText('Gabriel Martin', 62, SEAL.y + ns * 0.34);
+  seal(c, ink);
+
+  // from | to | title
+  const dy = 884;
+  c.fillStyle = ink; c.globalAlpha = 0.22; c.fillRect(64, dy, TW - 128, 3); c.globalAlpha = 1;
+  const dateTxt = fmtRange(b) || '—';
+  c.globalAlpha = 0.62; c.font = `500 26px ${MONO}`; c.fillText('DATE', 64, dy + 50); c.globalAlpha = 1;
+  c.font = `600 44px ${MONO}`; c.fillText(dateTxt, 64, dy + 104);
+  const tX = Math.max(300, 64 + c.measureText(dateTxt).width + 56), tW = TW - 64 - tX;
+  c.globalAlpha = 0.62; c.font = `500 26px ${MONO}`; c.fillText('TITLE', tX, dy + 50); c.globalAlpha = 1;
+  // one line if it fits at a readable size, otherwise two
+  let ts = 46, tl = [];
+  for (; ts >= 36; ts -= 2) { c.font = `600 ${ts}px ${BODY}`; if (c.measureText(b.role || '—').width <= tW) { tl = [b.role || '—']; break; } }
+  if (!tl.length) for (ts = 44; ts >= 30; ts -= 2) { c.font = `600 ${ts}px ${BODY}`; tl = wrap(c, b.role || '—', tW); if (tl.length <= 2 && tl.every(l => c.measureText(l).width <= tW)) break; }
+  tl.slice(0, 2).forEach((l, k) => c.fillText(l, tX, dy + 104 + k * ts * 1.1));
+
+  // split band: what I designed | what I built
+  // Taller band with large type: each item may wrap to two lines rather than shrinking.
+  const bY = 1066, half = TW / 2, bc = buildColor(b);
+  [[0, b.band, 'UX DESIGN', b.designList], [half, bc, 'UX ENGINEERING', b.buildList]].forEach(([x0, fill, label, list]) => {
+    c.fillStyle = fill; c.fillRect(x0, bY, half, TH - bY);
+    const tInk = inkOn(fill);
+    guilloche(c, x0, bY, half, TH - bY, tInk, 0.06, x0 * 0.01 + i);
+    c.fillStyle = tInk; c.globalAlpha = 0.75; c.font = `600 32px ${MONO}`; c.fillText(label, x0 + 40, bY + 66); c.globalAlpha = 1;
+    const items = (list || []).filter(Boolean).slice(0, 4);
+    if (!items.length) { c.font = `600 54px ${BODY}`; c.fillText('—', x0 + 40, bY + 150); return; }
+    const avail = TH - bY - 104 - 26;
+    let size = 56, laid = [], tx = 0;
+    for (; size >= 36; size -= 2) {
+      c.font = `600 ${size}px ${BODY}`; tx = x0 + 40 + size * 0.28 + 16;
+      const maxW = x0 + half - 26 - tx;
+      laid = items.map(t => wrap(c, t, maxW));
+      const h = laid.reduce((a, ls) => a + ls.length * size * 1.08 + size * 0.42, 0) - size * 0.42;
+      if (laid.every(ls => ls.length <= 2 && ls.every(l => c.measureText(l).width <= maxW)) && h <= avail) break;
+    }
+    let yy = bY + 104 + size * 0.8;
+    laid.forEach(ls => {
+      c.globalAlpha = 0.85; c.fillRect(x0 + 42, yy - size * 0.38, size * 0.28, size * 0.28); c.globalAlpha = 1;
+      ls.slice(0, 2).forEach((l, j) => c.fillText(l, tx, yy + j * size * 1.08));
+      yy += Math.min(ls.length, 2) * size * 1.08 + size * 0.42;
+    });
+  });
+}
+
+function drawBack(b, i, cv) {
+  cv.width = TW; cv.height = TH; const c = cv.getContext('2d');
+  const bg = lum(b.color) > 0.45 ? shade(b.color, -0.07) : shade(b.color, -0.38);
+  c.fillStyle = bg; c.fillRect(0, 0, TW, TH);
+  if (b.backImg) { cover(c, b.backImg, TW, TH); return; }
+  const ink = inkOn(bg);
+  topLabels(c, i, fmtRange(b).toUpperCase() || (b.org || '').toUpperCase().slice(0, 22), ink);
+  c.textBaseline = 'top'; c.textAlign = 'left';
+
+  const groups = [['UX DESIGN', b.band, b.design || []], ['UX ENGINEERING', buildColor(b), b.build || []]]
+    .map(([l, col, items]) => [l, col, items.filter(Boolean)]).filter(gr => gr[2].length);
+  if (!groups.length) {
+    c.fillStyle = ink; stretch(c, 'expanded'); c.font = `850 88px ${DISPLAY}`; c.fillText('On the job', 58, 240); stretch(c, 'normal');
+    c.globalAlpha = 0.7; c.font = `500 56px ${BODY}`;
+    wrap(c, 'Nothing here yet. Add your UX design and engineering work with “Edit a badge” under the wall.', TW - 140)
+      .forEach((l, k) => c.fillText(l, 64, 400 + k * 76));
+    c.globalAlpha = 1;
+  } else {
+    let size = 60, laid;
+    for (; size >= 30; size -= 2) {
+      c.font = `500 ${size}px ${BODY}`; const lh = size * 1.25; let y = 210; laid = [];
+      for (const [label, col, items] of groups) {
+        laid.push({ chip: { label, col, y } }); y += 92;
+        for (const it of items) { const ls = wrap(c, it, TW - 182); laid.push({ col, y, ls }); y += ls.length * lh + size * 0.55; }
+        y += 30;
+      }
+      if (y <= 1370) break;
+    }
+    const lh = size * 1.25;
+    for (const row of laid) {
+      if (row.chip) {
+        const { label, col, y } = row.chip;
+        c.font = `600 34px ${MONO}`; const w = c.measureText(label).width + 48;
+        rr(c, 62, y, w, 62, 31); c.fillStyle = col; c.fill();
+        c.fillStyle = inkOn(col); c.textBaseline = 'middle'; c.fillText(label, 86, y + 33); c.textBaseline = 'top';
+      } else {
+        c.font = `500 ${size}px ${BODY}`;
+        c.fillStyle = row.col; c.fillRect(66, row.y + size * 0.36, size * 0.34, size * 0.34);
+        c.fillStyle = ink; row.ls.forEach((l, k) => c.fillText(l, 118, row.y + k * lh));
+      }
+    }
+  }
+  c.fillStyle = ink; c.globalAlpha = 0.22; c.fillRect(64, 1396, TW - 128, 3); c.globalAlpha = 0.6;
+  c.font = `500 32px ${MONO}`; c.textBaseline = 'alphabetic'; c.fillText('If found email: Gabriel@GabrielMartin.Dev', 64, 1456);
+  c.globalAlpha = 1; c.fillStyle = b.band; c.fillRect(0, 1500, TW / 2, 36); c.fillStyle = buildColor(b); c.fillRect(TW / 2, 1500, TW / 2, 36);
+}
+
+function drawStrap(b, cv) {
+  // The canvas length is a whole number of text repeats, so the pattern tiles without a seam.
+  const font = `600 40px ${MONO}`, unit = `GABRIEL MARTIN · ${(b.org || '').toUpperCase()} · `;
+  let c = cv.getContext('2d'); c.font = font;
+  const w = c.measureText(unit).width, reps = Math.max(1, Math.round(512 / w));
+  cv.width = 128; cv.height = Math.round(w * reps); c = cv.getContext('2d');
+  const H2 = cv.height;
+  c.fillStyle = b.strap; c.fillRect(0, 0, 128, H2);
+  c.save(); c.translate(64, 0); c.rotate(Math.PI / 2);
+  c.fillStyle = b.strapInk || inkOn(b.strap); c.globalAlpha = b.strapInk ? 1 : 0.85; c.font = font; c.textBaseline = 'middle';
+  for (let k = 0; k < reps; k++) c.fillText(unit, k * (H2 / reps), 0);
+  c.restore();
+  c.fillStyle = 'rgba(0,0,0,0.18)'; c.fillRect(0, 0, 6, H2); c.fillRect(122, 0, 6, H2);
+}
+
+function drawSwag(s, cv) {
+  const N2 = 512, R = 256; cv.width = cv.height = N2; const c = cv.getContext('2d');
+  const ink = inkOn(s.color);
+  c.fillStyle = s.color; c.fillRect(0, 0, N2, N2);
+  const g = c.createRadialGradient(170, 150, 10, 256, 256, 260);
+  g.addColorStop(0, 'rgba(255,255,255,0.28)'); g.addColorStop(0.55, 'rgba(255,255,255,0)'); g.addColorStop(1, 'rgba(0,0,0,0.18)');
+  c.fillStyle = g; c.fillRect(0, 0, N2, N2);
+  c.strokeStyle = ink; c.globalAlpha = 0.55; c.lineWidth = 4;
+  for (const r of [222]) { c.beginPath(); c.arc(R, R, r, 0, 7); c.stroke(); }
+  c.globalAlpha = 0.9; c.fillStyle = ink; c.font = `600 26px ${MONO}`; c.textAlign = 'center'; c.textBaseline = 'middle';
+  const ring = s.ring.repeat(Math.max(1, Math.round(54 / s.ring.length)));
+  [...ring].forEach((ch, k) => { const a = k / ring.length * Math.PI * 2 - Math.PI / 2;
+    c.save(); c.translate(R + Math.cos(a) * 195, R + Math.sin(a) * 195); c.rotate(a + Math.PI / 2); c.fillText(ch, 0, 0); c.restore(); });
+  c.globalAlpha = 1;
+  const lines = s.big, maxW = 318;
+  let size = 150;
+  for (; size > 40; size -= 4) { c.font = `850 ${size}px ${DISPLAY}`; if (lines.every(l => c.measureText(l).width <= maxW) && lines.length * size * 0.95 <= (s.small ? 230 : 280)) break; }
+  const smallH = s.small ? 44 : 0, total = lines.length * size * 0.92 + smallH;
+  let y = R - total / 2 + size * 0.46;
+  lines.forEach(l => { c.fillText(l, R, y); y += size * 0.92; });
+  if (s.small) { c.font = `600 44px ${BODY}`; c.fillText(s.small, R, y - size * 0.46 + 26); }
+}
+
+/* ---------- accessible list + editor ---------- */
+const $ = id => document.getElementById(id);
+const live = $('live');
+let gl = null; // set once WebGL is up
+
+function announce(i) {
+  const b = data[i];
+  const list = a => (a || []).filter(Boolean).join('. ') || 'nothing listed yet';
+  live.textContent = b.face
+    ? `${b.org} badge, back. UX design: ${list(b.design)}. UX engineering: ${list(b.build)}.`
+    : `${b.org} badge, front. ${b.role}${fmtRange(b) ? ', ' + fmtRange(b) : ''}. UX design: ${(b.designList || []).join(', ') || 'none listed'}. UX engineering: ${(b.buildList || []).join(', ') || 'none listed'}.`;
+}
+function renderList() {
+  const ul = $('list'); ul.innerHTML = '';
+  data.forEach((b, i) => {
+    const li = document.createElement('li');
+    li.innerHTML = `<span class="sw" aria-hidden="true"></span>
+      <div class="who"><strong></strong><span></span></div>
+      <button type="button" data-flip="${i}"></button>`;
+    li.querySelector('.sw').style.background = `linear-gradient(${b.band} 50%, ${buildColor(b)} 50%)`;
+    li.querySelector('strong').textContent = b.org;
+    li.querySelector('.who span').textContent = [b.role, fmtRange(b)].filter(Boolean).join(' · ');
+    syncFlipBtn(li.querySelector('[data-flip]'), i);
+    ul.appendChild(li);
+  });
+}
+function syncFlipBtn(btn, i) {
+  btn.textContent = data[i].face ? 'Show front' : 'Show back';
+  btn.classList.toggle('on', !!data[i].face);
+  btn.setAttribute('aria-label', `${data[i].face ? 'Show front of' : 'Show back of'} ${data[i].org}`);
+}
+function flip(i, announceIt = true) {
+  data[i].face ^= 1;
+  if (gl) gl.flip(i);
+  const btn = document.querySelector(`[data-flip="${i}"]`); if (btn) syncFlipBtn(btn, i);
+  if (announceIt) announce(i);
+}
+$('list').addEventListener('click', e => {
+  const f = e.target.closest('[data-flip]'); if (f) return flip(+f.dataset.flip);
+});
+
+// Design view / Build view
+function setView(build) {
+  $('v-design').setAttribute('aria-pressed', String(!build));
+  $('v-build').setAttribute('aria-pressed', String(build));
+  $('hud').hidden = !build || !gl;
+  $('hint').textContent = build ? 'Drag a badge to watch the constraints solve' : 'Drag to swing · Tap to flip';
+  if (gl) gl.setView(build);
+  live.textContent = build ? 'Build view: badges shown as wireframes with their rope and constraint points.' : 'Design view.';
+}
+$('v-design').addEventListener('click', () => setView(false));
+$('v-build').addEventListener('click', () => setView(true));
+
+/* ---------- boot ---------- */
+await Promise.all(data.flatMap(b => [loadImg(b.frontSrc).then(im => b.frontImg = im), loadImg(b.backSrc).then(im => b.backImg = im)]));
+renderList();
+
+function renderSwagList() {
+  const ul = $('swag-list'); ul.innerHTML = '';
+  SWAG.forEach(s => {
+    const li = document.createElement('li');
+    li.innerHTML = '<span class="pin" aria-hidden="true"></span><div class="who"><strong></strong><span></span></div>';
+    li.querySelector('.pin').style.background = s.color;
+    li.querySelector('strong').textContent = s.name;
+    li.querySelector('.who span').textContent = swagWhen(s);
+    ul.appendChild(li);
+  });
+}
+renderSwagList();
+
+await Promise.race([
+  Promise.all([document.fonts.load(`850 120px ${DISPLAY}`), document.fonts.load(`600 60px ${BODY}`), document.fonts.load(`500 30px ${MONO}`)]).catch(() => {}),
+  new Promise(r => setTimeout(r, 2500)),
+]);
+
+try { gl = startGL(); } catch (err) { console.error(err); $('fallback').hidden = false; $('c').hidden = true; $('v-build').disabled = true; }
+
+/* ---------- WebGL + physics ---------- */
+function startGL() {
+  const wall = $('wall'), canvas = $('c');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
+  renderer.setClearColor(0x000000, 0);
+  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+  renderer.toneMapping = THREE.NeutralToneMapping;
+  renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+  const scene = new THREE.Scene();
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+  scene.environmentIntensity = 0.75;
+  const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100); camera.position.set(0, 0, 10);
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x8a8f8c, 0.5));
+  const sun = new THREE.DirectionalLight(0xffffff, 1.5); sun.position.set(2.5, 4, 8); sun.castShadow = true;
+  sun.shadow.mapSize.set(2048, 2048); sun.shadow.bias = -0.0004; sun.shadow.normalBias = 0.02; sun.shadow.radius = 6;
+  scene.add(sun, sun.target);
+  const shadowMat = new THREE.ShadowMaterial({ opacity: 0.24 });
+  const backdrop = new THREE.Mesh(new THREE.PlaneGeometry(80, 80), shadowMat); backdrop.position.z = -0.75; backdrop.receiveShadow = true;
+  scene.add(backdrop);
+  const metal = new THREE.MeshStandardMaterial({ color: 0xc9ced3, metalness: 1, roughness: 0.28 });
+  // Foil over the printed seal: thin-film iridescence, so it shifts colour as the card turns.
+  const holoMat = new THREE.MeshPhysicalMaterial({ color: 0xffffff, metalness: 0.75, roughness: 0.2, iridescence: 1,
+    iridescenceIOR: 1.9, iridescenceThicknessRange: [180, 900], transparent: true, opacity: 0.55, depthWrite: false });
+
+  // Pin-back buttons: a shallow dome with a rolled rim, pinned to the wall behind the lanyards.
+  const swagGeo = (() => {
+    const prof = [];
+    for (let k = 0; k <= 20; k++) { const t = k / 20; prof.push(new THREE.Vector2(t, 0.03 + 0.11 * (1 - t * t))); }
+    prof.push(new THREE.Vector2(1.025, 0.0), new THREE.Vector2(1.02, -0.05), new THREE.Vector2(0.95, -0.07));
+    const g = new THREE.LatheGeometry(prof, 64); g.rotateX(Math.PI / 2);
+    const p = g.attributes.position, uv = g.attributes.uv;
+    for (let k = 0; k < p.count; k++) uv.setXY(k, p.getX(k) / 2.06 + 0.5, p.getY(k) / 2.06 + 0.5);
+    g.computeVertexNormals(); return g;
+  })();
+  const swagMeshes = SWAG.map((s, k) => {
+    const cv = document.createElement('canvas'); drawSwag(s, cv);
+    const t = new THREE.CanvasTexture(cv); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = renderer.capabilities.getMaxAnisotropy();
+    const m = new THREE.Mesh(swagGeo, new THREE.MeshPhysicalMaterial({ map: t, roughness: 0.32, clearcoat: 1, clearcoatRoughness: 0.06, side: THREE.DoubleSide }));
+    m.castShadow = true;
+    m.userData = { k, r: 0.3, s: 1, tilt: [-0.14, 0.1, -0.06, 0.16, -0.1][k % 5], wob: 0 };
+    scene.add(m); return m;
+  });
+  const tip = $('tip');
+  let hoverSwag = -1, tipTimer = 0;
+  function setHover(k) {
+    if (k === hoverSwag) return;
+    hoverSwag = k; tip.hidden = k < 0;
+    if (k >= 0) { $('tip-name').textContent = SWAG[k].name; $('tip-when').textContent = swagWhen(SWAG[k]); swagMeshes[k].userData.wob = 1; }
+  }
+  const tipV = new THREE.Vector3();
+  function animateSwag() {
+    for (const m of swagMeshes) {
+      const u = m.userData, target = u.k === hoverSwag ? 1.12 : 1;
+      u.s += (target - u.s) * 0.18; u.wob *= 0.92;
+      m.scale.setScalar(u.r * u.s);
+      m.rotation.set(0, Math.sin(performance.now() / 70) * 0.12 * u.wob, u.tilt);
+    }
+    if (hoverSwag >= 0) {
+      const m = swagMeshes[hoverSwag];
+      tipV.set(m.position.x, m.position.y + m.userData.r * 1.15, m.position.z).project(camera);
+      const w = wall.clientWidth, h = wall.clientHeight;
+      const x = THREE.MathUtils.clamp((tipV.x + 1) / 2 * w, 90, w - 90), y = (1 - tipV.y) / 2 * h;
+      tip.style.left = `${x}px`; tip.style.top = `${y}px`;
+    }
+  }
+  // Buttons are sized in screen pixels (so they stay readable) and placed by layout().
+  function placeSwag(lay) {
+    swagMeshes.forEach((m, k) => { const [x, y] = lay.pins[k % lay.pins.length]; m.position.set(x, y, -0.6); m.userData.r = lay.pinR; });
+  }
+
+  // Build-view overlay materials (drawn on top of everything)
+  const dbgLine = new THREE.LineBasicMaterial({ color: 0x2447c9, depthTest: false, transparent: true });
+  const dbgPts = new THREE.PointsMaterial({ color: 0x2447c9, size: 7, sizeAttenuation: false, depthTest: false, transparent: true });
+  let buildView = false;
+
+  const G = -18, H = 1 / 480, N = 8, WP = 1 / 0.06, AR = 1e-6, AD = 1.5e-5;
+  let worldW = 1, worldH = 1, S = 1, lanyards = [], simT = 0;
+  const tmpA = new THREE.Vector3(), tmpB = new THREE.Vector3(), tmpC = new THREE.Vector3(), tmpD = new THREE.Vector3();
+  const qInv = new THREE.Quaternion(), dq = new THREE.Quaternion(), fwd = new THREE.Vector3();
+
+  function measure() {
+    const w = Math.max(1, wall.clientWidth), h = Math.max(1, wall.clientHeight);
+    renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
+    worldH = 2 * camera.position.z * Math.tan(THREE.MathUtils.degToRad(15)); worldW = worldH * camera.aspect;
+    const sc = sun.shadow.camera; sc.left = -worldW; sc.right = worldW; sc.top = worldH; sc.bottom = -worldH; sc.updateProjectionMatrix();
+    const cs = getComputedStyle(document.documentElement);
+    shadowMat.opacity = parseFloat(cs.getPropertyValue('--shadow-strength')) || 0.24;
+    const acc = cs.getPropertyValue('--accent').trim();
+    if (acc) { dbgLine.color.set(acc); dbgPts.color.set(acc); }
+  }
+
+  // Wide: one row, cards up to half the wall's height; volunteer buttons sit in the gaps between lanyards,
+  //   or in a strip above the cards when the gaps are too narrow.
+  // Narrow (< 700px): two columns in two staggered rows (the back row hangs behind on longer straps),
+  //   with the volunteer buttons in their own rows along the bottom of the wall.
+  function layout() {
+    const n = data.length, P = SWAG.length, Wpx = wall.clientWidth, Hpx = wall.clientHeight;
+    const two = Wpx < 700 && n > 2, pxU = Hpx / worldH;
+    const cols = two ? 2 : n, rows = Math.ceil(n / cols);
+    const jitter = [0.02, -0.05, 0.04, -0.02, 0.03, -0.03];
+    let S, pinR, pins = [], pinH = 0;
+    if (two) {
+      pinR = THREE.MathUtils.clamp(Wpx * 0.22, 80, 100) / 2 / pxU;
+      const step = 2.3 * pinR, perRow = Math.max(1, Math.min(P, Math.floor((worldW - 0.1) / step)));
+      const prow = Math.ceil(P / perRow);
+      pinH = prow * step + 0.08;
+      S = THREE.MathUtils.clamp(Math.min(worldW / (cols * 1.18), (worldH * 0.82 - pinH) / (rows * 1.5 + 0.35)), 0.4, 1.7);
+      for (let k = 0; k < P; k++) {
+        const row = Math.floor(k / perRow), cnt = Math.min(perRow, P - row * perRow), idx = k - row * perRow;
+        pins.push([(idx - (cnt - 1) / 2) * step, -worldH / 2 + pinH - 0.04 - step / 2 - row * step]);
+      }
+    } else {
+      S = THREE.MathUtils.clamp(Math.min(worldW / (cols * 1.14), (worldH * 0.5) / 1.5), 0.4, 1.7);
+    }
+    const CH = 1.5 * S;
+    const slots = data.map((_, i) => {
+      const col = i % cols, row = Math.floor(i / cols);
+      let x = -worldW / 2 + worldW * (col + 0.5) / cols, y, z = 0;
+      if (two) {
+        const yBack = -worldH / 2 + pinH + CH / 2 + worldH * 0.03;
+        const yFront = yBack + CH + worldH * 0.05;
+        y = row === 0 ? yFront : yBack;
+        z = row === 0 ? 0 : -0.4;
+        if (row > 0) x += (col === 0 ? -1 : 1) * 0.16 * S;
+      } else {
+        y = -worldH * 0.035 + worldH * 0.5 * jitter[i % jitter.length];
+      }
+      return { row, center: new THREE.Vector3(x, y, z), anchor: new THREE.Vector3(x, worldH / 2 + 0.35, z) };
+    });
+    if (!two) {
+      pinR = THREE.MathUtils.clamp(Wpx * 0.07, 88, 124) / 2 / pxU;
+      const sp = worldW / n, gap = sp - S, mid = k => -worldW / 2 + sp * (k + 1), yc = -worldH * 0.035;
+      if (n >= 3 && gap >= 2.3 * pinR) {
+        const v = Math.max(0.5 * S, 1.2 * pinR);
+        pins = [[mid(0), yc + v], [mid(1), yc - v * 0.8], [mid(n - 2), yc + v * 0.6], [mid(1), yc + v * 1.2], [mid(0), yc - v * 0.85]];
+      } else {
+        // a strip above the cards: between each pair of straps, plus both outer edges
+        const top = Math.max(...slots.map(sl => sl.center.y)) + CH / 2 + 0.36 * S;
+        const y = (top + worldH / 2) / 2;
+        pinR = Math.max(60 / 2 / pxU, Math.min(pinR, (worldH / 2 - top) * 0.44, sp * 0.4));
+        pins = [[-worldW / 2 + sp * 0.25, y], ...Array.from({ length: n - 1 }, (_, k) => [mid(k), y + (k % 2 ? -0.04 : 0.03)]),
+          [worldW / 2 - sp * 0.25, y]];
+      }
+    }
+    return { cols, S, slots, pins, pinR };
+  }
+
+  function cardShape(w, h, r) {
+    const s = new THREE.Shape(); const x = -w / 2, y = -h / 2;
+    s.moveTo(x + r, y); s.lineTo(x + w - r, y); s.quadraticCurveTo(x + w, y, x + w, y + r);
+    s.lineTo(x + w, y + h - r); s.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    s.lineTo(x + r, y + h); s.quadraticCurveTo(x, y + h, x, y + h - r);
+    s.lineTo(x, y + r); s.quadraticCurveTo(x, y, x + r, y); return s;
+  }
+  function slotPath(cx, cy, w, h) {
+    const p = new THREE.Path(), r = h / 2;
+    p.moveTo(cx - w / 2 + r, cy - r); p.lineTo(cx + w / 2 - r, cy - r); p.absarc(cx + w / 2 - r, cy, r, -Math.PI / 2, Math.PI / 2, false);
+    p.lineTo(cx - w / 2 + r, cy + r); p.absarc(cx - w / 2 + r, cy, r, Math.PI / 2, Math.PI * 1.5, false); return p;
+  }
+
+  let builtS = 1, builtCols = 0;
+  function build(intro) {
+    lanyards.forEach(L => {
+      L.group.traverse(o => { o.geometry?.dispose(); });
+      scene.remove(L.group, L.strap, L.ropeLine, L.ropePts);
+      L.strap.geometry.dispose(); L.ropeGeo.dispose();
+    });
+    lanyards = []; const lay = layout(); S = lay.S; builtS = S; builtCols = lay.cols;
+    const CW = 1 * S, CH = 1.5 * S, D = 0.012 * S, BEV = 0.006 * S, slotY = CH / 2 - 0.11 * S;
+    const shape = cardShape(CW, CH, 0.07 * S); shape.holes.push(slotPath(0, slotY, 0.3 * S, 0.055 * S));
+    const bodyGeo = new THREE.ExtrudeGeometry(shape, { depth: D, bevelEnabled: true, bevelThickness: BEV, bevelSize: BEV, bevelSegments: 3, curveSegments: 14 });
+    bodyGeo.translate(0, 0, -D / 2);
+    const faceGeo = new THREE.ShapeGeometry(shape, 14);
+    const pos = faceGeo.attributes.position, uv = faceGeo.attributes.uv;
+    for (let k = 0; k < pos.count; k++) uv.setXY(k, (pos.getX(k) + CW / 2) / CW, (pos.getY(k) + CH / 2) / CH);
+    const FZ = D / 2 + BEV + 0.0015;
+    const ringGeo = new THREE.TorusGeometry(0.06 * S, 0.012 * S, 10, 28);
+    const clipGeo = new THREE.BoxGeometry(0.09 * S, 0.13 * S, 0.035 * S);
+    const edgeGeo = new THREE.EdgesGeometry(bodyGeo, 30);
+    const holoGeo = new THREE.CircleGeometry(SEAL.r / TW * CW, 48);
+    const c = 0.09 * S;
+    const comGeo = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-c, 0, 0), new THREE.Vector3(c, 0, 0), new THREE.Vector3(0, -c, 0), new THREE.Vector3(0, c, 0)]);
+    const hang = new THREE.Vector3(0, slotY + 0.21 * S, 0);
+    const mass = 1, T = 2 * (D / 2 + BEV);
+    const Iinv = new THREE.Vector3(12 / (mass * (CH * CH + T * T)), 12 / (mass * (CW * CW + T * T)), 12 / (mass * (CW * CW + CH * CH)));
+
+    data.forEach((b, i) => {
+      const cvF = document.createElement('canvas'), cvB = document.createElement('canvas'), cvS = document.createElement('canvas');
+      drawFront(b, i, cvF); drawBack(b, i, cvB); drawStrap(b, cvS);
+      const mkTex = cv => { const t = new THREE.CanvasTexture(cv); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = renderer.capabilities.getMaxAnisotropy(); return t; };
+      const tF = mkTex(cvF), tB = mkTex(cvB), tS = mkTex(cvS); tS.wrapT = THREE.RepeatWrapping; tS.flipY = false;
+      const faceMat = map => new THREE.MeshPhysicalMaterial({ map, roughness: 0.42, clearcoat: 1, clearcoatRoughness: 0.14, iridescence: 0.22, iridescenceIOR: 1.3 });
+      const edgeMat = new THREE.MeshPhysicalMaterial({ color: new THREE.Color(shade(b.color, -0.12)), roughness: 0.4, clearcoat: 0.8 });
+      const group = new THREE.Group();
+      const body = new THREE.Mesh(bodyGeo, edgeMat); body.castShadow = true;
+      const front = new THREE.Mesh(faceGeo, faceMat(tF)); front.position.z = FZ;
+      const back = new THREE.Mesh(faceGeo, faceMat(tB)); back.position.z = -FZ; back.rotation.y = Math.PI;
+      const ring = new THREE.Mesh(ringGeo, metal); ring.position.set(0, slotY + 0.025 * S, 0); ring.rotation.y = Math.PI / 2; ring.castShadow = true;
+      const clip = new THREE.Mesh(clipGeo, metal); clip.position.set(0, slotY + 0.14 * S, 0); clip.castShadow = true;
+      const outline = new THREE.LineSegments(edgeGeo, dbgLine); outline.renderOrder = 10;
+      const com = new THREE.LineSegments(comGeo, dbgLine); com.renderOrder = 10;
+      const holo = new THREE.Mesh(holoGeo, holoMat);
+      holo.position.set((SEAL.x / TW - 0.5) * CW, (0.5 - SEAL.y / TH) * CH, FZ + 0.0008);
+      [body, front, back].forEach(m => m.userData.idx = i);
+      group.add(body, front, back, holo, ring, clip, outline, com); scene.add(group);
+
+      const SEG = 48;
+      const sg = new THREE.BufferGeometry();
+      sg.setAttribute('position', new THREE.BufferAttribute(new Float32Array((SEG + 1) * 2 * 3), 3));
+      sg.setAttribute('uv', new THREE.BufferAttribute(new Float32Array((SEG + 1) * 2 * 2), 2));
+      const idx = []; for (let k = 0; k < SEG; k++) { const a = k * 2; idx.push(a, a + 1, a + 2, a + 1, a + 3, a + 2); } sg.setIndex(idx);
+      const strapMat = new THREE.MeshStandardMaterial({ map: tS, roughness: 0.75, side: THREE.DoubleSide });
+      const strap = new THREE.Mesh(sg, strapMat);
+      strap.castShadow = true; strap.frustumCulled = false; scene.add(strap);
+
+      const ropeGeo = new THREE.BufferGeometry();
+      ropeGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array((N + 1) * 3), 3));
+      const ropeLine = new THREE.Line(ropeGeo, dbgLine), ropePts = new THREE.Points(ropeGeo, dbgPts);
+      [ropeLine, ropePts].forEach(o => { o.renderOrder = 11; o.frustumCulled = false; scene.add(o); });
+
+      const slot = lay.slots[i], anchor = slot.anchor.clone();
+      const strapLen = anchor.y - (slot.center.y + hang.y);
+      const rest = strapLen / (N - 1);
+      const dir = intro && !reduce ? new THREE.Vector3(0.92, -0.38, 0).normalize() : new THREE.Vector3(0, -1, 0);
+      const x = [], prev = [];
+      for (let k = 0; k < N; k++) { const p = anchor.clone().addScaledVector(dir, rest * k); x.push(p); prev.push(p.clone()); }
+      const q = new THREE.Quaternion(); if (b.face) q.setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI);
+      const posB = x[N - 1].clone().sub(hang.clone().applyQuaternion(q));
+      lanyards.push({
+        i, row: slot.row, group, strap, SEG, holo, tex: { tF, tB, tS, cvF, cvB, cvS }, edgeMat,
+        mats: [edgeMat, front.material, back.material, strapMat], overlays: [outline, com, ropeLine, ropePts],
+        ropeGeo, ropeLine, ropePts, pick: [body, front, back],
+        anchor, x, prev, rest, hang, mass, Iinv, CW, CH,
+        pos: posB, prevPos: posB.clone(), vel: new THREE.Vector3(), q, prevQ: q.clone(), ang: new THREE.Vector3(),
+        targetYaw: b.face ? Math.PI : 0, holdUntil: intro && !reduce ? 0.25 + i * 0.16 : 0,
+        curve: new THREE.CatmullRomCurve3(x.map(v => v.clone()), false, 'centripetal'),
+      });
+    });
+    placeSwag(lay);
+    applyView();
+  }
+
+  function applyView() {
+    for (const L of lanyards) {
+      L.overlays.forEach(o => { o.visible = buildView; });
+      L.holo.visible = !buildView && !data[L.i].frontImg;
+      L.mats.forEach(m => { m.transparent = buildView; m.opacity = buildView ? 0.32 : 1; m.depthWrite = !buildView; m.needsUpdate = true; });
+    }
+    for (const m of swagMeshes) { const mt = m.material; mt.transparent = buildView; mt.opacity = buildView ? 0.32 : 1; mt.depthWrite = !buildView; mt.needsUpdate = true; }
+    dragLine.visible = false;
+    $('hud-n').textContent = String(lanyards.length);
+  }
+
+  /* physics helpers */
+  function iInvWorld(L, v, out) { qInv.copy(L.q).invert(); out.copy(v).applyQuaternion(qInv).multiply(L.Iinv).applyQuaternion(L.q); return out; }
+  function genInvMass(L, r, n) { tmpC.crossVectors(r, n); iInvWorld(L, tmpC, tmpD); return 1 / L.mass + tmpC.dot(tmpD); }
+  function correctBody(L, r, P) {
+    L.pos.addScaledVector(P, 1 / L.mass);
+    tmpC.crossVectors(r, P); iInvWorld(L, tmpC, tmpD);
+    dq.set(tmpD.x, tmpD.y, tmpD.z, 0).multiply(L.q);
+    L.q.x += 0.5 * dq.x; L.q.y += 0.5 * dq.y; L.q.z += 0.5 * dq.z; L.q.w += 0.5 * dq.w; L.q.normalize();
+  }
+  function integrateQ(q, w, h) {
+    dq.set(w.x, w.y, w.z, 0).multiply(q);
+    q.x += 0.5 * h * dq.x; q.y += 0.5 * h * dq.y; q.z += 0.5 * h * dq.z; q.w += 0.5 * h * dq.w; q.normalize();
+  }
+  const wrapA = a => Math.atan2(Math.sin(a), Math.cos(a));
+
+  let grab = null; // { i, local, z, target, sx, sy, t, moved }
+  const dragGeo = new THREE.BufferGeometry(); dragGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(6), 3));
+  const dragLine = new THREE.Line(dragGeo, dbgLine); dragLine.renderOrder = 12; dragLine.frustumCulled = false; dragLine.visible = false;
+  scene.add(dragLine);
+
+  function step(h) {
+    simT += h;
+    const breeze = reduce ? 0 : 0.5;
+    for (const L of lanyards) {
+      L.x[0].copy(L.anchor); L.prev[0].copy(L.anchor);
+      if (L.holdUntil > simT) continue;
+      for (let k = 1; k < N; k++) {
+        const x = L.x[k], p = L.prev[k];
+        tmpA.subVectors(x, p).multiplyScalar(1 - 0.8 * h); p.copy(x); x.add(tmpA);
+        x.y += G * h * h; x.x += Math.sin(simT * 0.8 + k * 0.6 + L.i * 2.1) * breeze * h * h;
+      }
+      L.prevPos.copy(L.pos); L.prevQ.copy(L.q);
+      L.vel.y += G * h; L.vel.x += Math.sin(simT * 0.55 + L.i * 1.7) * breeze * 0.4 * h;
+      fwd.set(0, 0, 1).applyQuaternion(L.q);
+      const err = wrapA(Math.atan2(fwd.x, fwd.z) - L.targetYaw);
+      const K = grab && grab.i === L.i ? 4 : 36;
+      L.ang.y += (-K * err - 4.5 * L.ang.y) * h;
+      L.vel.multiplyScalar(1 - 0.3 * h); L.ang.multiplyScalar(1 - 1.4 * h);
+      L.pos.addScaledVector(L.vel, h); integrateQ(L.q, L.ang, h);
+    }
+    for (let it = 0; it < 2; it++) for (const L of lanyards) {
+      if (L.holdUntil > simT) continue;
+      for (let k = 0; k < N - 1; k++) {
+        const a = L.x[k], b = L.x[k + 1], wa = k === 0 ? 0 : WP;
+        tmpA.subVectors(b, a); const len = tmpA.length(); if (len < 1e-6) continue;
+        const lam = -(len - L.rest) / (wa + WP + AR / (h * h));
+        tmpA.multiplyScalar(lam / len); a.addScaledVector(tmpA, -wa); b.addScaledVector(tmpA, WP);
+      }
+      const p = L.x[N - 1];
+      const r = tmpB.copy(L.hang).applyQuaternion(L.q);
+      tmpA.copy(L.pos).add(r).sub(p); const C = tmpA.length();
+      if (C > 1e-7) {
+        tmpA.divideScalar(C);
+        const lam = -C / (WP + genInvMass(L, r, tmpA));
+        tmpA.multiplyScalar(lam); const P = tmpA.clone();
+        correctBody(L, r, P); p.addScaledVector(P, -WP);
+      }
+      if (grab && grab.i === L.i && grab.target) {
+        const r2 = tmpB.copy(grab.local).applyQuaternion(L.q);
+        tmpA.copy(L.pos).add(r2).sub(grab.target); const C2 = tmpA.length();
+        if (C2 > 1e-7) {
+          tmpA.divideScalar(C2);
+          const lam = -C2 / (genInvMass(L, r2, tmpA) + AD / (h * h));
+          correctBody(L, r2, tmpA.multiplyScalar(lam).clone());
+        }
+      }
+    }
+    // Card-to-card contact: a soft, capped push (so overlap resolves over many substeps
+    // instead of one violent shove), then most of the closing speed is absorbed below.
+    const contacts = [];
+    for (let a = 0; a < lanyards.length; a++) for (let b = a + 1; b < lanyards.length; b++) {
+      const A = lanyards[a], B = lanyards[b]; if (A.row !== B.row || A.holdUntil > simT || B.holdUntil > simT) continue;
+      const dx = B.pos.x - A.pos.x, minD = A.CW * 1.04;
+      if (Math.abs(dx) < minD && Math.abs(B.pos.y - A.pos.y) < A.CH * 0.95) {
+        const s = Math.sign(dx || 1);
+        const corr = Math.min((minD - Math.abs(dx)) * 0.04, 0.0015 * S);
+        const ga = grab && grab.i === A.i, gb = grab && grab.i === B.i; // the dragged card doesn't yield
+        const wa = ga ? 0 : gb ? 1 : 0.5, wb = gb ? 0 : ga ? 1 : 0.5;
+        A.pos.x -= corr * s * wa; B.pos.x += corr * s * wb;
+        contacts.push([A, B, s]);
+      }
+    }
+    for (const L of lanyards) {
+      if (L.holdUntil > simT) continue;
+      L.vel.subVectors(L.pos, L.prevPos).divideScalar(h);
+      dq.copy(L.q).multiply(qInv.copy(L.prevQ).invert());
+      L.ang.set(dq.x, dq.y, dq.z).multiplyScalar(2 / h); if (dq.w < 0) L.ang.negate();
+    }
+    for (const [A, B, s] of contacts) {
+      const rel = (B.vel.x - A.vel.x) * s;          // < 0 means they're closing
+      if (rel < 0) { const imp = rel * 0.45; A.vel.x += imp * s; B.vel.x -= imp * s; }
+      const sep = (B.vel.x - A.vel.x) * s;          // cap how fast contact can push them apart
+      const maxSep = 0.6 * S;
+      if (sep > maxSep) { const k = (sep - maxSep) * 0.5; A.vel.x += k * s; B.vel.x -= k * s; }
+      A.ang.multiplyScalar(0.996); B.ang.multiplyScalar(0.996);
+    }
+  }
+
+  const sideV = new THREE.Vector3(), cardX = new THREE.Vector3(), worldX = new THREE.Vector3(1, 0, 0), tan = new THREE.Vector3(), pt = new THREE.Vector3();
+  function syncMeshes() {
+    for (const L of lanyards) {
+      L.group.position.copy(L.pos); L.group.quaternion.copy(L.q);
+      const pts = L.curve.points;
+      for (let k = 0; k < N - 1; k++) pts[k].copy(L.x[k]);
+      pts[N - 1].copy(L.hang).applyQuaternion(L.q).add(L.pos);
+      cardX.set(1, 0, 0).applyQuaternion(L.q); if (cardX.x < 0) cardX.negate();
+      const posA = L.strap.geometry.attributes.position, uvA = L.strap.geometry.attributes.uv;
+      const hw = 0.06 * S, repeat = 0.12 * S * (L.tex.cvS.height / 128); let arc = 0;
+      for (let k = 0; k <= L.SEG; k++) {
+        const t = k / L.SEG; L.curve.getPoint(t, pt); L.curve.getTangent(t, tan);
+        if (k > 0) arc += pt.distanceTo(tmpA); tmpA.copy(pt);
+        const w = t ** 4;
+        sideV.copy(worldX).multiplyScalar(1 - w).addScaledVector(cardX, w);
+        sideV.addScaledVector(tan, -sideV.dot(tan)).normalize().multiplyScalar(hw);
+        posA.setXYZ(k * 2, pt.x - sideV.x, pt.y - sideV.y, pt.z - sideV.z);
+        posA.setXYZ(k * 2 + 1, pt.x + sideV.x, pt.y + sideV.y, pt.z + sideV.z);
+        uvA.setXY(k * 2, 0, arc / repeat); uvA.setXY(k * 2 + 1, 1, arc / repeat);
+      }
+      posA.needsUpdate = true; uvA.needsUpdate = true; L.strap.geometry.computeVertexNormals();
+      if (buildView) {
+        const rp = L.ropeGeo.attributes.position;
+        for (let k = 0; k < N; k++) rp.setXYZ(k, L.x[k].x, L.x[k].y, L.x[k].z);
+        rp.setXYZ(N, L.pos.x, L.pos.y, L.pos.z); // last segment: hang point to centre of mass
+        rp.setXYZ(N - 1, pts[N - 1].x, pts[N - 1].y, pts[N - 1].z);
+        rp.needsUpdate = true;
+      }
+    }
+    if (buildView && grab && grab.target) {
+      const L = lanyards[grab.i], dp = dragGeo.attributes.position;
+      tmpB.copy(grab.local).applyQuaternion(L.q).add(L.pos);
+      dp.setXYZ(0, tmpB.x, tmpB.y, tmpB.z); dp.setXYZ(1, grab.target.x, grab.target.y, grab.target.z); dp.needsUpdate = true;
+      dragLine.visible = true;
+    } else dragLine.visible = false;
+  }
+
+  /* pointer */
+  const ray = new THREE.Raycaster(), ndc = new THREE.Vector2(), plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+  function hitAt(cx, cy) {
+    const r = canvas.getBoundingClientRect();
+    ndc.set(((cx - r.left) / r.width) * 2 - 1, -((cy - r.top) / r.height) * 2 + 1);
+    ray.setFromCamera(ndc, camera);
+    return ray.intersectObjects(lanyards.flatMap(L => L.pick), false)[0] || null;
+  }
+  function rayPoint(cx, cy, z) {
+    const r = canvas.getBoundingClientRect();
+    ndc.set(((cx - r.left) / r.width) * 2 - 1, -((cy - r.top) / r.height) * 2 + 1);
+    ray.setFromCamera(ndc, camera); plane.constant = -z;
+    return ray.ray.intersectPlane(plane, new THREE.Vector3());
+  }
+  canvas.addEventListener('touchstart', e => { const t = e.touches[0]; if (e.touches.length === 1 && t && hitAt(t.clientX, t.clientY)) e.preventDefault(); }, { passive: false });
+  function swagAt(cx, cy) {
+    const r = canvas.getBoundingClientRect();
+    ndc.set(((cx - r.left) / r.width) * 2 - 1, -((cy - r.top) / r.height) * 2 + 1);
+    ray.setFromCamera(ndc, camera);
+    const h = ray.intersectObjects(swagMeshes, false)[0]; return h ? h.object.userData.k : -1;
+  }
+  canvas.addEventListener('pointerleave', () => setHover(-1));
+  canvas.addEventListener('pointerdown', e => {
+    const h = hitAt(e.clientX, e.clientY);
+    if (!h) { // tap a pin-back button on touch screens to see its date
+      const k = swagAt(e.clientX, e.clientY);
+      if (e.pointerType !== 'mouse') { clearTimeout(tipTimer); setHover(k); if (k >= 0) tipTimer = setTimeout(() => setHover(-1), 2600); }
+      return;
+    }
+    setHover(-1);
+    const L = lanyards[h.object.userData.idx];
+    L.holdUntil = 0;
+    const local = h.point.clone().sub(L.pos).applyQuaternion(L.q.clone().invert());
+    grab = { i: L.i, local, z: h.point.z, target: h.point.clone(), sx: e.clientX, sy: e.clientY, t: performance.now(), moved: false };
+    canvas.setPointerCapture?.(e.pointerId); canvas.style.cursor = 'grabbing'; wake();
+  });
+  canvas.addEventListener('pointermove', e => {
+    if (grab) {
+      if (Math.hypot(e.clientX - grab.sx, e.clientY - grab.sy) > 6) grab.moved = true;
+      const p = rayPoint(e.clientX, e.clientY, grab.z); if (p) grab.target = p; wake(); return;
+    }
+    if (e.pointerType === 'mouse') {
+      if (hitAt(e.clientX, e.clientY)) { canvas.style.cursor = 'grab'; setHover(-1); }
+      else { const k = swagAt(e.clientX, e.clientY); setHover(k); canvas.style.cursor = k >= 0 ? 'pointer' : ''; }
+    }
+  });
+  const release = e => {
+    if (!grab) return;
+    const g = grab; grab = null; canvas.style.cursor = e.pointerType === 'mouse' ? 'grab' : '';
+    if (!g.moved && performance.now() - g.t < 350) flip(g.i);
+  };
+  canvas.addEventListener('pointerup', release);
+  canvas.addEventListener('pointercancel', () => { grab = null; canvas.style.cursor = ''; });
+
+  /* loop */
+  let running = false, visible = true, last = performance.now(), acc = 0, raf = 0, msAvg = 0, hudT = 0;
+  const hudMs = $('hud-ms');
+  function frame(now) {
+    raf = 0; const t0 = performance.now();
+    const dt = Math.min(0.05, (now - last) / 1000); last = now; acc += dt;
+    let n = 0; while (acc >= H && n < 24) { step(H); acc -= H; n++; } if (n === 24) acc = 0;
+    syncMeshes(); animateSwag(); renderer.render(scene, camera);
+    msAvg = msAvg * 0.9 + (performance.now() - t0) * 0.1;
+    if (buildView && now - hudT > 500) { hudT = now; hudMs.textContent = `${msAvg.toFixed(1)} ms CPU · ${n} substeps`; }
+    if (running) raf = requestAnimationFrame(frame);
+  }
+  function wake() { if (!running && visible && !document.hidden) { running = true; last = performance.now(); raf = requestAnimationFrame(frame); } }
+  function sleep() { running = false; if (raf) cancelAnimationFrame(raf); raf = 0; }
+  new IntersectionObserver(([en]) => { visible = en.isIntersecting; visible ? wake() : sleep(); }).observe(wall);
+  document.addEventListener('visibilitychange', () => document.hidden ? sleep() : wake());
+
+  measure(); build(true);
+  new ResizeObserver(() => {
+    measure();
+    const lay = layout();
+    if (lay.cols !== builtCols || Math.abs(lay.S - builtS) / builtS > 0.12) build(false);
+    else { lanyards.forEach(L => L.anchor.copy(lay.slots[L.i].anchor)); placeSwag(lay); }
+    syncMeshes(); animateSwag(); renderer.render(scene, camera); wake();
+  }).observe(wall);
+  const mq = matchMedia('(prefers-color-scheme: dark)');
+  const retheme = () => { measure(); wake(); };
+  mq.addEventListener?.('change', retheme);
+  new MutationObserver(retheme).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  wake();
+
+  return {
+    flip(i) {
+      const L = lanyards[i]; if (!L) return;
+      L.holdUntil = 0;
+      L.targetYaw = data[i].face ? Math.PI : 0;
+      L.ang.y += (reduce ? 5 : 9) * (data[i].face ? 1 : -1);
+      wake();
+    },
+    refresh(i) {
+      const L = lanyards[i], b = data[i]; if (!L) return;
+      drawFront(b, i, L.tex.cvF); drawBack(b, i, L.tex.cvB);
+      L.tex.tF.needsUpdate = L.tex.tB.needsUpdate = true;
+      // the strap canvas can change length, so it gets a fresh texture
+      const cvS = document.createElement('canvas'); drawStrap(b, cvS);
+      const tS = new THREE.CanvasTexture(cvS); tS.colorSpace = THREE.SRGBColorSpace; tS.wrapT = THREE.RepeatWrapping; tS.flipY = false;
+      tS.anisotropy = renderer.capabilities.getMaxAnisotropy();
+      L.strap.material.map = tS; L.strap.material.needsUpdate = true; L.tex.tS.dispose(); L.tex.tS = tS; L.tex.cvS = cvS;
+      L.edgeMat.color.set(shade(b.color, -0.12));
+      L.holo.visible = !buildView && !b.frontImg;
+      wake();
+    },
+    setView(on) { buildView = on; applyView(); wake(); },
+  };
+}
+</script>
 </body>
- 
+</html>
