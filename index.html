@@ -768,7 +768,7 @@ function startGL() {
       } else {
         y = stageMid - stageH * 0.035 + stageH * 0.5 * jitter[i % jitter.length];
       }
-      return { row, center: new THREE.Vector3(x, y, z), anchor: new THREE.Vector3(x, worldH / 2 + 0.35, z) };
+      return { row, center: new THREE.Vector3(x, y, z), anchor: new THREE.Vector3(x, worldH / 2 + 1.1, z) }; // well above the top edge, so the straps' shadows also start off-screen
     });
     if (!two) {
       pinR = THREE.MathUtils.clamp(Wpx * 0.07, 88, 124) / 2 / pxU;
@@ -817,13 +817,17 @@ function startGL() {
     const pos = faceGeo.attributes.position, uv = faceGeo.attributes.uv;
     for (let k = 0; k < pos.count; k++) uv.setXY(k, (pos.getX(k) + CW / 2) / CW, (pos.getY(k) + CH / 2) / CH);
     const FZ = D / 2 + BEV + 0.0015;
-    const ringGeo = new THREE.TorusGeometry(0.06 * S, 0.012 * S, 10, 28);
-    const clipGeo = new THREE.BoxGeometry(0.09 * S, 0.13 * S, 0.035 * S);
+    // Hardware: a split ring standing perpendicular to the card. Its lower crossing sits in the middle of the slot
+    // and its upper crossing clears the card's top edge, so it loops through the slot instead of through the card.
+    const ringR = 0.068 * S, ringCy = slotY + ringR, ringTop = ringCy + ringR;
+    const ringGeo = new THREE.TorusGeometry(ringR, 0.011 * S, 10, 32);
+    const clipH = 0.1 * S, clipCy = ringTop + clipH * 0.38;
+    const clipGeo = new THREE.BoxGeometry(0.085 * S, clipH, 0.034 * S);
     const edgeGeo = new THREE.EdgesGeometry(bodyGeo, 30);
     const holoGeo = new THREE.CircleGeometry(SEAL.r / TW * CW, 48);
     const c = 0.09 * S;
     const comGeo = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-c, 0, 0), new THREE.Vector3(c, 0, 0), new THREE.Vector3(0, -c, 0), new THREE.Vector3(0, c, 0)]);
-    const hang = new THREE.Vector3(0, slotY + 0.21 * S, 0);
+    const hang = new THREE.Vector3(0, clipCy + clipH * 0.15, 0); // strap ends inside the clip, so no gap shows
     const mass = 1, T = 2 * (D / 2 + BEV);
     const Iinv = new THREE.Vector3(12 / (mass * (CH * CH + T * T)), 12 / (mass * (CW * CW + T * T)), 12 / (mass * (CW * CW + CH * CH)));
 
@@ -838,8 +842,8 @@ function startGL() {
       const body = new THREE.Mesh(bodyGeo, edgeMat); body.castShadow = true;
       const front = new THREE.Mesh(faceGeo, faceMat(tF)); front.position.z = FZ;
       const back = new THREE.Mesh(faceGeo, faceMat(tB)); back.position.z = -FZ; back.rotation.y = Math.PI;
-      const ring = new THREE.Mesh(ringGeo, metal); ring.position.set(0, slotY + 0.025 * S, 0); ring.rotation.y = Math.PI / 2; ring.castShadow = true;
-      const clip = new THREE.Mesh(clipGeo, metal); clip.position.set(0, slotY + 0.14 * S, 0); clip.castShadow = true;
+      const ring = new THREE.Mesh(ringGeo, metal); ring.position.set(0, ringCy, 0); ring.rotation.y = Math.PI / 2; ring.castShadow = true;
+      const clip = new THREE.Mesh(clipGeo, metal); clip.position.set(0, clipCy, 0); clip.castShadow = true;
       const outline = new THREE.LineSegments(edgeGeo, dbgLine); outline.renderOrder = 10;
       const com = new THREE.LineSegments(comGeo, dbgLine); com.renderOrder = 10;
       const holo = new THREE.Mesh(holoGeo, holoMat);
