@@ -47,7 +47,18 @@
   .wall { position: relative; height: clamp(520px, 82vh, 880px); overflow: hidden; }
   /* under 700px the badges hang in two staggered rows, so the wall grows with the width */
   @media (max-width: 699px) { .wall { height: clamp(700px, 240vw, 1150px); } }
-  .wall canvas { display: block; width: 100%; height: 100%; touch-action: pan-y; }
+  [hidden] { display: none !important; }
+  /* The canvas spans the header and the wall, so the lanyards hang from the very top of the page. */
+  .hero { position: relative; -webkit-user-select: none; user-select: none; }
+  #c { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: pan-y; z-index: 0; }
+  .hero .top { position: relative; z-index: 2; pointer-events: none; }
+  .hero .top .views, .hero .top a { pointer-events: auto; }
+  .hero .top .intro { text-shadow: 0 1px 12px var(--wall), 0 0 2px var(--wall); }
+  /* the straps run up behind the header; a soft fade keeps the text readable over them */
+  .hero .top::before { content: ""; position: absolute; inset: 0 0 -48px; z-index: -1; pointer-events: none;
+    background: linear-gradient(to bottom, color-mix(in srgb, var(--wall) 80%, transparent) 0%, color-mix(in srgb, var(--wall) 72%, transparent) 75%, transparent 100%); }
+  .lede { color: #c2cac6; }
+  .wall { pointer-events: none; z-index: 1; }
   .hint { position: absolute; bottom: 14px; left: max(16px, env(safe-area-inset-left, 0px)); font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0; pointer-events: none; }
   .fallback { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 24px; color: var(--muted); margin: 0; }
   .hud { position: absolute; bottom: 14px; right: max(16px, env(safe-area-inset-right, 0px)); max-width: min(360px, calc(100% - 32px));
@@ -113,6 +124,8 @@
 
   /* keyboard / screen-reader controls for the wall */
   .controls { padding-block: 14px 8px; }
+  /* Visually hidden until a keyboard user tabs into it: the flip buttons stay reachable without a visible button row. */
+  .controls:not(:focus-within) { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; padding: 0; }
   .controls .inner { display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: center; }
   .controls h2 { font-size: 13px; font-family: var(--f-mono); font-stretch: 100%; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 0; }
   .chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
@@ -122,21 +135,26 @@
   .chips .who span { display: none; }
   .chips button { padding: 6px 12px; }
 
-  /* about: the previous homepage content, on the same dark ground */
-  .about { padding-block: 72px 96px; border-top: 1px solid var(--line); }
-  .about .inner { max-width: 760px; display: grid; gap: 40px; }
-  .quote-container { margin: 0; padding: 32px 32px 24px 40px; position: relative; border-left: 4px solid var(--accent); background: var(--panel); border-radius: 0 10px 10px 0; }
-  .quote-mark { font-family: var(--f-display); font-size: 96px; line-height: 1; position: absolute; left: 14px; top: -10px; color: var(--accent); opacity: 0.35; }
-  blockquote { font-size: clamp(19px, 2.4vw, 24px); line-height: 1.55; font-style: italic; margin: 0; color: var(--ink); text-wrap: pretty; }
-  .attribution { font-size: 17px; margin-top: 18px; color: var(--muted); }
+  /* about: the previous homepage content and layout, on the same dark ground */
+  .about { padding-block: 64px 96px; border-top: 1px solid var(--line); font-family: system-ui, -apple-system, "Segoe UI", Roboto, Georgia, serif; line-height: 1.6; }
+  .about .inner { max-width: 800px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .quote-container { margin: 0 0 3rem; padding: 2rem 2rem 2.5rem; position: relative; border-left: 5px solid var(--accent); background: var(--panel); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35); }
+  .quote-mark { font-size: 4rem; line-height: 1; position: absolute; left: 1.2rem; top: 0.4rem; color: var(--accent); opacity: 0.3; }
+  blockquote { font-size: 1.8rem; font-style: italic; margin: 1.2rem 0 0; padding: 0; color: var(--ink); }
+  .attribution { font-size: 1.2rem; margin-top: 1.4rem; color: var(--muted); }
   .about a { color: var(--accent); text-underline-offset: 3px; }
-  .about a:hover { text-decoration-thickness: 2px; }
-  .about h2 { font-size: clamp(26px, 4vw, 34px); margin: 0 0 6px; }
-  .blurb { font-size: 18px; line-height: 1.65; color: var(--ink); max-width: 64ch; }
-  .blurb p { margin: 0 0 16px; color: #cfd6d2; }
-  .email-link { display: inline-flex; align-items: center; gap: 10px; margin-top: 10px; padding: 14px 24px; background: var(--accent); color: var(--accent-ink) !important; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 16px; }
+  .about a:hover, .about a:focus-visible { text-decoration-thickness: 2px; }
+  .blurb { font-size: 1.1rem; max-width: 600px; padding: 2.5rem 2.25rem 2.25rem; background: var(--panel); border-radius: 5px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35); }
+  .blurb p { margin: 0 0 1rem; color: #d3d9d6; }
+  .email-link { display: inline-flex; align-items: center; gap: 0.6rem; margin-top: 2.5rem; padding: 0.75rem 1.5rem; background: var(--accent); color: var(--accent-ink) !important; border-radius: 5px; text-decoration: none; font-weight: 700; font-size: 1.1rem; }
   .email-link:hover { filter: brightness(1.08); }
-  @media (max-width: 600px) { .email-link { width: 100%; justify-content: center; } .quote-container { padding: 28px 18px 18px 26px; } }
+  @media (max-width: 600px) {
+    .quote-container { padding: 1.5rem 1rem 1.75rem 1.25rem; margin-bottom: 1.5rem; }
+    blockquote { font-size: 1.15rem; line-height: 1.45; text-align: left; }
+    .attribution { text-align: left; font-size: 1rem; }
+    .blurb { font-size: 1rem; padding: 1.25rem; text-align: left; }
+    .email-link { width: 100%; justify-content: center; box-sizing: border-box; }
+  }
   @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 </style>
 <script type="importmap">
@@ -149,12 +167,14 @@
 <body>
 <a class="skip" href="#about">Skip to about</a>
 
+<div class="hero" id="hero">
+<canvas id="c" aria-hidden="true"></canvas>
 <header class="top gutter">
   <div class="inner">
     <div class="intro">
       <p class="eyebrow">Senior UX Design Engineer</p>
       <h1>Gabriel Martin</h1>
-      <p class="lede">Fifteen years across design and engineering, one badge per job. Each badge splits the work in two: UX design on the left of the band, UX engineering on the right. Tap a badge to flip it, or switch to Build view to see how this page works.</p>
+      <p class="lede">I'm a Senior UX Design Engineer with 15 years bridging design and front-end engineering. I'm as comfortable in code as in Figma, or in a feature ticket, and I know when each is best. I've held engineering, design, and product architect roles, giving me experience understanding what each side needs and where things break down between them. I've built and scaled design systems, pattern libraries, and front-end component workflows that cement design intent without the telephone game between design and engineering.</p>
     </div>
     <div class="views" role="group" aria-label="Wall view">
       <button type="button" id="v-design" aria-pressed="true">Design view</button>
@@ -164,7 +184,6 @@
 </header>
 
 <section class="wall" id="wall" aria-label="Hanging badges. Use the badge list below to flip them with a keyboard.">
-  <canvas id="c" aria-hidden="true"></canvas>
   <p class="hint" id="hint">Drag to swing · Tap to flip</p>
   <div class="tip" id="tip" hidden aria-hidden="true"><strong id="tip-name"></strong><span id="tip-when"></span></div>
   <div class="hud" id="hud" hidden>
@@ -177,10 +196,11 @@
       <dt>A11y</dt><dd>Canvas is aria-hidden; the list below is the real control</dd>
     </dl>
   </div>
-  <p class="fallback" id="fallback" hidden>This browser couldn’t start WebGL, so the badges can’t hang here. The list below still works.</p>
+  <p class="fallback" id="fallback" hidden>This browser couldn’t start WebGL, so the badges can’t hang here.</p>
 </section>
+</div>
 
-<section class="controls gutter" aria-label="Badge controls">
+<section class="controls gutter" aria-label="Flip badges">
   <div class="inner">
     <h2>Badges</h2>
     <ul class="chips list" id="list"></ul>
@@ -201,7 +221,7 @@
     </div>
 
     <section class="blurb" aria-labelledby="about-h">
-      <h2 id="about-h">About Gabriel Martin</h2>
+      <h2 id="about-h" class="sr-only">About Gabriel Martin</h2>
       <p>Hi, I'm Gabriel, the quote above is how I aspire to deliver value within a team.</p>
       <p>I bring 15 years of experience across UX disciplines, engineering, design, and user research. This variety of experiences helps me bring diverse perspectives and expertise together, understand user and business needs, and have the technical and design chops to help teams transform complex challenges into elegant solutions that users love.</p>
       <p>I believe the secret is to use that experience to be a bridging force within cross-disciplinary teams, so we can represent the best of all of our vision, to set our sights on delivering technically robust, intuitive to use, and accessible products for all.</p>
@@ -618,7 +638,7 @@ try { gl = startGL(); } catch (err) { console.error(err); $('fallback').hidden =
 
 /* ---------- WebGL + physics ---------- */
 function startGL() {
-  const wall = $('wall'), canvas = $('c');
+  const wall = $('wall'), hero = $('hero'), canvas = $('c');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
   renderer.setClearColor(0x000000, 0);
@@ -679,8 +699,8 @@ function startGL() {
     if (hoverSwag >= 0) {
       const m = swagMeshes[hoverSwag];
       tipV.set(m.position.x, m.position.y + m.userData.r * 1.15, m.position.z).project(camera);
-      const w = wall.clientWidth, h = wall.clientHeight;
-      const x = THREE.MathUtils.clamp((tipV.x + 1) / 2 * w, 90, w - 90), y = (1 - tipV.y) / 2 * h;
+      const w = hero.clientWidth, h = hero.clientHeight;
+      const x = THREE.MathUtils.clamp((tipV.x + 1) / 2 * w, 90, w - 90), y = (1 - tipV.y) / 2 * h - wall.offsetTop;
       tip.style.left = `${x}px`; tip.style.top = `${y}px`;
     }
   }
@@ -694,13 +714,13 @@ function startGL() {
   const dbgPts = new THREE.PointsMaterial({ color: 0x2447c9, size: 7, sizeAttenuation: false, depthTest: false, transparent: true });
   let buildView = false;
 
-  const G = -18, H = 1 / 480, N = 8, WP = 1 / 0.06, AR = 1e-6, AD = 1.5e-5;
+  const G = -18, H = 1 / 480, N = 8, WP = 1 / 0.06, AR = 1e-6, AD = 6e-6;
   let worldW = 1, worldH = 1, S = 1, lanyards = [], simT = 0;
   const tmpA = new THREE.Vector3(), tmpB = new THREE.Vector3(), tmpC = new THREE.Vector3(), tmpD = new THREE.Vector3();
   const qInv = new THREE.Quaternion(), dq = new THREE.Quaternion(), fwd = new THREE.Vector3();
 
   function measure() {
-    const w = Math.max(1, wall.clientWidth), h = Math.max(1, wall.clientHeight);
+    const w = Math.max(1, hero.clientWidth), h = Math.max(1, hero.clientHeight);
     renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
     worldH = 2 * camera.position.z * Math.tan(THREE.MathUtils.degToRad(15)); worldW = worldH * camera.aspect;
     const sc = sun.shadow.camera; sc.left = -worldW; sc.right = worldW; sc.top = worldH; sc.bottom = -worldH; sc.updateProjectionMatrix();
@@ -715,8 +735,10 @@ function startGL() {
   // Narrow (< 700px): two columns in two staggered rows (the back row hangs behind on longer straps),
   //   with the volunteer buttons in their own rows along the bottom of the wall.
   function layout() {
-    const n = data.length, P = SWAG.length, Wpx = wall.clientWidth, Hpx = wall.clientHeight;
+    const n = data.length, P = SWAG.length, Wpx = hero.clientWidth, Hpx = hero.clientHeight;
     const two = Wpx < 700 && n > 2, pxU = Hpx / worldH;
+    // the stage is the part of the canvas below the header text; straps still run up to the top edge
+    const headU = wall.offsetTop / pxU, stageTop = worldH / 2 - headU, stageH = worldH - headU, stageMid = stageTop - stageH / 2;
     const cols = two ? 2 : n, rows = Math.ceil(n / cols);
     const jitter = [0.02, -0.05, 0.04, -0.02, 0.03, -0.03];
     let S, pinR, pins = [], pinH = 0;
@@ -725,40 +747,40 @@ function startGL() {
       const step = 2.3 * pinR, perRow = Math.max(1, Math.min(P, Math.floor((worldW - 0.1) / step)));
       const prow = Math.ceil(P / perRow);
       pinH = prow * step + 0.08;
-      S = THREE.MathUtils.clamp(Math.min(worldW / (cols * 1.18), (worldH * 0.82 - pinH) / (rows * 1.5 + 0.35)), 0.4, 1.7);
+      S = THREE.MathUtils.clamp(Math.min(worldW / (cols * 1.18), (stageH * 0.82 - pinH) / (rows * 1.5 + 0.35)), 0.4, 1.7);
       for (let k = 0; k < P; k++) {
         const row = Math.floor(k / perRow), cnt = Math.min(perRow, P - row * perRow), idx = k - row * perRow;
         pins.push([(idx - (cnt - 1) / 2) * step, -worldH / 2 + pinH - 0.04 - step / 2 - row * step]);
       }
     } else {
-      S = THREE.MathUtils.clamp(Math.min(worldW / (cols * 1.14), (worldH * 0.5) / 1.5), 0.4, 1.7);
+      S = THREE.MathUtils.clamp(Math.min(worldW / (cols * 1.14), (stageH * 0.5) / 1.5), 0.4, 1.7);
     }
     const CH = 1.5 * S;
     const slots = data.map((_, i) => {
       const col = i % cols, row = Math.floor(i / cols);
       let x = -worldW / 2 + worldW * (col + 0.5) / cols, y, z = 0;
       if (two) {
-        const yBack = -worldH / 2 + pinH + CH / 2 + worldH * 0.03;
-        const yFront = yBack + CH + worldH * 0.05;
+        const yBack = -worldH / 2 + pinH + CH / 2 + stageH * 0.03;
+        const yFront = yBack + CH + stageH * 0.05;
         y = row === 0 ? yFront : yBack;
         z = row === 0 ? 0 : -0.4;
         if (row > 0) x += (col === 0 ? -1 : 1) * 0.16 * S;
       } else {
-        y = -worldH * 0.035 + worldH * 0.5 * jitter[i % jitter.length];
+        y = stageMid - stageH * 0.035 + stageH * 0.5 * jitter[i % jitter.length];
       }
       return { row, center: new THREE.Vector3(x, y, z), anchor: new THREE.Vector3(x, worldH / 2 + 0.35, z) };
     });
     if (!two) {
       pinR = THREE.MathUtils.clamp(Wpx * 0.07, 88, 124) / 2 / pxU;
-      const sp = worldW / n, gap = sp - S, mid = k => -worldW / 2 + sp * (k + 1), yc = -worldH * 0.035;
+      const sp = worldW / n, gap = sp - S, mid = k => -worldW / 2 + sp * (k + 1), yc = stageMid - stageH * 0.035;
       if (n >= 3 && gap >= 2.3 * pinR) {
         const v = Math.max(0.5 * S, 1.2 * pinR);
         pins = [[mid(0), yc + v], [mid(1), yc - v * 0.8], [mid(n - 2), yc + v * 0.6], [mid(1), yc + v * 1.2], [mid(0), yc - v * 0.85]];
       } else {
         // a strip above the cards: between each pair of straps, plus both outer edges
         const top = Math.max(...slots.map(sl => sl.center.y)) + CH / 2 + 0.36 * S;
-        const y = (top + worldH / 2) / 2;
-        pinR = Math.max(60 / 2 / pxU, Math.min(pinR, (worldH / 2 - top) * 0.44, sp * 0.4));
+        const y = (top + stageTop) / 2;
+        pinR = Math.max(60 / 2 / pxU, Math.min(pinR, (stageTop - top) * 0.44, sp * 0.4));
         pins = [[-worldW / 2 + sp * 0.25, y], ...Array.from({ length: n - 1 }, (_, k) => [mid(k), y + (k % 2 ? -0.04 : 0.03)]),
           [worldW / 2 - sp * 0.25, y]];
       }
@@ -1036,16 +1058,16 @@ function startGL() {
       if (e.pointerType !== 'mouse') { clearTimeout(tipTimer); setHover(k); if (k >= 0) tipTimer = setTimeout(() => setHover(-1), 2600); }
       return;
     }
-    setHover(-1);
+    e.preventDefault(); setHover(-1);
     const L = lanyards[h.object.userData.idx];
     L.holdUntil = 0;
     const local = h.point.clone().sub(L.pos).applyQuaternion(L.q.clone().invert());
-    grab = { i: L.i, local, z: h.point.z, target: h.point.clone(), sx: e.clientX, sy: e.clientY, t: performance.now(), moved: false };
+    grab = { i: L.i, local, z: h.point.z, target: h.point.clone(), sx: e.clientX, sy: e.clientY, t: e.timeStamp, moved: false };
     canvas.setPointerCapture?.(e.pointerId); canvas.style.cursor = 'grabbing'; wake();
   });
   canvas.addEventListener('pointermove', e => {
     if (grab) {
-      if (Math.hypot(e.clientX - grab.sx, e.clientY - grab.sy) > 6) grab.moved = true;
+      if (Math.hypot(e.clientX - grab.sx, e.clientY - grab.sy) > 10) grab.moved = true;
       const p = rayPoint(e.clientX, e.clientY, grab.z); if (p) grab.target = p; wake(); return;
     }
     if (e.pointerType === 'mouse') {
@@ -1056,9 +1078,11 @@ function startGL() {
   const release = e => {
     if (!grab) return;
     const g = grab; grab = null; canvas.style.cursor = e.pointerType === 'mouse' ? 'grab' : '';
-    if (!g.moved && performance.now() - g.t < 350) flip(g.i);
+    // a press that barely moved is a tap; no time limit, so slow frames on weak devices can't swallow a flip
+    if (!g.moved) flip(g.i);
   };
   canvas.addEventListener('pointerup', release);
+  canvas.addEventListener('lostpointercapture', e => { if (grab) release(e); });
   canvas.addEventListener('pointercancel', () => { grab = null; canvas.style.cursor = ''; });
 
   /* loop */
@@ -1075,7 +1099,7 @@ function startGL() {
   }
   function wake() { if (!running && visible && !document.hidden) { running = true; last = performance.now(); raf = requestAnimationFrame(frame); } }
   function sleep() { running = false; if (raf) cancelAnimationFrame(raf); raf = 0; }
-  new IntersectionObserver(([en]) => { visible = en.isIntersecting; visible ? wake() : sleep(); }).observe(wall);
+  new IntersectionObserver(([en]) => { visible = en.isIntersecting; visible ? wake() : sleep(); }).observe(hero);
   document.addEventListener('visibilitychange', () => document.hidden ? sleep() : wake());
 
   measure(); build(false); // badges load already hanging; no drop-in swing
@@ -1085,7 +1109,7 @@ function startGL() {
     if (lay.cols !== builtCols || Math.abs(lay.S - builtS) / builtS > 0.12) build(false);
     else { lanyards.forEach(L => L.anchor.copy(lay.slots[L.i].anchor)); placeSwag(lay); }
     syncMeshes(); animateSwag(); renderer.render(scene, camera); wake();
-  }).observe(wall);
+  }).observe(hero);
   const mq = matchMedia('(prefers-color-scheme: dark)');
   const retheme = () => { measure(); wake(); };
   mq.addEventListener?.('change', retheme);
