@@ -812,7 +812,7 @@ function startGL() {
     const wx = x => -worldW / 2 + x / pxU, wy = y => worldH / 2 - (head + y) / pxU;
     const S = pl.W / pxU;
     const slots = pl.cards.map(c => ({ row: c.row, center: new THREE.Vector3(wx(c.x), wy(c.y), c.z),
-      anchor: new THREE.Vector3(wx(c.x), worldH / 2 + 1.1, c.z) })); // anchored above the top edge so strap shadows start off-screen too
+      anchor: new THREE.Vector3(wx(c.x), worldH / 2 + 2.6, c.z) })); // anchored above the top edge so strap shadows start off-screen too
     return { cols: pl.mode, S, slots, pins: pl.pins.map(p => [wx(p.x), wy(p.y)]), pinR: pl.pinD / 2 / pxU };
   }
   // size the wall to the plan before measuring the canvas
