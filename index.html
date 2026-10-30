@@ -523,7 +523,10 @@ function drawBack(b, i, cv) {
     }
   }
   c.fillStyle = ink; c.globalAlpha = 0.22; c.fillRect(64, 1396, TW - 128, 3); c.globalAlpha = 0.6;
-  c.font = `500 32px ${MONO}`; c.textBaseline = 'alphabetic'; c.fillText('If found email: Gabriel@GabrielMartin.Dev', 64, 1456);
+  c.globalAlpha = 0.9; c.textBaseline = 'alphabetic';
+  { const t = 'If found, email: Gabriel@GabrielMartin.Dev'; let fs = 44;
+    for (; fs > 30; fs -= 2) { c.font = `600 ${fs}px ${BODY}`; if (c.measureText(t).width <= TW - 128) break; }
+    c.fillText(t, 64, 1462); }
   c.globalAlpha = 1; c.fillStyle = b.band; c.fillRect(0, 1500, TW / 2, 36); c.fillStyle = buildColor(b); c.fillRect(TW / 2, 1500, TW / 2, 36);
 }
 
