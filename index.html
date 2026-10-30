@@ -232,13 +232,13 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
 /* ---------- data (from the Senior UX Design Engineer resume) ---------- */
 const DEFAULTS = [
-  { id: 'paypal', org: 'PayPal', logo: 'img/badges/paypal.png', sub: 'Incubator with Wellist', role: 'Hybrid UX Design / Developer', start: '12/2014', end: '01/2015',
+  { id: 'paypal', org: 'PayPal', logo: 'img/badges/paypal.png', sub: 'Incubator with Wellist', role: 'UX Designer / Developer', start: '12/2014', end: '01/2015',
     designList: ["Interaction Design", "Responsive Design", "Stakeholder Interviewing"], buildList: ["Gulp/SASS Build Refactor", "Responsive Refactor", "UI Template Rewrite"],
     color: '#003087', band: '#009cde', band2: '#012169', strap: '#001c54',
     design: ['Researched and prioritized accessibility in UI/UX concepts for the aging user archetype most likely to use the tool'],
     build: ['Rebuilt the Gulp, Sass and Compass build system and refactored the authoring SCSS to match',
       'Fixed the responsive bugs that were blocking product demos on mobile'] },
-  { id: 'akamai', org: 'Akamai', logo: 'img/badges/akamai.png', sub: '', role: 'Hybrid UX Design / Developer', start: '03/2019', end: '09/2019',
+  { id: 'akamai', org: 'Akamai', logo: 'img/badges/akamai.png', sub: '', role: 'UX Designer / Developer', start: '03/2019', end: '09/2019',
     designList: ["Information Architecture", "Contextual Inquiry", "Card Sorting"], buildList: ["Rails/ERB UI Build", "REST API Front End", "Custom Card-Sort Tool"],
     color: '#0d0f12', band: '#0096d6', band2: '#f28a1a', strap: '#0d0f12', strapInk: '#f28a1a',
     design: ['Information architecture research, wireframing and UI/UX design for the infosec team',
@@ -252,7 +252,7 @@ const DEFAULTS = [
     design: ['Redesigned a complex education platform with stakeholders during its rebuild'],
     build: ['Built interface and experience work in Angular, MathJax and MathML for educational content',
       'Shipped the rebuild as a Chrome OS PWA under extensive Section 508 requirements'] },
-  { id: 'virginpulse', org: 'Virgin Pulse', logo: 'img/badges/virginpulse.png', sub: '', role: 'Hybrid UX Design / Developer', start: '07/2021', end: '02/2023',
+  { id: 'virginpulse', org: 'Virgin Pulse', logo: 'img/badges/virginpulse.png', sub: '', role: 'UX Designer / Developer', start: '07/2021', end: '02/2023',
     designList: ["Design Workshops", "Wireframing", "Accessibility Curricula"], buildList: ["Micro-frontend POCs", "WCAG Reflow Refactor", "Component Library"],
     color: '#d81e2c', band: '#ffe1dc', band2: '#8f0f1b', strap: '#8f0f1b',
     design: ['Joined Virgin Pulse as first UX Design Engineer, guided product and engineering dialogs to help achieve WCAG compliance for priority client: Bank of America',
@@ -314,7 +314,7 @@ function parseMY(s) { const m = /^\s*(\d{1,2})\s*\/\s*(\d{4})\s*$/.exec(s || '')
 function fmtRange(b) {
   const a = parseMY(b.start), z = parseMY(b.end);
   if (!a && !z) return '';
-  if (a && z) return a.y === z.y ? String(a.y) : `${a.y}–${z.y}`;
+  if (a && z) return a.y === z.y ? String(a.y) : `${a.y} - ${String(z.y).slice(-2)}`; // e.g. 2014 - 15
   return a ? `${a.y}–present` : String(z.y);
 }
 function tenure(b) {
