@@ -1284,19 +1284,20 @@ function startGL() {
       const posA = L.strap.geometry.attributes.position, uvA = L.strap.geometry.attributes.uv;
       // more accumulated twist spreads over more of the strap, so the turns don't bunch up
       // (tension also pulls the twist out along the strap, so a stretched strap spreads it further)
-      // Twists form one at a time, like a real rope's: the first localizes right above the clip (the anchor where
-      // torsion builds up first), and each further half-turn buckles a short way up the strap from the last,
-      // at roughly even spacing. Tension pulls each twist out longer and spreads them further apart.
-      const tw = Math.abs(L.twist), twS = Math.sign(L.twist), pin = L.pinch || 0;
-      const zoneW = 0.075 * (1 + 0.8 * pin), zoneGap = 0.092 * (1 + 0.5 * pin);
-      const zones = Math.min(9, Math.ceil(tw / Math.PI));
+      // Twists form one at a time from the clip upward, like a real rope's, and share the strap evenly: the first
+      // half-turn is long and lazy, and each one added shortens all of them equally as the twisted stretch grows
+      // up the strap. Tension stretches the twisted stretch out further.
+      const tw = Math.abs(L.twist), twS = Math.sign(L.twist), pin = L.pinch || 0, n = tw / Math.PI;
+      const reach = Math.min(0.8, 0.34 + 0.075 * n) * (1 + 0.3 * pin);   // how far up the strap the twisting extends
+      const pitch = reach / Math.max(1, n), base = 0.94;                   // length of each half-turn; starts just above the clip
+      const zones = Math.min(12, Math.ceil(n));
       const twistAt = t => {
         let th = 0;
         for (let z = 0; z < zones; z++) {
           const amt = Math.min(Math.PI, tw - z * Math.PI); if (amt <= 0) break;
-          const c = Math.max(0.1, 0.875 - z * zoneGap - 0.004 * z * z);      // centre of this twist along the strap
-          const u = Math.min(1, Math.max(0, (t - c) / zoneW + 0.5));
-          th += amt * u * u * (3 - 2 * u);
+          const lo = Math.max(0.04, base - (z + 1) * pitch), hi = Math.max(lo + 0.01, base - z * pitch);
+          const u = Math.min(1, Math.max(0, (t - lo) / (hi - lo)));
+          th += amt * (0.4 * u + 0.6 * u * u * (3 - 2 * u));   // mostly even turning, eased at each half-turn's ends
         }
         return th * twS;
       };
