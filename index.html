@@ -1223,7 +1223,9 @@ function startGL() {
         // The two straps sit one behind the other along the facing direction. That direction turns with the twist,
         // so as the card spins the pair winds around each other (side by side at a quarter turn, swapped at a half).
         // They converge into the clip, and stretching pulls them together.
-        const gap = 0.5 * 0.1 * S * (0.65 + 0.35 * (1 - t)) * (1 - t ** 6) * (1 - 0.8 * L.pinch);
+        // snug: just over a strap's thickness apart, and tighter still where they're twisted around each other
+        const snug = Math.min(1, Math.abs(th) / (Math.PI / 2));
+        const gap = S * (0.0135 - 0.005 * snug) * (0.75 + 0.25 * (1 - t)) * (1 - t ** 6) * (1 - 0.6 * L.pinch);
         sideV.multiplyScalar(hw * waist); thick.copy(nrm).multiplyScalar(hw * 0.11 * waist);
         for (const [P, U, sgn] of [[posA, uvA, 1], [posB, uvB, -1]]) {
           const ox = nrm.x * gap * sgn, oy = nrm.y * gap * sgn, oz = nrm.z * gap * sgn;
