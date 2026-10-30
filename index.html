@@ -44,9 +44,7 @@
   .views button { border: 0; padding: 9px 16px; }
   .views button[aria-pressed="true"] { background: var(--ink); color: var(--wall); }
 
-  .wall { position: relative; height: clamp(520px, 82vh, 880px); overflow: hidden; }
-  /* under 700px the badges hang in two staggered rows, so the wall grows with the width */
-  @media (max-width: 699px) { .wall { height: clamp(700px, 240vw, 1150px); } }
+  .wall { position: relative; min-height: 520px; overflow: hidden; } /* height is set from the badge layout */
   [hidden] { display: none !important; }
   /* The canvas spans the header and the wall, so the lanyards hang from the very top of the page. */
   .hero { position: relative; -webkit-user-select: none; user-select: none; }
@@ -106,11 +104,13 @@
   input[type="file"] { font: 14px var(--f-body); color: var(--muted); max-width: 100%; }
   .actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
   #ed-status { font-size: 14px; color: var(--muted); }
-  .tip { position: absolute; left: 0; top: 0; transform: translate(-50%, calc(-100% - 10px)); background: var(--ink); color: var(--wall);
+  .tip { position: absolute; z-index: 5; left: 0; top: 0; transform: translate(-50%, calc(-100% - 10px)); background: var(--ink); color: var(--wall);
     font-family: var(--f-body); font-size: 14px; line-height: 1.35; padding: 8px 12px; border-radius: 8px; pointer-events: none; white-space: nowrap;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25); }
   .tip strong { display: block; font-weight: 600; }
   .tip span { display: block; font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.8; }
+  .tip.below { transform: translate(-50%, 10px); }
+  .tip.below::after { bottom: auto; top: -5px; }
   .tip::after { content: ""; position: absolute; left: 50%; bottom: -5px; width: 10px; height: 10px; background: var(--ink); transform: translateX(-50%) rotate(45deg); }
   .rail h2.later { margin-top: 36px; }
   .pin { width: 22px; height: 22px; border-radius: 50%; box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.2); }
@@ -169,6 +169,7 @@
 
 <div class="hero" id="hero">
 <canvas id="c" aria-hidden="true"></canvas>
+<div class="tip" id="tip" hidden aria-hidden="true"><strong id="tip-name"></strong><span id="tip-when"></span></div>
 <header class="top gutter">
   <div class="inner">
     <div class="intro">
@@ -181,7 +182,6 @@
 
 <section class="wall" id="wall" aria-label="Hanging badges. Use the badge list below to flip them with a keyboard.">
   <p class="hint" id="hint">Click badge to see detailed breakdown</p>
-  <div class="tip" id="tip" hidden aria-hidden="true"><strong id="tip-name"></strong><span id="tip-when"></span></div>
   <div class="hud" id="hud" hidden>
     <dl>
       <dt>Render</dt><dd>three.js r170 · WebGL2 · canvas textures</dd>
@@ -704,9 +704,14 @@ function startGL() {
     }
     if (hoverSwag >= 0) {
       const m = swagMeshes[hoverSwag];
-      tipV.set(m.position.x, m.position.y + m.userData.r * 1.15, m.position.z).project(camera);
+      // positioned in the hero (not the clipped wall); flips below the pin when there's no room above
       const w = hero.clientWidth, h = hero.clientHeight;
-      const x = THREE.MathUtils.clamp((tipV.x + 1) / 2 * w, 90, w - 90), y = (1 - tipV.y) / 2 * h - wall.offsetTop;
+      tipV.set(m.position.x, m.position.y + m.userData.r * 1.15, m.position.z).project(camera);
+      let y = (1 - tipV.y) / 2 * h;
+      const x = THREE.MathUtils.clamp((tipV.x + 1) / 2 * w, tip.offsetWidth / 2 + 8, w - tip.offsetWidth / 2 - 8);
+      const below = y - tip.offsetHeight - 14 < 0;
+      if (below) { tipV.set(m.position.x, m.position.y - m.userData.r * 1.15, m.position.z).project(camera); y = (1 - tipV.y) / 2 * h; }
+      tip.classList.toggle('below', below);
       tip.style.left = `${x}px`; tip.style.top = `${y}px`;
     }
   }
@@ -728,7 +733,9 @@ function startGL() {
   function measure() {
     const w = Math.max(1, hero.clientWidth), h = Math.max(1, hero.clientHeight);
     renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
-    worldH = 2 * camera.position.z * Math.tan(THREE.MathUtils.degToRad(15)); worldW = worldH * camera.aspect;
+    // one badge width = one world unit at every screen size, so physics, depth and shadows look the same everywhere
+    worldH = h / plan().W; worldW = worldH * camera.aspect;
+    camera.position.z = worldH / 2 / Math.tan(THREE.MathUtils.degToRad(15)); camera.far = camera.position.z + 50; camera.updateProjectionMatrix();
     const sc = sun.shadow.camera; sc.left = -worldW; sc.right = worldW; sc.top = worldH; sc.bottom = -worldH; sc.updateProjectionMatrix();
     const cs = getComputedStyle(document.documentElement);
     shadowMat.opacity = parseFloat(cs.getPropertyValue('--shadow-strength')) || 0.24;
@@ -736,63 +743,57 @@ function startGL() {
     if (acc) { dbgLine.color.set(acc); dbgPts.color.set(acc); }
   }
 
-  // Wide: one row, cards up to half the wall's height; volunteer buttons sit in the gaps between lanyards,
-  //   or in a strip above the cards when the gaps are too narrow.
-  // Narrow (< 700px): two columns in two staggered rows (the back row hangs behind on longer straps),
-  //   with the volunteer buttons in their own rows along the bottom of the wall.
-  function layout() {
-    const n = data.length, P = SWAG.length, Wpx = hero.clientWidth, Hpx = hero.clientHeight;
-    const two = Wpx < 700 && n > 2, pxU = Hpx / worldH;
-    // the stage is the part of the canvas below the header text; straps still run up to the top edge
-    const headU = wall.offsetTop / pxU, stageTop = worldH / 2 - headU, stageH = worldH - headU, stageMid = stageTop - stageH / 2;
-    const cols = two ? 2 : n, rows = Math.ceil(n / cols);
-    const jitter = [0.02, -0.05, 0.04, -0.02, 0.03, -0.03];
-    let S, pinR, pins = [], pinH = 0;
-    if (two) {
-      pinR = THREE.MathUtils.clamp(Wpx * 0.22, 80, 100) / 2 / pxU;
-      const step = 2.3 * pinR, perRow = Math.max(1, Math.min(P, Math.floor((worldW - 0.1) / step)));
-      const prow = Math.ceil(P / perRow);
-      pinH = prow * step + 0.08;
-      S = THREE.MathUtils.clamp(Math.min(worldW / (cols * 1.18), (stageH * 0.82 - pinH) / (rows * 1.5 + 0.35)), 0.4, 1.7);
-      for (let k = 0; k < P; k++) {
-        const row = Math.floor(k / perRow), cnt = Math.min(perRow, P - row * perRow), idx = k - row * perRow;
-        pins.push([(idx - (cnt - 1) / 2) * step, -worldH / 2 + pinH - 0.04 - step / 2 - row * step]);
+  // Responsive plan, worked out in CSS pixels so the card text stays readable at every width:
+  //   row    (>= 1100px): one row, alternate badges hang a little lower
+  //   grid   (700-1099px): two columns, the right column dropped half a step
+  //   column (< 700px): one zig-zag column of full-size badges on long straps
+  // The wall's height follows the plan; the volunteer buttons get their own rows under the badges.
+  function plan() {
+    const vw = Math.max(320, hero.clientWidth), n = data.length, P = SWAG.length;
+    const mode = vw >= 1100 ? 'row' : vw >= 700 ? 'grid' : 'column';
+    const clampPx = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+    const W = mode === 'row' ? clampPx((vw - 64) / n * 0.8, 240, 340)
+      : mode === 'grid' ? clampPx(vw * 0.36, 250, 340)
+      : clampPx(vw - 72, 220, 340);
+    const CH = W * 1.5, gap = Math.round(W * 0.18), top = Math.round(W * 0.5);
+    const cards = [];
+    let bottom = 0;
+    if (mode === 'row') {
+      const sp = vw / n, drop = CH * 0.16;
+      for (let i = 0; i < n; i++) cards.push({ x: sp * (i + 0.5), y: top + CH / 2 + (i % 2 ? drop : 0), z: 0, row: 0 });
+      bottom = top + CH + drop;
+    } else if (mode === 'grid') {
+      const sp = vw / 2, stepY = CH + gap;
+      for (let i = 0; i < n; i++) {
+        const col = i % 2, row = Math.floor(i / 2);
+        cards.push({ x: sp * (col + 0.5), y: top + CH / 2 + row * stepY + (col ? stepY * 0.42 : 0), z: -0.22 * row, row: i });
       }
+      bottom = Math.max(...cards.map(c => c.y)) + CH / 2;
     } else {
-      S = THREE.MathUtils.clamp(Math.min(worldW / (cols * 1.14), (stageH * 0.5) / 1.5), 0.4, 1.7);
+      const stepY = CH + gap, off = Math.max(0, (vw - W) / 2 - 16) * 0.6;
+      for (let i = 0; i < n; i++) cards.push({ x: vw / 2 + (i % 2 ? off : -off), y: top + CH / 2 + i * stepY, z: -0.16 * i, row: i });
+      bottom = top + CH / 2 + (n - 1) * stepY + CH / 2;
     }
-    const CH = 1.5 * S;
-    const slots = data.map((_, i) => {
-      const col = i % cols, row = Math.floor(i / cols);
-      let x = -worldW / 2 + worldW * (col + 0.5) / cols, y, z = 0;
-      if (two) {
-        const yBack = -worldH / 2 + pinH + CH / 2 + stageH * 0.03;
-        const yFront = yBack + CH + stageH * 0.05;
-        y = row === 0 ? yFront : yBack;
-        z = row === 0 ? 0 : -0.4;
-        if (row > 0) x += (col === 0 ? -1 : 1) * 0.16 * S;
-      } else {
-        y = stageMid - stageH * 0.035 + stageH * 0.5 * jitter[i % jitter.length];
-      }
-      return { row, center: new THREE.Vector3(x, y, z), anchor: new THREE.Vector3(x, worldH / 2 + 1.1, z) }; // well above the top edge, so the straps' shadows also start off-screen
-    });
-    if (!two) {
-      pinR = THREE.MathUtils.clamp(Wpx * 0.07, 88, 124) / 2 / pxU;
-      const sp = worldW / n, gap = sp - S, mid = k => -worldW / 2 + sp * (k + 1), yc = stageMid - stageH * 0.035;
-      if (n >= 3 && gap >= 2.3 * pinR) {
-        const v = Math.max(0.5 * S, 1.2 * pinR);
-        pins = [[mid(0), yc + v], [mid(1), yc - v * 0.8], [mid(n - 2), yc + v * 0.6], [mid(1), yc + v * 1.2], [mid(0), yc - v * 0.85]];
-      } else {
-        // a strip above the cards: between each pair of straps, plus both outer edges
-        const top = Math.max(...slots.map(sl => sl.center.y)) + CH / 2 + 0.36 * S;
-        const y = (top + stageTop) / 2;
-        pinR = Math.max(60 / 2 / pxU, Math.min(pinR, (stageTop - top) * 0.44, sp * 0.4));
-        pins = [[-worldW / 2 + sp * 0.25, y], ...Array.from({ length: n - 1 }, (_, k) => [mid(k), y + (k % 2 ? -0.04 : 0.03)]),
-          [worldW / 2 - sp * 0.25, y]];
-      }
+    const pinD = mode === 'column' ? clampPx(vw * 0.22, 80, 104) : clampPx(vw * 0.075, 88, 120);
+    const pitch = pinD * 1.3, perRow = Math.max(1, Math.min(P, Math.floor((vw - 32) / pitch))), pinRows = Math.ceil(P / perRow);
+    const pins = [];
+    for (let k = 0; k < P; k++) {
+      const r = Math.floor(k / perRow), cnt = Math.min(perRow, P - r * perRow), idx = k - r * perRow;
+      pins.push({ x: vw / 2 + (idx - (cnt - 1) / 2) * pitch, y: bottom + 48 + pinD / 2 + r * pitch });
     }
-    return { cols, S, slots, pins, pinR };
+    const height = Math.round(bottom + 48 + pinRows * pitch + 36);
+    return { mode, W, cards, pins, pinD, height };
   }
+  function layout() {
+    const pl = plan(), pxU = hero.clientHeight / worldH, head = wall.offsetTop;
+    const wx = x => -worldW / 2 + x / pxU, wy = y => worldH / 2 - (head + y) / pxU;
+    const S = pl.W / pxU;
+    const slots = pl.cards.map(c => ({ row: c.row, center: new THREE.Vector3(wx(c.x), wy(c.y), c.z),
+      anchor: new THREE.Vector3(wx(c.x), worldH / 2 + 1.1, c.z) })); // anchored above the top edge so strap shadows start off-screen too
+    return { cols: pl.mode, S, slots, pins: pl.pins.map(p => [wx(p.x), wy(p.y)]), pinR: pl.pinD / 2 / pxU };
+  }
+  // size the wall to the plan before measuring the canvas
+  function sizeWall() { const h = plan().height + 'px'; if (wall.style.height !== h) wall.style.height = h; }
 
   function cardShape(w, h, r) {
     const s = new THREE.Shape(); const x = -w / 2, y = -h / 2;
@@ -1112,9 +1113,9 @@ function startGL() {
   new IntersectionObserver(([en]) => { visible = en.isIntersecting; visible ? wake() : sleep(); }).observe(hero);
   document.addEventListener('visibilitychange', () => document.hidden ? sleep() : wake());
 
-  measure(); build(false); // badges load already hanging; no drop-in swing
+  sizeWall(); measure(); build(false); // badges load already hanging; no drop-in swing
   new ResizeObserver(() => {
-    measure();
+    sizeWall(); measure();
     const lay = layout();
     if (lay.cols !== builtCols || Math.abs(lay.S - builtS) / builtS > 0.12) build(false);
     else { lanyards.forEach(L => L.anchor.copy(lay.slots[L.i].anchor)); placeSwag(lay); }
