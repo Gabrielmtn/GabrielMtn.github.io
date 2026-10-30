@@ -238,6 +238,7 @@
 <script type="module">
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 
 /* ---------- data (from the Senior UX Design Engineer resume) ---------- */
 const DEFAULTS = [
@@ -681,7 +682,8 @@ function startGL() {
   const shadowMat = new THREE.ShadowMaterial({ opacity: 0.24, depthWrite: false }); // never hides a card that swings back
   const backdrop = new THREE.Mesh(new THREE.PlaneGeometry(80, 80), shadowMat); backdrop.position.z = -1.9; backdrop.receiveShadow = true; backdrop.layers.set(2);
   scene.add(backdrop);
-  const metal = new THREE.MeshStandardMaterial({ color: 0xc9ced3, metalness: 1, roughness: 0.28 });
+  // polished chrome for the badge hardware: low roughness plus a clearcoat so it picks up crisp highlights
+  const metal = new THREE.MeshPhysicalMaterial({ color: 0xc3c9d1, metalness: 1, roughness: 0.16, clearcoat: 1, clearcoatRoughness: 0.04, envMapIntensity: 1.9 });
   // Foil over the printed seal: thin-film iridescence, so it shifts colour as the card turns.
   const holoMat = new THREE.MeshPhysicalMaterial({ color: 0xffffff, metalness: 0.75, roughness: 0.2, iridescence: 1,
     iridescenceIOR: 1.9, iridescenceThicknessRange: [180, 900], transparent: true, opacity: 0.55, depthWrite: false });
@@ -911,17 +913,24 @@ function startGL() {
     const pos = faceGeo.attributes.position, uv = faceGeo.attributes.uv;
     for (let k = 0; k < pos.count; k++) uv.setXY(k, (pos.getX(k) + CW / 2) / CW, (pos.getY(k) + CH / 2) / CH);
     const FZ = D / 2 + BEV + 0.0015;
-    // Hardware: a split ring standing perpendicular to the card. Its lower crossing sits in the middle of the slot
-    // and its upper crossing clears the card's top edge, so it loops through the slot instead of through the card.
-    const ringR = 0.068 * S, ringCy = slotY + ringR, ringTop = ringCy + ringR;
-    const ringGeo = new THREE.TorusGeometry(ringR, 0.011 * S, 10, 32);
-    const clipH = 0.1 * S, clipCy = ringTop + clipH * 0.38;
-    const clipGeo = new THREE.BoxGeometry(0.085 * S, clipH, 0.034 * S);
+    // Hardware: a strap clip like a real ID-badge clip, in polished chrome. A front plate sits on the card face over
+    // the slot, its tongue passes through the slot to a small back tab, a D-ring threads through the top of the plate,
+    // and the strap ends in a metal cap on that ring.
+    const plateW = 0.12 * S, plateH = 0.17 * S, plateD = 0.02 * S, plateBot = slotY + 0.008 * S, plateTop = plateBot + plateH;
+    const plateGeo = new RoundedBoxGeometry(plateW, plateH, plateD, 4, 0.0095 * S);
+    const panelGeo = new RoundedBoxGeometry(plateW * 0.62, plateH * 0.52, 0.008 * S, 2, 0.003 * S);    // raised centre panel
+    const ridgeGeo = new RoundedBoxGeometry(plateW * 0.62, 0.008 * S, 0.006 * S, 2, 0.002 * S);         // grip ridges
+    const tongueGeo = new RoundedBoxGeometry(plateW * 0.75, 0.03 * S, 2 * FZ + 0.05 * S, 2, 0.006 * S); // through the slot
+    const tabGeo = new RoundedBoxGeometry(plateW * 0.9, 0.06 * S, 0.012 * S, 2, 0.005 * S);             // behind the card
+    const dR = 0.03 * S, dCy = plateTop + 0.012 * S, dTop = dCy + dR;
+    const dGeo = new THREE.TorusGeometry(dR, 0.0085 * S, 10, 28);
+    const capH = 0.055 * S, capCy = dTop + capH / 2 - 0.012 * S;
+    const capGeo = new RoundedBoxGeometry(0.13 * S, capH, 0.03 * S, 4, 0.013 * S);
     const edgeGeo = new THREE.EdgesGeometry(bodyGeo, 30);
     const holoGeo = new THREE.CircleGeometry(SEAL.r / TW * CW, 48);
     const c = 0.09 * S;
     const comGeo = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-c, 0, 0), new THREE.Vector3(c, 0, 0), new THREE.Vector3(0, -c, 0), new THREE.Vector3(0, c, 0)]);
-    const hang = new THREE.Vector3(0, clipCy + clipH * 0.15, 0); // strap ends inside the clip, so no gap shows
+    const hang = new THREE.Vector3(0, capCy + capH * 0.2, 0); // strap ends inside the cap, so no gap shows
     const mass = 1, T = 2 * (D / 2 + BEV);
     const Iinv = new THREE.Vector3(12 / (mass * (CH * CH + T * T)), 12 / (mass * (CW * CW + T * T)), 12 / (mass * (CW * CW + CH * CH)));
 
@@ -936,8 +945,17 @@ function startGL() {
       const body = new THREE.Mesh(bodyGeo, edgeMat); body.castShadow = true;
       const front = new THREE.Mesh(faceGeo, faceMat(tF)); front.position.z = FZ;
       const back = new THREE.Mesh(faceGeo, faceMat(tB)); back.position.z = -FZ; back.rotation.y = Math.PI;
-      const ring = new THREE.Mesh(ringGeo, metal); ring.position.set(0, ringCy, 0); ring.rotation.y = Math.PI / 2; ring.castShadow = true;
-      const clip = new THREE.Mesh(clipGeo, metal); clip.position.set(0, clipCy, 0); clip.castShadow = true;
+      const clip = new THREE.Group();
+      const part = (geo, x, y, z) => { const m = new THREE.Mesh(geo, metal); m.position.set(x, y, z); m.castShadow = true; clip.add(m); return m; };
+      const pz = FZ + plateD / 2 + 0.002 * S;
+      part(plateGeo, 0, plateBot + plateH / 2, pz);
+      part(panelGeo, 0, plateBot + plateH * 0.52, pz + plateD / 2 + 0.002 * S);
+      for (const k of [-1, 1]) part(ridgeGeo, 0, plateBot + plateH * (0.52 + k * 0.36), pz + plateD / 2 + 0.002 * S);
+      part(tongueGeo, 0, slotY, 0);
+      part(tabGeo, 0, slotY + 0.012 * S, -(FZ + 0.008 * S));
+      part(dGeo, 0, dCy, pz).rotation.y = Math.PI / 2;
+      part(capGeo, 0, capCy, 0);
+      const ring = clip;
       const outline = new THREE.LineSegments(edgeGeo, dbgLine); outline.renderOrder = 10;
       const com = new THREE.LineSegments(comGeo, dbgLine); com.renderOrder = 10;
       const holo = new THREE.Mesh(holoGeo, holoMat);
@@ -1183,14 +1201,20 @@ function startGL() {
       // more accumulated twist spreads over more of the strap, so the turns don't bunch up
       const twStart = Math.max(0.12, 0.5 - 0.06 * Math.abs(L.twist) / Math.PI);
       const hw = 0.06 * S, repeat = 0.12 * S * (L.tex.cvS.height / 128); let arc = 0;
+      // Squash and stretch: measure how stretched the strap is against its rest length, and thin it toward the
+      // middle as it stretches (ends stay full width at the anchor and the clip). Smoothed so it eases in and out.
+      let len = 0; for (let k = 1; k < N; k++) len += pts[k].distanceTo(pts[k - 1]);
+      const ratio = len / (L.rest * (N - 1));
+      L.pinch = (L.pinch || 0) + (Math.min(0.5, Math.max(0, ratio - 1.02) * 1.7) - (L.pinch || 0)) * 0.25;
       for (let k = 0; k <= L.SEG; k++) {
         const t = k / L.SEG; L.curve.getPoint(t, pt); L.curve.getTangent(t, tan);
         if (k > 0) arc += pt.distanceTo(tmpA); tmpA.copy(pt);
         // twist eases in over the lower half of the strap (where it's visible): none above, the card's full spin at the clip
         const tt = Math.min(1, Math.max(0, (t - twStart) / (1 - twStart))), th = L.twist * tt * tt * (3 - 2 * tt), w = t ** 4;
         sideV.set(Math.cos(th), 0, -Math.sin(th)).multiplyScalar(1 - w).addScaledVector(cardX, w);
-        sideV.addScaledVector(tan, -sideV.dot(tan)).normalize().multiplyScalar(hw);
-        thick.crossVectors(tan, sideV).normalize().multiplyScalar(hw * 0.11);
+        const waist = 1 - L.pinch * Math.sin(Math.PI * t);   // narrowest mid-strap
+        sideV.addScaledVector(tan, -sideV.dot(tan)).normalize().multiplyScalar(hw * waist);
+        thick.crossVectors(tan, sideV).normalize().multiplyScalar(hw * 0.11 * waist);
         const v = (j, sx, nx, u) => {
           posA.setXYZ(k * 8 + j, pt.x + sideV.x * sx + thick.x * nx, pt.y + sideV.y * sx + thick.y * nx, pt.z + sideV.z * sx + thick.z * nx);
           uvA.setXY(k * 8 + j, u, arc / repeat);
