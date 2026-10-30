@@ -59,7 +59,7 @@
     background: linear-gradient(to bottom, color-mix(in srgb, var(--wall) 80%, transparent) 0%, color-mix(in srgb, var(--wall) 72%, transparent) 75%, transparent 100%); }
   .lede { color: #c2cac6; }
   .wall { pointer-events: none; z-index: 1; }
-  .hint { position: absolute; bottom: 14px; left: max(16px, env(safe-area-inset-left, 0px)); font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0; pointer-events: none; }
+  .hint { position: absolute; bottom: 18px; left: max(16px, env(safe-area-inset-left, 0px)); font-family: var(--f-mono); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: #b9c1bd; margin: 0; pointer-events: none; }
   .fallback { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 24px; color: var(--muted); margin: 0; }
   .hud { position: absolute; bottom: 14px; right: max(16px, env(safe-area-inset-right, 0px)); max-width: min(360px, calc(100% - 32px));
     font-family: var(--f-mono); font-size: 11.5px; line-height: 1.55; color: var(--ink); background: color-mix(in srgb, var(--wall) 82%, transparent);
@@ -176,15 +176,11 @@
       <h1>Gabriel Martin</h1>
       <p class="lede">I'm a Senior UX Design Engineer with 15 years bridging design and front-end engineering. I'm as comfortable in code as in Figma, or in a feature ticket, and I know when each is best. I've held engineering, design, and product architect roles, giving me experience understanding what each side needs and where things break down between them. I've built and scaled design systems, pattern libraries, and front-end component workflows that cement design intent without the telephone game between design and engineering.</p>
     </div>
-    <div class="views" role="group" aria-label="Wall view">
-      <button type="button" id="v-design" aria-pressed="true">Design view</button>
-      <button type="button" id="v-build" aria-pressed="false">Build view</button>
-    </div>
   </div>
 </header>
 
 <section class="wall" id="wall" aria-label="Hanging badges. Use the badge list below to flip them with a keyboard.">
-  <p class="hint" id="hint">Drag to swing · Tap to flip</p>
+  <p class="hint" id="hint">Click badge to see detailed breakdown</p>
   <div class="tip" id="tip" hidden aria-hidden="true"><strong id="tip-name"></strong><span id="tip-when"></span></div>
   <div class="hud" id="hud" hidden>
     <dl>
@@ -259,11 +255,12 @@ const DEFAULTS = [
   { id: 'virginpulse', org: 'Virgin Pulse', logo: 'img/badges/virginpulse.png', sub: '', role: 'Hybrid UX Design / Developer', start: '07/2021', end: '02/2023',
     designList: ["Design Workshops", "Wireframing", "Accessibility Curricula"], buildList: ["Micro-frontend POCs", "WCAG Reflow Refactor", "Component Library"],
     color: '#d81e2c', band: '#ffe1dc', band2: '#8f0f1b', strap: '#8f0f1b',
-    design: ['Led workshops, wireframing and UX design for multiple product teams',
+    design: ['Joined Virgin Pulse as first UX Design Engineer, guided product and engineering dialogs to help achieve WCAG compliance for priority client: Bank of America',
+      'Led workshops, wireframing and UX design for multiple product teams',
       'Designed and taught two accessibility curricula reaching 400+ people'],
     build: ['Led proofs of concept refactoring AngularJS micro-frontend templates and CSS to meet WCAG Reflow and Resize',
       'Trained 300+ engineers and 50+ product colleagues on the new approach',
-      'Built and maintained the production front-end component library'] },
+      'Reviewed WCAG compliance for each new component in company’s front-end component library'] },
 ];
 const STORE = 'badge-drawer-v8';
 const clone = o => JSON.parse(JSON.stringify(o));
@@ -493,7 +490,8 @@ function drawBack(b, i, cv) {
   c.textBaseline = 'top'; c.textAlign = 'left';
 
   const groups = [['UX DESIGN', b.band, b.design || []], ['UX ENGINEERING', buildColor(b), b.build || []]]
-    .map(([l, col, items]) => [l, col, items.filter(Boolean)]).filter(gr => gr[2].length);
+    // an accent too close to the card's back colour gets lifted so its label and bullets stay visible
+    .map(([l, col, items]) => [l, contrast(col, bg) < 1.8 ? shade(col, 0.5) : col, items.filter(Boolean)]).filter(gr => gr[2].length);
   if (!groups.length) {
     c.fillStyle = ink; stretch(c, 'expanded'); c.font = `850 88px ${DISPLAY}`; c.fillText('On the job', 58, 240); stretch(c, 'normal');
     c.globalAlpha = 0.7; c.font = `500 56px ${BODY}`;
@@ -611,15 +609,11 @@ $('list').addEventListener('click', e => {
 
 // Design view / Build view
 function setView(build) {
-  $('v-design').setAttribute('aria-pressed', String(!build));
-  $('v-build').setAttribute('aria-pressed', String(build));
   $('hud').hidden = !build || !gl;
   $('hint').textContent = build ? 'Drag a badge to watch the constraints solve' : 'Drag to swing · Tap to flip';
   if (gl) gl.setView(build);
   live.textContent = build ? 'Build view: badges shown as wireframes with their rope and constraint points.' : 'Design view.';
 }
-$('v-design').addEventListener('click', () => setView(false));
-$('v-build').addEventListener('click', () => setView(true));
 
 /* ---------- boot ---------- */
 await Promise.all(data.flatMap(b => [loadImg(b.frontSrc).then(im => b.frontImg = im), loadImg(b.backSrc).then(im => b.backImg = im),
@@ -644,7 +638,7 @@ await Promise.race([
   new Promise(r => setTimeout(r, 2500)),
 ]);
 
-try { gl = startGL(); } catch (err) { console.error(err); $('fallback').hidden = false; $('c').hidden = true; $('v-build').disabled = true; }
+try { gl = startGL(); } catch (err) { console.error(err); $('fallback').hidden = false; $('c').hidden = true;  }
 
 /* ---------- WebGL + physics ---------- */
 function startGL() {
