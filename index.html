@@ -813,7 +813,24 @@ function startGL() {
     return { cols: pl.mode, S, slots, pins: pl.pins.map(p => [wx(p.x), wy(p.y)]), pinR: pl.pinD / 2 / pxU };
   }
   // size the wall to the plan before measuring the canvas
-  function sizeWall() { const h = plan().height + 'px'; if (wall.style.height !== h) wall.style.height = h; }
+  // Wall height = planned layout + any extra the fit check below found was needed. The extra resets when the width changes.
+  let extraPad = 0, padForW = 0;
+  function sizeWall() {
+    const w = hero.clientWidth; if (w !== padForW) { padForW = w; extraPad = 0; }
+    const h = (plan().height + extraPad) + 'px'; if (wall.style.height !== h) wall.style.height = h;
+  }
+  // Safety net: if any card corner hangs closer than 28px to the bottom of the hero, grow the wall to fit.
+  const corner = new THREE.Vector3();
+  function fitCheck() {
+    if (grab) return; // a card being dragged can go anywhere; only settled cards count
+    const pxU = hero.clientHeight / worldH; let lowest = 0;
+    for (const L of lanyards) for (const sx of [-0.5, 0.5]) for (const sy of [-0.5, 0.5]) {
+      corner.set(sx * L.CW, sy * L.CH, 0).applyQuaternion(L.q).add(L.pos);
+      lowest = Math.max(lowest, (worldH / 2 - corner.y) * pxU);
+    }
+    const need = lowest + 28 - hero.clientHeight;
+    if (need > 0) { extraPad += Math.ceil(need) + 24; sizeWall(); }
+  }
 
   function cardShape(w, h, r) {
     const s = new THREE.Shape(); const x = -w / 2, y = -h / 2;
@@ -1117,13 +1134,14 @@ function startGL() {
   canvas.addEventListener('pointercancel', () => { grab = null; canvas.style.cursor = ''; });
 
   /* loop */
-  let running = false, visible = true, last = performance.now(), acc = 0, raf = 0, msAvg = 0, hudT = 0;
+  let fitTick = 0, running = false, visible = true, last = performance.now(), acc = 0, raf = 0, msAvg = 0, hudT = 0;
   const hudMs = $('hud-ms');
   function frame(now) {
     raf = 0; const t0 = performance.now();
     const dt = Math.min(0.05, (now - last) / 1000); last = now; acc += dt;
     let n = 0; while (acc >= H && n < 24) { step(H); acc -= H; n++; } if (n === 24) acc = 0;
     syncMeshes(); animateSwag(); renderer.render(scene, camera);
+    if (++fitTick % 20 === 0) fitCheck();
     msAvg = msAvg * 0.9 + (performance.now() - t0) * 0.1;
     if (buildView && now - hudT > 500) { hudT = now; hudMs.textContent = `${msAvg.toFixed(1)} ms CPU · ${n} substeps`; }
     if (running) raf = requestAnimationFrame(frame);
@@ -1135,7 +1153,12 @@ function startGL() {
 
   sizeWall(); measure(); build(false); // badges load already hanging; no drop-in swing
   new ResizeObserver(() => {
+    const oldH = worldH;
     sizeWall(); measure();
+    const dy = (worldH - oldH) / 2; // screen positions are pinned to the top edge, so shift the world to match
+    if (dy) for (const L of lanyards) {
+      for (const v of [...L.x, ...L.prev, L.pos, L.prevPos, L.anchor]) v.y += dy;
+    }
     const lay = layout();
     if (lay.cols !== builtCols || Math.abs(lay.S - builtS) / builtS > 0.12) build(false);
     else { lanyards.forEach(L => L.anchor.copy(lay.slots[L.i].anchor)); placeSwag(lay); }
