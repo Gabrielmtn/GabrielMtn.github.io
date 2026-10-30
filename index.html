@@ -986,7 +986,11 @@ function startGL() {
       fwd.set(0, 0, 1).applyQuaternion(L.q);
       const err = wrapA(Math.atan2(fwd.x, fwd.z) - L.targetYaw);
       const K = grab && grab.i === L.i ? 4 : 36;
-      L.ang.y += (-K * err - 4.5 * L.ang.y) * h;
+      if (L.unspin) {
+        // unwinding: spin against the accumulated twist, easing off as it nears zero
+        if (Math.abs(L.twist) < 0.2) L.unspin = false;
+        else L.ang.y = -Math.sign(L.twist) * Math.min(reduce ? 7 : 15, 2.5 + Math.abs(L.twist) * 2);
+      } else L.ang.y += (-K * err - 4.5 * L.ang.y) * h;
       L.vel.multiplyScalar(1 - 0.3 * h); L.ang.multiplyScalar(1 - 1.4 * h);
       L.pos.addScaledVector(L.vel, h); integrateQ(L.q, L.ang, h);
     }
@@ -1195,8 +1199,16 @@ function startGL() {
     flip(i) {
       const L = lanyards[i]; if (!L) return;
       L.holdUntil = 0;
+      // Every flip spins the same way, so each click winds another half-twist into the strap.
+      L.clicks = Math.abs(L.twist) < 0.5 ? 1 : (L.clicks || 0) + 1;
+      if (L.clicks >= 11) {
+        // Easter egg: the 11th click lets it all go. The badge whirls back until the strap is untwisted, front side out.
+        L.clicks = 0; L.unspin = true; data[i].face = 0; L.targetYaw = 0;
+        setTimeout(() => { const el = document.getElementById('live'); if (el) el.textContent = `${data[i].org} badge unwound itself, front side out.`; }, 50);
+        wake(); return;
+      }
       L.targetYaw = data[i].face ? Math.PI : 0;
-      L.ang.y += (reduce ? 5 : 9) * (data[i].face ? 1 : -1);
+      L.ang.y += reduce ? 5 : 9;
       wake();
     },
     refresh(i) {
