@@ -751,10 +751,10 @@ function startGL() {
   // The wall's height follows the plan; the volunteer buttons get their own rows under the badges.
   function plan() {
     const vw = Math.max(320, hero.clientWidth), n = data.length, P = SWAG.length;
-    const mode = vw >= 1100 ? 'row' : vw >= 700 ? 'grid' : 'column';
+    const mode = vw >= 1200 ? 'row' : vw >= 700 ? 'grid' : 'column';
     const clampPx = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
-    const W = mode === 'row' ? clampPx((vw - 64) / n * 0.72, 230, 320)
-      : mode === 'grid' ? clampPx(vw * 0.36, 250, 340)
+    const W = mode === 'row' ? clampPx((vw - 64) / n * 0.72, 250, 320)
+      : mode === 'grid' ? clampPx(vw * 0.4, 300, 370)
       : clampPx(vw - 72, 220, 340);
     const CH = W * 1.5, gap = Math.round(W * 0.18), top = Math.round(W * 0.5);
     const cards = [];
@@ -764,10 +764,10 @@ function startGL() {
       for (let i = 0; i < n; i++) cards.push({ x: sp * (i + 0.5), y: top + CH / 2 + (i % 2 ? drop : 0), z: 0, row: 0 });
       bottom = top + CH + drop;
     } else if (mode === 'grid') {
-      const sp = vw / 2, stepY = CH + gap;
+      const stepY = CH + gap, edge = 24 + W / 2; // columns pushed toward the edges, leaving a channel for the pins
       for (let i = 0; i < n; i++) {
         const col = i % 2, row = Math.floor(i / 2);
-        cards.push({ x: sp * (col + 0.5), y: top + CH / 2 + row * stepY + (col ? stepY * 0.42 : 0), z: -0.22 * row, row: i });
+        cards.push({ x: col ? vw - edge : edge, y: top + CH / 2 + row * stepY + (col ? stepY * 0.42 : 0), z: -0.22 * row, row: i });
       }
       bottom = Math.max(...cards.map(c => c.y)) + CH / 2;
     } else {
@@ -779,7 +779,7 @@ function startGL() {
     // otherwise in rows under the badges with enough clearance that a hanging card can't cover them.
     const pins = [];
     let pinD, height;
-    const rowGap = mode === 'row' ? vw / n - W : mode === 'grid' ? vw / 2 - W : 0;
+    const rowGap = mode === 'row' ? vw / n - W : mode === 'grid' ? vw - 48 - 2 * W : 0;
     if (mode === 'row' && n >= 3 && rowGap >= 92) {
       pinD = Math.min(118, rowGap - 22);
       const sp = vw / n, g = k => sp * (k + 1);
