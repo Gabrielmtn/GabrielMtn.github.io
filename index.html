@@ -664,6 +664,7 @@ function startGL() {
   renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
   renderer.toneMapping = THREE.NeutralToneMapping;
   renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.autoClear = false; renderer.shadowMap.autoUpdate = false;
   // Overlay renderer for lifted cards (layer 1 only). It needs its own environment map: GPU textures don't cross contexts.
   const overlay = new THREE.WebGLRenderer({ canvas: $('c2'), antialias: true, alpha: true });
   overlay.setClearColor(0x000000, 0); overlay.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
@@ -675,12 +676,12 @@ function startGL() {
   const overlayEnv = new THREE.PMREMGenerator(overlay).fromScene(new RoomEnvironment(), 0.04).texture;
   scene.environmentIntensity = 0.75;
   const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100); camera.position.set(0, 0, 10);
-  const hemi = new THREE.HemisphereLight(0xffffff, 0x8a8f8c, 0.5); hemi.layers.enable(1); scene.add(hemi);
-  const sun = new THREE.DirectionalLight(0xffffff, 1.5); sun.position.set(2.5, 4, 8); sun.castShadow = true; sun.layers.enable(1);
+  const hemi = new THREE.HemisphereLight(0xffffff, 0x8a8f8c, 0.5); hemi.layers.enable(1); hemi.layers.enable(2); scene.add(hemi);
+  const sun = new THREE.DirectionalLight(0xffffff, 1.5); sun.position.set(2.5, 4, 8); sun.castShadow = true; sun.layers.enable(1); sun.layers.enable(2); sun.shadow.camera.layers.enableAll();
   sun.shadow.mapSize.set(2048, 2048); sun.shadow.bias = -0.0004; sun.shadow.normalBias = 0.02; sun.shadow.radius = 6;
   scene.add(sun, sun.target);
   const shadowMat = new THREE.ShadowMaterial({ opacity: 0.24, depthWrite: false }); // never hides a card that swings back
-  const backdrop = new THREE.Mesh(new THREE.PlaneGeometry(80, 80), shadowMat); backdrop.position.z = -1.9; backdrop.receiveShadow = true;
+  const backdrop = new THREE.Mesh(new THREE.PlaneGeometry(80, 80), shadowMat); backdrop.position.z = -1.9; backdrop.receiveShadow = true; backdrop.layers.set(2);
   scene.add(backdrop);
   const metal = new THREE.MeshStandardMaterial({ color: 0xc9ced3, metalness: 1, roughness: 0.28 });
   // Foil over the printed seal: thin-film iridescence, so it shifts colour as the card turns.
@@ -701,7 +702,7 @@ function startGL() {
     const cv = document.createElement('canvas'); drawSwag(s, cv);
     const t = new THREE.CanvasTexture(cv); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = renderer.capabilities.getMaxAnisotropy();
     const m = new THREE.Mesh(swagGeo, new THREE.MeshPhysicalMaterial({ map: t, roughness: 0.32, clearcoat: 1, clearcoatRoughness: 0.06, side: THREE.DoubleSide }));
-    m.castShadow = true;
+    m.castShadow = true; m.layers.set(2); // wall layer: drawn in the first pass, see renderMain()
     m.userData = { k, r: 0.3, s: 1, tilt: [-0.14, 0.1, -0.06, 0.16, -0.1][k % 5], wob: 0 };
     scene.add(m); return m;
   });
@@ -751,6 +752,13 @@ function startGL() {
   const tmpA = new THREE.Vector3(), tmpB = new THREE.Vector3(), tmpC = new THREE.Vector3(), tmpD = new THREE.Vector3();
   const qInv = new THREE.Quaternion(), dq = new THREE.Quaternion(), fwd = new THREE.Vector3();
 
+  // Two passes so a badge can never slip behind a pin: the wall (shadow plane + pins, layer 2) first,
+  // then clear depth and draw the badges and straps (layer 0) over it. Shadows render once per frame.
+  function renderMain() {
+    renderer.shadowMap.needsUpdate = true; renderer.clear();
+    camera.layers.set(2); renderer.render(scene, camera);
+    renderer.clearDepth(); camera.layers.set(0); renderer.render(scene, camera);
+  }
   function measure() {
     const w = Math.max(1, hero.clientWidth), h = Math.max(1, hero.clientHeight);
     renderer.setSize(w, h, false); overlay.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
@@ -1147,7 +1155,8 @@ function startGL() {
   }
 
   /* pointer */
-  const ray = new THREE.Raycaster(), ndc = new THREE.Vector2(), plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+  const ray = new THREE.Raycaster(); ray.layers.enableAll();
+  const ndc = new THREE.Vector2(), plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
   function hitAt(cx, cy) {
     const r = canvas.getBoundingClientRect();
     ndc.set(((cx - r.left) / r.width) * 2 - 1, -((cy - r.top) / r.height) * 2 + 1);
@@ -1216,7 +1225,7 @@ function startGL() {
     raf = 0; const t0 = performance.now();
     const dt = Math.min(0.05, (now - last) / 1000); last = now; acc += dt;
     let n = 0; while (acc >= H && n < 24) { step(H); acc -= H; n++; } if (n === 24) acc = 0;
-    syncMeshes(); animateSwag(); renderer.render(scene, camera);
+    syncMeshes(); animateSwag(); renderMain();
     if (++fitTick % 20 === 0) fitCheck();
     renderOverlay();
     msAvg = msAvg * 0.9 + (performance.now() - t0) * 0.1;
@@ -1239,7 +1248,7 @@ function startGL() {
     const lay = layout();
     if (lay.cols !== builtCols || Math.abs(lay.S - builtS) / builtS > 0.12) build(false);
     else { lanyards.forEach(L => L.anchor.copy(lay.slots[L.i].anchor)); placeSwag(lay); }
-    syncMeshes(); animateSwag(); renderer.render(scene, camera); wake();
+    syncMeshes(); animateSwag(); renderMain(); wake();
   }).observe(hero);
   const mq = matchMedia('(prefers-color-scheme: dark)');
   const retheme = () => { measure(); wake(); };
