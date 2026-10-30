@@ -895,7 +895,7 @@ function startGL() {
       [body, front, back].forEach(m => m.userData.idx = i);
       group.add(body, front, back, holo, ring, clip, outline, com); scene.add(group);
 
-      const SEG = 48;
+      const SEG = 168; // fine enough that several twists stay smooth
       const sg = new THREE.BufferGeometry();
       sg.setAttribute('position', new THREE.BufferAttribute(new Float32Array((SEG + 1) * 2 * 3), 3));
       sg.setAttribute('uv', new THREE.BufferAttribute(new Float32Array((SEG + 1) * 2 * 2), 2));
@@ -1053,12 +1053,14 @@ function startGL() {
       const yaw = Math.atan2(fwd.x, fwd.z);
       L.twist += wrapA(yaw - L.lastYaw); L.lastYaw = yaw;
       const posA = L.strap.geometry.attributes.position, uvA = L.strap.geometry.attributes.uv;
+      // more accumulated twist spreads over more of the strap, so the turns don't bunch up
+      const twStart = Math.max(0.12, 0.5 - 0.06 * Math.abs(L.twist) / Math.PI);
       const hw = 0.06 * S, repeat = 0.12 * S * (L.tex.cvS.height / 128); let arc = 0;
       for (let k = 0; k <= L.SEG; k++) {
         const t = k / L.SEG; L.curve.getPoint(t, pt); L.curve.getTangent(t, tan);
         if (k > 0) arc += pt.distanceTo(tmpA); tmpA.copy(pt);
         // twist eases in over the lower half of the strap (where it's visible): none above, the card's full spin at the clip
-        const tt = Math.min(1, Math.max(0, (t - 0.5) / 0.5)), th = L.twist * tt * tt * (3 - 2 * tt), w = t ** 4;
+        const tt = Math.min(1, Math.max(0, (t - twStart) / (1 - twStart))), th = L.twist * tt * tt * (3 - 2 * tt), w = t ** 4;
         sideV.set(Math.cos(th), 0, -Math.sin(th)).multiplyScalar(1 - w).addScaledVector(cardX, w);
         sideV.addScaledVector(tan, -sideV.dot(tan)).normalize().multiplyScalar(hw);
         posA.setXYZ(k * 2, pt.x - sideV.x, pt.y - sideV.y, pt.z - sideV.z);
