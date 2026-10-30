@@ -53,6 +53,9 @@
   @media (max-width: 699px) { :root { --ext: 320px; } }
   .hero { position: relative; padding-bottom: var(--ext); -webkit-user-select: none; user-select: none; }
   #c { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: pan-y; z-index: 0; }
+  /* a second transparent layer above the page draws only a badge that's being dragged or is swinging below the wall,
+     so that one card floats over the about panels while everything else stays put */
+  #c2 { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; z-index: 4; }
   .hero .top { position: relative; z-index: 2; pointer-events: none; }
   .hero .top .views, .hero .top a { pointer-events: auto; }
   .hero .top .intro { text-shadow: 0 1px 12px var(--wall), 0 0 2px var(--wall); }
@@ -174,6 +177,7 @@
 
 <div class="hero" id="hero">
 <canvas id="c" aria-hidden="true"></canvas>
+<canvas id="c2" aria-hidden="true"></canvas>
 <div class="tip" id="tip" hidden aria-hidden="true"><strong id="tip-name"></strong><span id="tip-when"></span></div>
 <header class="top gutter">
   <div class="inner">
@@ -656,14 +660,19 @@ function startGL() {
   renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
   renderer.toneMapping = THREE.NeutralToneMapping;
   renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  // Overlay renderer for lifted cards (layer 1 only). It needs its own environment map: GPU textures don't cross contexts.
+  const overlay = new THREE.WebGLRenderer({ canvas: $('c2'), antialias: true, alpha: true });
+  overlay.setClearColor(0x000000, 0); overlay.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+  overlay.toneMapping = THREE.NeutralToneMapping;
 
   const scene = new THREE.Scene();
   const pmrem = new THREE.PMREMGenerator(renderer);
   scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+  const overlayEnv = new THREE.PMREMGenerator(overlay).fromScene(new RoomEnvironment(), 0.04).texture;
   scene.environmentIntensity = 0.75;
   const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100); camera.position.set(0, 0, 10);
-  scene.add(new THREE.HemisphereLight(0xffffff, 0x8a8f8c, 0.5));
-  const sun = new THREE.DirectionalLight(0xffffff, 1.5); sun.position.set(2.5, 4, 8); sun.castShadow = true;
+  const hemi = new THREE.HemisphereLight(0xffffff, 0x8a8f8c, 0.5); hemi.layers.enable(1); scene.add(hemi);
+  const sun = new THREE.DirectionalLight(0xffffff, 1.5); sun.position.set(2.5, 4, 8); sun.castShadow = true; sun.layers.enable(1);
   sun.shadow.mapSize.set(2048, 2048); sun.shadow.bias = -0.0004; sun.shadow.normalBias = 0.02; sun.shadow.radius = 6;
   scene.add(sun, sun.target);
   const shadowMat = new THREE.ShadowMaterial({ opacity: 0.24, depthWrite: false }); // never hides a card that swings back
@@ -740,7 +749,7 @@ function startGL() {
 
   function measure() {
     const w = Math.max(1, hero.clientWidth), h = Math.max(1, hero.clientHeight);
-    renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
+    renderer.setSize(w, h, false); overlay.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
     // one badge width = one world unit at every screen size, so physics, depth and shadows look the same everywhere
     worldH = h / plan().W; worldW = worldH * camera.aspect;
     camera.position.z = worldH / 2 / Math.tan(THREE.MathUtils.degToRad(15)); camera.far = camera.position.z + 50; camera.updateProjectionMatrix();
@@ -828,13 +837,37 @@ function startGL() {
   }
   // Safety net: if any card corner hangs closer than 28px to the bottom of the hero, grow the wall to fit.
   const corner = new THREE.Vector3();
-  function fitCheck() {
-    if (grab) return; // a card being dragged can go anywhere; only settled cards count
+  function lowestCardPx() {
     const pxU = hero.clientHeight / worldH; let lowest = 0;
     for (const L of lanyards) for (const sx of [-0.5, 0.5]) for (const sy of [-0.5, 0.5]) {
       corner.set(sx * L.CW, sy * L.CH, 0).applyQuaternion(L.q).add(L.pos);
       lowest = Math.max(lowest, (worldH / 2 - corner.y) * pxU);
     }
+    return lowest;
+  }
+  // Cards being dragged, or hanging below the wall's bottom edge, also join layer 1 so the overlay draws them on top.
+  let overlayDirty = false;
+  function renderOverlay() {
+    const pxU = hero.clientHeight / worldH, limit = wall.offsetTop + wall.clientHeight - 2;
+    let any = false;
+    for (const L of lanyards) {
+      let low = 0;
+      for (const sx of [-0.5, 0.5]) for (const sy of [-0.5, 0.5]) {
+        corner.set(sx * L.CW, sy * L.CH, 0).applyQuaternion(L.q).add(L.pos);
+        low = Math.max(low, (worldH / 2 - corner.y) * pxU);
+      }
+      const lift = (grab && grab.i === L.i) || low > limit;
+      if (lift !== !!L.lifted) { L.lifted = lift; L.group.traverse(o => lift ? o.layers.enable(1) : o.layers.disable(1)); }
+      any = any || lift;
+    }
+    if (!any) { if (overlayDirty) { overlay.clear(); overlayDirty = false; } return; }
+    const env = scene.environment; scene.environment = overlayEnv; camera.layers.set(1);
+    overlay.render(scene, camera);
+    camera.layers.set(0); scene.environment = env; overlayDirty = true;
+  }
+  function fitCheck() {
+    if (grab) return; // a card being dragged can go anywhere; only settled cards count
+    const lowest = lowestCardPx();
     const need = lowest + 28 - (wall.offsetTop + wall.clientHeight); // settled cards stay inside the wall, above the about section
     if (need > 0) { extraPad += Math.ceil(need) + 24; sizeWall(); }
   }
@@ -1174,6 +1207,7 @@ function startGL() {
     let n = 0; while (acc >= H && n < 24) { step(H); acc -= H; n++; } if (n === 24) acc = 0;
     syncMeshes(); animateSwag(); renderer.render(scene, camera);
     if (++fitTick % 20 === 0) fitCheck();
+    renderOverlay();
     msAvg = msAvg * 0.9 + (performance.now() - t0) * 0.1;
     if (buildView && now - hudT > 500) { hudT = now; hudMs.textContent = `${msAvg.toFixed(1)} ms CPU · ${n} substeps`; }
     if (running) raf = requestAnimationFrame(frame);
