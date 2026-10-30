@@ -1187,7 +1187,7 @@ function startGL() {
     }
   }
 
-  const nrm = new THREE.Vector3(), thick = new THREE.Vector3(), sideV = new THREE.Vector3(), cardX = new THREE.Vector3(), worldX = new THREE.Vector3(1, 0, 0), tan = new THREE.Vector3(), pt = new THREE.Vector3();
+  const latV = new THREE.Vector3(), nrm = new THREE.Vector3(), thick = new THREE.Vector3(), sideV = new THREE.Vector3(), cardX = new THREE.Vector3(), worldX = new THREE.Vector3(1, 0, 0), tan = new THREE.Vector3(), pt = new THREE.Vector3();
   function syncMeshes() {
     for (const L of lanyards) {
       L.group.position.copy(L.pos); L.group.quaternion.copy(L.q);
@@ -1214,6 +1214,9 @@ function startGL() {
       for (let k = 0; k <= L.SEG; k++) {
         const t = k / L.SEG; L.curve.getPoint(t, pt); L.curve.getTangent(t, tan);
         if (k > 0) arc += pt.distanceTo(tmpA); tmpA.copy(pt);
+        // Lettering is pinned to the strap material, not to measured distance: each rope segment has the same rest
+        // length and the same share of t, so v follows t and the print stretches and twists with the strap.
+        const vMat = t * L.rest * (N - 1) / repeat;
         // twist eases in over the lower half of the strap (where it's visible): none above, the card's full spin at the clip
         const tt = Math.min(1, Math.max(0, (t - twStart) / (1 - twStart))), th = L.twist * tt * tt * (3 - 2 * tt), w = t ** 4;
         sideV.set(Math.cos(th), 0, -Math.sin(th)).multiplyScalar(1 - w).addScaledVector(cardX, w);
@@ -1226,12 +1229,16 @@ function startGL() {
         // snug: just over a strap's thickness apart, and tighter still where they're twisted around each other
         const snug = Math.min(1, Math.abs(th) / (Math.PI / 2));
         const gap = S * (0.0135 - 0.005 * snug) * (0.75 + 0.25 * (1 - t)) * (1 - t ** 6) * (1 - 0.6 * L.pinch);
+        // Pursing: where the twist is loose, the two straps ease apart sideways in a gentle lens (widest mid-strap,
+        // closing at the clip) so you can see it's two sides of a loop. Tight twists close it; as a twist unwinds it opens.
+        const purse = S * 0.034 * (1 - snug) * Math.sin(Math.PI * t) * (1 - t ** 6) * (1 - L.pinch);
+        latV.copy(sideV);
         sideV.multiplyScalar(hw * waist); thick.copy(nrm).multiplyScalar(hw * 0.11 * waist);
         for (const [P, U, sgn] of [[posA, uvA, 1], [posB, uvB, -1]]) {
-          const ox = nrm.x * gap * sgn, oy = nrm.y * gap * sgn, oz = nrm.z * gap * sgn;
+          const ox = (nrm.x * gap + latV.x * purse) * sgn, oy = (nrm.y * gap + latV.y * purse) * sgn, oz = (nrm.z * gap + latV.z * purse) * sgn;
           const v = (j, sx, nx, u) => {
             P.setXYZ(k * 8 + j, pt.x + ox + sideV.x * sx + thick.x * nx, pt.y + oy + sideV.y * sx + thick.y * nx, pt.z + oz + sideV.z * sx + thick.z * nx);
-            U.setXY(k * 8 + j, u, arc / repeat);
+            U.setXY(k * 8 + j, u, vMat);
           };
           v(0, -1, 1, 0); v(1, 1, 1, 1);          // front face
           v(2, 1, -1, 1); v(3, -1, -1, 0);        // back face
