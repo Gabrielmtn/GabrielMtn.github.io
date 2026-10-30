@@ -982,6 +982,7 @@ function startGL() {
         mats: [edgeMat, front.material, back.material, strapMat], overlays: [outline, com, ropeLine, ropePts],
         ropeGeo, ropeLine, ropePts, pick: [body, front, back],
         anchor, x, prev, rest, hang, mass, Iinv, CW, CH,
+        half: new THREE.Vector3(CW / 2, CH / 2, T / 2 + 0.006 * S), reach: Math.hypot(CW, CH) / 2 + 0.05 * S,
         pos: posB, prevPos: posB.clone(), vel: new THREE.Vector3(), q, prevQ: q.clone(), ang: new THREE.Vector3(),
         targetYaw: b.face ? Math.PI : 0, twist: b.face ? Math.PI : 0, lastYaw: b.face ? Math.PI : 0, holdUntil: intro && !reduce ? 0.25 + i * 0.16 : 0,
         curve: new THREE.CatmullRomCurve3(x.map(v => v.clone()), false, 'centripetal'),
@@ -1003,6 +1004,28 @@ function startGL() {
   }
 
   /* physics helpers */
+  // Oriented-box overlap by separating-axis test. Returns 0 when apart; otherwise the overlap depth, with satN set to
+  // the push direction (unit length, pointing from A toward B).
+  const satA = [new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()], satB = [new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()];
+  const satT = new THREE.Vector3(), satN = new THREE.Vector3(), satC = new THREE.Vector3(), satM = new THREE.Matrix4();
+  const satProj = (ax, hf, n) => Math.abs(ax[0].dot(n)) * hf.x + Math.abs(ax[1].dot(n)) * hf.y + Math.abs(ax[2].dot(n)) * hf.z;
+  function boxOverlap(A, B) {
+    satM.makeRotationFromQuaternion(A.q).extractBasis(satA[0], satA[1], satA[2]);
+    satM.makeRotationFromQuaternion(B.q).extractBasis(satB[0], satB[1], satB[2]);
+    satT.subVectors(B.pos, A.pos);
+    let best = Infinity;
+    const test = n => {
+      const len = n.length(); if (len < 1e-3) return true; // near-parallel edges: covered by the face axes
+      n.divideScalar(len);
+      const d = satT.dot(n), o = satProj(satA, A.half, n) + satProj(satB, B.half, n) - Math.abs(d);
+      if (o <= 0) return false;
+      if (o < best) { best = o; satN.copy(n); if (d < 0) satN.negate(); }
+      return true;
+    };
+    for (let i = 0; i < 3; i++) { if (!test(satC.copy(satA[i])) || !test(satC.copy(satB[i]))) return 0; }
+    for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) if (!test(satC.crossVectors(satA[i], satB[j]))) return 0;
+    return best;
+  }
   function iInvWorld(L, v, out) { qInv.copy(L.q).invert(); out.copy(v).applyQuaternion(qInv).multiply(L.Iinv).applyQuaternion(L.q); return out; }
   function genInvMass(L, r, n) { tmpC.crossVectors(r, n); iInvWorld(L, tmpC, tmpD); return 1 / L.mass + tmpC.dot(tmpD); }
   function correctBody(L, r, P) {
@@ -1073,33 +1096,33 @@ function startGL() {
         }
       }
     }
-    // Card-to-card contact: a soft, capped push (so overlap resolves over many substeps
-    // instead of one violent shove), then most of the closing speed is absorbed below.
+    // Card-to-card contact in 3D: every pair of cards is tested as oriented boxes, and an overlap is pushed apart along
+    // its shallowest axis (sideways when they bump edge to edge, in depth when they pass face to face). The push is a
+    // little per substep so nothing gets shoved; a dragged card doesn't yield and may push harder.
     const contacts = [];
     for (let a = 0; a < lanyards.length; a++) for (let b = a + 1; b < lanyards.length; b++) {
-      const A = lanyards[a], B = lanyards[b]; if (A.row !== B.row || A.holdUntil > simT || B.holdUntil > simT) continue;
-      const dx = B.pos.x - A.pos.x, minD = A.CW * 1.04;
-      if (Math.abs(dx) < minD && Math.abs(B.pos.y - A.pos.y) < A.CH * 0.95) {
-        const s = Math.sign(dx || 1);
-        const corr = Math.min((minD - Math.abs(dx)) * 0.04, 0.0015 * S);
-        const ga = grab && grab.i === A.i, gb = grab && grab.i === B.i; // the dragged card doesn't yield
-        const wa = ga ? 0 : gb ? 1 : 0.5, wb = gb ? 0 : ga ? 1 : 0.5;
-        A.pos.x -= corr * s * wa; B.pos.x += corr * s * wb;
-        contacts.push([A, B, s]);
-      }
+      const A = lanyards[a], B = lanyards[b]; if (A.holdUntil > simT || B.holdUntil > simT) continue;
+      if (A.pos.distanceTo(B.pos) > A.reach + B.reach) continue;
+      const depth = boxOverlap(A, B); if (!depth) continue;
+      const ga = grab && grab.i === A.i, gb = grab && grab.i === B.i;
+      const wa = ga ? 0 : gb ? 1 : 0.5, wb = gb ? 0 : ga ? 1 : 0.5;
+      const corr = Math.min(depth * (ga || gb ? 0.6 : 0.35), (ga || gb ? 0.03 : 0.004) * S);
+      A.pos.addScaledVector(satN, -corr * wa); B.pos.addScaledVector(satN, corr * wb);
+      contacts.push([A, B, satN.clone()]);
     }
+    for (const L of lanyards) L.pos.z = Math.min(0.7, Math.max(-1.3, L.pos.z)); // stays off the wall and doesn't lunge at the viewer
     for (const L of lanyards) {
       if (L.holdUntil > simT) continue;
       L.vel.subVectors(L.pos, L.prevPos).divideScalar(h);
       dq.copy(L.q).multiply(qInv.copy(L.prevQ).invert());
       L.ang.set(dq.x, dq.y, dq.z).multiplyScalar(2 / h); if (dq.w < 0) L.ang.negate();
     }
-    for (const [A, B, s] of contacts) {
-      const rel = (B.vel.x - A.vel.x) * s;          // < 0 means they're closing
-      if (rel < 0) { const imp = rel * 0.45; A.vel.x += imp * s; B.vel.x -= imp * s; }
-      const sep = (B.vel.x - A.vel.x) * s;          // cap how fast contact can push them apart
+    for (const [A, B, n] of contacts) {
+      const rel = tmpA.subVectors(B.vel, A.vel).dot(n);   // < 0 means they're closing
+      if (rel < 0) { const imp = rel * 0.45; A.vel.addScaledVector(n, imp); B.vel.addScaledVector(n, -imp); }
+      const sep = tmpA.subVectors(B.vel, A.vel).dot(n);   // cap how fast contact can push them apart
       const maxSep = 0.6 * S;
-      if (sep > maxSep) { const k = (sep - maxSep) * 0.5; A.vel.x += k * s; B.vel.x -= k * s; }
+      if (sep > maxSep) { const k = (sep - maxSep) * 0.5; A.vel.addScaledVector(n, k); B.vel.addScaledVector(n, -k); }
       A.ang.multiplyScalar(0.996); B.ang.multiplyScalar(0.996);
     }
   }
