@@ -52,10 +52,11 @@
   .hero .top { position: relative; z-index: 2; pointer-events: none; }
   .hero .top .views, .hero .top a { pointer-events: auto; }
   .hero .top .intro { text-shadow: 0 1px 12px var(--wall), 0 0 2px var(--wall); }
-  /* the straps run up behind the header; a soft fade keeps the text readable over them */
-  .hero .top::before { content: ""; position: absolute; inset: 0 0 -48px; z-index: -1; pointer-events: none;
-    background: linear-gradient(to bottom, color-mix(in srgb, var(--wall) 80%, transparent) 0%, color-mix(in srgb, var(--wall) 72%, transparent) 75%, transparent 100%); }
-  .lede { color: #c2cac6; }
+  /* a dark, slightly see-through panel behind the header text keeps contrast high over the straps */
+  .hero .top .intro { flex: 0 1 820px; background: rgba(13, 16, 19, 0.84); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 14px; padding: 22px 26px 24px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35); }
+  @media (max-width: 600px) { .hero .top .intro { padding: 18px 18px 20px; border-radius: 12px; } }
+  .lede { color: #d6ddd9; }
   .wall { pointer-events: none; z-index: 1; }
   .hint { position: absolute; bottom: 18px; left: max(16px, env(safe-area-inset-left, 0px)); font-family: var(--f-mono); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: #b9c1bd; margin: 0; pointer-events: none; }
   .fallback { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 24px; color: var(--muted); margin: 0; }
@@ -752,7 +753,7 @@ function startGL() {
     const vw = Math.max(320, hero.clientWidth), n = data.length, P = SWAG.length;
     const mode = vw >= 1100 ? 'row' : vw >= 700 ? 'grid' : 'column';
     const clampPx = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
-    const W = mode === 'row' ? clampPx((vw - 64) / n * 0.8, 240, 340)
+    const W = mode === 'row' ? clampPx((vw - 64) / n * 0.72, 230, 320)
       : mode === 'grid' ? clampPx(vw * 0.36, 250, 340)
       : clampPx(vw - 72, 220, 340);
     const CH = W * 1.5, gap = Math.round(W * 0.18), top = Math.round(W * 0.5);
@@ -774,14 +775,33 @@ function startGL() {
       for (let i = 0; i < n; i++) cards.push({ x: vw / 2 + (i % 2 ? off : -off), y: top + CH / 2 + i * stepY, z: -0.16 * i, row: i });
       bottom = top + CH / 2 + (n - 1) * stepY + CH / 2;
     }
-    const pinD = mode === 'column' ? clampPx(vw * 0.22, 80, 104) : clampPx(vw * 0.075, 88, 120);
-    const pitch = pinD * 1.3, perRow = Math.max(1, Math.min(P, Math.floor((vw - 32) / pitch))), pinRows = Math.ceil(P / perRow);
+    // Volunteer pins: in the gaps between lanyards when they fit with clear space around them,
+    // otherwise in rows under the badges with enough clearance that a hanging card can't cover them.
     const pins = [];
-    for (let k = 0; k < P; k++) {
-      const r = Math.floor(k / perRow), cnt = Math.min(perRow, P - r * perRow), idx = k - r * perRow;
-      pins.push({ x: vw / 2 + (idx - (cnt - 1) / 2) * pitch, y: bottom + 48 + pinD / 2 + r * pitch });
+    let pinD, height;
+    const rowGap = mode === 'row' ? vw / n - W : mode === 'grid' ? vw / 2 - W : 0;
+    if (mode === 'row' && n >= 3 && rowGap >= 92) {
+      pinD = Math.min(118, rowGap - 22);
+      const sp = vw / n, g = k => sp * (k + 1);
+      const yHi = top + CH * 0.32, yLo = top + CH * 0.32 + pinD * 1.35;
+      const spots = [[g(0), yHi], [g(1), yLo], [g(n - 2), yHi], [g(1), yHi - pinD * 1.35 < top ? yLo + pinD * 1.35 : yHi - pinD * 1.35], [g(0), yLo]];
+      for (let k = 0; k < P; k++) pins.push({ x: spots[k % spots.length][0], y: spots[k % spots.length][1] });
+      height = Math.round(Math.max(bottom, ...pins.map(p => p.y + pinD / 2)) + 90);
+    } else if (mode === 'grid' && rowGap >= 84) {
+      pinD = Math.min(110, rowGap - 20);
+      const pitchY = pinD * 1.35, y0 = top + CH * 0.35;
+      for (let k = 0; k < P; k++) pins.push({ x: vw / 2, y: y0 + k * pitchY });
+      height = Math.round(Math.max(bottom, ...pins.map(p => p.y + pinD / 2)) + 90);
+    } else {
+      pinD = mode === 'column' ? clampPx(vw * 0.22, 80, 104) : clampPx(vw * 0.075, 88, 120);
+      const pitch = pinD * 1.3, perRow = Math.max(1, Math.min(P, Math.floor((vw - 32) / pitch))), pinRows = Math.ceil(P / perRow);
+      const clear = 70 + CH * 0.08; // room for a card hanging a little lower than planned
+      for (let k = 0; k < P; k++) {
+        const r = Math.floor(k / perRow), cnt = Math.min(perRow, P - r * perRow), idx = k - r * perRow;
+        pins.push({ x: vw / 2 + (idx - (cnt - 1) / 2) * pitch, y: bottom + clear + pinD / 2 + r * pitch });
+      }
+      height = Math.round(bottom + clear + pinRows * pitch + 40);
     }
-    const height = Math.round(bottom + 48 + pinRows * pitch + 36);
     return { mode, W, cards, pins, pinD, height };
   }
   function layout() {
