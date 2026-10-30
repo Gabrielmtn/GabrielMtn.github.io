@@ -51,13 +51,15 @@
      downward slides behind the about panels instead of being cut off at the wall's edge. */
   :root { --ext: 560px; }
   @media (max-width: 699px) { :root { --ext: 440px; } }
-  .hero { position: relative; padding-bottom: var(--ext); -webkit-user-select: none; user-select: none; }
+  .hero { position: relative; padding-bottom: var(--ext); }
+  #c, #c2, .wall { -webkit-user-select: none; user-select: none; }   /* only the drag surface is unselectable */
+  ::selection { background: #8ea4ff; color: #0b1020; }
   #c { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: pan-y; z-index: 0; }
   /* a second transparent layer above the page draws only a badge that's being dragged or is swinging below the wall,
      so that one card floats over the about panels while everything else stays put */
   #c2 { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; z-index: 4; }
   .hero .top { position: relative; z-index: 2; pointer-events: none; }
-  .hero .top .views, .hero .top a { pointer-events: auto; }
+  .hero .top .views, .hero .top a, .hero .top .intro { pointer-events: auto; } /* header text is ordinary, selectable text */
   .hero .top .intro { text-shadow: 0 1px 12px var(--wall), 0 0 2px var(--wall); }
   /* a dark, slightly see-through panel behind the header text keeps contrast high over the straps */
   .hero .top .intro { flex: 0 1 820px; background: rgba(13, 16, 19, 0.84); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
@@ -123,6 +125,18 @@
   .rail h2.later { margin-top: 36px; }
   .pin { width: 22px; height: 22px; border-radius: 50%; box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.2); }
   .swag-list li { grid-template-columns: 22px minmax(0, 1fr); }
+  /* Keyboard and screen-reader layer: one real button laid exactly over each badge (and each pin), following it as it
+     swings. Mouse and touch pass straight through to the canvas; keyboard focus lands on these and shows a ring. */
+  .focus-layer { position: absolute; inset: 0; z-index: 5; pointer-events: none; }
+  .badge-hit, .pin-hit { position: absolute; left: 0; top: 0; margin: 0; padding: 0; border: 0; background: transparent; color: transparent;
+    pointer-events: none; transform-origin: 50% 50%; border-radius: 14px; font: inherit; letter-spacing: 0; text-transform: none; }
+  .pin-hit { border-radius: 50%; }
+  .badge-hit:focus-visible, .pin-hit:focus-visible { outline: 3px solid #ffd166; outline-offset: 4px; box-shadow: 0 0 0 9px rgba(13, 16, 19, 0.85); }
+  .badge-hit:hover { background: transparent; }
+  /* without WebGL the layer becomes a plain list of buttons */
+  .focus-layer.static { position: relative; inset: auto; display: flex; flex-wrap: wrap; gap: 10px; padding: 16px; pointer-events: auto; }
+  .focus-layer.static .badge-hit, .focus-layer.static .pin-hit { position: static; transform: none; width: auto; height: auto; color: var(--ink);
+    border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; pointer-events: auto; }
   .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
   html { background: var(--wall); }
@@ -179,6 +193,9 @@
 <canvas id="c" aria-hidden="true"></canvas>
 <canvas id="c2" aria-hidden="true"></canvas>
 <div class="tip" id="tip" hidden aria-hidden="true"><strong id="tip-name"></strong><span id="tip-when"></span></div>
+<div class="focus-layer" id="focus-layer" role="group" aria-label="Work history badges and volunteer pins">
+  <p class="sr-only" id="live" aria-live="polite"></p>
+</div>
 <header class="top gutter">
   <div class="inner">
     <div class="intro">
@@ -189,7 +206,7 @@
   </div>
 </header>
 
-<section class="wall" id="wall" aria-label="Hanging badges. Use the badge list below to flip them with a keyboard.">
+<section class="wall" id="wall" aria-label="Work history badges">
   <p class="hint" id="hint">Click badge to see detailed breakdown</p>
   <div class="hud" id="hud" hidden>
     <dl>
@@ -198,22 +215,13 @@
       <dt>Strap</dt><dd><span id="hud-n">4</span> Verlet ropes × 8 nodes</dd>
       <dt>Card</dt><dd>Rigid body with an inverse-inertia tensor</dd>
       <dt>Frame</dt><dd id="hud-ms">–</dd>
-      <dt>A11y</dt><dd>Canvas is aria-hidden; the list below is the real control</dd>
+      <dt>A11y</dt><dd>Canvas is aria-hidden; each badge has a real, focusable button laid over it</dd>
     </dl>
   </div>
   <p class="fallback" id="fallback" hidden>This browser couldn’t start WebGL, so the badges can’t hang here.</p>
 </section>
 </div>
 
-<section class="controls gutter" aria-label="Flip badges">
-  <div class="inner">
-    <h2>Badges</h2>
-    <ul class="chips list" id="list"></ul>
-    <p class="sr-only" id="live" aria-live="polite"></p>
-    <h2 class="sr-only">Volunteer</h2>
-    <ul class="sr-only" id="swag-list"></ul>
-  </div>
-</section>
 
 <main id="about" class="about gutter">
   <div class="inner">
@@ -592,34 +600,33 @@ function announce(i) {
     ? `${b.org} badge, back. UX design: ${list(b.design)}. UX engineering: ${list(b.build)}.`
     : `${b.org} badge, front. ${b.role}${fmtRange(b) ? ', ' + fmtRange(b) : ''}. UX design: ${(b.designList || []).join(', ') || 'none listed'}. UX engineering: ${(b.buildList || []).join(', ') || 'none listed'}.`;
 }
-function renderList() {
-  const ul = $('list'); ul.innerHTML = '';
-  data.forEach((b, i) => {
-    const li = document.createElement('li');
-    li.innerHTML = `<span class="sw" aria-hidden="true"></span>
-      <div class="who"><strong></strong><span></span></div>
-      <button type="button" data-flip="${i}"></button>`;
-    li.querySelector('.sw').style.background = `linear-gradient(${b.band} 50%, ${buildColor(b)} 50%)`;
-    li.querySelector('strong').textContent = b.org;
-    li.querySelector('.who span').textContent = [b.role, fmtRange(b)].filter(Boolean).join(' · ');
-    syncFlipBtn(li.querySelector('[data-flip]'), i);
-    ul.appendChild(li);
-  });
+const orgName = b => b.tag === 'INCUBATOR' ? `${b.org} Incubator, with Wellist` : b.org;
+// everything printed on both sides of a badge, as text
+function describe(b) {
+  const list = a => (a || []).filter(Boolean).join('. ');
+  return [`Front: ${orgName(b)}. ${b.role}, ${fmtRange(b)}.`,
+    `UX design: ${(b.designList || []).join(', ')}.`, `UX engineering: ${(b.buildList || []).join(', ')}.`,
+    `Back: UX design: ${list(b.design)}.`, `UX engineering: ${list(b.build)}.`].join(' ');
 }
-function syncFlipBtn(btn, i) {
-  btn.textContent = data[i].face ? 'Show front' : 'Show back';
-  btn.classList.toggle('on', !!data[i].face);
-  btn.setAttribute('aria-label', `${data[i].face ? 'Show front of' : 'Show back of'} ${data[i].org}`);
+// Each badge is an image whose alt text carries both sides. Focusable so keyboard users can see where it is,
+// but nothing to operate: no buttons, no key handling.
+function renderList() {
+  const layer = $('focus-layer');
+  layer.querySelectorAll('.badge-hit').forEach(e => e.remove());
+  data.forEach((b, i) => {
+    const el = document.createElement('span'); el.className = 'badge-hit'; el.tabIndex = 0; el.dataset.badge = i;
+    el.setAttribute('role', 'img'); el.setAttribute('aria-label', `${orgName(b)} badge. ${describe(b)}`);
+    el.textContent = b.org;   // visible only in the no-WebGL fallback
+    layer.append(el);
+  });
 }
 function flip(i, announceIt = true) {
   data[i].face ^= 1;
   if (gl) gl.flip(i);
-  const btn = document.querySelector(`[data-flip="${i}"]`); if (btn) syncFlipBtn(btn, i);
   if (announceIt) announce(i);
 }
-$('list').addEventListener('click', e => {
-  const f = e.target.closest('[data-flip]'); if (f) return flip(+f.dataset.flip);
-});
+$('focus-layer').addEventListener('focusin', e => { const p = e.target.closest('[data-pin]'); if (gl) gl.showPin(p ? +p.dataset.pin : -1); });
+$('focus-layer').addEventListener('focusout', () => { if (gl) gl.showPin(-1); });
 
 // Design view / Build view
 function setView(build) {
@@ -634,15 +641,14 @@ await Promise.all(data.flatMap(b => [loadImg(b.frontSrc).then(im => b.frontImg =
   loadImg(b.logo).then(im => b.logoImg = im), loadImg(b.subLogo).then(im => b.subLogoImg = im)]));
 renderList();
 
+// volunteer pins: focusable (not clickable); focusing one shows its tooltip, as hover does
 function renderSwagList() {
-  const ul = $('swag-list'); ul.innerHTML = '';
-  SWAG.forEach(s => {
-    const li = document.createElement('li');
-    li.innerHTML = '<span class="pin" aria-hidden="true"></span><div class="who"><strong></strong><span></span></div>';
-    li.querySelector('.pin').style.background = s.color;
-    li.querySelector('strong').textContent = s.name;
-    li.querySelector('.who span').textContent = swagWhen(s);
-    ul.appendChild(li);
+  const layer = $('focus-layer');
+  layer.querySelectorAll('.pin-hit').forEach(e => e.remove());
+  SWAG.forEach((s, k) => {
+    const el = document.createElement('span'); el.className = 'pin-hit'; el.tabIndex = 0; el.dataset.pin = k;
+    el.setAttribute('role', 'img'); el.setAttribute('aria-label', `${s.name} volunteer pin. ${swagWhen(s)}.`);
+    layer.append(el);
   });
 }
 renderSwagList();
@@ -652,7 +658,7 @@ await Promise.race([
   new Promise(r => setTimeout(r, 2500)),
 ]);
 
-try { gl = startGL(); } catch (err) { console.error(err); $('fallback').hidden = false; $('c').hidden = true;  }
+try { gl = startGL(); } catch (err) { console.error(err); $('fallback').hidden = false; $('c').hidden = true; $('focus-layer').classList.add('static');  }
 
 /* ---------- WebGL + physics ---------- */
 function startGL() {
@@ -869,7 +875,7 @@ function startGL() {
         corner.set(sx * L.CW, sy * L.CH, 0).applyQuaternion(L.q).add(L.pos);
         low = Math.max(low, (worldH / 2 - corner.y) * pxU);
       }
-      const lift = (grab && grab.i === L.i) || low > limit;
+      const lift = (grab && grab.i === L.i) || low > limit;   // (the overlay is clipped below the header, see measureHeader)
       if (lift !== !!L.lifted) { L.lifted = lift; L.group.traverse(o => lift ? o.layers.enable(1) : o.layers.disable(1)); }
       any = any || lift;
     }
@@ -878,7 +884,62 @@ function startGL() {
     overlay.render(scene, camera);
     camera.layers.set(0); scene.environment = env; overlayDirty = true;
   }
+  // Keep each keyboard hit box laid over its badge (rotated rectangle) and pin (circle), in hero-relative pixels.
+  const hitP = new THREE.Vector3(), hitA = new THREE.Vector3(), hitB = new THREE.Vector3(), hitR = new THREE.Vector3();
+  const toPx = v => { v.project(camera); return [(v.x + 1) / 2 * hero.clientWidth, (1 - v.y) / 2 * hero.clientHeight]; };
+  function placeHits() {
+    const bh = document.querySelectorAll('#focus-layer .badge-hit');
+    lanyards.forEach((L, i) => {
+      const el = bh[i]; if (!el) return;
+      const [cx, cy] = toPx(hitP.copy(L.pos));
+      const [ax, ay] = toPx(hitA.set(L.CW / 2, 0, 0).applyQuaternion(L.q).add(L.pos));
+      const [bx, by] = toPx(hitB.set(0, L.CH / 2, 0).applyQuaternion(L.q).add(L.pos));
+      const w = Math.max(24, 2 * Math.hypot(ax - cx, ay - cy)), h = Math.max(24, 2 * Math.hypot(bx - cx, by - cy));
+      const ang = Math.atan2(cx - bx, cy - by);   // the card's tilt on screen
+      el.style.width = `${w}px`; el.style.height = `${h}px`;
+      el.style.transform = `translate(${cx - w / 2}px, ${cy - h / 2}px) rotate(${-ang}rad)`;
+    });
+    const ph = document.querySelectorAll('#focus-layer .pin-hit');
+    swagMeshes.forEach((m, k) => {
+      const el = ph[k]; if (!el) return;
+      const [cx, cy] = toPx(hitP.copy(m.position));
+      const [ex] = toPx(hitA.copy(m.position).add(hitR.set(m.userData.r, 0, 0)));
+      const d = Math.max(24, 2 * Math.abs(ex - cx));
+      el.style.width = el.style.height = `${d}px`;
+      el.style.transform = `translate(${cx - d / 2}px, ${cy - d / 2}px)`;
+    });
+  }
+  // The header panel is a solid ledge: badges hang behind it and stop against its bottom edge.
+  // hdr holds that edge in world units on the z = 0 plane; limits at other depths are scaled by perspective.
+  const hdr = { y: Infinity, x0: 0, x1: 0 };
+  function measureHeader() {
+    const intro = document.querySelector('.hero .top .intro'); if (!intro || !worldH) return;
+    const r = intro.getBoundingClientRect(), hr = hero.getBoundingClientRect(), pxU = hero.clientHeight / worldH;
+    const bottom = r.bottom - hr.top;
+    hdr.y = worldH / 2 - (bottom + 6) / pxU;
+    hdr.x0 = -worldW / 2 + (r.left - hr.left) / pxU; hdr.x1 = -worldW / 2 + (r.right - hr.left) / pxU;
+    // the overlay (cards lifted over the about section) never covers the header
+    overlay.domElement.style.clipPath = `inset(${Math.max(0, Math.round(bottom))}px 0 0 0)`;
+  }
+  const persp = z => (camera.position.z - z) / camera.position.z;
+  const topPts = [new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()], topW = new THREE.Vector3();
+  // the card's top corners and the clip's cap, in card space
+  function cardTops(L) { topPts[0].set(-L.CW / 2, L.CH / 2, 0); topPts[1].set(L.CW / 2, L.CH / 2, 0); topPts[2].copy(L.hang); return topPts; }
+  function headerCollide(L) {
+    if (!isFinite(hdr.y)) return;
+    let excess = 0;
+    for (const p of cardTops(L)) {
+      topW.copy(p).applyQuaternion(L.q).add(L.pos);
+      const k = persp(topW.z);   // each point's own depth: a card tipped back reaches a little higher on screen
+      if (topW.x < hdr.x0 * k || topW.x > hdr.x1 * k) continue;
+      excess = Math.max(excess, topW.y - hdr.y * k);
+    }
+    if (excess <= 0) return;
+    // a dead stop, like the strap running out of give: push back down and drop any upward speed
+    L.pos.y -= excess; L.prevPos.y = Math.max(L.prevPos.y - excess, L.pos.y);
+  }
   function fitCheck() {
+    measureHeader();
     if (grab) return; // a card being dragged can go anywhere; only settled cards count
     const lowest = lowestCardPx();
     const need = lowest + 28 - (wall.offsetTop + wall.clientHeight); // settled cards stay inside the wall, above the about section
@@ -1119,9 +1180,12 @@ function startGL() {
       const flat = Math.hypot(fwd.x, fwd.z), trust = Math.min(1, Math.max(0, (flat - 0.25) / 0.35));
       const K = grab && grab.i === L.i ? 4 : 36;
       if (L.unspin) {
-        // unwinding: spin against the accumulated twist, easing off as it nears zero
-        if (Math.abs(L.twist) < 0.2) L.unspin = false;
-        else L.ang.y = -Math.sign(L.twist) * Math.min(reduce ? 7 : 15, 2.5 + Math.abs(L.twist) * 2);
+        // Unwinding: the wound strap acts as a torsion spring. Let go, the badge starts slowly, gathers speed as the
+        // twist pays out, sails past straight, then swings back and settles (an underdamped spring, not a set speed).
+        const kU = reduce ? 1.2 : 2.2, cU = reduce ? 2 : 0;
+        L.ang.y += (-kU * L.twist - cU * L.ang.y) * h;
+        L.unspinT = (L.unspinT || 0) + h;
+        if ((Math.abs(L.twist) < 0.25 && Math.abs(L.ang.y) < 0.6) || L.unspinT > 8) { L.unspin = false; L.unspinT = 0; }
       } else L.ang.y += (-K * err * trust - 4.5 * L.ang.y) * h;
       L.vel.multiplyScalar(1 - 0.3 * h); L.ang.multiplyScalar(1 - 1.4 * h);
       // The held point acts like a pin the card could whip around under strap tension, so a held card gets heavy
@@ -1133,10 +1197,14 @@ function startGL() {
     }
     for (let it = 0; it < 2; it++) for (const L of lanyards) {
       if (L.holdUntil > simT) continue;
+      // Twisting takes up length, as it does in a real lanyard: each half-turn hitches the badge up a little.
+      // Eased, so the badge rises (and drops back as it unwinds) instead of jumping.
+      if (it === 0) L.shrink = (L.shrink || 0) + (Math.min(0.13, 0.022 * Math.abs(L.twist) / Math.PI) - (L.shrink || 0)) * Math.min(1, 5 * h);
+      const rest = L.rest * (1 - L.shrink);
       for (let k = 0; k < N - 1; k++) {
         const a = L.x[k], b = L.x[k + 1], wa = k === 0 ? 0 : WP;
         tmpA.subVectors(b, a); const len = tmpA.length(); if (len < 1e-6) continue;
-        const lam = -(len - L.rest) / (wa + WP + AR / (h * h));
+        const lam = -(len - rest) / (wa + WP + AR / (h * h));
         tmpA.multiplyScalar(lam / len); a.addScaledVector(tmpA, -wa); b.addScaledVector(tmpA, WP);
       }
       const p = L.x[N - 1];
@@ -1182,7 +1250,7 @@ function startGL() {
         A.pos.z -= dz * wa; A.prevPos.z -= dz * wa; B.pos.z += dz * wb; B.prevPos.z += dz * wb;
       }
     }
-    for (const L of lanyards) L.pos.z = Math.min(0.7, Math.max(-1.3, L.pos.z)); // stays off the wall and doesn't lunge at the viewer
+    for (const L of lanyards) { L.pos.z = Math.min(0.7, Math.max(-1.3, L.pos.z)); headerCollide(L); } // stays off the wall, doesn't lunge at the viewer, stops at the header
     for (const L of lanyards) {
       if (L.holdUntil > simT) continue;
       L.vel.subVectors(L.pos, L.prevPos).divideScalar(h);
@@ -1216,7 +1284,22 @@ function startGL() {
       const posA = L.strap.geometry.attributes.position, uvA = L.strap.geometry.attributes.uv;
       // more accumulated twist spreads over more of the strap, so the turns don't bunch up
       // (tension also pulls the twist out along the strap, so a stretched strap spreads it further)
-      const twStart = Math.max(0.1, 0.62 - 0.07 * Math.abs(L.twist) / Math.PI - 0.3 * (L.pinch || 0)); // a single flip's twist sits low, in view
+      // Twists form one at a time, like a real rope's: the first localizes right above the clip (the anchor where
+      // torsion builds up first), and each further half-turn buckles a short way up the strap from the last,
+      // at roughly even spacing. Tension pulls each twist out longer and spreads them further apart.
+      const tw = Math.abs(L.twist), twS = Math.sign(L.twist), pin = L.pinch || 0;
+      const zoneW = 0.075 * (1 + 0.8 * pin), zoneGap = 0.092 * (1 + 0.5 * pin);
+      const zones = Math.min(9, Math.ceil(tw / Math.PI));
+      const twistAt = t => {
+        let th = 0;
+        for (let z = 0; z < zones; z++) {
+          const amt = Math.min(Math.PI, tw - z * Math.PI); if (amt <= 0) break;
+          const c = Math.max(0.1, 0.875 - z * zoneGap - 0.004 * z * z);      // centre of this twist along the strap
+          const u = Math.min(1, Math.max(0, (t - c) / zoneW + 0.5));
+          th += amt * u * u * (3 - 2 * u);
+        }
+        return th * twS;
+      };
       const posB = L.strap2.geometry.attributes.position, uvB = L.strap2.geometry.attributes.uv;
       const hw = 0.06 * S, repeat = 0.12 * S * (L.tex.cvS.height / 128); let arc = 0;
       // Squash and stretch: measure how stretched the strap is against its rest length, and thin it toward the
@@ -1231,7 +1314,7 @@ function startGL() {
         // length and the same share of t, so v follows t and the print stretches and twists with the strap.
         const vMat = t * L.rest * (N - 1) / repeat;
         // twist eases in over the lower half of the strap (where it's visible): none above, the card's full spin at the clip
-        const tt = Math.min(1, Math.max(0, (t - twStart) / (1 - twStart))), th = L.twist * tt * tt * (3 - 2 * tt), w = t ** 4;
+        const th = twistAt(t), w = t ** 12;   // the last few percent lock onto the clip's own orientation
         sideV.set(Math.cos(th), 0, -Math.sin(th)).multiplyScalar(1 - w).addScaledVector(cardX, w);
         const waist = 1 - L.pinch * Math.sin(Math.PI * t);   // narrowest mid-strap
         sideV.addScaledVector(tan, -sideV.dot(tan)).normalize();
@@ -1322,6 +1405,16 @@ function startGL() {
         // keep the held point high enough that the whole card stays inside the drawing area
         const L = lanyards[grab.i], pxU = hero.clientHeight / worldH;
         p.y = Math.max(p.y, -worldH / 2 + 24 / pxU + L.CH * 1.05);
+        // and low enough that the card's top can't be pulled up past the header's bottom edge
+        if (isFinite(hdr.y)) {
+          let cap = Infinity;
+          for (const q of cardTops(L)) {
+            topW.copy(q).sub(grab.local).applyQuaternion(L.q);
+            const k = persp(p.z + topW.z), x = p.x + topW.x;
+            if (x > hdr.x0 * k && x < hdr.x1 * k) cap = Math.min(cap, hdr.y * k - topW.y);
+          }
+          p.y = Math.min(p.y, cap);
+        }
         clampReach(L, p);
         grab.target = p;
       }
@@ -1352,7 +1445,7 @@ function startGL() {
     raf = 0; const t0 = performance.now();
     const dt = Math.min(0.05, (now - last) / 1000); last = now; acc += dt;
     let n = 0; while (acc >= H && n < 24) { step(H); acc -= H; n++; } if (n === 24) acc = 0;
-    syncMeshes(); animateSwag(); renderMain();
+    syncMeshes(); animateSwag(); renderMain(); placeHits();
     if (++fitTick % 20 === 0) fitCheck();
     renderOverlay();
     msAvg = msAvg * 0.9 + (performance.now() - t0) * 0.1;
@@ -1390,8 +1483,8 @@ function startGL() {
       // Every flip spins the same way, so each click winds another half-twist into the strap (7 in a row unwinds it).
       L.clicks = Math.abs(L.twist) < 0.5 ? 1 : (L.clicks || 0) + 1;
       if (L.clicks >= 7) {
-        // Easter egg: the 7th click lets it all go. The badge whirls back until the strap is untwisted, front side out.
-        L.clicks = 0; L.unspin = true; data[i].face = 0; L.targetYaw = 0;
+        // Easter egg: the 7th click lets it all go. The strap unwinds like a torsion spring: speeds up, overshoots, swings back, front side out.
+        L.clicks = 0; L.unspin = true; L.unspinT = 0; data[i].face = 0; L.targetYaw = 0;
         setTimeout(() => { const el = document.getElementById('live'); if (el) el.textContent = `${data[i].org} badge unwound itself, front side out.`; }, 50);
         wake(); return;
       }
@@ -1413,6 +1506,9 @@ function startGL() {
       wake();
     },
     setView(on) { buildView = on; applyView(); wake(); },
+    // keyboard swing: a sideways push, as if nudged by hand
+    nudge(i, dir) { const L = lanyards[i]; if (!L) return; L.holdUntil = 0; L.vel.x += dir * (reduce ? 1.2 : 2.4); wake(); },
+    showPin(k) { setHover(k); wake(); },
   };
 }
 </script>
