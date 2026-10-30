@@ -909,7 +909,8 @@ function startGL() {
       el.style.transform = `translate(${cx - d / 2}px, ${cy - d / 2}px)`;
     });
   }
-  // The header panel is a solid ledge: badges hang behind it and stop against its bottom edge.
+  // The header panel is a rubber-band stop: a badge can be pulled up behind it, but the further past its bottom edge
+  // it goes, the harder the strap pulls back (and the thinner it stretches), and it springs back down on release.
   // hdr holds that edge in world units on the z = 0 plane; limits at other depths are scaled by perspective.
   const hdr = { y: Infinity, x0: 0, x1: 0 };
   function measureHeader() {
@@ -925,7 +926,9 @@ function startGL() {
   const topPts = [new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()], topW = new THREE.Vector3();
   // the card's top corners and the clip's cap, in card space
   function cardTops(L) { topPts[0].set(-L.CW / 2, L.CH / 2, 0); topPts[1].set(L.CW / 2, L.CH / 2, 0); topPts[2].copy(L.hang); return topPts; }
-  function headerCollide(L) {
+  const HDR_GIVE = 0.3;   // how far past the edge (in badge widths) the band lets a badge go, give or take
+  function headerCollide(L, h) {
+    L.hdrPull = 0;
     if (!isFinite(hdr.y)) return;
     let excess = 0;
     for (const p of cardTops(L)) {
@@ -935,8 +938,9 @@ function startGL() {
       excess = Math.max(excess, topW.y - hdr.y * k);
     }
     if (excess <= 0) return;
-    // a dead stop, like the strap running out of give: push back down and drop any upward speed
-    L.pos.y -= excess; L.prevPos.y = Math.max(L.prevPos.y - excess, L.pos.y);
+    L.hdrPull = Math.min(1, excess / HDR_GIVE);
+    // a spring pulling it back below the edge, stiffening the further it goes
+    L.pos.y -= (90 + 160 * L.hdrPull) * excess * h * h;
   }
   function fitCheck() {
     measureHeader();
@@ -1250,7 +1254,7 @@ function startGL() {
         A.pos.z -= dz * wa; A.prevPos.z -= dz * wa; B.pos.z += dz * wb; B.prevPos.z += dz * wb;
       }
     }
-    for (const L of lanyards) { L.pos.z = Math.min(0.7, Math.max(-1.3, L.pos.z)); headerCollide(L); } // stays off the wall, doesn't lunge at the viewer, stops at the header
+    for (const L of lanyards) { L.pos.z = Math.min(0.7, Math.max(-1.3, L.pos.z)); headerCollide(L, h); } // stays off the wall, doesn't lunge at the viewer, stops at the header
     for (const L of lanyards) {
       if (L.holdUntil > simT) continue;
       L.vel.subVectors(L.pos, L.prevPos).divideScalar(h);
@@ -1307,7 +1311,7 @@ function startGL() {
       // middle as it stretches (ends stay full width at the anchor and the clip). Smoothed so it eases in and out.
       let len = 0; for (let k = 1; k < N; k++) len += pts[k].distanceTo(pts[k - 1]);
       const ratio = len / (L.rest * (N - 1));
-      L.pinch = (L.pinch || 0) + (Math.min(0.5, Math.max(0, ratio - 1.02) * 1.7) - (L.pinch || 0)) * 0.25;
+      L.pinch = (L.pinch || 0) + (Math.min(0.55, Math.max(0, ratio - 1.02) * 1.7 + 0.45 * (L.hdrPull || 0)) - (L.pinch || 0)) * 0.25;
       for (let k = 0; k <= L.SEG; k++) {
         const t = k / L.SEG; L.curve.getPoint(t, pt); L.curve.getTangent(t, tan);
         if (k > 0) arc += pt.distanceTo(tmpA); tmpA.copy(pt);
@@ -1406,7 +1410,7 @@ function startGL() {
         // keep the held point high enough that the whole card stays inside the drawing area
         const L = lanyards[grab.i], pxU = hero.clientHeight / worldH;
         p.y = Math.max(p.y, -worldH / 2 + 24 / pxU + L.CH * 1.05);
-        // and low enough that the card's top can't be pulled up past the header's bottom edge
+        // and resisted, like a rubber band, once the card's top is pulled up past the header's bottom edge
         if (isFinite(hdr.y)) {
           let cap = Infinity;
           for (const q of cardTops(L)) {
@@ -1414,7 +1418,8 @@ function startGL() {
             const k = persp(p.z + topW.z), x = p.x + topW.x;
             if (x > hdr.x0 * k && x < hdr.x1 * k) cap = Math.min(cap, hdr.y * k - topW.y);
           }
-          p.y = Math.min(p.y, cap);
+          // past the edge the pointer gets diminishing returns, so it feels like stretching a band
+          if (p.y > cap) p.y = cap + HDR_GIVE * (1 - Math.exp(-(p.y - cap) / HDR_GIVE));
         }
         clampReach(L, p);
         grab.target = p;
