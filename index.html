@@ -172,9 +172,9 @@
 <header class="top gutter">
   <div class="inner">
     <div class="intro">
-      <p class="eyebrow">Senior UX Design Engineer</p>
+      <p class="eyebrow">UX Architect / Designer / Engineer</p>
       <h1>Gabriel Martin</h1>
-      <p class="lede">I'm a Senior UX Design Engineer with 15 years bridging design and front-end engineering. I'm as comfortable in code as in Figma, or in a feature ticket, and I know when each is best. I've held engineering, design, and product architect roles, giving me experience understanding what each side needs and where things break down between them. I've built and scaled design systems, pattern libraries, and front-end component workflows that cement design intent without the telephone game between design and engineering.</p>
+      <p class="lede">I'm a UX Architect, Designer, and Engineer (often called Design Engineer these days) with 15 years bridging design and front-end engineering. I'm as comfortable in code as in Figma, or in a feature ticket, and I know when each is best. I've held engineering, design, and product architect roles, giving me experience understanding what each side needs and where things break down between them. I've built and scaled design systems, pattern libraries, and front-end component workflows that cement design intent without the telephone game between design and engineering.</p>
     </div>
   </div>
 </header>
@@ -345,7 +345,6 @@ function stretch(c, v) { try { c.fontStretch = v; } catch {} }
 function topLabels(c, i, right, ink) {
   // Sits above the slot punch (which starts ~85px down), so long date ranges don't run into it.
   c.save(); c.fillStyle = ink; c.globalAlpha = 0.72; c.font = `500 34px ${MONO}`; c.textBaseline = 'alphabetic';
-  c.textAlign = 'left'; c.fillText(`No. ${String(i + 1).padStart(2, '0')}`, 64, 62);
   c.textAlign = 'right'; c.fillText(right, TW - 64, 62); c.restore();
 }
 
