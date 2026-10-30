@@ -47,7 +47,11 @@
   .wall { position: relative; min-height: 520px; overflow: hidden; } /* height is set from the badge layout */
   [hidden] { display: none !important; }
   /* The canvas spans the header and the wall, so the lanyards hang from the very top of the page. */
-  .hero { position: relative; -webkit-user-select: none; user-select: none; }
+  /* The canvas runs --ext below the badge wall, underneath the top of the about section, so a badge dragged
+     downward slides behind the about panels instead of being cut off at the wall's edge. */
+  :root { --ext: 420px; }
+  @media (max-width: 699px) { :root { --ext: 320px; } }
+  .hero { position: relative; padding-bottom: var(--ext); -webkit-user-select: none; user-select: none; }
   #c { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: pan-y; z-index: 0; }
   .hero .top { position: relative; z-index: 2; pointer-events: none; }
   .hero .top .views, .hero .top a { pointer-events: auto; }
@@ -137,7 +141,7 @@
   .chips button { padding: 6px 12px; }
 
   /* about: the previous homepage content and layout, on the same dark ground */
-  .about { padding-block: 64px 96px; border-top: 1px solid var(--line); font-family: system-ui, -apple-system, "Segoe UI", Roboto, Georgia, serif; line-height: 1.6; }
+  .about { position: relative; z-index: 3; margin-top: calc(-1 * var(--ext)); padding-block: 64px 96px; border-top: 1px solid var(--line); font-family: system-ui, -apple-system, "Segoe UI", Roboto, Georgia, serif; line-height: 1.6; }
   .about .inner { max-width: 800px; display: flex; flex-direction: column; align-items: center; text-align: center; }
   .quote-container { margin: 0 0 3rem; padding: 2rem 2rem 2.5rem; position: relative; border-left: 5px solid var(--accent); background: var(--panel); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35); }
   .quote-mark { font-size: 4rem; line-height: 1; position: absolute; left: 1.2rem; top: 0.4rem; color: var(--accent); opacity: 0.3; }
@@ -831,7 +835,7 @@ function startGL() {
       corner.set(sx * L.CW, sy * L.CH, 0).applyQuaternion(L.q).add(L.pos);
       lowest = Math.max(lowest, (worldH / 2 - corner.y) * pxU);
     }
-    const need = lowest + 28 - hero.clientHeight;
+    const need = lowest + 28 - (wall.offsetTop + wall.clientHeight); // settled cards stay inside the wall, above the about section
     if (need > 0) { extraPad += Math.ceil(need) + 24; sizeWall(); }
   }
 
