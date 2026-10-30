@@ -745,7 +745,7 @@ function startGL() {
   const dbgPts = new THREE.PointsMaterial({ color: 0x2447c9, size: 7, sizeAttenuation: false, depthTest: false, transparent: true });
   let buildView = false;
 
-  const G = -18, H = 1 / 480, N = 8, WP = 1 / 0.06, AR = 1e-6, AD = 6e-6;
+  const G = -18, H = 1 / 480, N = 8, WP = 1 / 0.06, AR = 1e-6, AD = 1.6e-5; // AD: a slightly springy grip
   let worldW = 1, worldH = 1, S = 1, lanyards = [], simT = 0;
   const tmpA = new THREE.Vector3(), tmpB = new THREE.Vector3(), tmpC = new THREE.Vector3(), tmpD = new THREE.Vector3();
   const qInv = new THREE.Quaternion(), dq = new THREE.Quaternion(), fwd = new THREE.Vector3();
@@ -1007,6 +1007,20 @@ function startGL() {
   const satA = [new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()], satB = [new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()];
   const satT = new THREE.Vector3(), satN = new THREE.Vector3(), satC = new THREE.Vector3(), satM = new THREE.Matrix4();
   const satProj = (ax, hf, n) => Math.abs(ax[0].dot(n)) * hf.x + Math.abs(ax[1].dot(n)) * hf.y + Math.abs(ax[2].dot(n)) * hf.z;
+  // Keep a dragged point within reach of the strap: anchor-to-hang strap length (plus a little give) plus the
+  // distance from the hang point to where the card is held. Past that the rope would stretch and snap back on release.
+  const reachV = new THREE.Vector3();
+  function clampReach(L, p) {
+    if (!grab) return;
+    const max = L.rest * (N - 1) * 1.04 + reachV.copy(grab.local).sub(L.hang).length();
+    reachV.subVectors(p, L.anchor); const d = reachV.length();
+    if (d > max) p.copy(L.anchor).addScaledVector(reachV, max / d);
+  }
+  // how far a card reaches along world z (half its depth, accounting for tilt and spin)
+  function zExtent(L) {
+    satM.makeRotationFromQuaternion(L.q).extractBasis(satA[0], satA[1], satA[2]);
+    return Math.abs(satA[0].z) * L.half.x + Math.abs(satA[1].z) * L.half.y + Math.abs(satA[2].z) * L.half.z;
+  }
   function boxOverlap(A, B) {
     satM.makeRotationFromQuaternion(A.q).extractBasis(satA[0], satA[1], satA[2]);
     satM.makeRotationFromQuaternion(B.q).extractBasis(satB[0], satB[1], satB[2]);
@@ -1058,13 +1072,21 @@ function startGL() {
       L.vel.y += G * h; L.vel.x += Math.sin(simT * 0.55 + L.i * 1.7) * breeze * 0.4 * h;
       fwd.set(0, 0, 1).applyQuaternion(L.q);
       const err = wrapA(Math.atan2(fwd.x, fwd.z) - L.targetYaw);
+      // When a hard pull tips the card nearly flat, its facing has almost no horizontal part and the yaw angle is
+      // noise that flips by ±π. Fade the face-out spring to zero there so it can't fire a wild spin.
+      const flat = Math.hypot(fwd.x, fwd.z), trust = Math.min(1, Math.max(0, (flat - 0.25) / 0.35));
       const K = grab && grab.i === L.i ? 4 : 36;
       if (L.unspin) {
         // unwinding: spin against the accumulated twist, easing off as it nears zero
         if (Math.abs(L.twist) < 0.2) L.unspin = false;
         else L.ang.y = -Math.sign(L.twist) * Math.min(reduce ? 7 : 15, 2.5 + Math.abs(L.twist) * 2);
-      } else L.ang.y += (-K * err - 4.5 * L.ang.y) * h;
+      } else L.ang.y += (-K * err * trust - 4.5 * L.ang.y) * h;
       L.vel.multiplyScalar(1 - 0.3 * h); L.ang.multiplyScalar(1 - 1.4 * h);
+      // The held point acts like a pin the card could whip around under strap tension, so a held card gets heavy
+      // rotational damping and a low spin cap: it eases into its new angle instead of pivoting violently.
+      const held = grab && grab.i === L.i;
+      if (held) L.ang.multiplyScalar(1 - 9 * h);
+      const cap = held ? 7 : 24, spin = L.ang.length(); if (spin > cap) L.ang.multiplyScalar(cap / spin);
       L.pos.addScaledVector(L.vel, h); integrateQ(L.q, L.ang, h);
     }
     for (let it = 0; it < 2; it++) for (const L of lanyards) {
@@ -1094,19 +1116,18 @@ function startGL() {
         }
       }
     }
-    // Card-to-card contact in 3D: every pair of cards is tested as oriented boxes, and an overlap is pushed apart along
-    // its shallowest axis (sideways when they bump edge to edge, in depth when they pass face to face). The push is a
-    // little per substep so nothing gets shoved; a dragged card doesn't yield and may push harder.
-    const contacts = [];
+    // Overlapping cards are only ever layered in depth: they're nudged apart along z until they no longer intersect,
+    // with the card being held brought to the front. The nudge moves prevPos too, so it adds no momentum and
+    // neighbours simply slide behind instead of being knocked away.
     for (let a = 0; a < lanyards.length; a++) for (let b = a + 1; b < lanyards.length; b++) {
       const A = lanyards[a], B = lanyards[b]; if (A.holdUntil > simT || B.holdUntil > simT) continue;
-      if (A.pos.distanceTo(B.pos) > A.reach + B.reach) continue;
-      const depth = boxOverlap(A, B); if (!depth) continue;
+      if (A.pos.distanceTo(B.pos) > A.reach + B.reach || !boxOverlap(A, B)) continue;
+      const need = zExtent(A) + zExtent(B) - Math.abs(B.pos.z - A.pos.z); if (need <= 0) continue;
       const ga = grab && grab.i === A.i, gb = grab && grab.i === B.i;
+      let sgn = ga ? -1 : gb ? 1 : Math.sign(B.pos.z - A.pos.z) || 1;   // +1: B goes in front of A
       const wa = ga ? 0 : gb ? 1 : 0.5, wb = gb ? 0 : ga ? 1 : 0.5;
-      const corr = Math.min(depth * (ga || gb ? 0.6 : 0.35), (ga || gb ? 0.03 : 0.004) * S);
-      A.pos.addScaledVector(satN, -corr * wa); B.pos.addScaledVector(satN, corr * wb);
-      contacts.push([A, B, satN.clone()]);
+      const dz = Math.min(need + 0.004 * S, 0.012 * S) * sgn;
+      A.pos.z -= dz * wa; A.prevPos.z -= dz * wa; B.pos.z += dz * wb; B.prevPos.z += dz * wb;
     }
     for (const L of lanyards) L.pos.z = Math.min(0.7, Math.max(-1.3, L.pos.z)); // stays off the wall and doesn't lunge at the viewer
     for (const L of lanyards) {
@@ -1114,14 +1135,6 @@ function startGL() {
       L.vel.subVectors(L.pos, L.prevPos).divideScalar(h);
       dq.copy(L.q).multiply(qInv.copy(L.prevQ).invert());
       L.ang.set(dq.x, dq.y, dq.z).multiplyScalar(2 / h); if (dq.w < 0) L.ang.negate();
-    }
-    for (const [A, B, n] of contacts) {
-      const rel = tmpA.subVectors(B.vel, A.vel).dot(n);   // < 0 means they're closing
-      if (rel < 0) { const imp = rel * 0.45; A.vel.addScaledVector(n, imp); B.vel.addScaledVector(n, -imp); }
-      const sep = tmpA.subVectors(B.vel, A.vel).dot(n);   // cap how fast contact can push them apart
-      const maxSep = 0.6 * S;
-      if (sep > maxSep) { const k = (sep - maxSep) * 0.5; A.vel.addScaledVector(n, k); B.vel.addScaledVector(n, -k); }
-      A.ang.multiplyScalar(0.996); B.ang.multiplyScalar(0.996);
     }
   }
 
@@ -1136,7 +1149,8 @@ function startGL() {
       // Track how far the card has spun (unwrapped), so the strap winds and unwinds a twist as it flips.
       fwd.set(0, 0, 1).applyQuaternion(L.q);
       const yaw = Math.atan2(fwd.x, fwd.z);
-      L.twist += wrapA(yaw - L.lastYaw); L.lastYaw = yaw;
+      if (Math.hypot(fwd.x, fwd.z) > 0.35) L.twist += wrapA(yaw - L.lastYaw); // ignore yaw noise while the card is tipped flat
+      L.lastYaw = yaw;
       const posA = L.strap.geometry.attributes.position, uvA = L.strap.geometry.attributes.uv;
       // more accumulated twist spreads over more of the strap, so the turns don't bunch up
       const twStart = Math.max(0.12, 0.5 - 0.06 * Math.abs(L.twist) / Math.PI);
@@ -1220,6 +1234,7 @@ function startGL() {
         // keep the held point high enough that the whole card stays inside the drawing area
         const L = lanyards[grab.i], pxU = hero.clientHeight / worldH;
         p.y = Math.max(p.y, -worldH / 2 + 24 / pxU + L.CH * 1.05);
+        clampReach(L, p);
         grab.target = p;
       }
       wake(); return;
@@ -1231,7 +1246,10 @@ function startGL() {
   });
   const release = e => {
     if (!grab) return;
-    const g = grab; grab = null; canvas.style.cursor = e.pointerType === 'mouse' ? 'grab' : '';
+    const g = grab; grab = null;
+    { const L = lanyards[g.i]; const v = L.vel.length(), a = L.ang.length();
+      if (v > 6) { const k = 6 / v; L.vel.multiplyScalar(k); L.prevPos.copy(L.pos).addScaledVector(L.vel, -H); }
+      if (a > 8) L.ang.multiplyScalar(8 / a); } canvas.style.cursor = e.pointerType === 'mouse' ? 'grab' : '';
     // a press that barely moved is a tap; no time limit, so slow frames on weak devices can't swallow a flip
     if (!g.moved) flip(g.i);
   };
