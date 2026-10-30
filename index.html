@@ -1007,14 +1007,23 @@ function startGL() {
   const satA = [new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()], satB = [new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()];
   const satT = new THREE.Vector3(), satN = new THREE.Vector3(), satC = new THREE.Vector3(), satM = new THREE.Matrix4();
   const satProj = (ax, hf, n) => Math.abs(ax[0].dot(n)) * hf.x + Math.abs(ax[1].dot(n)) * hf.y + Math.abs(ax[2].dot(n)) * hf.z;
-  // Keep a dragged point within reach of the strap: anchor-to-hang strap length (plus a little give) plus the
-  // distance from the hang point to where the card is held. Past that the rope would stretch and snap back on release.
+  // Let the strap stretch while dragging (it's part of the feel), but only so far: past ~40% the stored stretch
+  // would slingshot the card on release.
   const reachV = new THREE.Vector3();
   function clampReach(L, p) {
     if (!grab) return;
-    const max = L.rest * (N - 1) * 1.04 + reachV.copy(grab.local).sub(L.hang).length();
+    const max = L.rest * (N - 1) * 1.4 + reachV.copy(grab.local).sub(L.hang).length(); // up to 40% stretch
     reachV.subVectors(p, L.anchor); const d = reachV.length();
     if (d > max) p.copy(L.anchor).addScaledVector(reachV, max / d);
+  }
+  // a card's half-extent along each world axis (accounting for tilt and spin)
+  const extA = new THREE.Vector3(), extB = new THREE.Vector3(), extM = [new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()];
+  function worldExtent(L, out) {
+    satM.makeRotationFromQuaternion(L.q).extractBasis(extM[0], extM[1], extM[2]);
+    const hx = L.half.x, hy = L.half.y, hz = L.half.z, [u, v, w] = extM;
+    return out.set(Math.abs(u.x) * hx + Math.abs(v.x) * hy + Math.abs(w.x) * hz,
+                   Math.abs(u.y) * hx + Math.abs(v.y) * hy + Math.abs(w.y) * hz,
+                   Math.abs(u.z) * hx + Math.abs(v.z) * hy + Math.abs(w.z) * hz);
   }
   // how far a card reaches along world z (half its depth, accounting for tilt and spin)
   function zExtent(L) {
@@ -1116,18 +1125,29 @@ function startGL() {
         }
       }
     }
-    // Overlapping cards are only ever layered in depth: they're nudged apart along z until they no longer intersect,
-    // with the card being held brought to the front. The nudge moves prevPos too, so it adds no momentum and
-    // neighbours simply slide behind instead of being knocked away.
+    // Card contact, two ways. Side by side (they meet edge to edge, roughly in the same plane): the original sideways
+    // bump, with momentum, so a neighbour gets knocked and swings. Shoved deep into each other or meeting face to face:
+    // layered in depth with no momentum (the held card comes forward), so they never visibly intersect.
+    const contacts = [];
     for (let a = 0; a < lanyards.length; a++) for (let b = a + 1; b < lanyards.length; b++) {
       const A = lanyards[a], B = lanyards[b]; if (A.holdUntil > simT || B.holdUntil > simT) continue;
-      if (A.pos.distanceTo(B.pos) > A.reach + B.reach || !boxOverlap(A, B)) continue;
-      const need = zExtent(A) + zExtent(B) - Math.abs(B.pos.z - A.pos.z); if (need <= 0) continue;
-      const ga = grab && grab.i === A.i, gb = grab && grab.i === B.i;
-      let sgn = ga ? -1 : gb ? 1 : Math.sign(B.pos.z - A.pos.z) || 1;   // +1: B goes in front of A
+      if (A.pos.distanceTo(B.pos) > A.reach + B.reach) continue;
+      const eA = worldExtent(A, extA), eB = worldExtent(B, extB);
+      const ox = eA.x + eB.x - Math.abs(B.pos.x - A.pos.x), oy = eA.y + eB.y - Math.abs(B.pos.y - A.pos.y);
+      if (ox <= 0 || oy <= 0) continue;                   // not overlapping on screen
+      const ga = grab && grab.i === A.i, gb = grab && grab.i === B.i; // the dragged card doesn't yield
       const wa = ga ? 0 : gb ? 1 : 0.5, wb = gb ? 0 : ga ? 1 : 0.5;
-      const dz = Math.min(need + 0.004 * S, 0.012 * S) * sgn;
-      A.pos.z -= dz * wa; A.prevPos.z -= dz * wa; B.pos.z += dz * wb; B.prevPos.z += dz * wb;
+      if (Math.abs(B.pos.z - A.pos.z) < 0.3 * S && ox < 0.35 * Math.min(A.CW, B.CW)) {
+        const sx = Math.sign(B.pos.x - A.pos.x) || 1;
+        const corr = Math.min(ox * 0.04, 0.0015 * S);
+        A.pos.x -= corr * sx * wa; B.pos.x += corr * sx * wb;
+        contacts.push([A, B, sx]);
+      } else if (boxOverlap(A, B)) {
+        const need = eA.z + eB.z - Math.abs(B.pos.z - A.pos.z); if (need <= 0) continue;
+        const sgn = ga ? -1 : gb ? 1 : Math.sign(B.pos.z - A.pos.z) || 1;   // +1: B goes in front of A
+        const dz = Math.min(need + 0.004 * S, 0.012 * S) * sgn;
+        A.pos.z -= dz * wa; A.prevPos.z -= dz * wa; B.pos.z += dz * wb; B.prevPos.z += dz * wb;
+      }
     }
     for (const L of lanyards) L.pos.z = Math.min(0.7, Math.max(-1.3, L.pos.z)); // stays off the wall and doesn't lunge at the viewer
     for (const L of lanyards) {
@@ -1135,6 +1155,14 @@ function startGL() {
       L.vel.subVectors(L.pos, L.prevPos).divideScalar(h);
       dq.copy(L.q).multiply(qInv.copy(L.prevQ).invert());
       L.ang.set(dq.x, dq.y, dq.z).multiplyScalar(2 / h); if (dq.w < 0) L.ang.negate();
+    }
+    for (const [A, B, sx] of contacts) {
+      const rel = (B.vel.x - A.vel.x) * sx;          // < 0 means they're closing
+      if (rel < 0) { const imp = rel * 0.45; A.vel.x += imp * sx; B.vel.x -= imp * sx; }
+      const sep = (B.vel.x - A.vel.x) * sx;          // cap how fast contact can push them apart
+      const maxSep = 0.6 * S;
+      if (sep > maxSep) { const k = (sep - maxSep) * 0.5; A.vel.x += k * sx; B.vel.x -= k * sx; }
+      A.ang.multiplyScalar(0.996); B.ang.multiplyScalar(0.996);
     }
   }
 
