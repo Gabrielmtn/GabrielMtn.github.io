@@ -241,7 +241,8 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
 /* ---------- data (from the Senior UX Design Engineer resume) ---------- */
 const DEFAULTS = [
-  { id: 'paypal', org: 'PayPal', logo: 'img/badges/paypal.png', sub: 'Incubator with Wellist', role: 'UX Designer / Developer', start: '12/2014', end: '01/2015',
+  { id: 'paypal', org: 'PayPal', logo: 'img/badges/paypal.png', sub: '', subLogo: 'img/badges/wellist.png', tag: 'INCUBATOR',
+    printLabel: 'PAYPAL INCUBATOR · WELLIST', role: 'UI/UX Consultant', start: '12/2014', end: '01/2015',
     designList: ["Interaction Design", "Responsive Design", "Stakeholder Interviewing"], buildList: ["Gulp/SASS Build Refactor", "Responsive Refactor", "UI Template Rewrite"],
     color: '#003087', band: '#009cde', band2: '#012169', strap: '#001c54',
     design: ['Researched and prioritized accessibility in UI/UX concepts for the aging user archetype most likely to use the tool'],
@@ -374,7 +375,7 @@ function guilloche(c, x, y, w, h, color, alpha, seed) {
   c.restore();
 }
 function microtext(c, b, ink) {
-  const unit = `${(b.org || '').toUpperCase()} · GABRIEL MARTIN · ALUMNI · `;
+  const unit = `${b.printLabel || (b.org || '').toUpperCase()} · GABRIEL MARTIN · ${b.tag || 'ALUMNI'} · `;
   c.save(); c.fillStyle = ink; c.globalAlpha = 0.34; c.font = `500 17px ${MONO}`; c.textBaseline = 'middle';
   for (const [x, rot] of [[26, -Math.PI / 2], [TW - 26, Math.PI / 2]]) {
     c.save(); c.translate(x, TH / 2); c.rotate(rot);
@@ -414,7 +415,7 @@ function drawFront(b, i, cv) {
   c.fillStyle = g; c.fillRect(0, 0, TW, TH);
   guilloche(c, 40, 214, TW - 80, 440, ink, 0.07, i * 1.7);
   microtext(c, b, ink);
-  topLabels(c, i, 'ALUMNI', ink);
+  topLabels(c, i, b.tag || 'ALUMNI', ink);
   c.fillStyle = b.band; c.fillRect(64, 204, TW - 128, 6);
   c.fillStyle = buildColor(b); c.fillRect(TW / 2, 204, TW / 2 - 64, 6);
 
@@ -425,7 +426,10 @@ function drawFront(b, i, cv) {
     const bw = TW - 104 - pad * 2, bh = pH - pad * 2, k = Math.min(bw / b.logoImg.width, bh / b.logoImg.height);
     const lw = b.logoImg.width * k, lh = b.logoImg.height * k;
     c.drawImage(b.logoImg, 52 + pad + (bw - lw) / 2, pY + pad + (bh - lh) / 2, lw, lh);
-    if (b.sub) { c.textBaseline = 'top'; c.textAlign = 'left'; c.fillStyle = ink; c.font = `500 50px ${BODY}`; c.globalAlpha = 0.85; c.fillText(b.sub, 60, pY + pH + 22); c.globalAlpha = 1; }
+    if (b.subLogoImg) { // second logo under the plate (e.g. the company that was in the incubator)
+      const sh = 64, sw = b.subLogoImg.width * sh / b.subLogoImg.height;
+      c.drawImage(b.subLogoImg, 60, pY + pH + 26, sw, sh);
+    } else if (b.sub) { c.textBaseline = 'top'; c.textAlign = 'left'; c.fillStyle = ink; c.font = `500 50px ${BODY}`; c.globalAlpha = 0.85; c.fillText(b.sub, 60, pY + pH + 22); c.globalAlpha = 1; }
   } else {
   stretch(c, 'expanded');
   let size = 176, lines = [];
@@ -541,7 +545,7 @@ function drawBack(b, i, cv) {
 
 function drawStrap(b, cv) {
   // The canvas length is a whole number of text repeats, so the pattern tiles without a seam.
-  const font = `600 40px ${MONO}`, unit = `GABRIEL MARTIN · ${(b.org || '').toUpperCase()} · `;
+  const font = `600 40px ${MONO}`, unit = `GABRIEL MARTIN · ${b.printLabel || (b.org || '').toUpperCase()} · `;
   let c = cv.getContext('2d'); c.font = font;
   const w = c.measureText(unit).width, reps = Math.max(1, Math.round(512 / w));
   cv.width = 128; cv.height = Math.round(w * reps); c = cv.getContext('2d');
@@ -628,7 +632,7 @@ function setView(build) {
 
 /* ---------- boot ---------- */
 await Promise.all(data.flatMap(b => [loadImg(b.frontSrc).then(im => b.frontImg = im), loadImg(b.backSrc).then(im => b.backImg = im),
-  loadImg(b.logo).then(im => b.logoImg = im)]));
+  loadImg(b.logo).then(im => b.logoImg = im), loadImg(b.subLogo).then(im => b.subLogoImg = im)]));
 renderList();
 
 function renderSwagList() {
