@@ -662,8 +662,8 @@ function startGL() {
   const sun = new THREE.DirectionalLight(0xffffff, 1.5); sun.position.set(2.5, 4, 8); sun.castShadow = true;
   sun.shadow.mapSize.set(2048, 2048); sun.shadow.bias = -0.0004; sun.shadow.normalBias = 0.02; sun.shadow.radius = 6;
   scene.add(sun, sun.target);
-  const shadowMat = new THREE.ShadowMaterial({ opacity: 0.24 });
-  const backdrop = new THREE.Mesh(new THREE.PlaneGeometry(80, 80), shadowMat); backdrop.position.z = -0.75; backdrop.receiveShadow = true;
+  const shadowMat = new THREE.ShadowMaterial({ opacity: 0.24, depthWrite: false }); // never hides a card that swings back
+  const backdrop = new THREE.Mesh(new THREE.PlaneGeometry(80, 80), shadowMat); backdrop.position.z = -1.9; backdrop.receiveShadow = true;
   scene.add(backdrop);
   const metal = new THREE.MeshStandardMaterial({ color: 0xc9ced3, metalness: 1, roughness: 0.28 });
   // Foil over the printed seal: thin-film iridescence, so it shifts colour as the card turns.
@@ -718,7 +718,10 @@ function startGL() {
   }
   // Buttons are sized in screen pixels (so they stay readable) and placed by layout().
   function placeSwag(lay) {
-    swagMeshes.forEach((m, k) => { const [x, y] = lay.pins[k % lay.pins.length]; m.position.set(x, y, -0.6); m.userData.r = lay.pinR; });
+    // Pins sit on the wall well behind the furthest a swinging or flipping card can reach (about -1.2),
+    // scaled out by the perspective factor so they keep the same on-screen size and position.
+    const zP = -1.75, k = (camera.position.z - zP) / camera.position.z;
+    swagMeshes.forEach((m, j) => { const [x, y] = lay.pins[j % lay.pins.length]; m.position.set(x * k, y * k, zP); m.userData.r = lay.pinR * k; });
   }
 
   // Build-view overlay materials (drawn on top of everything)
