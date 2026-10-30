@@ -51,7 +51,7 @@
      downward slides behind the about panels instead of being cut off at the wall's edge. */
   :root { --ext: 560px; }
   @media (max-width: 699px) { :root { --ext: 440px; } }
-  .hero { position: relative; padding-bottom: var(--ext); }
+  .hero { position: relative; padding-bottom: var(--ext); overflow-x: clip; }
   #c, #c2, .wall { -webkit-user-select: none; user-select: none; }   /* only the drag surface is unselectable */
   ::selection { background: #8ea4ff; color: #0b1020; }
   #c { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: pan-y; z-index: 0; }
@@ -127,7 +127,8 @@
   .swag-list li { grid-template-columns: 22px minmax(0, 1fr); }
   /* Keyboard and screen-reader layer: one real button laid exactly over each badge (and each pin), following it as it
      swings. Mouse and touch pass straight through to the canvas; keyboard focus lands on these and shows a ring. */
-  .focus-layer { position: absolute; inset: 0; z-index: 5; pointer-events: none; }
+  /* overflow clip: hit boxes following badges off-screen must never add scroll area */
+  .focus-layer { position: absolute; inset: 0; z-index: 5; pointer-events: none; overflow: clip; }
   .badge-hit, .pin-hit { position: absolute; left: 0; top: 0; margin: 0; padding: 0; border: 0; background: transparent; color: transparent;
     pointer-events: none; transform-origin: 50% 50%; border-radius: 14px; font: inherit; letter-spacing: 0; text-transform: none; }
   .pin-hit { border-radius: 50%; }
@@ -909,38 +910,12 @@ function startGL() {
       el.style.transform = `translate(${cx - d / 2}px, ${cy - d / 2}px)`;
     });
   }
-  // The header panel is a rubber-band stop: a badge can be pulled up behind it, but the further past its bottom edge
-  // it goes, the harder the strap pulls back (and the thinner it stretches), and it springs back down on release.
-  // hdr holds that edge in world units on the z = 0 plane; limits at other depths are scaled by perspective.
-  const hdr = { y: Infinity, x0: 0, x1: 0 };
+  // Badges swing and bounce freely, always behind the header panel: the overlay canvas (which draws dragged cards and
+  // cards hanging below the wall over the about section) is clipped to below the header, so nothing pops in front of it.
   function measureHeader() {
-    const intro = document.querySelector('.hero .top .intro'); if (!intro || !worldH) return;
-    const r = intro.getBoundingClientRect(), hr = hero.getBoundingClientRect(), pxU = hero.clientHeight / worldH;
-    const bottom = r.bottom - hr.top;
-    hdr.y = worldH / 2 - (bottom + 6) / pxU;
-    hdr.x0 = -worldW / 2 + (r.left - hr.left) / pxU; hdr.x1 = -worldW / 2 + (r.right - hr.left) / pxU;
-    // the overlay (cards lifted over the about section) never covers the header
+    const intro = document.querySelector('.hero .top .intro'); if (!intro) return;
+    const bottom = intro.getBoundingClientRect().bottom - hero.getBoundingClientRect().top;
     overlay.domElement.style.clipPath = `inset(${Math.max(0, Math.round(bottom))}px 0 0 0)`;
-  }
-  const persp = z => (camera.position.z - z) / camera.position.z;
-  const topPts = [new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()], topW = new THREE.Vector3();
-  // the card's top corners and the clip's cap, in card space
-  function cardTops(L) { topPts[0].set(-L.CW / 2, L.CH / 2, 0); topPts[1].set(L.CW / 2, L.CH / 2, 0); topPts[2].copy(L.hang); return topPts; }
-  const HDR_GIVE = 0.3;   // how far past the edge (in badge widths) the band lets a badge go, give or take
-  function headerCollide(L, h) {
-    L.hdrPull = 0;
-    if (!isFinite(hdr.y)) return;
-    let excess = 0;
-    for (const p of cardTops(L)) {
-      topW.copy(p).applyQuaternion(L.q).add(L.pos);
-      const k = persp(topW.z);   // each point's own depth: a card tipped back reaches a little higher on screen
-      if (topW.x < hdr.x0 * k || topW.x > hdr.x1 * k) continue;
-      excess = Math.max(excess, topW.y - hdr.y * k);
-    }
-    if (excess <= 0) return;
-    L.hdrPull = Math.min(1, excess / HDR_GIVE);
-    // a spring pulling it back below the edge, stiffening the further it goes
-    L.pos.y -= (90 + 160 * L.hdrPull) * excess * h * h;
   }
   function fitCheck() {
     measureHeader();
@@ -1254,7 +1229,7 @@ function startGL() {
         A.pos.z -= dz * wa; A.prevPos.z -= dz * wa; B.pos.z += dz * wb; B.prevPos.z += dz * wb;
       }
     }
-    for (const L of lanyards) { L.pos.z = Math.min(0.7, Math.max(-1.3, L.pos.z)); headerCollide(L, h); } // stays off the wall, doesn't lunge at the viewer, stops at the header
+    for (const L of lanyards) { L.pos.z = Math.min(0.7, Math.max(-1.3, L.pos.z)); } // stays off the wall and doesn't lunge at the viewer
     for (const L of lanyards) {
       if (L.holdUntil > simT) continue;
       L.vel.subVectors(L.pos, L.prevPos).divideScalar(h);
@@ -1311,7 +1286,7 @@ function startGL() {
       // middle as it stretches (ends stay full width at the anchor and the clip). Smoothed so it eases in and out.
       let len = 0; for (let k = 1; k < N; k++) len += pts[k].distanceTo(pts[k - 1]);
       const ratio = len / (L.rest * (N - 1));
-      L.pinch = (L.pinch || 0) + (Math.min(0.55, Math.max(0, ratio - 1.02) * 1.7 + 0.45 * (L.hdrPull || 0)) - (L.pinch || 0)) * 0.25;
+      L.pinch = (L.pinch || 0) + (Math.min(0.55, Math.max(0, ratio - 1.02) * 1.7) - (L.pinch || 0)) * 0.25;
       for (let k = 0; k <= L.SEG; k++) {
         const t = k / L.SEG; L.curve.getPoint(t, pt); L.curve.getTangent(t, tan);
         if (k > 0) arc += pt.distanceTo(tmpA); tmpA.copy(pt);
@@ -1410,17 +1385,6 @@ function startGL() {
         // keep the held point high enough that the whole card stays inside the drawing area
         const L = lanyards[grab.i], pxU = hero.clientHeight / worldH;
         p.y = Math.max(p.y, -worldH / 2 + 24 / pxU + L.CH * 1.05);
-        // and resisted, like a rubber band, once the card's top is pulled up past the header's bottom edge
-        if (isFinite(hdr.y)) {
-          let cap = Infinity;
-          for (const q of cardTops(L)) {
-            topW.copy(q).sub(grab.local).applyQuaternion(L.q);
-            const k = persp(p.z + topW.z), x = p.x + topW.x;
-            if (x > hdr.x0 * k && x < hdr.x1 * k) cap = Math.min(cap, hdr.y * k - topW.y);
-          }
-          // past the edge the pointer gets diminishing returns, so it feels like stretching a band
-          if (p.y > cap) p.y = cap + HDR_GIVE * (1 - Math.exp(-(p.y - cap) / HDR_GIVE));
-        }
         clampReach(L, p);
         grab.target = p;
       }
