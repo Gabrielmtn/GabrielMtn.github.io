@@ -921,7 +921,11 @@ function startGL() {
     const panelGeo = new RoundedBoxGeometry(plateW * 0.62, plateH * 0.52, 0.008 * S, 2, 0.003 * S);    // raised centre panel
     const ridgeGeo = new RoundedBoxGeometry(plateW * 0.62, 0.008 * S, 0.006 * S, 2, 0.002 * S);         // grip ridges
     const tongueGeo = new RoundedBoxGeometry(plateW * 0.75, 0.03 * S, 2 * FZ + 0.05 * S, 2, 0.006 * S); // through the slot
-    const tabGeo = new RoundedBoxGeometry(plateW * 0.9, 0.06 * S, 0.012 * S, 2, 0.005 * S);             // behind the card
+    // back plate mirrors the front, and a bridge over the card's top edge joins them, so it's one clip from either side
+    const backH = plateTop - (slotY - 0.012 * S);
+    const backGeo = new RoundedBoxGeometry(plateW * 0.96, backH, plateD * 0.8, 4, 0.0085 * S);
+    const edgeY = CH / 2 + 0.004 * S, bridgeH = plateTop - edgeY;
+    const bridgeGeo = new RoundedBoxGeometry(plateW, bridgeH, 2 * (FZ + plateD) + 0.006 * S, 4, Math.min(0.0095 * S, bridgeH * 0.45));
     const dR = 0.03 * S, dCy = plateTop + 0.012 * S, dTop = dCy + dR;
     const dGeo = new THREE.TorusGeometry(dR, 0.0085 * S, 10, 28);
     const capH = 0.055 * S, capCy = dTop + capH / 2 - 0.012 * S;
@@ -952,7 +956,8 @@ function startGL() {
       part(panelGeo, 0, plateBot + plateH * 0.52, pz + plateD / 2 + 0.002 * S);
       for (const k of [-1, 1]) part(ridgeGeo, 0, plateBot + plateH * (0.52 + k * 0.36), pz + plateD / 2 + 0.002 * S);
       part(tongueGeo, 0, slotY, 0);
-      part(tabGeo, 0, slotY + 0.012 * S, -(FZ + 0.008 * S));
+      part(backGeo, 0, plateTop - backH / 2, -(FZ + plateD * 0.4 + 0.002 * S));
+      part(bridgeGeo, 0, edgeY + bridgeH / 2, 0);
       part(dGeo, 0, dCy, pz).rotation.y = Math.PI / 2;
       part(capGeo, 0, capCy, 0);
       const ring = clip;
