@@ -3,8 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Gabriel Martin · Senior UX Design Engineer</title>
-<meta name="description" content="Gabriel Martin is a Boston-area Senior UX Design Engineer with 15 years across UX design, front-end engineering, accessibility and user research.">
+<title>Gabriel Martin · UX Architect, Designer &amp; Engineer</title>
+<meta name="description" content="Gabriel Martin is a Boston-area UX Architect, Designer and Engineer with 15 years bridging UX design, front-end engineering, accessibility and user research.">
+<link rel="canonical" href="https://gabrielmartin.dev/">
+<!-- link previews (LinkedIn, Slack, iMessage, X) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Gabriel Martin">
+<meta property="og:title" content="Gabriel Martin · UX Architect, Designer &amp; Engineer">
+<meta property="og:description" content="15 years bridging UX design and front-end engineering: design systems, accessibility and the handoff in between. Swing the badges to see where I've worked.">
+<meta property="og:url" content="https://gabrielmartin.dev/">
+<meta property="og:image" content="https://gabrielmartin.dev/img/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta property="og:image:alt" content="Gabriel Martin's site: lanyard badges from PayPal, Akamai, Pearson and Virgin Pulse hanging below his name.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Gabriel Martin · UX Architect, Designer &amp; Engineer">
+<meta name="twitter:description" content="15 years bridging UX design and front-end engineering: design systems, accessibility and the handoff in between.">
+<meta name="twitter:image" content="https://gabrielmartin.dev/img/og-card.png">
+<meta name="twitter:image:alt" content="Gabriel Martin's site: lanyard badges from PayPal, Akamai, Pearson and Virgin Pulse hanging below his name.">
 <meta name="theme-color" content="#13171a">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -133,11 +149,21 @@
     pointer-events: none; transform-origin: 50% 50%; border-radius: 14px; font: inherit; letter-spacing: 0; text-transform: none; }
   .pin-hit { border-radius: 50%; }
   .badge-hit:focus-visible, .pin-hit:focus-visible { outline: 3px solid #ffd166; outline-offset: 4px; box-shadow: 0 0 0 9px rgba(13, 16, 19, 0.85); }
-  .badge-hit:hover { background: transparent; }
-  /* without WebGL the layer becomes a plain list of buttons */
-  .focus-layer.static { position: relative; inset: auto; display: flex; flex-wrap: wrap; gap: 10px; padding: 16px; pointer-events: auto; }
-  .focus-layer.static .badge-hit, .focus-layer.static .pin-hit { position: static; transform: none; width: auto; height: auto; color: var(--ink);
-    border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; pointer-events: auto; }
+  .badge-hit:hover, .pin-hit:hover { background: transparent; }
+  /* Without WebGL, the wall becomes a readable list of the same work history, below the header */
+  .wall.no-gl { min-height: 0; height: auto !important; pointer-events: auto; user-select: text; -webkit-user-select: text; }
+  .wall.no-gl .fallback { position: static; display: block; text-align: left; padding: 8px 0 0; }
+  .wall.no-gl .hint { display: none; }
+  :root:has(.wall.no-gl) { --ext: 0px; }   /* no canvas running under the about section */
+  .wall.no-gl { padding-bottom: 40px; }
+  .wall.no-gl > * { max-width: 1200px; margin-left: auto; margin-right: auto; }
+  .gl-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
+  .gl-list > li { background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--c, var(--line)); border-radius: 12px; padding: 16px 18px; }
+  .gl-list h3 { margin: 0; font-size: 18px; }
+  .gl-list .meta { margin: 2px 0 10px; color: var(--muted); font-size: 14px; }
+  .gl-list h4 { margin: 10px 0 4px; font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+  .gl-list ul { margin: 0; padding-left: 18px; }
+  .gl-pins { margin: 16px 0 0; color: var(--muted); }
   .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
   html { background: var(--wall); }
@@ -208,7 +234,7 @@
 </header>
 
 <section class="wall" id="wall" aria-label="Work history badges">
-  <p class="hint" id="hint">Click badge to see detailed breakdown</p>
+  <p class="hint" id="hint">Select a badge for details</p>
   <div class="hud" id="hud" hidden>
     <dl>
       <dt>Render</dt><dd>three.js r170 · WebGL2 · canvas textures</dd>
@@ -216,7 +242,7 @@
       <dt>Strap</dt><dd><span id="hud-n">4</span> Verlet ropes × 8 nodes</dd>
       <dt>Card</dt><dd>Rigid body with an inverse-inertia tensor</dd>
       <dt>Frame</dt><dd id="hud-ms">–</dd>
-      <dt>A11y</dt><dd>Canvas is aria-hidden; each badge has a real, focusable button laid over it</dd>
+      <dt>A11y</dt><dd>Canvas is aria-hidden; each badge and pin has a real button laid over it (Enter or Space flips a badge)</dd>
     </dl>
   </div>
   <p class="fallback" id="fallback" hidden>This browser couldn’t start WebGL, so the badges can’t hang here.</p>
@@ -236,9 +262,9 @@
 
     <section class="blurb" aria-labelledby="about-h">
       <h2 id="about-h" class="sr-only">About Gabriel Martin</h2>
-      <p>Hi, I'm Gabriel, the quote above is how I aspire to deliver value within a team.</p>
+      <p>Hi, I'm Gabriel. The quote above is how I aspire to deliver value within a team.</p>
       <p>I bring 15 years of experience across UX disciplines, engineering, design, and user research. This variety of experiences helps me bring diverse perspectives and expertise together, understand user and business needs, and have the technical and design chops to help teams transform complex challenges into elegant solutions that users love.</p>
-      <p>I believe the secret is to use that experience to be a bridging force within cross-disciplinary teams, so we can represent the best of all of our vision, to set our sights on delivering technically robust, intuitive to use, and accessible products for all.</p>
+      <p>I believe the secret is to use that experience as a bridging force within cross-disciplinary teams, bringing everyone's vision together to deliver products that are technically robust, intuitive to use, and accessible to all.</p>
       <a href="mailto:Gabriel@GabrielMartin.dev" class="email-link"><i class="fas fa-envelope" aria-hidden="true"></i><span>Get in touch</span></a>
     </section>
   </div>
@@ -609,23 +635,34 @@ function describe(b) {
     `UX design: ${(b.designList || []).join(', ')}.`, `UX engineering: ${(b.buildList || []).join(', ')}.`,
     `Back: UX design: ${list(b.design)}.`, `UX engineering: ${list(b.build)}.`].join(' ');
 }
-// Each badge is an image whose alt text carries both sides. Focusable so keyboard users can see where it is,
-// but nothing to operate: no buttons, no key handling.
+// Each badge has a real button laid over it. Enter or Space flips it to its detailed back, the same as a click or tap;
+// the full text of both sides is its description, and the live region reads out whichever side is now showing.
 function renderList() {
   const layer = $('focus-layer');
-  layer.querySelectorAll('.badge-hit').forEach(e => e.remove());
+  layer.querySelectorAll('.badge-hit, .badge-desc').forEach(e => e.remove());
   data.forEach((b, i) => {
-    const el = document.createElement('span'); el.className = 'badge-hit'; el.tabIndex = 0; el.dataset.badge = i;
-    el.setAttribute('role', 'img'); el.setAttribute('aria-label', `${orgName(b)} badge. ${describe(b)}`);
-    el.textContent = b.org;   // visible only in the no-WebGL fallback
-    layer.append(el);
+    const d = document.createElement('p'); d.id = `badge-desc-${i}`; d.className = 'sr-only badge-desc'; d.textContent = describe(b);
+    const el = document.createElement('button'); el.type = 'button'; el.className = 'badge-hit'; el.dataset.flip = i;
+    el.setAttribute('aria-describedby', d.id);
+    syncFlipBtn(el, i);
+    layer.append(el, d);
   });
+}
+function syncFlipBtn(el, i) {
+  const b = data[i];
+  el.setAttribute('aria-label', `${orgName(b)} badge, ${b.role}, ${fmtRange(b)}. Showing the ${b.face ? 'back, with details' : 'front'}. Press to flip.`);
+  el.textContent = `${b.org}: show ${b.face ? 'front' : 'details'}`;   // visible only in the no-WebGL fallback
 }
 function flip(i, announceIt = true) {
   data[i].face ^= 1;
   if (gl) gl.flip(i);
+  const el = document.querySelector(`[data-flip="${i}"]`); if (el) syncFlipBtn(el, i);
   if (announceIt) announce(i);
 }
+$('focus-layer').addEventListener('click', e => {
+  const f = e.target.closest('[data-flip]'); if (f) return flip(+f.dataset.flip);   // Enter and Space click a button natively
+  const p = e.target.closest('[data-pin]'); if (p && gl) gl.showPin(+p.dataset.pin);
+});
 $('focus-layer').addEventListener('focusin', e => { const p = e.target.closest('[data-pin]'); if (gl) gl.showPin(p ? +p.dataset.pin : -1); });
 $('focus-layer').addEventListener('focusout', () => { if (gl) gl.showPin(-1); });
 
@@ -642,13 +679,14 @@ await Promise.all(data.flatMap(b => [loadImg(b.frontSrc).then(im => b.frontImg =
   loadImg(b.logo).then(im => b.logoImg = im), loadImg(b.subLogo).then(im => b.subLogoImg = im)]));
 renderList();
 
-// volunteer pins: focusable (not clickable); focusing one shows its tooltip, as hover does
+// volunteer pins: a button over each; focusing or pressing one shows its tooltip, as hover does
 function renderSwagList() {
   const layer = $('focus-layer');
   layer.querySelectorAll('.pin-hit').forEach(e => e.remove());
   SWAG.forEach((s, k) => {
-    const el = document.createElement('span'); el.className = 'pin-hit'; el.tabIndex = 0; el.dataset.pin = k;
-    el.setAttribute('role', 'img'); el.setAttribute('aria-label', `${s.name} volunteer pin. ${swagWhen(s)}.`);
+    const el = document.createElement('button'); el.type = 'button'; el.className = 'pin-hit'; el.dataset.pin = k;
+    el.setAttribute('aria-label', `${s.name} volunteer pin. ${swagWhen(s)}.`);
+    el.textContent = s.name;   // visible only in the no-WebGL fallback
     layer.append(el);
   });
 }
@@ -659,7 +697,34 @@ await Promise.race([
   new Promise(r => setTimeout(r, 2500)),
 ]);
 
-try { gl = startGL(); } catch (err) { console.error(err); $('fallback').hidden = false; $('c').hidden = true; $('focus-layer').classList.add('static');  }
+try { gl = startGL(); } catch (err) { console.error(err); noGL(); }
+
+// No WebGL: show the same work history as plain, readable cards inside the wall, below the header.
+function noGL() {
+  $('c').hidden = true; $('c2').hidden = true;
+  $('focus-layer').querySelectorAll('.badge-hit, .badge-desc, .pin-hit').forEach(e => e.remove());
+  const wall = $('wall'); wall.classList.add('no-gl'); wall.classList.add('gutter');
+  const fb = $('fallback'); fb.hidden = false;
+  fb.textContent = 'This browser couldn’t start WebGL, so the badges can’t hang here. Here’s the same work history as a list.';
+  const ul = document.createElement('ul'); ul.className = 'gl-list';
+  const items = a => (a || []).filter(Boolean).map(t => { const li = document.createElement('li'); li.textContent = t; return li; });
+  data.forEach(b => {
+    const li = document.createElement('li'); li.style.setProperty('--c', b.band || b.color);
+    const h = document.createElement('h3'); h.textContent = orgName(b);
+    const m = document.createElement('p'); m.className = 'meta'; m.textContent = [b.role, fmtRange(b)].filter(Boolean).join(' · ');
+    li.append(h, m);
+    for (const [title, list] of [['UX design', b.design], ['UX engineering', b.build]]) {
+      if (!(list || []).filter(Boolean).length) continue;
+      const t = document.createElement('h4'); t.textContent = title;
+      const u = document.createElement('ul'); u.append(...items(list));
+      li.append(t, u);
+    }
+    ul.append(li);
+  });
+  const pins = document.createElement('p'); pins.className = 'gl-pins';
+  pins.textContent = 'Volunteer: ' + SWAG.map(s => s.when ? `${s.name} (${s.when})` : s.name).join(', ') + '.';
+  fb.after(ul, pins);
+}
 
 /* ---------- WebGL + physics ---------- */
 function startGL() {
