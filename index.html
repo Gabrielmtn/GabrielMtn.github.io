@@ -211,16 +211,16 @@
   html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-motion="reduced"] *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
   /* Load-in: the header panel fades and rises into place once its fonts are ready (no font-swap jump), and the
      badge wall fades in on its first rendered frame while the badges lower into place (see INTRO in the script). */
-  .js .hero .top .intro, .js .motion-toggle, .js .hint { transition: opacity 0.7s ease-out, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1); }
-  .js .motion-toggle { transition-delay: 0.15s; }
-  .js .hint { transition-delay: 0.9s; }
+  .js .hero .top .intro, .js .motion-toggle, .js .hint { transition: opacity 1.1s ease-out, transform 1.2s cubic-bezier(0.2, 0.7, 0.2, 1); }
+  .js .motion-toggle { transition-delay: 0.3s; }
+  .js .hint { transition-delay: 1.4s; }
   .js.is-loading .hero .top .intro, .js.is-loading .motion-toggle { opacity: 0; transform: translateY(12px); }
-  .js #c, .js #c2 { opacity: 0; transition: opacity 0.9s ease-out; }
+  .js #c, .js #c2 { opacity: 0; transition: opacity 1.4s ease-out; }
   .js.gl-ready #c, .js.gl-ready #c2 { opacity: 1; }
   .js:not(.gl-ready) .hint { opacity: 0; }
   /* reduced motion keeps the gentle fades but drops the rise */
   html[data-motion="reduced"].js .hero .top .intro, html[data-motion="reduced"].js .motion-toggle, html[data-motion="reduced"].js .hint,
-  html[data-motion="reduced"].js #c, html[data-motion="reduced"].js #c2 { transition: opacity 0.4s linear !important; transform: none !important; }
+  html[data-motion="reduced"].js #c, html[data-motion="reduced"].js #c2 { transition: opacity 0.7s linear !important; transform: none !important; }
   .motion-toggle { position: absolute; top: 10px; right: max(16px, env(safe-area-inset-right, 0px)); z-index: 6; display: inline-flex; align-items: center; gap: 8px;
     background: rgba(13, 16, 19, 0.84); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); padding: 6px 12px 6px 8px; font-size: 11px; }
   .motion-toggle:hover { background: var(--panel); }
@@ -232,9 +232,10 @@
   @media (max-width: 600px) { .top { padding-top: 52px; } }
 </style>
 <script>
-  // set the motion preference before anything paints: off, unless the visitor's OS/browser asks for reduced motion
-  (() => { try { localStorage.removeItem('motion'); } catch (e) {}   // (an earlier version remembered the toggle)
-    document.documentElement.dataset.motion = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'reduced' : 'full'; })();
+  // set the motion preference before anything paints: on if the visitor turned it on here before, or if their
+  // OS/browser asks for reduced motion; otherwise off
+  (() => { let saved = null; try { saved = localStorage.getItem('motion'); } catch (e) {}
+    document.documentElement.dataset.motion = saved === 'reduced' || matchMedia('(prefers-reduced-motion: reduce)').matches ? 'reduced' : 'full'; })();
   // load-in: hold the header back until its fonts are ready (max 1.5s), then let it fade up; if this script never
   // runs, none of the hiding applies (it's all scoped to .js)
   (() => { const de = document.documentElement; de.classList.add('js', 'is-loading');
@@ -662,21 +663,26 @@ const $ = id => document.getElementById(id);
 const live = $('live');
 let gl = null; // set once WebGL is up
 
-// Reduced motion. Off by default, on when the visitor's OS/browser asks for it; the toggle overrides it for this visit.
+// Reduced motion. Off by default, on when the visitor's OS/browser asks for it. Turning it on with the toggle is
+// remembered for later visits; turning it off forgets that, so the OS/browser setting decides again.
 const motionMQ = matchMedia('(prefers-reduced-motion: reduce)');
 let reduceMotion = document.documentElement.dataset.motion === 'reduced';
-function applyMotion(on) {
+function applyMotion(on, save) {
   reduceMotion = on;
   document.documentElement.dataset.motion = on ? 'reduced' : 'full';
   $('motion-toggle').setAttribute('aria-pressed', String(on));
+  if (save) try { on ? localStorage.setItem('motion', 'reduced') : localStorage.removeItem('motion'); } catch (e) {}
   if (gl) gl.setReduced(on);
   document.dispatchEvent(new CustomEvent('motionchange', { detail: on }));
 }
 $('motion-toggle').addEventListener('click', () => {
-  applyMotion(!reduceMotion);
+  applyMotion(!reduceMotion, true);
   live.textContent = reduceMotion ? 'Reduced motion on: badges flip in place and barely swing.' : 'Reduced motion off.';
 });
-motionMQ.addEventListener?.('change', e => applyMotion(e.matches));   // follow the system setting if it changes mid-visit
+motionMQ.addEventListener?.('change', e => {   // follow the system setting if it changes mid-visit, unless they chose it here
+  let saved = null; try { saved = localStorage.getItem('motion'); } catch (_) {}
+  if (saved !== 'reduced') applyMotion(e.matches, false);
+});
 $('motion-toggle').setAttribute('aria-pressed', String(reduceMotion));
 
 function announce(i) {
@@ -1561,7 +1567,7 @@ function startGL() {
      Reduced motion skips the lowering (the canvas still fades in). */
   // Its clock advances by at most 1/30 s per frame, so a stutter on the first frames (shader compiles, image decodes)
   // slows the lowering down instead of skipping it.
-  const INTRO = { on: true, t: 0, dur: 1.25, stagger: 0.12, drop: 0.6 };
+  const INTRO = { on: true, t: 0, dur: 1.5, stagger: 0.14, drop: 0.6 };
   function applyIntro(dt) {
     if (!INTRO.on) return;
     const t = INTRO.t; INTRO.t += Math.min(dt, 1 / 30); let done = true;
