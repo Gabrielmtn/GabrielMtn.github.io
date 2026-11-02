@@ -509,7 +509,7 @@ function drawFront(b, i, cv) {
     c.fillStyle = fill; c.fillRect(x0, bY, half, TH - bY);
     const tInk = inkOn(fill);
     guilloche(c, x0, bY, half, TH - bY, tInk, 0.06, x0 * 0.01 + i);
-    c.fillStyle = tInk; c.globalAlpha = 0.75; c.font = `600 32px ${MONO}`; c.fillText(label, x0 + 40, bY + 66); c.globalAlpha = 1;
+    c.fillStyle = tInk; c.font = `600 42px ${MONO}`; c.fillText(label, x0 + 40, bY + 50);   // full-strength ink: a readable heading, not a watermark
     const items = (list || []).filter(Boolean).slice(0, 4);
     if (!items.length) { c.font = `600 54px ${BODY}`; c.fillText('—', x0 + 40, bY + 150); return; }
     const avail = TH - bY - 104 - 26;
