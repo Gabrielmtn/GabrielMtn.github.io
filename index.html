@@ -209,6 +209,18 @@
   }
   /* Reduced motion: set from the visitor's OS/browser preference, and switchable with the toggle (top right) */
   html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-motion="reduced"] *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  /* Load-in: the header panel fades and rises into place once its fonts are ready (no font-swap jump), and the
+     badge wall fades in on its first rendered frame while the badges lower into place (see INTRO in the script). */
+  .js .hero .top .intro, .js .motion-toggle, .js .hint { transition: opacity 0.7s ease-out, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1); }
+  .js .motion-toggle { transition-delay: 0.15s; }
+  .js .hint { transition-delay: 0.9s; }
+  .js.is-loading .hero .top .intro, .js.is-loading .motion-toggle { opacity: 0; transform: translateY(12px); }
+  .js #c, .js #c2 { opacity: 0; transition: opacity 0.9s ease-out; }
+  .js.gl-ready #c, .js.gl-ready #c2 { opacity: 1; }
+  .js:not(.gl-ready) .hint { opacity: 0; }
+  /* reduced motion keeps the gentle fades but drops the rise */
+  html[data-motion="reduced"].js .hero .top .intro, html[data-motion="reduced"].js .motion-toggle, html[data-motion="reduced"].js .hint,
+  html[data-motion="reduced"].js #c, html[data-motion="reduced"].js #c2 { transition: opacity 0.4s linear !important; transform: none !important; }
   .motion-toggle { position: absolute; top: 10px; right: max(16px, env(safe-area-inset-right, 0px)); z-index: 6; display: inline-flex; align-items: center; gap: 8px;
     background: rgba(13, 16, 19, 0.84); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); padding: 6px 12px 6px 8px; font-size: 11px; }
   .motion-toggle:hover { background: var(--panel); }
@@ -223,6 +235,16 @@
   // set the motion preference before anything paints: off, unless the visitor's OS/browser asks for reduced motion
   (() => { try { localStorage.removeItem('motion'); } catch (e) {}   // (an earlier version remembered the toggle)
     document.documentElement.dataset.motion = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'reduced' : 'full'; })();
+  // load-in: hold the header back until its fonts are ready (max 1.5s), then let it fade up; if this script never
+  // runs, none of the hiding applies (it's all scoped to .js)
+  (() => { const de = document.documentElement; de.classList.add('js', 'is-loading');
+    const reveal = () => requestAnimationFrame(() => requestAnimationFrame(() => de.classList.remove('is-loading')));
+    addEventListener('DOMContentLoaded', () => {
+      const f = document.fonts ? Promise.all(['850 84px Anybody', '400 17px "Instrument Sans"', '500 12px "IBM Plex Mono"'].map(x => document.fonts.load(x))) : Promise.resolve();
+      Promise.race([f.catch(() => {}), new Promise(r => setTimeout(r, 1500))]).then(reveal);
+    });
+    setTimeout(() => { de.classList.remove('is-loading'); de.classList.add('gl-ready'); }, 6000);   // never leave anything hidden
+  })();
 </script>
 <script type="importmap">
 { "imports": {
@@ -754,6 +776,7 @@ try { gl = startGL(); } catch (err) { console.error(err); noGL(); }
 function noGL() {
   $('c').hidden = true; $('c2').hidden = true;
   $('flip-all').remove();   // nothing to flip without the badge wall
+  document.documentElement.classList.add('gl-ready');
   $('focus-layer').querySelectorAll('.badge-hit, .badge-desc, .pin-hit').forEach(e => e.remove());
   const wall = $('wall'); wall.classList.add('no-gl'); wall.classList.add('gutter');
   const fb = $('fallback'); fb.hidden = false;
@@ -841,8 +864,9 @@ function startGL() {
   const tipV = new THREE.Vector3();
   function animateSwag() {
     for (const m of swagMeshes) {
-      const u = m.userData, target = u.k === hoverSwag ? 1.12 : 1;
-      u.s += (target - u.s) * 0.18; u.wob *= 0.92;
+      // hover: the pin swells a little and wobbles; with reduced motion it stays still (the tooltip still shows)
+      const u = m.userData, target = u.k === hoverSwag && !reduce ? 1.12 : 1;
+      u.s += (target - u.s) * 0.18; u.wob = reduce ? 0 : u.wob * 0.92;
       m.scale.setScalar(u.r * u.s);
       m.rotation.set(0, Math.sin(performance.now() / 70) * 0.12 * u.wob, u.tilt);
     }
@@ -1532,14 +1556,35 @@ function startGL() {
   canvas.addEventListener('lostpointercapture', e => { if (grab) release(e); });
   canvas.addEventListener('pointercancel', () => { grab = null; canvas.style.cursor = ''; });
 
+  /* Load-in: each badge (with its strap) lowers into place on an ease-out curve, staggered left to right. It's a pure
+     translation applied outside the physics, so nothing swings or bounces; it simply settles where it hangs.
+     Reduced motion skips the lowering (the canvas still fades in). */
+  // Its clock advances by at most 1/30 s per frame, so a stutter on the first frames (shader compiles, image decodes)
+  // slows the lowering down instead of skipping it.
+  const INTRO = { on: true, t: 0, dur: 1.25, stagger: 0.12, drop: 0.6 };
+  function applyIntro(dt) {
+    if (!INTRO.on) return;
+    const t = INTRO.t; INTRO.t += Math.min(dt, 1 / 30); let done = true;
+    for (const L of lanyards) {
+      const u = Math.min(1, Math.max(0, (t - L.i * INTRO.stagger) / INTRO.dur));
+      const off = reduce ? 0 : INTRO.drop * Math.pow(1 - u, 3);          // easeOutCubic, measured as height above rest
+      const d = off - (L.introOff || 0);
+      if (d) for (const v of [...L.x, ...L.prev, L.pos, L.prevPos, L.anchor]) v.y += d;
+      L.introOff = off; if (off > 1e-5) done = false;
+    }
+    if (done) INTRO.on = false;
+  }
+
   /* loop */
   let fitTick = 0, running = false, visible = true, last = performance.now(), acc = 0, raf = 0, msAvg = 0, hudT = 0;
   const hudMs = $('hud-ms');
   function frame(now) {
     raf = 0; const t0 = performance.now();
     const dt = Math.min(0.05, (now - last) / 1000); last = now; acc += dt;
+    applyIntro(dt);
     let n = 0; while (acc >= H && n < 24) { step(H); acc -= H; n++; } if (n === 24) acc = 0;
     syncMeshes(); animateSwag(); renderMain(); placeHits();
+    if (!document.documentElement.classList.contains('gl-ready')) requestAnimationFrame(() => document.documentElement.classList.add('gl-ready'));
     if (++fitTick % 20 === 0) fitCheck();
     renderOverlay();
     msAvg = msAvg * 0.9 + (performance.now() - t0) * 0.1;
@@ -1561,7 +1606,7 @@ function startGL() {
     }
     const lay = layout();
     if (lay.cols !== builtCols || Math.abs(lay.S - builtS) / builtS > 0.12) build(false);
-    else { lanyards.forEach(L => L.anchor.copy(lay.slots[L.i].anchor)); placeSwag(lay); }
+    else { lanyards.forEach(L => { L.anchor.copy(lay.slots[L.i].anchor); L.anchor.y += L.introOff || 0; }); placeSwag(lay); }   // keep any load-in lift
     syncMeshes(); animateSwag(); renderMain(); wake();
   }).observe(hero);
   const mq = matchMedia('(prefers-color-scheme: dark)');
