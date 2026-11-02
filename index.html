@@ -220,10 +220,9 @@
   @media (max-width: 600px) { .top { padding-top: 52px; } }
 </style>
 <script>
-  // set the motion preference before anything paints: a saved choice wins, otherwise follow the OS/browser setting
-  (() => { let v = null; try { v = localStorage.getItem('motion'); } catch (e) {}
-    const on = v ? v === 'reduced' : matchMedia('(prefers-reduced-motion: reduce)').matches;
-    document.documentElement.dataset.motion = on ? 'reduced' : 'full'; })();
+  // set the motion preference before anything paints: off, unless the visitor's OS/browser asks for reduced motion
+  (() => { try { localStorage.removeItem('motion'); } catch (e) {}   // (an earlier version remembered the toggle)
+    document.documentElement.dataset.motion = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'reduced' : 'full'; })();
 </script>
 <script type="importmap">
 { "imports": {
@@ -641,22 +640,21 @@ const $ = id => document.getElementById(id);
 const live = $('live');
 let gl = null; // set once WebGL is up
 
-// Reduced motion. On by default when the visitor's OS/browser asks for it; the toggle overrides that and is remembered.
+// Reduced motion. Off by default, on when the visitor's OS/browser asks for it; the toggle overrides it for this visit.
 const motionMQ = matchMedia('(prefers-reduced-motion: reduce)');
 let reduceMotion = document.documentElement.dataset.motion === 'reduced';
-function applyMotion(on, save) {
+function applyMotion(on) {
   reduceMotion = on;
   document.documentElement.dataset.motion = on ? 'reduced' : 'full';
   $('motion-toggle').setAttribute('aria-pressed', String(on));
-  if (save) try { localStorage.setItem('motion', on ? 'reduced' : 'full'); } catch (e) {}
   if (gl) gl.setReduced(on);
   document.dispatchEvent(new CustomEvent('motionchange', { detail: on }));
 }
 $('motion-toggle').addEventListener('click', () => {
-  applyMotion(!reduceMotion, true);
+  applyMotion(!reduceMotion);
   live.textContent = reduceMotion ? 'Reduced motion on: badges flip in place and barely swing.' : 'Reduced motion off.';
 });
-motionMQ.addEventListener?.('change', e => { let saved = null; try { saved = localStorage.getItem('motion'); } catch (_) {} if (!saved) applyMotion(e.matches, false); });
+motionMQ.addEventListener?.('change', e => applyMotion(e.matches));   // follow the system setting if it changes mid-visit
 $('motion-toggle').setAttribute('aria-pressed', String(reduceMotion));
 
 function announce(i) {
@@ -1417,7 +1415,10 @@ function startGL() {
         const vMat = t * L.rest * (N - 1) / repeat;
         // twist eases in over the lower half of the strap (where it's visible): none above, the card's full spin at the clip
         const th = twistAt(t), w = t ** 12;   // the last few percent lock onto the clip's own orientation
-        sideV.set(Math.cos(th), 0, -Math.sin(th)).multiplyScalar(1 - w).addScaledVector(cardX, w);
+        // blend toward whichever way of the card's x axis the strap already faces, so a card turned 180° from the strap's
+        // twist (a reduced-motion flip) doesn't pinch the strap into a kink at the clip
+        const cw = Math.cos(th) * cardX.x - Math.sin(th) * cardX.z < 0 ? -w : w;
+        sideV.set(Math.cos(th), 0, -Math.sin(th)).multiplyScalar(1 - w).addScaledVector(cardX, cw);
         const waist = 1 - L.pinch * Math.sin(Math.PI * t);   // narrowest mid-strap
         sideV.addScaledVector(tan, -sideV.dot(tan)).normalize();
         nrm.crossVectors(tan, sideV).normalize();            // which way the ribbon faces
