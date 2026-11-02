@@ -171,6 +171,8 @@
   body { margin: 0; }
   .skip { position: absolute; left: 12px; top: -60px; z-index: 20; background: var(--accent); color: var(--accent-ink); padding: 10px 14px; border-radius: 6px; font-weight: 600; text-decoration: none; }
   .skip:focus { top: 12px; }
+  button.skip { font: 600 16px/1.5 var(--f-body); letter-spacing: 0; text-transform: none; border: 0; white-space: normal; }
+  button.skip:hover { background: var(--accent); }
 
   /* keyboard / screen-reader controls for the wall */
   .controls { padding-block: 14px 8px; }
@@ -216,6 +218,7 @@
 </head>
 <body>
 <a class="skip" href="#about">Skip to about</a>
+<button class="skip" id="flip-all" type="button">Flip all badges to their details</button>
 
 <div class="hero" id="hero">
 <canvas id="c" aria-hidden="true"></canvas>
@@ -658,11 +661,25 @@ function flip(i, announceIt = true) {
   data[i].face ^= 1;
   if (gl) gl.flip(i);
   const el = document.querySelector(`[data-flip="${i}"]`); if (el) syncFlipBtn(el, i);
+  syncFlipAll();
   if (announceIt) announce(i);
 }
 $('focus-layer').addEventListener('click', e => {
   const f = e.target.closest('[data-flip]'); if (f) return flip(+f.dataset.flip);   // Enter and Space click a button natively
   const p = e.target.closest('[data-pin]'); if (p && gl) gl.showPin(+p.dataset.pin);
+});
+// Second skip link: flips every badge at once (to their detailed backs, or all back to the front), one after another.
+function syncFlipAll() {
+  const anyFront = data.some(b => !b.face);
+  $('flip-all').textContent = anyFront ? 'Flip all badges to their details' : 'Flip all badges to the front';
+}
+$('flip-all').addEventListener('click', () => {
+  const toBack = data.some(b => !b.face);
+  data.forEach((b, i) => { if (!!b.face !== toBack) setTimeout(() => flip(i, false), i * 140); });
+  setTimeout(() => {
+    syncFlipAll();
+    live.textContent = toBack ? 'All badges now show their details.' : 'All badges now show their fronts.';
+  }, data.length * 140);
 });
 $('focus-layer').addEventListener('focusin', e => { const p = e.target.closest('[data-pin]'); if (gl) gl.showPin(p ? +p.dataset.pin : -1); });
 $('focus-layer').addEventListener('focusout', () => { if (gl) gl.showPin(-1); });
@@ -703,6 +720,7 @@ try { gl = startGL(); } catch (err) { console.error(err); noGL(); }
 // No WebGL: show the same work history as plain, readable cards inside the wall, below the header.
 function noGL() {
   $('c').hidden = true; $('c2').hidden = true;
+  $('flip-all').remove();   // nothing to flip without the badge wall
   $('focus-layer').querySelectorAll('.badge-hit, .badge-desc, .pin-hit').forEach(e => e.remove());
   const wall = $('wall'); wall.classList.add('no-gl'); wall.classList.add('gutter');
   const fb = $('fallback'); fb.hidden = false;
