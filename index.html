@@ -207,8 +207,24 @@
     .blurb { font-size: 1rem; padding: 1.25rem; text-align: left; }
     .email-link { width: 100%; justify-content: center; box-sizing: border-box; }
   }
-  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+  /* Reduced motion: set from the visitor's OS/browser preference, and switchable with the toggle (top right) */
+  html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-motion="reduced"] *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .motion-toggle { position: absolute; top: 10px; right: max(16px, env(safe-area-inset-right, 0px)); z-index: 6; display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(13, 16, 19, 0.84); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); padding: 6px 12px 6px 8px; font-size: 11px; }
+  .motion-toggle:hover { background: var(--panel); }
+  .motion-toggle .sw { position: relative; width: 28px; height: 16px; border-radius: 999px; border: 1px solid currentColor; flex: none; }
+  .motion-toggle .sw::after { content: ""; position: absolute; top: 2px; left: 2px; width: 10px; height: 10px; border-radius: 50%; background: currentColor; transition: transform 0.15s; }
+  .motion-toggle[aria-pressed="true"] { background: var(--ink); color: var(--wall); }
+  .motion-toggle[aria-pressed="true"] .sw::after { transform: translateX(12px); }
+  .motion-toggle:focus-visible { outline: 3px solid #ffd166; outline-offset: 3px; }
+  @media (max-width: 600px) { .top { padding-top: 52px; } }
 </style>
+<script>
+  // set the motion preference before anything paints: a saved choice wins, otherwise follow the OS/browser setting
+  (() => { let v = null; try { v = localStorage.getItem('motion'); } catch (e) {}
+    const on = v ? v === 'reduced' : matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.documentElement.dataset.motion = on ? 'reduced' : 'full'; })();
+</script>
 <script type="importmap">
 { "imports": {
   "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
@@ -219,6 +235,7 @@
 <body>
 <a class="skip" href="#about">Skip to about</a>
 <button class="skip" id="flip-all" type="button">Flip all badges to their details</button>
+<button class="motion-toggle" id="motion-toggle" type="button" aria-pressed="false"><span class="sw" aria-hidden="true"></span>Reduce motion</button>
 
 <div class="hero" id="hero">
 <canvas id="c" aria-hidden="true"></canvas>
@@ -624,6 +641,24 @@ const $ = id => document.getElementById(id);
 const live = $('live');
 let gl = null; // set once WebGL is up
 
+// Reduced motion. On by default when the visitor's OS/browser asks for it; the toggle overrides that and is remembered.
+const motionMQ = matchMedia('(prefers-reduced-motion: reduce)');
+let reduceMotion = document.documentElement.dataset.motion === 'reduced';
+function applyMotion(on, save) {
+  reduceMotion = on;
+  document.documentElement.dataset.motion = on ? 'reduced' : 'full';
+  $('motion-toggle').setAttribute('aria-pressed', String(on));
+  if (save) try { localStorage.setItem('motion', on ? 'reduced' : 'full'); } catch (e) {}
+  if (gl) gl.setReduced(on);
+  document.dispatchEvent(new CustomEvent('motionchange', { detail: on }));
+}
+$('motion-toggle').addEventListener('click', () => {
+  applyMotion(!reduceMotion, true);
+  live.textContent = reduceMotion ? 'Reduced motion on: badges flip in place, and swinging settles quickly.' : 'Reduced motion off.';
+});
+motionMQ.addEventListener?.('change', e => { let saved = null; try { saved = localStorage.getItem('motion'); } catch (_) {} if (!saved) applyMotion(e.matches, false); });
+$('motion-toggle').setAttribute('aria-pressed', String(reduceMotion));
+
 function announce(i) {
   const b = data[i];
   const list = a => (a || []).filter(Boolean).join('. ') || 'nothing listed yet';
@@ -748,7 +783,7 @@ function noGL() {
 /* ---------- WebGL + physics ---------- */
 function startGL() {
   const wall = $('wall'), hero = $('hero'), canvas = $('c');
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let reduce = reduceMotion;   // switchable at runtime with the reduced-motion toggle (setReduced below)
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
   renderer.setClearColor(0x000000, 0);
   renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
@@ -1231,7 +1266,7 @@ function startGL() {
       if (L.holdUntil > simT) continue;
       for (let k = 1; k < N; k++) {
         const x = L.x[k], p = L.prev[k];
-        tmpA.subVectors(x, p).multiplyScalar(1 - 0.8 * h); p.copy(x); x.add(tmpA);
+        tmpA.subVectors(x, p).multiplyScalar(1 - (reduce ? 2.6 : 0.8) * h); p.copy(x); x.add(tmpA);
         x.y += G * h * h; x.x += Math.sin(simT * 0.8 + k * 0.6 + L.i * 2.1) * breeze * h * h;
       }
       L.prevPos.copy(L.pos); L.prevQ.copy(L.q);
@@ -1251,6 +1286,7 @@ function startGL() {
         if ((Math.abs(L.twist) < 0.25 && Math.abs(L.ang.y) < 0.6) || L.unspinT > 8) { L.unspin = false; L.unspinT = 0; }
       } else L.ang.y += (-K * err * trust - 4.5 * L.ang.y) * h;
       L.vel.multiplyScalar(1 - 0.3 * h); L.ang.multiplyScalar(1 - 1.4 * h);
+      if (reduce) { L.vel.multiplyScalar(1 - 2.2 * h); L.ang.multiplyScalar(1 - 3 * h); }   // reduced motion: swings settle quickly
       // The held point acts like a pin the card could whip around under strap tension, so a held card gets heavy
       // rotational damping and a low spin cap: it eases into its new angle instead of pivoting violently.
       const held = grab && grab.i === L.i;
@@ -1534,6 +1570,13 @@ function startGL() {
     flip(i) {
       const L = lanyards[i]; if (!L) return;
       L.holdUntil = 0;
+      if (reduce) {
+        // Reduced motion: turn the badge over in place, no spin, no strap twist, no easter egg
+        L.clicks = 0; L.unspin = false; L.targetYaw = data[i].face ? Math.PI : 0;
+        L.q.premultiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI)); L.prevQ.copy(L.q); L.ang.set(0, 0, 0);
+        fwd.set(0, 0, 1).applyQuaternion(L.q); L.lastYaw = Math.atan2(fwd.x, fwd.z);
+        wake(); return;
+      }
       // Every flip spins the same way, so each click winds another half-twist into the strap (7 in a row unwinds it).
       L.clicks = Math.abs(L.twist) < 0.5 ? 1 : (L.clicks || 0) + 1;
       if (L.clicks >= 7) {
@@ -1563,6 +1606,12 @@ function startGL() {
     // keyboard swing: a sideways push, as if nudged by hand
     nudge(i, dir) { const L = lanyards[i]; if (!L) return; L.holdUntil = 0; L.vel.x += dir * (reduce ? 1.2 : 2.4); wake(); },
     showPin(k) { setHover(k); wake(); },
+    // reduced-motion toggle: switch modes and calm anything already moving
+    setReduced(on) {
+      reduce = on;
+      if (on) for (const L of lanyards) { L.unspin = false; L.ang.multiplyScalar(0.2); L.vel.multiplyScalar(0.2); L.prevPos.copy(L.pos).addScaledVector(L.vel, -H); }
+      wake();
+    },
   };
 }
 </script>

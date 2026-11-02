@@ -70,8 +70,11 @@
   document.insertBefore(node, document.documentElement);
   let i = 0, timer = 0;
   const tick = () => { node.data = '\n' + frames[i] + '\n'; i = (i + 1) % frames.length; };
-  const run = () => { clearInterval(timer); if (!document.hidden) timer = setInterval(tick, 100); };
+  // paused while the tab is hidden, and held on one frame when reduced motion is on
+  const still = () => document.hidden || document.documentElement.dataset.motion === 'reduced';
+  const run = () => { clearInterval(timer); if (!still()) timer = setInterval(tick, 100); };
   tick(); run();
   document.addEventListener('visibilitychange', run);
+  document.addEventListener('motionchange', run);
   console.log('%c\u{1F440} There\u2019s something moving at the top of the Elements tab.', 'font: 600 13px system-ui; color: #8ea4ff');
 })();
