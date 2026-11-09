@@ -5,7 +5,7 @@
 <title>Portfolio · Gabriel Martin</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Selected work by Gabriel Martin, UX designer and front-end engineer: Swirl Together, Virgin Pulse, Akamai, Eastern Bank, and experiments.">
+<meta name="description" content="Selected work by Gabriel Martin, UX designer and front-end engineer: Swirl Together, Quickbase Pipelines, Virgin Pulse, Akamai, and experiments.">
 <link rel="canonical" href="https://gabrielmartin.dev/portfolio/">
 <meta property="og:title" content="Portfolio · Gabriel Martin">
 <meta property="og:description" content="Selected work: accessibility at scale, enterprise security tools, banking UI, and a WebGL art therapy app.">
@@ -89,6 +89,8 @@
   .mat { background: var(--panel); border: 1px solid var(--line); border-radius: 4px; padding: clamp(10px, 2vw, 22px); display: grid; place-items: center; }
   .mat.light { background: #eceeed; border-color: #eceeed; }
   .mat img { border-radius: 2px; }
+  .mat.diagram { padding: 0; overflow: hidden; }
+  .mat.diagram svg { display: block; width: 100%; height: auto; }
   figcaption { margin-top: 10px; font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.03em; color: var(--muted); line-height: 1.5; }
 
   /* ---------- end ---------- */
@@ -129,9 +131,9 @@
   </div>
   <ol class="index" aria-label="Projects on this page">
     <li><a href="#swirl-together"><span class="mono">2022–2026</span><b>Swirl Together</b><span aria-hidden="true">↓</span></a></li>
+    <li><a href="#quickbase"><span class="mono">2023</span><b>Quickbase Pipelines</b><span aria-hidden="true">↓</span></a></li>
     <li><a href="#virgin-pulse"><span class="mono">2021–2023</span><b>Virgin Pulse</b><span aria-hidden="true">↓</span></a></li>
     <li><a href="#akamai"><span class="mono">2019</span><b>Akamai</b><span aria-hidden="true">↓</span></a></li>
-    <li><a href="#eastern-bank"><span class="mono">2015–2017</span><b>Eastern Bank</b><span aria-hidden="true">↓</span></a></li>
     <li><a href="#experiments"><span class="mono">2014–2015</span><b>Experiments</b><span aria-hidden="true">↓</span></a></li>
   </ol>
 </header>
@@ -163,6 +165,86 @@
       <figure class="four">
         <div class="mat"><img src="img/swirl-prototype.png" width="563" height="305" alt="Early prototype: a magenta and green fluid painting beside a plain black panel of color pickers and unlabeled sliders."></div>
         <figcaption>The original prototype on Pavel's fluid sim, around 2022.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Quickbase -->
+  <section class="wrap project" id="quickbase" aria-labelledby="qb-h">
+    <div class="label">
+      <p class="when mono">2023 · No-code automation</p>
+      <h2 id="qb-h">Quickbase Pipelines</h2>
+      <p class="role">Sr. Interaction Designer (contract)</p>
+      <p class="thesis">A node-based way to build automations, prototyped as working software instead of static mockups.</p>
+      <p class="body">Pipelines lets Quickbase customers connect their data to other services and automate the work in between. The existing builder was hard to read and hard to learn. I prototyped a node-based interaction model in LiteGraph, so stakeholders and testers could drag, connect, and rearrange steps on a live canvas instead of reacting to pictures of one.</p>
+      <ul class="facts">
+        <li><span>Led wireframing and interactive prototyping for the new builder</span></li>
+        <li><span>Ran workshops with SMEs, engineers, and UX researchers to set the technical scope</span></li>
+        <li><span><strong>95%</strong> positive feedback from users in the private beta</span></li>
+      </ul>
+      <ul class="tags" aria-label="Tools and methods"><li>Interaction design</li><li>LiteGraph</li><li>Prototyping</li><li>Workshops</li><li>No-code</li></ul>
+    </div>
+    <div class="table">
+      <figure>
+        <div class="mat diagram">
+          <svg viewBox="0 0 760 330" role="img" aria-labelledby="qb-svg-t qb-svg-d">
+            <title id="qb-svg-t">Node-based pipeline concept</title>
+            <desc id="qb-svg-d">A trigger node, When a record is added to Projects, connects to a Search records node, then to a Condition node that checks whether the budget is over 50,000 dollars. The yes branch goes to Send a Slack message; the no branch goes to Create a calendar event.</desc>
+            <defs>
+              <pattern id="qb-grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#2d3437"/></pattern>
+            </defs>
+            <rect width="760" height="330" fill="url(#qb-grid)"/>
+            <g fill="none" stroke="#8ea4ff" stroke-width="2">
+              <path d="M178 82 C 210 82, 210 82, 240 82"/>
+              <path d="M418 82 C 450 82, 440 165, 470 165"/>
+              <path d="M530 205 C 530 238, 430 230, 430 262"/>
+              <path d="M600 205 C 600 238, 645 230, 645 262" stroke="#a3aca8" stroke-dasharray="4 4"/>
+            </g>
+            <g font-family="IBM Plex Mono, monospace" font-size="11" fill="#a3aca8">
+              <text x="512" y="250">yes</text>
+              <text x="630" y="232">no</text>
+            </g>
+            <g font-family="Instrument Sans, system-ui, sans-serif">
+              <g transform="translate(20 50)">
+                <rect width="158" height="66" rx="5" fill="#1a1f22" stroke="#3a4246"/>
+                <rect width="158" height="22" rx="5" fill="#8ea4ff"/><rect y="12" width="158" height="10" fill="#8ea4ff"/>
+                <text x="10" y="15" font-size="11" font-weight="600" fill="#0b1020">TRIGGER · QUICKBASE</text>
+                <text x="10" y="42" font-size="13" fill="#e7ebe9">When a record is</text>
+                <text x="10" y="58" font-size="13" fill="#e7ebe9">added to Projects</text>
+                <circle cx="158" cy="32" r="5" fill="#8ea4ff"/>
+              </g>
+              <g transform="translate(240 50)">
+                <rect width="178" height="66" rx="5" fill="#1a1f22" stroke="#3a4246"/>
+                <rect width="178" height="22" rx="5" fill="#2d3437"/><rect y="12" width="178" height="10" fill="#2d3437"/>
+                <text x="10" y="15" font-size="11" font-weight="600" fill="#a3aca8">STEP · QUICKBASE</text>
+                <text x="10" y="42" font-size="13" fill="#e7ebe9">Search records in</text>
+                <text x="10" y="58" font-size="13" fill="#e7ebe9">Budgets by project</text>
+                <circle cx="0" cy="32" r="5" fill="#8ea4ff"/><circle cx="178" cy="32" r="5" fill="#8ea4ff"/>
+              </g>
+              <g transform="translate(470 132)">
+                <rect width="178" height="73" rx="5" fill="#1a1f22" stroke="#3a4246"/>
+                <rect width="178" height="22" rx="5" fill="#2d3437"/><rect y="12" width="178" height="10" fill="#2d3437"/>
+                <text x="10" y="15" font-size="11" font-weight="600" fill="#a3aca8">CONDITION</text>
+                <text x="10" y="42" font-size="13" fill="#e7ebe9">If budget is over</text>
+                <text x="10" y="58" font-size="13" fill="#e7ebe9">$50,000</text>
+                <circle cx="0" cy="33" r="5" fill="#8ea4ff"/><circle cx="60" cy="73" r="5" fill="#8ea4ff"/><circle cx="130" cy="73" r="5" fill="#a3aca8"/>
+              </g>
+              <g transform="translate(330 262)">
+                <rect width="200" height="50" rx="5" fill="#1a1f22" stroke="#3a4246"/>
+                <text x="10" y="20" font-size="11" font-weight="600" fill="#a3aca8">STEP · SLACK</text>
+                <text x="10" y="39" font-size="13" fill="#e7ebe9">Message #finance</text>
+                <circle cx="100" cy="0" r="5" fill="#8ea4ff"/>
+              </g>
+              <g transform="translate(550 262)">
+                <rect width="190" height="50" rx="5" fill="#1a1f22" stroke="#3a4246"/>
+                <text x="10" y="20" font-size="11" font-weight="600" fill="#a3aca8">STEP · CALENDAR</text>
+                <text x="10" y="39" font-size="13" fill="#e7ebe9">Schedule a kickoff</text>
+                <circle cx="95" cy="0" r="5" fill="#a3aca8"/>
+              </g>
+            </g>
+          </svg>
+        </div>
+        <figcaption>Illustration of the node-based model, redrawn for this page.</figcaption>
       </figure>
     </div>
   </section>
@@ -232,31 +314,6 @@
     </div>
   </section>
 
-  <!-- Eastern Bank -->
-  <section class="wrap project" id="eastern-bank" aria-labelledby="eb-h">
-    <div class="label">
-      <p class="when mono">2015–2017 · Banking</p>
-      <h2 id="eb-h">Eastern Bank</h2>
-      <p class="role">UX Developer, Eastern Labs innovation lab</p>
-      <p class="thesis">A shared SCSS framework so designers and engineers stopped redoing each other's work.</p>
-      <p class="body">Designers and engineers were iterating in parallel but speaking different languages, and daily tweaks were eating the team's time. The framework let designers make system-wide changes without touching code, and let engineers keep the code clean without chasing design drift.</p>
-      <ul class="facts">
-        <li><span>Interaction design and UI development for business and mobile banking</span></li>
-        <li><span>Grew into WCAG audits and compliance-sensitive work in finance and education</span></li>
-      </ul>
-      <ul class="tags" aria-label="Tools and methods"><li>SCSS architecture</li><li>Interaction design</li><li>Motion</li><li>WCAG audits</li></ul>
-    </div>
-    <div class="table">
-      <figure class="four">
-        <div class="mat light"><img src="img/eastern-desktop.png" width="773" height="676" alt="Business banking accounts page with a left navigation menu and tables of checking, savings, and loan accounts with current and available balances."></div>
-        <figcaption>Business banking UI, 2017.</figcaption>
-      </figure>
-      <figure class="two">
-        <div class="mat light"><img src="img/eastern-mobile.png" width="309" height="550" alt="Mobile banking app with color-coded account cards for checking, savings, prime liquid assets, and a certificate of deposit."></div>
-        <figcaption>Mobile interaction design and state animations, 2017.</figcaption>
-      </figure>
-    </div>
-  </section>
 
   <!-- Experiments -->
   <section class="wrap project" id="experiments" aria-labelledby="ex-h">
