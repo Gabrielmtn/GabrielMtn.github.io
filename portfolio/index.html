@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Portfolio · Gabriel Martin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Selected work by Gabriel Martin, UX designer and front-end engineer: Swirl Together, Virgin Pulse, Akamai, Eastern Bank, and experiments.">
+<link rel="canonical" href="https://gabrielmartin.dev/portfolio/">
+<meta property="og:title" content="Portfolio · Gabriel Martin">
+<meta property="og:description" content="Selected work: accessibility at scale, enterprise security tools, banking UI, and a WebGL art therapy app.">
+<meta property="og:image" content="https://gabrielmartin.dev/portfolio/img/swirl-2026.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+  /* Layout: a light table. Each project is a band: a sticky label card on the left, its artifacts laid out on the right. Dark on purpose, to match the badge wall homepage. */
+  :root {
+    color-scheme: dark;
+    --wall: #13171a;      /* page */
+    --panel: #1a1f22;     /* image mats */
+    --ink: #e7ebe9;
+    --muted: #a3aca8;
+    --line: #2d3437;
+    --accent: #8ea4ff;
+    --accent-ink: #0b1020;
+    --f-display: "Anybody", "Arial Black", "Helvetica Neue", sans-serif;
+    --f-body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+    --gut-l: max(20px, env(safe-area-inset-left, 0px));
+    --gut-r: max(20px, env(safe-area-inset-right, 0px));
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+  body { margin: 0; background: var(--wall); color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:hover { text-decoration-thickness: 2px; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+  img { max-width: 100%; height: auto; display: block; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding-left: var(--gut-l); padding-right: var(--gut-r); }
+  .skip { position: absolute; left: -9999px; top: 8px; background: var(--accent); color: var(--accent-ink); padding: 8px 14px; border-radius: 4px; z-index: 20; font-weight: 600; }
+  .skip:focus { left: var(--gut-l); }
+  .mono { font-family: var(--f-mono); font-size: 12.5px; letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* ---------- top ---------- */
+  .top { padding-block: 28px 0; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .top a { color: var(--muted); text-decoration: none; }
+  .top a:hover, .top a:focus-visible { color: var(--ink); }
+  .top nav { display: flex; gap: 22px; flex-wrap: wrap; }
+  .top a[aria-current="page"] { color: var(--ink); border-bottom: 1px solid var(--accent); }
+
+  .hero { padding-block: clamp(56px, 10vw, 112px) clamp(40px, 6vw, 64px); display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 40px 64px; align-items: end; border-bottom: 1px solid var(--line); }
+  .hero h1 { font-family: var(--f-display); font-variation-settings: "wdth" 140; font-weight: 800; font-size: clamp(3rem, 9vw, 6.5rem); line-height: 0.92; letter-spacing: -0.02em; margin: 0 0 24px; }
+  .hero p { margin: 0; max-width: 54ch; color: var(--muted); font-size: 1.1rem; }
+  .hero p strong { color: var(--ink); font-weight: 600; }
+  .index { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+  .index li { border-bottom: 1px solid var(--line); }
+  .index a { display: grid; grid-template-columns: 7.5em minmax(0, 1fr) auto; gap: 12px; align-items: baseline; padding: 11px 2px; text-decoration: none; color: var(--ink); }
+  .index a span:first-child { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .index a span:last-child { color: var(--muted); transition: transform .2s ease, color .2s ease; }
+  .index a:hover span:last-child, .index a:focus-visible span:last-child { transform: translateY(2px); color: var(--accent); }
+  .index b { font-weight: 600; }
+
+  /* ---------- project bands ---------- */
+  .project { display: grid; grid-template-columns: minmax(0, 330px) minmax(0, 1fr); gap: 40px 64px; padding-block: clamp(56px, 8vw, 96px); border-bottom: 1px solid var(--line); scroll-margin-top: 12px; }
+  .label { position: sticky; top: calc(24px + env(safe-area-inset-top, 0px)); align-self: start; }
+  .label .when { color: var(--muted); margin: 0 0 14px; font-variant-numeric: tabular-nums; }
+  .label h2 { font-family: var(--f-display); font-variation-settings: "wdth" 125; font-weight: 750; font-size: clamp(2rem, 3.6vw, 2.75rem); line-height: 1; letter-spacing: -0.01em; margin: 0 0 10px; text-wrap: balance; }
+  .label .role { margin: 0 0 22px; color: var(--muted); font-size: 0.95rem; }
+  .label .thesis { font-size: 1.2rem; line-height: 1.4; font-weight: 500; margin: 0 0 18px; text-wrap: balance; }
+  .label .body { margin: 0 0 18px; color: #c9d0cc; font-size: 0.98rem; }
+  .facts { list-style: none; margin: 0 0 24px; padding: 0; display: grid; gap: 8px; }
+  .facts li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px; font-size: 0.95rem; color: #c9d0cc; }
+  .facts li::before { content: ""; width: 6px; height: 6px; margin-top: 0.62em; background: var(--accent); border-radius: 1px; }
+  .facts strong { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 26px; padding: 0; list-style: none; }
+  .tags li { font-family: var(--f-mono); font-size: 11.5px; letter-spacing: 0.06em; color: var(--muted); border: 1px solid var(--line); padding: 3px 8px; border-radius: 3px; }
+  .links { display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: center; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: var(--accent-ink); text-decoration: none; font-weight: 600; padding: 9px 16px; border-radius: 5px; font-size: 0.95rem; }
+  .btn:hover { filter: brightness(1.08); }
+
+  /* ---------- the light table ---------- */
+  .table { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 28px 24px; align-content: start; }
+  figure { margin: 0; grid-column: span 6; min-width: 0; }
+  figure.half { grid-column: span 3; }
+  figure.two { grid-column: span 2; }
+  figure.four { grid-column: span 4; }
+  .mat { background: var(--panel); border: 1px solid var(--line); border-radius: 4px; padding: clamp(10px, 2vw, 22px); display: grid; place-items: center; }
+  .mat.light { background: #eceeed; border-color: #eceeed; }
+  .mat img { border-radius: 2px; }
+  figcaption { margin-top: 10px; font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.03em; color: var(--muted); line-height: 1.5; }
+
+  /* ---------- end ---------- */
+  .end { padding-block: clamp(64px, 10vw, 120px); display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px 48px; align-items: end; }
+  .end h2 { font-family: var(--f-display); font-variation-settings: "wdth" 130; font-weight: 750; font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1; margin: 0 0 14px; text-wrap: balance; }
+  .end p { margin: 0; color: var(--muted); max-width: 52ch; }
+  .contact { display: grid; gap: 6px; text-align: right; }
+  .contact a { font-family: var(--f-mono); font-size: 1rem; color: var(--ink); }
+  footer.wrap { padding-block: 0 40px; color: var(--muted); }
+
+  @media (max-width: 900px) {
+    .hero, .project, .end { grid-template-columns: minmax(0, 1fr); }
+    .label { position: static; }
+    .contact { text-align: left; }
+  }
+  @media (max-width: 560px) {
+    figure.half, figure.two, figure.four { grid-column: span 6; }
+    .index a { grid-template-columns: 6.2em minmax(0, 1fr) auto; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#work">Skip to the work</a>
+
+<div class="wrap top mono">
+  <a href="../">← gabrielmartin.dev</a>
+  <nav aria-label="Site">
+    <a href="./" aria-current="page">Portfolio</a>
+    <a href="../case-studies/">Case studies</a>
+    <a href="mailto:Gabriel@GabrielMartin.dev">Contact</a>
+  </nav>
+</div>
+
+<header class="wrap hero">
+  <div>
+    <h1>Portfolio</h1>
+    <p><strong>UX designer and front-end engineer, 15 years.</strong> I design products that work for everyone, then help engineering build them that way: accessibility (WCAG 2.1 AA, Section 508, VPAT/ACR), design systems, and interactive prototypes. This page is the work itself. The <a href="../case-studies/">case studies</a> are the long version.</p>
+  </div>
+  <ol class="index" aria-label="Projects on this page">
+    <li><a href="#swirl-together"><span class="mono">2022–2026</span><b>Swirl Together</b><span aria-hidden="true">↓</span></a></li>
+    <li><a href="#virgin-pulse"><span class="mono">2021–2023</span><b>Virgin Pulse</b><span aria-hidden="true">↓</span></a></li>
+    <li><a href="#akamai"><span class="mono">2019</span><b>Akamai</b><span aria-hidden="true">↓</span></a></li>
+    <li><a href="#eastern-bank"><span class="mono">2015–2017</span><b>Eastern Bank</b><span aria-hidden="true">↓</span></a></li>
+    <li><a href="#experiments"><span class="mono">2014–2015</span><b>Experiments</b><span aria-hidden="true">↓</span></a></li>
+  </ol>
+</header>
+
+<main id="work">
+
+  <!-- Swirl Together -->
+  <section class="wrap project" id="swirl-together" aria-labelledby="st-h">
+    <div class="label">
+      <p class="when mono">2022–2026 · Own product</p>
+      <h2 id="st-h">Swirl Together</h2>
+      <p class="role">Designer and engineer, end to end</p>
+      <p class="thesis">An art therapy painting app, taken from a CodePen prototype to Steam Next Fest.</p>
+      <p class="body">It started as a fork of Pavel Dobryakov's WebGL fluid simulation. Testing with art therapists showed where the information architecture fell short, so I reshaped inputs to prevent errors, rewrote labels to read at a glance, and made presets glide every slider into place.</p>
+      <ul class="facts">
+        <li><span>Calm multiplayer painting for up to <strong>8</strong> people, in the browser and on desktop</span></li>
+        <li><span>Every control works from the keyboard, with a skip link, visible focus, and a name a screen reader can announce</span></li>
+        <li><span>A simple layout for beginners; the full parameter system for power users</span></li>
+        <li><span>Shown in Steam Next Fest, October 2026</span></li>
+      </ul>
+      <ul class="tags" aria-label="Tools and methods"><li>WebGL2</li><li>Vanilla JS</li><li>Electron</li><li>On-device ML</li><li>User testing</li><li>WCAG audit</li></ul>
+      <div class="links"><a class="btn" href="https://swirltogether.com">Try the playtest <span aria-hidden="true">↗</span></a></div>
+    </div>
+    <div class="table">
+      <figure>
+        <div class="mat"><img src="img/swirl-2026.png" width="627" height="351" alt="Swirl Together's painting screen: a bold orange and blue fluid swirl with the letters GM masked out of it, framed by walnut and copper control panels with dials for viscosity, curl, and brush size."></div>
+        <figcaption>Swirl Together, 2026. Collision masking keeps the paint flowing around the letters.</figcaption>
+      </figure>
+      <figure class="four">
+        <div class="mat"><img src="img/swirl-prototype.png" width="563" height="305" alt="Early prototype: a magenta and green fluid painting beside a plain black panel of color pickers and unlabeled sliders."></div>
+        <figcaption>The original prototype on Pavel's fluid sim, around 2022.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Virgin Pulse -->
+  <section class="wrap project" id="virgin-pulse" aria-labelledby="vp-h">
+    <div class="label">
+      <p class="when mono">2021–2023 · Enterprise wellness</p>
+      <h2 id="vp-h">Virgin Pulse</h2>
+      <p class="role">UX Design Engineer, leading accessibility strategy</p>
+      <p class="thesis">Accessibility training that gave engineers and designers one shared language.</p>
+      <p class="body">A Bank of America contract required Section 508 compliance and the effort had stalled. I built the shared standards, then taught both sides how to use them.</p>
+      <ul class="facts">
+        <li><span><strong>400+</strong> engineers, designers, and PMs trained across two curricula</span></li>
+        <li><span>Resize and Reflow approach adopted as the engineering SOP for <strong>300+</strong> engineers</span></li>
+        <li><span>Annotation library for writing a11y acceptance criteria engineers could build without guessing</span></li>
+        <li><span>Also designed for the rewards, pattern library, and partner API teams</span></li>
+      </ul>
+      <ul class="tags" aria-label="Tools and methods"><li>Section 508</li><li>WCAG 2.1 AA</li><li>Angular</li><li>Training design</li><li>Design systems</li></ul>
+      <div class="links"><a class="btn" href="../case-studies/virgin-pulse/">Read the case study <span aria-hidden="true">→</span></a></div>
+    </div>
+    <div class="table">
+      <figure>
+        <div class="mat"><img src="img/vp-training.png" width="1005" height="273" alt="Overview of about twenty slides from the WCAG Resize and Reflow training deck, navy slides with layout diagrams, breakpoint grids, and flexbox examples."></div>
+        <figcaption>WCAG Resize/Reflow training deck, 2022.</figcaption>
+      </figure>
+      <figure class="two">
+        <div class="mat light"><img src="img/vp-rewards.png" width="212" height="570" alt="Mobile prototype of a How to Earn screen listing steps, active minutes, and workout minutes with progress bars toward daily, monthly, and one-time rewards."></div>
+        <figcaption>Rewards for Steps prototype, 2022.</figcaption>
+      </figure>
+      <figure class="four">
+        <div class="mat light"><img src="img/vp-partner-api.png" width="376" height="546" alt="Partner API documentation page prototype with a navigation column, explanatory text in the middle, and example JSON responses in a dark code panel."></div>
+        <figcaption>Partner API documentation prototype, 2022.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Akamai -->
+  <section class="wrap project" id="akamai" aria-labelledby="ak-h">
+    <div class="label">
+      <p class="when mono">2019 · Infosec, federal cloud</p>
+      <h2 id="ak-h">Akamai</h2>
+      <p class="role">Sr. UI/UX Developer and Designer, embedded with the infosec team</p>
+      <p class="thesis">A FedRAMP vulnerability tracker built around how the compliance team actually worked.</p>
+      <p class="body">Product owners had to keep up a strict scanning cadence, but the data lived in scanners, internal APIs, calendars, spreadsheets, and NIST.gov. I mapped that workflow and pulled it into one tool.</p>
+      <ul class="facts">
+        <li><span>Task analysis and contextual inquiry with <strong>8</strong> people from compliance, engineering, and management</span></li>
+        <li><span>Remote and in-person card sorts shaped the information architecture</span></li>
+        <li><span>Three rounds of prototypes, built in Rails so the team could use them</span></li>
+      </ul>
+      <ul class="tags" aria-label="Tools and methods"><li>Contextual inquiry</li><li>Card sorting</li><li>Information architecture</li><li>Ruby on Rails</li></ul>
+      <div class="links"><a class="btn" href="../case-studies/akamai/">Read the case study <span aria-hidden="true">→</span></a></div>
+    </div>
+    <div class="table">
+      <figure>
+        <div class="mat"><img src="img/akamai-traffic.png" width="535" height="344" alt="Akamai Traffic Statistics dashboard in black and orange, with totals for networks, locations, and servers and tables of peak and lifetime usage."></div>
+        <figcaption>Akamai traffic statistics, 2019.</figcaption>
+      </figure>
+      <figure class="two">
+        <div class="mat light"><img src="img/akamai-cadence.png" width="304" height="315" alt="Scan summary card with concentric progress rings for low, medium, and critical findings, 58 percent complete."></div>
+        <figcaption>Early scan cadence concept.</figcaption>
+      </figure>
+      <figure class="four">
+        <div class="mat light"><img src="img/akamai-calendar.png" width="569" height="323" alt="Compliance calendar wireframe showing each product's scans across months, with flags for a scan due in one day and a missed scan."></div>
+        <figcaption>Compliance calendar wireframe.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Eastern Bank -->
+  <section class="wrap project" id="eastern-bank" aria-labelledby="eb-h">
+    <div class="label">
+      <p class="when mono">2015–2017 · Banking</p>
+      <h2 id="eb-h">Eastern Bank</h2>
+      <p class="role">UX Developer, Eastern Labs innovation lab</p>
+      <p class="thesis">A shared SCSS framework so designers and engineers stopped redoing each other's work.</p>
+      <p class="body">Designers and engineers were iterating in parallel but speaking different languages, and daily tweaks were eating the team's time. The framework let designers make system-wide changes without touching code, and let engineers keep the code clean without chasing design drift.</p>
+      <ul class="facts">
+        <li><span>Interaction design and UI development for business and mobile banking</span></li>
+        <li><span>Grew into WCAG audits and compliance-sensitive work in finance and education</span></li>
+      </ul>
+      <ul class="tags" aria-label="Tools and methods"><li>SCSS architecture</li><li>Interaction design</li><li>Motion</li><li>WCAG audits</li></ul>
+    </div>
+    <div class="table">
+      <figure class="four">
+        <div class="mat light"><img src="img/eastern-desktop.png" width="773" height="676" alt="Business banking accounts page with a left navigation menu and tables of checking, savings, and loan accounts with current and available balances."></div>
+        <figcaption>Business banking UI, 2017.</figcaption>
+      </figure>
+      <figure class="two">
+        <div class="mat light"><img src="img/eastern-mobile.png" width="309" height="550" alt="Mobile banking app with color-coded account cards for checking, savings, prime liquid assets, and a certificate of deposit."></div>
+        <figcaption>Mobile interaction design and state animations, 2017.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Experiments -->
+  <section class="wrap project" id="experiments" aria-labelledby="ex-h">
+    <div class="label">
+      <p class="when mono">2014–2015 · Open source</p>
+      <h2 id="ex-h">Experiments</h2>
+      <p class="role">Where the motion and performance habits started</p>
+      <p class="thesis">Small libraries and CSS art, made to learn how the browser renders.</p>
+      <p class="body">ReAnimate.css added the missing "small" animation type to Animate.css, plus iteration and timing controls. Art@60fps pushed HAML and SCSS loops to see how far pure CSS could go.</p>
+      <ul class="tags" aria-label="Tools and methods"><li>CSS animation</li><li>SCSS</li><li>HAML</li><li>CodePen</li></ul>
+      <div class="links">
+        <a href="../reanimate/">ReAnimate.css</a>
+        <a href="https://codepen.io/Gabrielmtn/pen/jEXOjw">Art@60fps on CodePen ↗</a>
+      </div>
+    </div>
+    <div class="table">
+      <figure class="half">
+        <div class="mat light"><img src="img/reanimate.png" width="556" height="339" alt="ReAnimate.css homepage with a pink gradient logo and dropdowns for animation type, duration, and easing next to an Animate it button."></div>
+        <figcaption>ReAnimate.css, 2015.</figcaption>
+      </figure>
+      <figure class="half">
+        <div class="mat"><img src="img/art-60fps.png" width="411" height="395" alt="A sphere drawn from red, orange, and yellow dashes on a grey background."></div>
+        <figcaption>Art@60fps, HAML and SCSS nth-child iteration, 2015.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="wrap end" aria-labelledby="end-h">
+    <div>
+      <h2 id="end-h">Have a project, or a role to fill?</h2>
+      <p>I take on accessibility audits and remediation plans, VPAT/ACR prep, accessible component and design-system work, and interactive prototypes. Based near Boston.</p>
+    </div>
+    <div class="contact">
+      <a href="mailto:Gabriel@GabrielMartin.dev">Gabriel@GabrielMartin.dev</a>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap mono">Gabriel Martin · Boston, MA · 2026</footer>
+</body>
+</html>
