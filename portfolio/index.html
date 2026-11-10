@@ -91,6 +91,10 @@
   .mat img { border-radius: 2px; }
   .mat.diagram { padding: 0; overflow: hidden; }
   .mat.diagram svg { display: block; width: 100%; height: auto; }
+  .hero p.note { margin-top: 18px; font-size: 0.95rem; color: var(--muted); }
+  .hero p.note b { color: var(--ink); font-weight: 600; }
+  figcaption code { font: inherit; color: var(--accent); white-space: nowrap; }
+  pf-artifact, swirl-launcher, qb-pipeline, vp-api-docs, vp-rewards, akamai-traffic, scan-cadence, scan-calendar, reanimate-demo, css-sphere { display: block; min-width: 0; }
   figcaption { margin-top: 10px; font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.03em; color: var(--muted); line-height: 1.5; }
 
   /* ---------- end ---------- */
@@ -128,6 +132,7 @@
   <div>
     <h1>Portfolio</h1>
     <p><strong>UX designer and front-end engineer, 15 years.</strong> I design products that work for everyone, then help engineering build them that way: accessibility (WCAG 2.1 AA, Section 508, VPAT/ACR), design systems, and interactive prototypes. This page is the work itself. The <a href="../case-studies/">case studies</a> are the long version.</p>
+    <p class="note">Every artifact below is a working rebuild, written as a standalone web component. Use <b>Compare original</b> to see the screenshot it came from.</p>
   </div>
   <ol class="index" aria-label="Projects on this page">
     <li><a href="#swirl-together"><span class="mono">2022–2026</span><b>Swirl Together</b><span aria-hidden="true">↓</span></a></li>
@@ -159,8 +164,8 @@
     </div>
     <div class="table">
       <figure>
-        <div class="mat"><img src="img/swirl-2026.png" width="627" height="351" alt="Swirl Together's painting screen: a bold orange and blue fluid swirl with the letters GM masked out of it, framed by walnut and copper control panels with dials for viscosity, curl, and brush size."></div>
-        <figcaption>Swirl Together, 2026. Collision masking keeps the paint flowing around the letters.</figcaption>
+        <swirl-launcher src="https://swirltogether.com"><img src="img/swirl-2026.png" width="627" height="351" alt="Swirl Together's painting screen: a bold orange and blue fluid swirl with the letters GM masked out of it, framed by walnut and copper control panels with dials for viscosity, curl, and brush size."></swirl-launcher>
+        <figcaption>Swirl Together, 2026. Opens the live playtest in a dialog. <code>&lt;swirl-launcher&gt;</code></figcaption>
       </figure>
       <figure class="four">
         <div class="mat"><img src="img/swirl-prototype.png" width="563" height="305" alt="Early prototype: a magenta and green fluid painting beside a plain black panel of color pickers and unlabeled sliders."></div>
@@ -186,7 +191,7 @@
     </div>
     <div class="table">
       <figure>
-        <div class="mat diagram">
+        <pf-artifact><qb-pipeline>
           <svg viewBox="0 0 760 330" role="img" aria-labelledby="qb-svg-t qb-svg-d">
             <title id="qb-svg-t">Node-based pipeline concept</title>
             <desc id="qb-svg-d">A trigger node, When a record is added to Projects, connects to a Search records node, then to a Condition node that checks whether the budget is over 50,000 dollars. The yes branch goes to Send a Slack message; the no branch goes to Create a calendar event.</desc>
@@ -243,8 +248,8 @@
               </g>
             </g>
           </svg>
-        </div>
-        <figcaption>Illustration of the node-based model, redrawn for this page.</figcaption>
+        </qb-pipeline></pf-artifact>
+        <figcaption>A working sketch of the node model: drag steps, change the budget, run it. Redrawn for this page. <code>&lt;qb-pipeline&gt;</code></figcaption>
       </figure>
     </div>
   </section>
@@ -268,16 +273,16 @@
     </div>
     <div class="table">
       <figure>
-        <div class="mat"><img src="img/vp-training.png" width="1005" height="273" alt="Overview of about twenty slides from the WCAG Resize and Reflow training deck, navy slides with layout diagrams, breakpoint grids, and flexbox examples."></div>
-        <figcaption>WCAG Resize/Reflow training deck, 2022.</figcaption>
+        <pf-artifact><vp-api-docs><img src="img/vp-partner-api.png" width="458" height="671" alt="Partner API documentation page prototype with a navigation column, explanatory text in the middle, and example JSON responses in a dark code panel."></vp-api-docs></pf-artifact>
+        <figcaption>Partner API documentation prototype, 2022. The example response follows the section you're reading. <code>&lt;vp-api-docs&gt;</code></figcaption>
       </figure>
       <figure class="two">
-        <div class="mat light"><img src="img/vp-rewards.png" width="212" height="570" alt="Mobile prototype of a How to Earn screen listing steps, active minutes, and workout minutes with progress bars toward daily, monthly, and one-time rewards."></div>
-        <figcaption>Rewards for Steps prototype, 2022.</figcaption>
+        <pf-artifact><vp-rewards><img src="img/vp-rewards.png" width="212" height="570" alt="Mobile prototype of a How to Earn screen listing steps, active minutes, and workout minutes with progress bars toward daily, monthly, and one-time rewards."></vp-rewards></pf-artifact>
+        <figcaption>Rewards for Steps prototype, 2022. Tap an activity to log it. <code>&lt;vp-rewards&gt;</code></figcaption>
       </figure>
       <figure class="four">
-        <div class="mat light"><img src="img/vp-partner-api.png" width="458" height="671" alt="Partner API documentation page prototype with a navigation column, explanatory text in the middle, and example JSON responses in a dark code panel."></div>
-        <figcaption>Partner API documentation prototype, 2022.</figcaption>
+        <div class="mat"><img src="img/vp-training.png" width="1005" height="273" alt="Overview of about twenty slides from the WCAG Resize and Reflow training deck, navy slides with layout diagrams, breakpoint grids, and flexbox examples."></div>
+        <figcaption>WCAG Resize/Reflow training deck, 2022.</figcaption>
       </figure>
     </div>
   </section>
@@ -300,16 +305,16 @@
     </div>
     <div class="table">
       <figure>
-        <div class="mat"><img src="img/akamai-traffic.png" width="658" height="422" alt="Akamai Traffic Statistics dashboard in black and orange, with totals for networks, locations, and servers and tables of peak and lifetime usage."></div>
-        <figcaption>Akamai traffic statistics, 2019.</figcaption>
+        <pf-artifact><akamai-traffic><img src="img/akamai-traffic.png" width="658" height="422" alt="Akamai Traffic Statistics dashboard in black and orange, with totals for networks, locations, and servers and tables of peak and lifetime usage."></akamai-traffic></pf-artifact>
+        <figcaption>Akamai traffic statistics, 2019. <code>&lt;akamai-traffic&gt;</code></figcaption>
       </figure>
       <figure class="two">
-        <div class="mat light"><img src="img/akamai-cadence.png" width="304" height="315" alt="Scan summary card with concentric progress rings for low, medium, and critical findings, 58 percent complete."></div>
-        <figcaption>Early scan cadence concept.</figcaption>
+        <pf-artifact><scan-cadence><img src="img/akamai-cadence.png" width="304" height="315" alt="Scan summary card with concentric progress rings for low, medium, and critical findings, 58 percent complete."></scan-cadence></pf-artifact>
+        <figcaption>Scan cadence concept. Remediation works critical findings first. <code>&lt;scan-cadence&gt;</code></figcaption>
       </figure>
       <figure class="four">
-        <div class="mat light"><img src="img/akamai-calendar.png" width="569" height="323" alt="Compliance calendar wireframe showing each product's scans across months, with flags for a scan due in one day and a missed scan."></div>
-        <figcaption>Compliance calendar wireframe.</figcaption>
+        <pf-artifact><scan-calendar><img src="img/akamai-calendar.png" width="569" height="323" alt="Compliance calendar wireframe showing each product's scans across months, with flags for a scan due in one day and a missed scan."></scan-calendar></pf-artifact>
+        <figcaption>Compliance calendar wireframe. Choose a marker for its detail. <code>&lt;scan-calendar&gt;</code></figcaption>
       </figure>
     </div>
   </section>
@@ -331,12 +336,12 @@
     </div>
     <div class="table">
       <figure class="half">
-        <div class="mat light"><img src="img/reanimate.png" width="556" height="339" alt="ReAnimate.css homepage with a pink gradient logo and dropdowns for animation type, duration, and easing next to an Animate it button."></div>
-        <figcaption>ReAnimate.css, 2015.</figcaption>
+        <pf-artifact><reanimate-demo><img src="img/reanimate.png" width="556" height="339" alt="ReAnimate.css homepage with a pink gradient logo and dropdowns for animation type, duration, and easing next to an Animate it button."></reanimate-demo></pf-artifact>
+        <figcaption>ReAnimate.css, 2015. <code>&lt;reanimate-demo&gt;</code></figcaption>
       </figure>
       <figure class="half">
-        <div class="mat"><img src="img/art-60fps.png" width="411" height="395" alt="A sphere drawn from red, orange, and yellow dashes on a grey background."></div>
-        <figcaption>Art@60fps, HAML and SCSS nth-child iteration, 2015.</figcaption>
+        <pf-artifact><css-sphere><img src="img/art-60fps.png" width="411" height="395" alt="A sphere drawn from red, orange, and yellow dashes on a grey background."></css-sphere></pf-artifact>
+        <figcaption>Art@60fps, 2015, rebuilt with CSS 3D transforms. <code>&lt;css-sphere&gt;</code></figcaption>
       </figure>
     </div>
   </section>
@@ -353,5 +358,6 @@
 </main>
 
 <footer class="wrap mono">Gabriel Martin · Boston, MA · 2026</footer>
+<script type="module" src="components/index.js"></script>
 </body>
 </html>
