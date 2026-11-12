@@ -54,10 +54,12 @@
      from the very top of the page. It reaches --ext below the badges, under the top of the about section, so a badge
      dragged downward slides behind the about panels (and its own overlay draws it over them) instead of being cut off. */
   :root { --ext: 560px; }
-  .hero:not(:defined) > :not([slot]) { display: none; }   /* badge markup stays out of sight until the component draws it */
+  .hero:not(:defined) > :not([slot]), .hero:not(:defined) > [slot="corner"] { display: none; }   /* badge markup stays out of sight until the component draws it */
   .hero { display: block; --lanyard-accent-ink: var(--accent-ink); --lanyard-ink: var(--ink); --lanyard-muted: var(--muted); --lanyard-overhang: var(--ext); --lanyard-shadow: var(--shadow-strength);
     --lanyard-font-display: var(--f-display); --lanyard-font-body: var(--f-body); --lanyard-font-mono: var(--f-mono); --lanyard-accent: var(--accent); }
+  .hero::part(corner) { bottom: 18px; font-size: 13px; color: #b9c1bd; }
   .hero::part(hint) { bottom: 18px; left: max(16px, env(safe-area-inset-left, 0px)); font-size: 13px; color: #b9c1bd; }
+  @media (max-width: 640px) { .hero::part(hint) { bottom: 44px; } .hero::part(corner) { left: max(16px, env(safe-area-inset-left, 0px)); right: auto; text-align: left; } }   /* stacked on phones */
   :root:has(.hero.no-gl) { --ext: 0px; }   /* no canvas running under the about section */
   .hero.no-gl::part(area) { max-width: 1200px; margin: 0 auto; padding: 0 16px 40px; }
   @media (max-width: 699px) { :root { --ext: 440px; } }
@@ -108,14 +110,14 @@
        0.45s  about section (quote and bio) fades and rises
        1.5s   "Select a badge" hint
      If this script never runs, none of the hiding applies (it's all scoped to .js). */
-  .js .hero::part(hero-panel), .js .motion-toggle, .js .hero::part(hint), .js .about { transition: opacity 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), transform 1.4s cubic-bezier(0.16, 1, 0.3, 1); }
+  .js .hero::part(hero-panel), .js .motion-toggle, .js .hero::part(hint), .js .hero::part(corner), .js .about { transition: opacity 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), transform 1.4s cubic-bezier(0.16, 1, 0.3, 1); }
   .js .hero::part(canvas), .js .hero::part(overlay) { transition: opacity 1.3s cubic-bezier(0.25, 0.1, 0.25, 1); }
   .js .motion-toggle { transition-delay: 0.25s; }
   .js .about { transition-delay: 0.45s; }
-  .js .hero::part(hint) { transition-delay: 1.5s; }
+  .js .hero::part(hint), .js .hero::part(corner) { transition-delay: 1.5s; }
   .js.is-loading .hero::part(hero-panel), .js.is-loading .motion-toggle { opacity: 0; transform: translateY(14px); }
   .js.is-loading .about { opacity: 0; transform: translateY(24px); }
-  .js.is-loading .hero::part(canvas), .js.is-loading .hero::part(overlay), .js.is-loading .hero::part(hint) { opacity: 0; }
+  .js.is-loading .hero::part(canvas), .js.is-loading .hero::part(overlay), .js.is-loading .hero::part(hint), .js.is-loading .hero::part(corner) { opacity: 0; }
   /* reduced motion keeps the gentle fades but drops the rise */
   html[data-motion="reduced"].js .hero::part(hero-panel), html[data-motion="reduced"].js .motion-toggle, html[data-motion="reduced"].js .hero::part(hint),
   html[data-motion="reduced"].js .about, html[data-motion="reduced"].js .hero::part(canvas), html[data-motion="reduced"].js .hero::part(overlay) { transition-property: opacity !important; transition-duration: 0.8s !important; transform: none !important; }
@@ -222,6 +224,9 @@
         <li>Part of the front-end component library team, responsible for WCAG-compliant behavior across its components</li></ul>
     </lanyard-section>
   </lanyard-badge>
+
+  <!-- bottom-right of the badge area -->
+  <a slot="corner" href="https://gabrielmtn.github.io/lanyard-portfolio/">Lanyard UX is Open Source, make your own</a>
 
   <!-- Volunteer pin-back buttons -->
   <lanyard-pin id="mit-t0" name="MIT t=0" text="t=0" small="MIT" ring="MIT · t=0 · Volunteer" color="#a31f34" note="Volunteered"></lanyard-pin>

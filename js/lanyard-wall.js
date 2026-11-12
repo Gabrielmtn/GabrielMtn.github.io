@@ -1484,6 +1484,11 @@ canvas.over { z-index: 4; pointer-events: none; touch-action: auto; }
 .hint { position: absolute; bottom: 16px; left: 16px; margin: 0; font: 12.5px var(--_mono); letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--_muted); pointer-events: none; }
 .hint:empty { display: none; }
+/* slot="corner": a small line of your own (a credit, a link) in the bottom-right corner of the badge area */
+.corner { position: absolute; bottom: 16px; right: max(16px, env(safe-area-inset-right, 0px)); max-width: calc(100% - 32px); margin: 0;
+  font: 12.5px var(--_mono); letter-spacing: 0.04em; color: var(--_muted); text-align: right; pointer-events: auto; }
+.corner ::slotted(a) { color: inherit; text-underline-offset: 3px; }
+.corner ::slotted(a:hover) { color: var(--_ink); }
 .hud { position: absolute; bottom: 14px; right: 16px; max-width: min(360px, calc(100% - 32px)); font: 11.5px/1.55 var(--_mono);
   background: color-mix(in srgb, #13171a 82%, transparent); border: 1px solid var(--_accent); border-radius: 6px; padding: 10px 12px; pointer-events: none; }
 .hud dl { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 2px 12px; margin: 0; }
@@ -1508,6 +1513,7 @@ const TEMPLATE = `<style>${CSS}</style>
 <div class="head" id="head" part="header"><header class="hero" id="hero" part="hero" hidden></header><slot name="header"></slot></div>
 <div class="area" id="area" part="area">
 <p class="hint" id="hint" part="hint" aria-hidden="true"></p>
+<div class="corner" part="corner"><slot name="corner"></slot></div>
 <div class="hud" id="hud" part="hud" hidden>
   <dl>
     <dt>Render</dt><dd>three.js r<span id="hud-r"></span> · WebGL2 · canvas textures</dd>
