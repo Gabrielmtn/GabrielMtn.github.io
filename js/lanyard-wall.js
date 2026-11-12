@@ -438,11 +438,12 @@ function startGL(ctx) {
   const tmpA = new THREE.Vector3(), tmpB = new THREE.Vector3(), tmpC = new THREE.Vector3(), tmpD = new THREE.Vector3();
   const qInv = new THREE.Quaternion(), dq = new THREE.Quaternion(), fwd = new THREE.Vector3();
   // Easter egg: wind 7 half-twists into a strap and it lets go, unspinning front side out.
-  const WOUND = 7 * Math.PI, FLARE = 0.18;   // FLARE: how hard the clip end swings out while it unwinds
+  const WOUND = 7 * Math.PI, FLARE = 0.04;   // FLARE: how hard the badge is flung outward while it unwinds
   // The goal a badge rests at: its current face (front 0, back π), on whichever turn of the strap it's already on.
   const anchorGoal = L => { const f = data[L.i].face ? Math.PI : 0; return f + 2 * Math.PI * Math.round((L.twist - f) / (2 * Math.PI)); };
   function startUnwind(L) {
     L.armed = false; L.unspin = true; L.unspinT = 0; data[L.i].face = 0; L.targetYaw = 0; L.goal = 0;
+    L.flareSide = Math.sign(L.pos.x - L.anchor.x) || (L.i % 2 ? 1 : -1);
     ctx.unwound?.(L.i);
   }
 
@@ -891,10 +892,15 @@ function startGL(ctx) {
         // twist pays out, sails past straight, then swings back and settles (an underdamped spring, not a set speed).
         const kU = reduce ? 1.2 : 2.2, cU = reduce ? 2 : 0;
         L.ang.y += (-kU * L.twist - cU * L.ang.y) * h;
-        // Centrifugal flare. The clip end is the heaviest part, so spinning fast it feels the largest outward pull;
-        // the badge pivots at the clip, so that pull tips it off vertical, more the faster it turns (it grows with
-        // the spin rate squared). The tilt sweeps round with the spin, and gravity brings it back as the spin slows.
-        if (!reduce) L.ang.addScaledVector(tmpD.set(1, 0, 0).applyQuaternion(L.q), FLARE * L.ang.y * L.ang.y * h);
+        // Centrifugal flare. Spinning fast, the badge's weight is flung outward, away from the line straight down
+        // from the strap's top: it swings out to one side, the strap leaning with it, further the faster it spins (the
+        // pull grows with the spin rate squared), and gravity swings it back in as the spin dies down. It swings out
+        // the way it's already leaning, or a side picked when it lets go, and only sideways, so it stays in its layer.
+        if (!reduce) {
+          const dx = L.pos.x - L.anchor.x;
+          const side = Math.abs(dx) > 0.05 * S ? Math.sign(dx) : L.flareSide;
+          L.vel.x += side * FLARE * S * L.ang.y * L.ang.y * h;
+        }
         L.unspinT = (L.unspinT || 0) + h;
         if ((Math.abs(L.twist) < 0.25 && Math.abs(L.ang.y) < 0.6) || L.unspinT > 8) { L.unspin = false; L.unspinT = 0; L.goal = anchorGoal(L); }
       } else if (reduce) L.ang.y += (-K * err * trust - 4.5 * L.ang.y) * h;
