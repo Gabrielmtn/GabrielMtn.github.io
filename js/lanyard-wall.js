@@ -438,12 +438,18 @@ function startGL(ctx) {
   const tmpA = new THREE.Vector3(), tmpB = new THREE.Vector3(), tmpC = new THREE.Vector3(), tmpD = new THREE.Vector3();
   const qInv = new THREE.Quaternion(), dq = new THREE.Quaternion(), fwd = new THREE.Vector3();
   // Easter egg: wind 7 half-twists into a strap and it lets go, unspinning front side out.
-  const WOUND = 7 * Math.PI, FLARE = 0.04;   // FLARE: how hard the badge is flung outward while it unwinds
+  const WOUND = 7 * Math.PI;
+  // Centrifugal flare while a strap unwinds. The badge spins about a line through its middle; the clip at the top is
+  // the heaviest part, sitting off that line, so spinning fast it's thrown outward: the badge leans over about its
+  // middle, the clip end out, and the clip circles round the middle as it turns. The lean grows with the spin rate
+  // squared (FLARE radians per (rad/s)^2, so about 30 degrees at full spin) and is gone once it slows. The middle stays
+  // put; this is drawn on top of the physics, so it can't knock anything or leave the badge in an odd state.
+  const FLARE = 0.0009, FLARE_MAX = 0.6;
+  const flareQ = new THREE.Quaternion(), flareAxis = new THREE.Vector3(1, 0, 0), drawQ = new THREE.Quaternion();
   // The goal a badge rests at: its current face (front 0, back π), on whichever turn of the strap it's already on.
   const anchorGoal = L => { const f = data[L.i].face ? Math.PI : 0; return f + 2 * Math.PI * Math.round((L.twist - f) / (2 * Math.PI)); };
   function startUnwind(L) {
     L.armed = false; L.unspin = true; L.unspinT = 0; data[L.i].face = 0; L.targetYaw = 0; L.goal = 0;
-    L.flareSide = Math.sign(L.pos.x - L.anchor.x) || (L.i % 2 ? 1 : -1);
     ctx.unwound?.(L.i);
   }
 
@@ -892,15 +898,6 @@ function startGL(ctx) {
         // twist pays out, sails past straight, then swings back and settles (an underdamped spring, not a set speed).
         const kU = reduce ? 1.2 : 2.2, cU = reduce ? 2 : 0;
         L.ang.y += (-kU * L.twist - cU * L.ang.y) * h;
-        // Centrifugal flare. Spinning fast, the badge's weight is flung outward, away from the line straight down
-        // from the strap's top: it swings out to one side, the strap leaning with it, further the faster it spins (the
-        // pull grows with the spin rate squared), and gravity swings it back in as the spin dies down. It swings out
-        // the way it's already leaning, or a side picked when it lets go, and only sideways, so it stays in its layer.
-        if (!reduce) {
-          const dx = L.pos.x - L.anchor.x;
-          const side = Math.abs(dx) > 0.05 * S ? Math.sign(dx) : L.flareSide;
-          L.vel.x += side * FLARE * S * L.ang.y * L.ang.y * h;
-        }
         L.unspinT = (L.unspinT || 0) + h;
         if ((Math.abs(L.twist) < 0.25 && Math.abs(L.ang.y) < 0.6) || L.unspinT > 8) { L.unspin = false; L.unspinT = 0; L.goal = anchorGoal(L); }
       } else if (reduce) L.ang.y += (-K * err * trust - 4.5 * L.ang.y) * h;
@@ -1029,12 +1026,15 @@ function startGL(ctx) {
   const latV = new THREE.Vector3(), nrm = new THREE.Vector3(), thick = new THREE.Vector3(), sideV = new THREE.Vector3(), cardX = new THREE.Vector3(), worldX = new THREE.Vector3(1, 0, 0), tan = new THREE.Vector3(), pt = new THREE.Vector3();
   function syncMeshes() {
     for (const L of lanyards) {
-      L.group.position.copy(L.pos); L.group.quaternion.copy(L.q);
+      const want = L.unspin && !reduce ? Math.min(FLARE_MAX, FLARE * L.ang.y * L.ang.y) : 0;
+      L.flare = (L.flare || 0) + (want - (L.flare || 0)) * 0.2;   // eased, so the lean grows and fades smoothly
+      drawQ.copy(L.q).multiply(flareQ.setFromAxisAngle(flareAxis, L.flare));   // lean about the badge's own middle, clip end toward its front
+      L.group.position.copy(L.pos); L.group.quaternion.copy(drawQ);
       L.shadowTail.position.copy(L.anchor);
       const pts = L.curve.points;
       for (let k = 0; k < N - 1; k++) pts[k].copy(L.x[k]);
-      pts[N - 1].copy(L.hang).applyQuaternion(L.q).add(L.pos);
-      cardX.set(1, 0, 0).applyQuaternion(L.q);
+      pts[N - 1].copy(L.hang).applyQuaternion(drawQ).add(L.pos);   // the strap follows the clip round
+      cardX.set(1, 0, 0).applyQuaternion(drawQ);
       // Track how far the card has spun (unwrapped), so the strap winds and unwinds a twist as it flips.
       fwd.set(0, 0, 1).applyQuaternion(L.q);
       const yaw = Math.atan2(fwd.x, fwd.z);
