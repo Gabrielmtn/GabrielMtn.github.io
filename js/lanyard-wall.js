@@ -438,7 +438,7 @@ function startGL(ctx) {
   const tmpA = new THREE.Vector3(), tmpB = new THREE.Vector3(), tmpC = new THREE.Vector3(), tmpD = new THREE.Vector3();
   const qInv = new THREE.Quaternion(), dq = new THREE.Quaternion(), fwd = new THREE.Vector3();
   // Easter egg: wind 7 half-twists into a strap and it lets go, unspinning front side out.
-  const WOUND = 7 * Math.PI, FLARE = 0.1;
+  const WOUND = 7 * Math.PI, FLARE = 0.18;   // FLARE: how hard the clip end swings out while it unwinds
   // The goal a badge rests at: its current face (front 0, back π), on whichever turn of the strap it's already on.
   const anchorGoal = L => { const f = data[L.i].face ? Math.PI : 0; return f + 2 * Math.PI * Math.round((L.twist - f) / (2 * Math.PI)); };
   function startUnwind(L) {
@@ -1032,7 +1032,12 @@ function startGL(ctx) {
       // Track how far the card has spun (unwrapped), so the strap winds and unwinds a twist as it flips.
       fwd.set(0, 0, 1).applyQuaternion(L.q);
       const yaw = Math.atan2(fwd.x, fwd.z);
-      if (Math.hypot(fwd.x, fwd.z) > 0.35) L.twist += wrapA(yaw - L.lastYaw); // ignore yaw noise while the card is tipped flat
+      // The twist always matches the way the card faces (twist and yaw agree, give or take whole turns), so the badge
+      // can never come to rest part-way round. Steps of under half a turn per frame keep the count of whole turns.
+      // While the card is tipped nearly flat its facing is noise, so the twist holds still and catches up after.
+      // (It used to add up frame-to-frame changes and skip the flat frames, which lost whatever turning happened
+      // meanwhile: the badge then settled at an odd angle, stuck "half-way" with its strap still wound.)
+      if (Math.hypot(fwd.x, fwd.z) > 0.35) L.twist += wrapA(yaw - L.twist);
       L.lastYaw = yaw;
       const posA = L.strap.geometry.attributes.position, uvA = L.strap.geometry.attributes.uv;
       // more accumulated twist spreads over more of the strap, so the turns don't bunch up
