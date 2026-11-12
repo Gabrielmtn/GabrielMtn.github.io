@@ -59,7 +59,7 @@
     --lanyard-font-display: var(--f-display); --lanyard-font-body: var(--f-body); --lanyard-font-mono: var(--f-mono); --lanyard-accent: var(--accent); }
   .hero::part(corner) { bottom: 18px; font-size: 13px; color: #b9c1bd; }
   .hero::part(hint) { bottom: 18px; left: max(16px, env(safe-area-inset-left, 0px)); font-size: 13px; color: #b9c1bd; }
-  @media (max-width: 640px) { .hero::part(hint) { bottom: 44px; } .hero::part(corner) { left: max(16px, env(safe-area-inset-left, 0px)); right: auto; text-align: left; } }   /* stacked on phones */
+  @media (max-width: 440px) { .hero::part(hint) { bottom: 42px; } }   /* phones: the hint sits above the corner link */
   :root:has(.hero.no-gl) { --ext: 0px; }   /* no canvas running under the about section */
   .hero.no-gl::part(area) { max-width: 1200px; margin: 0 auto; padding: 0 16px 40px; }
   @media (max-width: 699px) { :root { --ext: 440px; } }
@@ -226,7 +226,7 @@
   </lanyard-badge>
 
   <!-- bottom-right of the badge area -->
-  <a slot="corner" href="https://gabrielmtn.github.io/lanyard-portfolio/">Lanyard UX is Open Source, make your own</a>
+  <a slot="corner" href="https://gabrielmtn.github.io/lanyard-portfolio/" title="The badge wall is open source: make your own">Copy This Design</a>
 
   <!-- Volunteer pin-back buttons -->
   <lanyard-pin id="mit-t0" name="MIT t=0" text="t=0" small="MIT" ring="MIT · t=0 · Volunteer" color="#a31f34" note="Volunteered"></lanyard-pin>
