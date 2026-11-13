@@ -33,7 +33,15 @@ button:hover { background: #fdf0f5; }
 class ReanimateDemo extends HTMLElement {
   connectedCallback() {
     const u = Math.random().toString(36).slice(2, 7);
-    const href = new URL(this.getAttribute('css') || '../reanimate/reanimate.css', document.baseURI).href;
+    // Where the stylesheet is: the css attribute (relative to the page), else the site's copy two folders up from this
+    // file, else one next to it. Each one that fails to load hands over to the next, so the demo still works when the
+    // page is served somewhere other than the site.
+    const hrefs = [...new Set([
+      this.getAttribute('css') && new URL(this.getAttribute('css'), document.baseURI).href,
+      new URL('../../reanimate/reanimate.css', import.meta.url).href,
+      new URL('reanimate.css', import.meta.url).href,
+    ].filter(Boolean))];
+    const href = hrefs[0];
     const opt = (v, t, sel) => `<option value="${v}"${v === sel ? ' selected' : ''}>${t}</option>`;
     const root = mount(this, css, `
       <link rel="stylesheet" href="${href}">
@@ -50,6 +58,9 @@ class ReanimateDemo extends HTMLElement {
         </div>
       </div>`);
     if (!root) return;
+    const link = root.querySelector('link');
+    let tryNext = 1;
+    link.addEventListener('error', () => { if (tryNext < hrefs.length) link.href = hrefs[tryNext++]; });
     const g = id => root.getElementById(`${id}-${u}`).value;
     const logo = root.getElementById(`logo-${u}`);
     // the original page's trick: put the classes on, then take them off when the animation is done
