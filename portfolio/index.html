@@ -105,13 +105,17 @@
   figure.four { grid-column: span 4; }
   .mat { background: var(--panel); border: 1px solid var(--line); border-radius: 4px; padding: clamp(10px, 2vw, 22px); display: grid; place-items: center; }
   .mat.light { background: #eceeed; border-color: #eceeed; }
+  /* a reference image (someone else's work, for context): smaller, and labelled as such */
+  figure.ref { grid-column: span 4; }
+  .ref-label { color: var(--muted); margin: 0 0 10px; }
+  @media (max-width: 560px) { figure.ref { grid-column: span 6; } }
   .mat img { border-radius: 2px; }
   .mat.diagram { padding: 0; overflow: hidden; }
   .mat.diagram svg { display: block; width: 100%; height: auto; }
   .hero p.note { margin-top: 18px; font-size: 0.95rem; color: var(--muted); }
   .hero p.note b { color: var(--ink); font-weight: 600; }
 
-  pf-artifact, swirl-launcher, qb-pipeline, vp-api-docs, vp-rewards, akamai-traffic, scan-cadence, scan-calendar, reanimate-demo, css-sphere { display: block; min-width: 0; }
+  pf-artifact, swirl-launcher, qb-pipeline, vp-api-docs, vp-rewards, scan-cadence, scan-calendar, reanimate-demo, css-sphere { display: block; min-width: 0; }
   figcaption { margin-top: 10px; font-size: 14px; color: var(--muted); line-height: 1.5; }
 
   /* ---------- each project in its own shape ---------- */
@@ -357,10 +361,6 @@
       </div>
     </div>
     <div class="table">
-      <figure>
-        <pf-artifact><akamai-traffic><img src="img/akamai-traffic.png" width="658" height="422" alt="Akamai Traffic Statistics dashboard in black and orange, with totals for networks, locations, and servers and tables of peak and lifetime usage."></akamai-traffic></pf-artifact>
-        <figcaption>Akamai traffic statistics, 2019.</figcaption>
-      </figure>
       <figure class="two">
         <pf-artifact><scan-cadence><img src="img/akamai-cadence.png" width="304" height="315" alt="Scan summary card with concentric progress rings for low, medium, and critical findings, 58 percent complete."></scan-cadence></pf-artifact>
         <figcaption>Scan cadence concept. Remediation works critical findings first.</figcaption>
@@ -368,6 +368,12 @@
       <figure class="four">
         <pf-artifact><scan-calendar><img src="img/akamai-calendar.png" width="569" height="323" alt="Compliance calendar wireframe showing each product's scans across months, with flags for a scan due in one day and a missed scan."></scan-calendar></pf-artifact>
         <figcaption>Compliance calendar wireframe. Choose a marker for its detail.</figcaption>
+      </figure>
+      <!-- reference only: Akamai's own public stats, not Gabriel's work, so it's shown as a plain image, not rebuilt -->
+      <figure class="ref">
+        <p class="mono ref-label">For reference · not my work</p>
+        <div class="mat"><img src="img/akamai-traffic.png" width="658" height="422" loading="lazy" alt="Akamai Traffic Statistics dashboard in black and orange, with totals for networks, locations, and servers and tables of peak and lifetime usage."></div>
+        <figcaption>Akamai's public traffic statistics, 2019: the scale of what the infosec team was protecting.</figcaption>
       </figure>
     </div>
   </section>
