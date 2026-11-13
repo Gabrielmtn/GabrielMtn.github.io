@@ -1,5 +1,5 @@
 /*!
- * Lanyard Portfolio · <lanyard-wall>
+ * Lanyard Hero Component · <lanyard-wall>
  * Hanging ID badges on lanyards, with real rope physics, for portfolios and about pages.
  * https://github.com/Gabrielmtn/lanyard-portfolio · MIT License · (c) 2026 Gabriel Martin
  *
@@ -1380,7 +1380,7 @@ const DEFAULT_FONTS = {
 const DEFAULT_LABELS = ['UX design', 'UX engineering'];
 // Every printed label, with the wall-wide default. Each can be set on <lanyard-wall> for all badges,
 // or on a single <lanyard-badge> (or JSON badge) to override it there.
-const DEFAULTS = { name: '', contact: '', seal: 'Lanyard Portfolio · Alumni', tag: 'Alumni', dateLabel: 'Date', titleLabel: 'Title',
+const DEFAULTS = { name: '', contact: '', seal: 'Lanyard Hero · Alumni', tag: 'Alumni', dateLabel: 'Date', titleLabel: 'Title',
   emptyHeading: 'On the job', emptyText: 'Nothing listed yet.' };
 const LABEL_ATTRS = { name: 'name', contact: 'contact', seal: 'seal', tag: 'tag', dateLabel: 'date-label', titleLabel: 'title-label',
   emptyHeading: 'empty-heading', emptyText: 'empty-text' };
