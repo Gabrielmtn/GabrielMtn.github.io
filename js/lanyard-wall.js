@@ -896,12 +896,12 @@ function startGL(ctx) {
       if (L.unspin) {
         // Unwinding: the wound strap acts as a torsion spring releasing its tension. The pull eases in over the first
         // 0.7 s, as a twisted strap takes a beat to start turning, then it accelerates to full speed. Over the last
-        // turn and a half, drag builds, so it slows a little before the end and eases into its rest position with
-        // only a slight settle past straight (about 1.4 s of spin, 2.5 s in all, not a fixed speed).
+        // turn and a half, drag builds, so it slows a little before the end, then carries on past its rest position by about
+        // a sixth of a turn and eases back into it without a second wobble (not a fixed speed).
         L.unspinT = (L.unspinT || 0) + h;
         const r = Math.min(1, L.unspinT / 0.7), ease = r * r * (3 - 2 * r);
         const near = Math.min(1, Math.abs(L.twist) / (3 * Math.PI)), brake = 1 - near * near * (3 - 2 * near);
-        const kU = reduce ? 1.2 : 2.6 * ease, cU = reduce ? 2 : 2.8 * brake;
+        const kU = reduce ? 1.2 : 2.6 * ease, cU = reduce ? 2 : 2.0 * brake;
         L.ang.y += (-kU * L.twist - cU * L.ang.y) * h;
         if ((Math.abs(L.twist) < 0.25 && Math.abs(L.ang.y) < 0.6) || L.unspinT > 8) { L.unspin = false; L.unspinT = 0; L.goal = anchorGoal(L); }
       } else if (reduce) L.ang.y += (-K * err * trust - 4.5 * L.ang.y) * h;
