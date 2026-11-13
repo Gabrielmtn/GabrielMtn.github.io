@@ -1,7 +1,7 @@
 /*!
  * Lanyard Hero Component · <lanyard-wall>
  * Hanging ID badges on lanyards, with real rope physics, for portfolios and about pages.
- * https://github.com/Gabrielmtn/lanyard-portfolio · MIT License · (c) 2026 Gabriel Martin
+ * https://github.com/Gabrielmtn/lanyard-hero-component · MIT License · (c) 2026 Gabriel Martin
  *
  * Rendering: three.js (peer dependency) with canvas-drawn card faces.
  * Physics: hand-written XPBD at 480 Hz substeps. Each strap is a Verlet rope, each card a rigid body.
