@@ -1042,8 +1042,8 @@ function startGL(ctx) {
       for (let k = 0; k < N - 1; k++) pts[k].copy(L.x[k]);
       // The rope ends at the clip where the physics has it; the flare's lean moves the drawn clip off that point, round
       // in a circle as the badge spins. Rather than bend only the last stretch to reach it, the whole strap follows the
-      // clip round in a spiral: the swing grows from nothing at the anchor to the clip's own (t², a parabola down the
-      // strap) and lags behind it further up, about one and a half coils, as the spinning mass drags the strap after it.
+      // clip round in a spiral: the swing grows from nothing at the anchor to the clip's own (a parabola down the strap,
+      // with a little linear lift so the top stays lively too) and lags behind it further up, about one and a half coils, as the spinning mass drags the strap after it.
       pts[N - 1].copy(L.hang).applyQuaternion(L.q).add(L.pos);
       spD.copy(L.hang).applyQuaternion(drawQ).add(L.pos).sub(pts[N - 1]);
       const spOn = spD.lengthSq() > 1e-10, spSgn = L.ang.y < 0 ? -1 : 1;
@@ -1110,7 +1110,7 @@ function startGL(ctx) {
         const at = (tt, out) => {
           L.curve.getPoint(tt, out);
           if (spOn) {
-            const a = -spSgn * SPIRAL * (1 - tt), c = Math.cos(a), sn = Math.sin(a), w = tt * tt;
+            const a = -spSgn * SPIRAL * (1 - tt), c = Math.cos(a), sn = Math.sin(a), w = tt * (0.35 + 0.65 * tt);
             out.x += w * (spD.x * c + spD.z * sn); out.y += w * spD.y; out.z += w * (spD.z * c - spD.x * sn);
           }
           return out;
