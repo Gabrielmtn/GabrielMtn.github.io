@@ -13,36 +13,40 @@ const pts = (a) => Math.round(Math.min(1, a.val / a.goal) * MAX);
 
 const css = `
 :host { display: block; }
+/* A phone screen: laid out at a real phone width (375px) like the original, then scaled as a whole to fit the column,
+   so it never reflows into a squeezed layout. */
+.fit { position: relative; margin: 0 auto; }
+.fit > .phone { position: absolute; top: 0; left: 0; transform-origin: 0 0; }
 ${focusCss}
-.phone { max-width: 300px; margin: 0 auto; background: #fff; color: #2b3338; border-radius: 18px; overflow: hidden; border: 6px solid #0f1416; font-family: var(--f-body, system-ui, sans-serif); font-size: 12px; }
-.nav { background: #24323a; color: #fff; display: grid; grid-template-columns: 28px 1fr 28px; align-items: center; padding: 8px 6px; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; text-align: center; }
-.band { width: 100%; display: flex; justify-content: space-between; align-items: center; background: #127a8f; color: #fff; border: 0; font: inherit; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; padding: 8px 12px; cursor: pointer; text-align: left; }
+.phone { width: 387px; background: #fff; color: #2b3338; border-radius: 26px; overflow: hidden; border: 6px solid #0f1416; font-family: var(--f-body, system-ui, sans-serif); font-size: 14px; box-sizing: border-box; }
+.nav { background: #24323a; color: #fff; display: grid; grid-template-columns: 28px 1fr 28px; align-items: center; padding: 12px 8px; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; text-align: center; }
+.band { width: 100%; display: flex; justify-content: space-between; align-items: center; background: #127a8f; color: #fff; border: 0; font: inherit; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; padding: 11px 16px; cursor: pointer; text-align: left; }
 .band .chev { transition: transform .2s; }
 .band[aria-expanded="false"] .chev { transform: rotate(-90deg); }
-.pad { padding: 10px 12px; }
-.note { margin: 0 0 10px; color: #4a5358; font-size: 11px; line-height: 1.45; }
-.total { display: flex; justify-content: space-between; font-weight: 600; font-size: 11.5px; margin-bottom: 6px; }
+.pad { padding: 14px 16px; }
+.note { margin: 0 0 14px; color: #4a5358; font-size: 13px; line-height: 1.45; }
+.total { display: flex; justify-content: space-between; font-weight: 600; font-size: 13.5px; margin-bottom: 8px; }
 .coin { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #e6b417; margin-right: 4px; vertical-align: -1px; }
-.bar { height: 7px; background: #e5eaec; border-radius: 4px; overflow: hidden; }
+.bar { height: 9px; background: #e5eaec; border-radius: 4px; overflow: hidden; }
 .bar i { display: block; height: 100%; background: #127a8f; border-radius: 4px; transition: width .4s ease; }
 .acts { list-style: none; margin: 12px 0 0; padding: 0; }
 .acts li + li { margin-top: 2px; }
-.or { text-align: center; font-size: 9.5px; color: #7d878c; letter-spacing: .1em; margin: 2px 0; }
-.act { width: 100%; display: grid; grid-template-columns: 46px 22px 1fr auto; gap: 6px; align-items: center; background: none; border: 0; padding: 8px 2px; font: inherit; color: inherit; cursor: pointer; text-align: left; border-radius: 6px; }
+.or { text-align: center; font-size: 11px; color: #7d878c; letter-spacing: .1em; margin: 2px 0; }
+.act { width: 100%; display: grid; grid-template-columns: 56px 26px 1fr auto; gap: 8px; align-items: center; background: none; border: 0; padding: 10px 2px; font: inherit; color: inherit; cursor: pointer; text-align: left; border-radius: 6px; }
 .act:hover { background: #f1f5f6; }
-.flag { visibility: hidden; background: #127a8f; color: #fff; font-size: 9px; padding: 3px 6px; clip-path: polygon(0 0, 82% 0, 100% 50%, 82% 100%, 0 100%); }
+.flag { visibility: hidden; background: #127a8f; color: #fff; font-size: 11px; padding: 4px 8px; clip-path: polygon(0 0, 82% 0, 100% 50%, 82% 100%, 0 100%); }
 .act[data-active="true"] .flag { visibility: visible; }
-svg { width: 20px; height: 20px; fill: none; stroke: #127a8f; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+svg { width: 24px; height: 24px; fill: none; stroke: #127a8f; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .name { font-weight: 600; }
-.val { font-variant-numeric: tabular-nums; font-size: 11px; color: #4a5358; }
-.hint { font-size: 10.5px; color: #6c767b; margin: 6px 0 0; }
-.item { padding: 8px 12px; border-bottom: 1px solid #e7ecee; }
-.item .t { display: flex; justify-content: space-between; gap: 10px; color: #127a8f; font-size: 11px; }
+.val { font-variant-numeric: tabular-nums; font-size: 13px; color: #4a5358; }
+.hint { font-size: 12px; color: #6c767b; margin: 6px 0 0; }
+.item { padding: 11px 16px; border-bottom: 1px solid #e7ecee; }
+.item .t { display: flex; justify-content: space-between; gap: 10px; color: #127a8f; font-size: 13px; }
 .item .t b { color: #2b3338; font-weight: 600; }
-.item .s { display: grid; grid-template-columns: 1fr auto 60px; gap: 8px; align-items: center; margin-top: 6px; font-size: 10.5px; color: #4a5358; }
+.item .s { display: grid; grid-template-columns: 1fr auto 80px; gap: 10px; align-items: center; margin-top: 8px; font-size: 12.5px; color: #4a5358; }
 .mini { height: 5px; background: #e5eaec; border-radius: 3px; overflow: hidden; }
 .mini i { display: block; height: 100%; background: #127a8f; }
-.check { width: 14px; height: 14px; border-radius: 50%; background: #3fae49; color: #fff; display: grid; place-items: center; font-size: 9px; justify-self: end; }
+.check { width: 18px; height: 18px; border-radius: 50%; background: #3fae49; color: #fff; display: grid; place-items: center; font-size: 9px; justify-self: end; }
 [hidden] { display: none !important; }
 @media (prefers-reduced-motion: reduce) { .bar i, .band .chev { transition: none; } }
 `;
@@ -63,7 +67,7 @@ class VpRewards extends HTMLElement {
   connectedCallback() {
     const uid = Math.random().toString(36).slice(2, 7);
     const root = mount(this, css, `
-      <div class="phone">
+      <div class="fit"><div class="phone">
         <div class="nav"><span aria-hidden="true">‹</span><span>How to earn</span><span></span></div>
         <button type="button" class="band" aria-expanded="true" aria-controls="a-${uid}">Activity <span class="chev" aria-hidden="true">▾</span></button>
         <div class="pad" id="a-${uid}">
@@ -81,8 +85,16 @@ class VpRewards extends HTMLElement {
           <div id="s${si}-${uid}" ${s.open ? '' : 'hidden'}>
             ${s.items.map((it) => `<div class="item"><div class="t"><span>${it.t}</span><b>${it.p}</b></div><div class="s"><span>${it.s}</span>${it.done ? '<span></span><span class="check" aria-label="Done">✓</span>' : `<span>${it.v} / ${it.g}</span><span class="mini"><i style="width:${(it.v / it.g) * 100}%"></i></span>`}</div></div>`).join('')}
           </div>`).join('')}
-      </div>`);
+      </div></div>`);
     if (!root) return;
+    // scale the whole phone to the column, and keep the space it takes in step (sections open and close)
+    const fit = root.querySelector('.fit'), phone = root.querySelector('.phone');
+    const size = () => {
+      const k = Math.min(1, this.clientWidth / phone.offsetWidth);
+      phone.style.transform = `scale(${k})`;
+      fit.style.width = `${phone.offsetWidth * k}px`; fit.style.height = `${phone.offsetHeight * k}px`;
+    };
+    new ResizeObserver(size).observe(this); new ResizeObserver(size).observe(phone); size();
     this.acts = ACTS.map((a) => ({ ...a }));
     this.root = root;
     root.querySelectorAll('.band').forEach((b) => b.addEventListener('click', () => {
