@@ -18,12 +18,17 @@ const EASES = ['Cubic', 'Circ', 'Expo', 'Quad', 'Quart', 'Quint', 'Sine', 'Back'
 const css = `
 :host { display: block; }
 ${focusCss}
-.page { background: #fff; color: #555; border-radius: 4px; padding: 22px 18px 18px; text-align: center; font-family: var(--f-body, system-ui, sans-serif); }
+.page { background: #fff; color: #555; border-radius: 4px; padding: 22px 18px 18px; text-align: center; font-family: var(--f-body, system-ui, sans-serif);
+  /* the same frame as the Art@60fps piece beside it, with everything centred in it */
+  aspect-ratio: 1 / 0.92; max-width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; }
 h3 { margin: 0 0 8px; font-weight: 400; font-size: clamp(30px, 6vw, 44px); line-height: 1.05; display: inline-block;
   background: linear-gradient(90deg, #a35cf0, #f0478c 60%, #a35cf0); -webkit-background-clip: text; background-clip: text; color: transparent; }
 p { margin: 0 0 4px; font-size: 13px; }
 .sm { font-size: 11.5px; color: #777; margin-bottom: 14px; }
-.ctl { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+/* the controls as one even block: the animation across the top, duration and easing side by side, then the button */
+.ctl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; width: min(100%, 300px); margin-top: 6px; }
+.ctl select:first-of-type, .ctl button { grid-column: 1 / -1; }
+.ctl select { width: 100%; min-width: 0; }
 label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 select { font: inherit; font-size: 12.5px; color: #333; padding: 6px 8px; border: 1px solid #c9c9c9; border-radius: 3px; background: #fff; }
 button { font: inherit; font-size: 12.5px; font-weight: 600; color: #e0367a; background: #fff; border: 1px solid #e0367a; border-radius: 3px; padding: 6px 14px; cursor: pointer; }
