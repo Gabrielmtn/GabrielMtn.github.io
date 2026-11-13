@@ -5,7 +5,7 @@ const css = `
 :host { display: block; container-type: inline-size; }
 @container (max-width: 340px) { .x { display: none; } }
 .bar { white-space: nowrap; display: flex; justify-content: space-between; align-items: center; gap: 8px; margin: 0 0 10px;
-  font: 500 11.5px/1.2 var(--f-mono, ui-monospace, monospace); letter-spacing: .08em; text-transform: uppercase; color: var(--muted, #a3aca8); }
+  font: 500 12px/1.2 var(--f-mono, ui-monospace, monospace); letter-spacing: .1em; text-transform: uppercase; color: var(--muted, #a3aca8); }
 .state { display: inline-flex; align-items: center; gap: 8px; }
 .dot { width: 7px; height: 7px; border-radius: 50%; background: #5fd38d; box-shadow: 0 0 0 3px rgba(95,211,141,.16); }
 :host([showing="original"]) .dot { background: var(--muted, #a3aca8); box-shadow: none; }

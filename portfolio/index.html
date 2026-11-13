@@ -14,7 +14,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600&display=swap">
 <style>
-  /* Layout: a light table. Each project is a band: a sticky label card on the left, its artifacts laid out on the right. Dark on purpose, to match the badge wall homepage. */
+  /* The homepage's colors and type. Each project opens with a badge: its company's color across the top with the
+     slot punched for the clip, its facts in the badge's DATE / ROLE fields, and the two-tone band along the bottom.
+     Each project is laid out to suit its work, so no two look the same. */
   :root {
     color-scheme: dark;
     --wall: #13171a;      /* page */
@@ -41,7 +43,8 @@
   .wrap { max-width: 1240px; margin: 0 auto; padding-left: var(--gut-l); padding-right: var(--gut-r); }
   .skip { position: absolute; left: -9999px; top: 8px; background: var(--accent); color: var(--accent-ink); padding: 8px 14px; border-radius: 4px; z-index: 20; font-weight: 600; }
   .skip:focus { left: var(--gut-l); }
-  .mono { font-family: var(--f-mono); font-size: 12.5px; letter-spacing: 0.1em; text-transform: uppercase; }
+  /* the one label style: small mono caps */
+  .mono { font-family: var(--f-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; line-height: 1.5; }
 
   /* ---------- top ---------- */
   .top { padding-block: 28px 0; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
@@ -51,31 +54,45 @@
   .top a[aria-current="page"] { color: var(--ink); border-bottom: 1px solid var(--accent); }
 
   .hero { padding-block: clamp(56px, 10vw, 112px) clamp(40px, 6vw, 64px); display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 40px 64px; align-items: end; border-bottom: 1px solid var(--line); }
-  .hero h1 { font-family: var(--f-display); font-variation-settings: "wdth" 140; font-weight: 800; font-size: clamp(3rem, 9vw, 6.5rem); line-height: 0.92; letter-spacing: -0.02em; margin: 0 0 24px; }
+  .hero h1 { font-family: var(--f-display); font-variation-settings: "wdth" 125; font-weight: 850; font-size: clamp(2.4rem, 5.6vw, 4.4rem); line-height: 0.98; letter-spacing: -0.01em; margin: 0 0 24px; text-wrap: balance; }
   .hero p { margin: 0; max-width: 54ch; color: var(--muted); font-size: 1.1rem; }
   .hero p strong { color: var(--ink); font-weight: 600; }
   .index { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
   .index li { border-bottom: 1px solid var(--line); }
-  .index a { display: grid; grid-template-columns: 7.5em minmax(0, 1fr) auto; gap: 12px; align-items: baseline; padding: 11px 2px; text-decoration: none; color: var(--ink); }
-  .index a span:first-child { color: var(--muted); font-variant-numeric: tabular-nums; }
-  .index a span:last-child { color: var(--muted); transition: transform .2s ease, color .2s ease; }
-  .index a:hover span:last-child, .index a:focus-visible span:last-child { transform: translateY(2px); color: var(--accent); }
+  .index a { display: grid; grid-template-columns: 8.5em minmax(0, 1fr); gap: 12px; align-items: baseline; padding: 11px 2px; text-decoration: none; color: var(--ink); }
+  .index a span { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .index a:hover b, .index a:focus-visible b { text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 4px; }
   .index b { font-weight: 600; }
+  .index i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 10px; background: var(--c); vertical-align: -0.02em; }
 
   /* ---------- project bands ---------- */
-  .project { display: grid; grid-template-columns: minmax(0, 330px) minmax(0, 1fr); gap: 40px 64px; padding-block: clamp(56px, 8vw, 96px); border-bottom: 1px solid var(--line); scroll-margin-top: 12px; }
+  .project { display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); gap: 40px 64px; padding-block: clamp(56px, 8vw, 96px); border-bottom: 1px solid var(--line); scroll-margin-top: 12px; }
   .label { position: sticky; top: calc(24px + env(safe-area-inset-top, 0px)); align-self: start; }
-  .label .when { color: var(--muted); margin: 0 0 14px; font-variant-numeric: tabular-nums; }
-  .label h2 { font-family: var(--f-display); font-variation-settings: "wdth" 125; font-weight: 750; font-size: clamp(2rem, 3.6vw, 2.75rem); line-height: 1; letter-spacing: -0.01em; margin: 0 0 10px; text-wrap: balance; }
-  .label .role { margin: 0 0 22px; color: var(--muted); font-size: 0.95rem; }
-  .label .thesis { font-size: 1.2rem; line-height: 1.4; font-weight: 500; margin: 0 0 18px; text-wrap: balance; }
+
+  /* the badge that opens each project */
+  .badge { --c: #444; --band: #888; --band2: #555; position: relative; background: var(--panel); border-radius: 14px; overflow: hidden;
+    padding: 64px clamp(20px, 2.4vw, 28px) 30px; margin: 0 0 26px; box-shadow: 0 14px 34px rgba(0, 0, 0, 0.35);
+    background-image: linear-gradient(var(--c), var(--c)), linear-gradient(90deg, var(--band) 0 55%, var(--band2) 55% 100%);
+    background-size: 100% 40px, 100% 8px; background-position: top, bottom; background-repeat: no-repeat; }
+  .badge::before { content: ""; position: absolute; top: 13px; left: 50%; width: 64px; height: 12px; margin-left: -32px; border-radius: 6px;
+    background: var(--wall); box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.5); }   /* the slot for the clip */
+  .badge h2 { font-family: var(--f-display); font-variation-settings: "wdth" 125; font-weight: 750; font-size: clamp(2rem, 3.4vw, 2.6rem); line-height: 1; letter-spacing: -0.01em; margin: 0 0 18px; text-wrap: balance; }
+  .fields { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 18px; margin: 0; }
+  .fields dt { color: var(--muted); padding-top: 2px; }
+  .fields dd { margin: 0; font-size: 0.95rem; color: var(--ink); }
+  .label .thesis { font-size: 1.2rem; line-height: 1.4; font-weight: 500; margin: 0 0 16px; text-wrap: pretty; }
   .label .body { margin: 0 0 18px; color: #c9d0cc; font-size: 0.98rem; }
+  .swirl  { --c: #c2410c; --band: #ff9e5e; --band2: #1d4ed8; }
+  .qb     { --c: #3d1f7a; --band: #a98cf0; --band2: #2a7de1; }
+  .vp     { --c: #d81e2c; --band: #ffe1dc; --band2: #8f0f1b; }
+  .akamai { --c: #0d0f12; --band: #0096d6; --band2: #f28a1a; }
+  .akamai.badge { border: 1px solid var(--line); }
+  .exp    { --c: #e8459b; --band: #ffb31a; --band2: #0f8b8d; }
   .facts { list-style: none; margin: 0 0 24px; padding: 0; display: grid; gap: 8px; }
   .facts li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px; font-size: 0.95rem; color: #c9d0cc; }
   .facts li::before { content: ""; width: 6px; height: 6px; margin-top: 0.62em; background: var(--accent); border-radius: 1px; }
   .facts strong { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
-  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 26px; padding: 0; list-style: none; }
-  .tags li { font-family: var(--f-mono); font-size: 11.5px; letter-spacing: 0.06em; color: var(--muted); border: 1px solid var(--line); padding: 3px 8px; border-radius: 3px; }
+  .tags { margin: 0 0 26px; color: var(--muted); }
   .links { display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: center; }
   .btn { display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: var(--accent-ink); text-decoration: none; font-weight: 600; padding: 9px 16px; border-radius: 5px; font-size: 0.95rem; }
   .btn:hover { filter: brightness(1.08); }
@@ -93,9 +110,28 @@
   .mat.diagram svg { display: block; width: 100%; height: auto; }
   .hero p.note { margin-top: 18px; font-size: 0.95rem; color: var(--muted); }
   .hero p.note b { color: var(--ink); font-weight: 600; }
-  figcaption code { font: inherit; color: var(--accent); white-space: nowrap; }
+
   pf-artifact, swirl-launcher, qb-pipeline, vp-api-docs, vp-rewards, akamai-traffic, scan-cadence, scan-calendar, reanimate-demo, css-sphere { display: block; min-width: 0; }
-  figcaption { margin-top: 10px; font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.03em; color: var(--muted); line-height: 1.5; }
+  figcaption { margin-top: 10px; font-size: 14px; color: var(--muted); line-height: 1.5; }
+
+  /* ---------- each project in its own shape ---------- */
+  /* Swirl: the badge and story side by side across the top, then the painting screen large with the prototype beside it */
+  .p-wide { grid-template-columns: minmax(0, 1fr); }
+  .p-wide .label { position: static; display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); gap: 0 64px; align-items: start; }
+  .p-wide .label .badge { margin: 0; }
+  .p-wide .table { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .p-wide .table figure:first-child { grid-column: span 4; }
+  .p-wide .table figure.four { grid-column: span 2; align-self: end; }
+  /* Quickbase: the canvas runs the full width, the badge and story beneath it */
+  .p-canvas { grid-template-columns: minmax(0, 1fr); }
+  .p-canvas .table { order: -1; }
+  .p-canvas .label { position: static; display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); gap: 0 64px; align-items: start; }
+  .p-canvas .label .badge { margin: 0; }
+  /* Akamai: mirrored, the work on the left and the badge on the right */
+  .p-flip { grid-template-columns: minmax(0, 1fr) minmax(0, 360px); }
+  .p-flip .table { order: -1; }
+  /* Experiments: one compact row */
+  .p-row { grid-template-columns: minmax(0, 360px) minmax(0, 1fr); align-items: start; }
 
   /* ---------- end ---------- */
   .end { padding-block: clamp(64px, 10vw, 120px); display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px 48px; align-items: end; }
@@ -106,13 +142,16 @@
   footer.wrap { padding-block: 0 40px; color: var(--muted); }
 
   @media (max-width: 900px) {
-    .hero, .project, .end { grid-template-columns: minmax(0, 1fr); }
+    .hero, .project, .end, .p-wide .label, .p-canvas .label { grid-template-columns: minmax(0, 1fr); }
     .label { position: static; }
+    .p-flip .table { order: 0; }
+    .p-wide .label .badge, .p-canvas .label .badge { margin: 0 0 26px; }
+    .p-wide .table figure:first-child, .p-wide .table figure.four { grid-column: span 6; }
     .contact { text-align: left; }
   }
   @media (max-width: 560px) {
     figure.half, figure.two, figure.four { grid-column: span 6; }
-    .index a { grid-template-columns: 6.2em minmax(0, 1fr) auto; }
+    .index a { grid-template-columns: 7em minmax(0, 1fr); }
   }
 </style>
 </head>
@@ -120,7 +159,7 @@
 <a class="skip" href="#work">Skip to the work</a>
 
 <div class="wrap top mono">
-  <a href="../">← gabrielmartin.dev</a>
+  <a href="../">Gabriel Martin · gabrielmartin.dev</a>
   <nav aria-label="Site">
     <a href="./" aria-current="page">Portfolio</a>
     <a href="../case-studies/">Case studies</a>
@@ -130,28 +169,32 @@
 
 <header class="wrap hero">
   <div>
-    <h1>Portfolio</h1>
-    <p><strong>UX designer and front-end engineer, 15 years.</strong> I design products that work for everyone, then help engineering build them that way: accessibility (WCAG 2.1 AA, Section 508, VPAT/ACR), design systems, and interactive prototypes. This page is the work itself. The <a href="../case-studies/">case studies</a> are the long version.</p>
-    <p class="note">Every artifact below is a working rebuild, written as a standalone web component. Use <b>Compare original</b> to see the screenshot it came from.</p>
+    <p class="mono" style="color:var(--muted); margin:0 0 16px">Portfolio</p>
+    <!-- DRAFT copy: rewrite in your own voice -->
+    <h1>Things I designed, rebuilt so you can use them.</h1>
+    <p><strong>UX designer and front-end engineer, 15 years.</strong> Mostly accessibility (WCAG 2.1 AA, Section 508, VPAT/ACR), design systems and prototypes. Every piece below is a working rebuild you can click, type into and drag. The <a href="../case-studies/">case studies</a> tell the longer stories.</p>
+    <p class="note">Use <b>Compare original</b> on any piece to see the screenshot it was rebuilt from.</p>
   </div>
   <ol class="index" aria-label="Projects on this page">
-    <li><a href="#swirl-together"><span class="mono">2022–2026</span><b>Swirl Together</b><span aria-hidden="true">↓</span></a></li>
-    <li><a href="#quickbase"><span class="mono">2023</span><b>Quickbase Pipelines</b><span aria-hidden="true">↓</span></a></li>
-    <li><a href="#virgin-pulse"><span class="mono">2021–2023</span><b>Virgin Pulse</b><span aria-hidden="true">↓</span></a></li>
-    <li><a href="#akamai"><span class="mono">2019</span><b>Akamai</b><span aria-hidden="true">↓</span></a></li>
-    <li><a href="#experiments"><span class="mono">2014–2015</span><b>Experiments</b><span aria-hidden="true">↓</span></a></li>
+    <li><a href="#swirl-together"><span class="mono">2022–2026</span><b><i aria-hidden="true" style="--c:#c2410c"></i>Swirl Together</b></a></li>
+    <li><a href="#quickbase"><span class="mono">2023</span><b><i aria-hidden="true" style="--c:#3d1f7a"></i>Quickbase Pipelines</b></a></li>
+    <li><a href="#virgin-pulse"><span class="mono">2021–2023</span><b><i aria-hidden="true" style="--c:#d81e2c"></i>Virgin Pulse</b></a></li>
+    <li><a href="#akamai"><span class="mono">2019</span><b><i aria-hidden="true" style="--c:#0096d6"></i>Akamai</b></a></li>
+    <li><a href="#experiments"><span class="mono">2014–2015</span><b><i aria-hidden="true" style="--c:#e8459b"></i>Experiments</b></a></li>
   </ol>
 </header>
 
 <main id="work">
 
   <!-- Swirl Together -->
-  <section class="wrap project" id="swirl-together" aria-labelledby="st-h">
+  <section class="wrap project p-wide" id="swirl-together" aria-labelledby="st-h">
     <div class="label">
-      <p class="when mono">2022–2026 · Own product</p>
-      <h2 id="st-h">Swirl Together</h2>
-      <p class="role">Designer and engineer, end to end</p>
-      <p class="thesis">An art therapy painting app, taken from a CodePen prototype to Steam Next Fest.</p>
+      <div class="badge swirl">
+        <h2 id="st-h">Swirl Together</h2>
+        <dl class="fields"><dt class="mono">Date</dt><dd>2022–2026</dd><dt class="mono">Field</dt><dd>Own product</dd><dt class="mono">Role</dt><dd>Designer and engineer, end to end</dd></dl>
+      </div>
+      <div>
+      <p class="thesis">I took a fluid-sim CodePen to Steam Next Fest as a painting app built for art therapy.</p>
       <p class="body">It started as a fork of Pavel Dobryakov's WebGL fluid simulation. Testing with art therapists showed where the information architecture fell short, so I reshaped inputs to prevent errors, rewrote labels to read at a glance, and made presets glide every slider into place.</p>
       <ul class="facts">
         <li><span>Calm multiplayer painting for up to <strong>8</strong> people, in the browser and on desktop</span></li>
@@ -159,13 +202,14 @@
         <li><span>A simple layout for beginners; the full parameter system for power users</span></li>
         <li><span>Shown in Steam Next Fest, October 2026</span></li>
       </ul>
-      <ul class="tags" aria-label="Tools and methods"><li>WebGL2</li><li>Vanilla JS</li><li>Electron</li><li>On-device ML</li><li>User testing</li><li>WCAG audit</li></ul>
+      <p class="tags mono" aria-label="Tools and methods">WebGL2 · Vanilla JS · Electron · On-device ML · User testing · WCAG audit</p>
       <div class="links"><a class="btn" href="https://swirltogether.com">Try the playtest <span aria-hidden="true">↗</span></a></div>
+      </div>
     </div>
     <div class="table">
       <figure>
         <swirl-launcher src="https://swirltogether.com"><img src="img/swirl-2026.png" width="627" height="351" alt="Swirl Together's painting screen: a bold orange and blue fluid swirl with the letters GM masked out of it, framed by walnut and copper control panels with dials for viscosity, curl, and brush size."></swirl-launcher>
-        <figcaption>Swirl Together, 2026. Opens the live playtest in a dialog. <code>&lt;swirl-launcher&gt;</code></figcaption>
+        <figcaption>Swirl Together, 2026. Opens the live playtest in a dialog.</figcaption>
       </figure>
       <figure class="four">
         <div class="mat"><img src="img/swirl-prototype.png" width="563" height="305" alt="Early prototype: a magenta and green fluid painting beside a plain black panel of color pickers and unlabeled sliders."></div>
@@ -175,19 +219,22 @@
   </section>
 
   <!-- Quickbase -->
-  <section class="wrap project" id="quickbase" aria-labelledby="qb-h">
+  <section class="wrap project p-canvas" id="quickbase" aria-labelledby="qb-h">
     <div class="label">
-      <p class="when mono">2023 · No-code automation</p>
-      <h2 id="qb-h">Quickbase Pipelines</h2>
-      <p class="role">Sr. Interaction Designer (contract)</p>
-      <p class="thesis">A node-based way to build automations, prototyped as working software instead of static mockups.</p>
-      <p class="body">Pipelines lets Quickbase customers connect their data to other services and automate the work in between. The existing builder was hard to read and hard to learn. I prototyped a node-based interaction model in LiteGraph, so stakeholders and testers could drag, connect, and rearrange steps on a live canvas instead of reacting to pictures of one.</p>
+      <div class="badge qb">
+        <h2 id="qb-h">Quickbase Pipelines</h2>
+        <dl class="fields"><dt class="mono">Date</dt><dd>2023</dd><dt class="mono">Field</dt><dd>No-code automation</dd><dt class="mono">Role</dt><dd>Sr. Interaction Designer (contract)</dd></dl>
+      </div>
+      <div>
+      <p class="thesis">I prototyped Quickbase's new automation builder as a live node canvas, and 95% of beta users liked it.</p>
+      <p class="body">Pipelines lets Quickbase customers connect their data to other services and automate the work in between. The existing builder was hard to read and hard to learn. I prototyped a node-based interaction model in LiteGraph, so stakeholders and testers could drag, connect, and rearrange real steps and react to how it actually felt to use.</p>
       <ul class="facts">
         <li><span>Led wireframing and interactive prototyping for the new builder</span></li>
         <li><span>Ran workshops with SMEs, engineers, and UX researchers to set the technical scope</span></li>
         <li><span><strong>95%</strong> positive feedback from users in the private beta</span></li>
       </ul>
-      <ul class="tags" aria-label="Tools and methods"><li>Interaction design</li><li>LiteGraph</li><li>Prototyping</li><li>Workshops</li><li>No-code</li></ul>
+      <p class="tags mono" aria-label="Tools and methods">Interaction design · LiteGraph · Prototyping · Workshops · No-code</p>
+      </div>
     </div>
     <div class="table">
       <figure>
@@ -249,7 +296,7 @@
             </g>
           </svg>
         </qb-pipeline></pf-artifact>
-        <figcaption>A working sketch of the node model: drag steps, change the budget, run it. Redrawn for this page. <code>&lt;qb-pipeline&gt;</code></figcaption>
+        <figcaption>A working sketch of the node model: drag steps, change the budget, run it. Redrawn for this page.</figcaption>
       </figure>
     </div>
   </section>
@@ -257,10 +304,12 @@
   <!-- Virgin Pulse -->
   <section class="wrap project" id="virgin-pulse" aria-labelledby="vp-h">
     <div class="label">
-      <p class="when mono">2021–2023 · Enterprise wellness</p>
-      <h2 id="vp-h">Virgin Pulse</h2>
-      <p class="role">UX Design Engineer, leading accessibility strategy</p>
-      <p class="thesis">Accessibility training that gave engineers and designers one shared language.</p>
+      <div class="badge vp">
+        <h2 id="vp-h">Virgin Pulse</h2>
+        <dl class="fields"><dt class="mono">Date</dt><dd>2021–2023</dd><dt class="mono">Field</dt><dd>Enterprise wellness</dd><dt class="mono">Role</dt><dd>UX Design Engineer, leading accessibility strategy</dd></dl>
+      </div>
+      <div>
+      <p class="thesis">I taught 400 engineers, designers and PMs to build pages that hold up at 400% zoom.</p>
       <p class="body">A Bank of America contract required Section 508 compliance and the effort had stalled. I built the shared standards, then taught both sides how to use them.</p>
       <ul class="facts">
         <li><span><strong>400+</strong> engineers, designers, and PMs trained across two curricula</span></li>
@@ -268,17 +317,18 @@
         <li><span>Annotation library for writing a11y acceptance criteria engineers could build without guessing</span></li>
         <li><span>Also designed for the rewards, pattern library, and partner API teams</span></li>
       </ul>
-      <ul class="tags" aria-label="Tools and methods"><li>Section 508</li><li>WCAG 2.1 AA</li><li>Angular</li><li>Training design</li><li>Design systems</li></ul>
-      <div class="links"><a class="btn" href="../case-studies/virgin-pulse/">Read the case study <span aria-hidden="true">→</span></a></div>
+      <p class="tags mono" aria-label="Tools and methods">Section 508 · WCAG 2.1 AA · Angular · Training design · Design systems</p>
+      <div class="links"><a class="btn" href="../case-studies/virgin-pulse/">Read the case study</a></div>
+      </div>
     </div>
     <div class="table">
       <figure>
         <pf-artifact><vp-api-docs><img src="img/vp-partner-api.png" width="458" height="671" alt="Partner API documentation page prototype with a navigation column, explanatory text in the middle, and example JSON responses in a dark code panel."></vp-api-docs></pf-artifact>
-        <figcaption>Partner API documentation prototype, 2022. The example response follows the section you're reading. <code>&lt;vp-api-docs&gt;</code></figcaption>
+        <figcaption>Partner API documentation prototype, 2022. The example response follows the section you're reading.</figcaption>
       </figure>
       <figure class="two">
         <pf-artifact><vp-rewards><img src="img/vp-rewards.png" width="212" height="570" alt="Mobile prototype of a How to Earn screen listing steps, active minutes, and workout minutes with progress bars toward daily, monthly, and one-time rewards."></vp-rewards></pf-artifact>
-        <figcaption>Rewards for Steps prototype, 2022. Tap an activity to log it. <code>&lt;vp-rewards&gt;</code></figcaption>
+        <figcaption>Rewards for Steps prototype, 2022. Tap an activity to log it.</figcaption>
       </figure>
       <figure class="four">
         <div class="mat"><img src="img/vp-training.png" width="1005" height="273" alt="Overview of about twenty slides from the WCAG Resize and Reflow training deck, navy slides with layout diagrams, breakpoint grids, and flexbox examples."></div>
@@ -288,60 +338,66 @@
   </section>
 
   <!-- Akamai -->
-  <section class="wrap project" id="akamai" aria-labelledby="ak-h">
+  <section class="wrap project p-flip" id="akamai" aria-labelledby="ak-h">
     <div class="label">
-      <p class="when mono">2019 · Infosec, federal cloud</p>
-      <h2 id="ak-h">Akamai</h2>
-      <p class="role">Sr. UI/UX Developer and Designer, embedded with the infosec team</p>
-      <p class="thesis">A FedRAMP vulnerability tracker built around how the compliance team actually worked.</p>
+      <div class="badge akamai">
+        <h2 id="ak-h">Akamai</h2>
+        <dl class="fields"><dt class="mono">Date</dt><dd>2019</dd><dt class="mono">Field</dt><dd>Infosec, federal cloud</dd><dt class="mono">Role</dt><dd>Sr. UI/UX Developer and Designer, embedded with the infosec team</dd></dl>
+      </div>
+      <div>
+      <p class="thesis">I pulled a FedRAMP scanning workflow out of five different systems and into one tool.</p>
       <p class="body">Product owners had to keep up a strict scanning cadence, but the data lived in scanners, internal APIs, calendars, spreadsheets, and NIST.gov. I mapped that workflow and pulled it into one tool.</p>
       <ul class="facts">
         <li><span>Task analysis and contextual inquiry with <strong>8</strong> people from compliance, engineering, and management</span></li>
         <li><span>Remote and in-person card sorts shaped the information architecture</span></li>
         <li><span>Three rounds of prototypes, built in Rails so the team could use them</span></li>
       </ul>
-      <ul class="tags" aria-label="Tools and methods"><li>Contextual inquiry</li><li>Card sorting</li><li>Information architecture</li><li>Ruby on Rails</li></ul>
-      <div class="links"><a class="btn" href="../case-studies/akamai/">Read the case study <span aria-hidden="true">→</span></a></div>
+      <p class="tags mono" aria-label="Tools and methods">Contextual inquiry · Card sorting · Information architecture · Ruby on Rails</p>
+      <div class="links"><a class="btn" href="../case-studies/akamai/">Read the case study</a></div>
+      </div>
     </div>
     <div class="table">
       <figure>
         <pf-artifact><akamai-traffic><img src="img/akamai-traffic.png" width="658" height="422" alt="Akamai Traffic Statistics dashboard in black and orange, with totals for networks, locations, and servers and tables of peak and lifetime usage."></akamai-traffic></pf-artifact>
-        <figcaption>Akamai traffic statistics, 2019. <code>&lt;akamai-traffic&gt;</code></figcaption>
+        <figcaption>Akamai traffic statistics, 2019.</figcaption>
       </figure>
       <figure class="two">
         <pf-artifact><scan-cadence><img src="img/akamai-cadence.png" width="304" height="315" alt="Scan summary card with concentric progress rings for low, medium, and critical findings, 58 percent complete."></scan-cadence></pf-artifact>
-        <figcaption>Scan cadence concept. Remediation works critical findings first. <code>&lt;scan-cadence&gt;</code></figcaption>
+        <figcaption>Scan cadence concept. Remediation works critical findings first.</figcaption>
       </figure>
       <figure class="four">
         <pf-artifact><scan-calendar><img src="img/akamai-calendar.png" width="569" height="323" alt="Compliance calendar wireframe showing each product's scans across months, with flags for a scan due in one day and a missed scan."></scan-calendar></pf-artifact>
-        <figcaption>Compliance calendar wireframe. Choose a marker for its detail. <code>&lt;scan-calendar&gt;</code></figcaption>
+        <figcaption>Compliance calendar wireframe. Choose a marker for its detail.</figcaption>
       </figure>
     </div>
   </section>
 
 
   <!-- Experiments -->
-  <section class="wrap project" id="experiments" aria-labelledby="ex-h">
+  <section class="wrap project p-row" id="experiments" aria-labelledby="ex-h">
     <div class="label">
-      <p class="when mono">2014–2015 · Open source</p>
-      <h2 id="ex-h">Experiments</h2>
-      <p class="role">Where the motion and performance habits started</p>
-      <p class="thesis">Small libraries and CSS art, made to learn how the browser renders.</p>
+      <div class="badge exp">
+        <h2 id="ex-h">Experiments</h2>
+        <dl class="fields"><dt class="mono">Date</dt><dd>2014–2015</dd><dt class="mono">Field</dt><dd>Open source</dd><dt class="mono">Role</dt><dd>Author</dd></dl>
+      </div>
+      <div>
+      <p class="thesis">Two small open-source projects from 2015, made to learn how the browser draws a frame.</p>
       <p class="body">ReAnimate.css added the missing "small" animation type to Animate.css, plus iteration and timing controls. Art@60fps pushed HAML and SCSS loops to see how far pure CSS could go.</p>
-      <ul class="tags" aria-label="Tools and methods"><li>CSS animation</li><li>SCSS</li><li>HAML</li><li>CodePen</li></ul>
+      <p class="tags mono" aria-label="Tools and methods">CSS animation · SCSS · HAML · CodePen</p>
       <div class="links">
         <a href="../reanimate/">ReAnimate.css</a>
-        <a href="https://codepen.io/Gabrielmtn/pen/jEXOjw">Art@60fps on CodePen ↗</a>
+        <a href="https://codepen.io/Gabrielmtn/pen/jEXOjw">Art@60fps on CodePen</a>
+      </div>
       </div>
     </div>
     <div class="table">
       <figure class="half">
         <pf-artifact><reanimate-demo><img src="img/reanimate.png" width="556" height="339" alt="ReAnimate.css homepage with a pink gradient logo and dropdowns for animation type, duration, and easing next to an Animate it button."></reanimate-demo></pf-artifact>
-        <figcaption>ReAnimate.css, 2015. <code>&lt;reanimate-demo&gt;</code></figcaption>
+        <figcaption>ReAnimate.css, 2015.</figcaption>
       </figure>
       <figure class="half">
         <pf-artifact><css-sphere><img src="img/art-60fps.png" width="411" height="395" alt="A sphere drawn from red, orange, and yellow dashes on a grey background."></css-sphere></pf-artifact>
-        <figcaption>Art@60fps, 2015, rebuilt with CSS 3D transforms. <code>&lt;css-sphere&gt;</code></figcaption>
+        <figcaption>Art@60fps, 2015, rebuilt with CSS 3D transforms.</figcaption>
       </figure>
     </div>
   </section>
