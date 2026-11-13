@@ -1,8 +1,13 @@
-// <vp-api-docs> Rebuild of the Partner API documentation prototype:
-// three-pane docs where the example response follows the section you read.
+// <vp-api-docs> Rebuild of the Partner API documentation prototype, as the scrolling page it was: a fixed nav on
+// the left, every section one after another in the middle, and the dark example column on the right, with each
+// example response lined up beside its section and holding its place while you read it. The nav jumps to a section
+// and marks the one you're reading.
 import { mount, focusCss } from './shared.js';
 
 const SECTIONS = [
+  { group: 'API Basics', id: 'basics', title: 'API Basics',
+    body: `<p>The Virgin Pulse Partner API enables applications to interact with the Virgin Pulse platform programmatically.</p>
+      <p>The Partner API is organized around the principles of REST, with all requests and responses encoded as JSON. Standard HTTP response codes are used to indicate API errors and successful requests. All requests to the API should be made over SSL. API calls made over plain HTTP will fail.</p>` },
   { group: 'API Basics', id: 'apps', title: 'Partner Applications',
     body: `<p>The Partner API is available to authorized Partners. Applications belonging to these Partners are referred to as Partner Applications. A Partner Application is assigned a Client ID and a Client Secret, which must be kept confidential.</p>
       <h5>Obtaining your client credentials</h5>
@@ -17,6 +22,8 @@ Content-Type: application/json
   "expires_in": 3600,
   "scope": "partner.read"
 }` },
+  { group: 'API Basics', id: 'pilot', title: 'Pilot Testing Environment',
+    body: `<p>Virgin Pulse provides a Pilot Testing Environment which should be used while developing or testing integrations with the Partner API. The Pilot Environment is a standalone instance which is separate from Virgin Pulse's Production servers. This enables Partners to make API requests without affecting production data.</p>` },
   { group: 'API Basics', id: 'urls', title: 'Base Resource URLs',
     body: `<p>Use these base URLs when making requests to the Partner API. All API resources and endpoints are relative to them. Pilot and Production have different URLs.</p>
       <table><thead><tr><th>Environment</th><th>URL</th></tr></thead><tbody>
@@ -36,7 +43,10 @@ Content-Type: application/json
       <pre>https://&lt;identity_host&gt;/auth/realms/&lt;realm_name&gt;</pre>
       <table><thead><tr><th>Environment</th><th>Identity host</th></tr></thead><tbody>
       <tr><td>Pilot</td><td><code>iam.stage2.virginpulse.com</code></td></tr>
-      <tr><td>Production</td><td><code>iam.virginpulse.com</code></td></tr></tbody></table>`,
+      <tr><td>Production</td><td><code>iam.virginpulse.com</code></td></tr></tbody></table>
+      <p>And one of the following values for <code>&lt;realm_name&gt;</code>:</p>
+      <table><thead><tr><th>Realm name</th><th>Description</th></tr></thead><tbody>
+      <tr><td>VirginPulse</td><td>All Virgin Pulse program members. Partners should use this realm unless otherwise instructed by Virgin Pulse.</td></tr></tbody></table>`,
     req: 'GET /partner/v1/members/me', res: `HTTP/1.1 200 OK
 Content-Type: application/json
 
@@ -64,77 +74,113 @@ Content-Type: application/json
 }` },
 ];
 
+// the documentation's full outline, as in the original; only the sections above are written out
+const OUTLINE = [
+  ['API Basics', ['basics', 'apps', 'pilot', 'urls', 'Authentication & Authorization', 'Libraries and SDKs', 'Error Responses']],
+  ['Authentication', ['iam', 'Getting an Access Token', 'Making API Calls', 'Authentication Errors', 'General Guidelines']],
+  ['Error Handling', ['errors', 'Error Response Format']],
+  ['User Profile Information', ['Standard User Attributes', 'Additional User Attributes', 'Organizational Hierarchy']],
+  ['Events API', ['Event Scope', 'Event Types', 'Source Type (Login Type)', 'Resources/Endpoints']],
+  ['Subscriptions API', ['Resources/Endpoints']],
+  ['Frequently Asked Questions', ['Sponsors', 'User Attributes']],
+];
+
 const css = `
 :host { display: block; container-type: inline-size; }
 ${focusCss}
-.docs { display: grid; grid-template-columns: 150px minmax(0, 1fr) minmax(0, .85fr); background: #fff; color: #333b41; border-radius: 4px; overflow: hidden; font-family: var(--f-body, system-ui, sans-serif); font-size: 12.5px; min-height: 420px; }
-nav { background: #f4f6f7; border-right: 1px solid #e3e7ea; padding: 12px 0; }
-.g { font-size: 11px; font-weight: 600; color: #22303a; padding: 10px 12px 4px; margin: 0; }
+.win { background: #fff; color: #333b41; border-radius: 4px; overflow: hidden; font-family: var(--f-body, system-ui, sans-serif); font-size: 12.5px; }
+.chrome { display: flex; gap: 8px; align-items: center; padding: 8px 10px; background: #fff; border-bottom: 1px solid #e3e7ea; }
+.chrome i { display: block; height: 10px; border-radius: 5px; background: #d9dde0; }
+/* the page scrolls inside this window */
+.page { height: 560px; overflow: auto; display: grid; grid-template-columns: 158px minmax(0, 1fr); scroll-behavior: smooth; overscroll-behavior: contain; }
+@media (prefers-reduced-motion: reduce) { .page { scroll-behavior: auto; } }
+nav { position: sticky; top: 0; align-self: start; max-height: 560px; overflow: auto; background: #f4f6f7; border-right: 1px solid #e3e7ea; padding: 10px 0 14px; }
+.g { font-size: 11px; font-weight: 600; color: #22303a; padding: 9px 10px 3px; margin: 0; }
 nav ul { list-style: none; margin: 0; padding: 0; }
-nav button { display: block; width: 100%; text-align: left; border: 0; background: none; font: inherit; font-size: 12px; color: #48535b; padding: 5px 12px 5px 16px; cursor: pointer; border-left: 3px solid transparent; }
-nav button:hover { background: #e9edf0; }
-nav button[aria-current="true"] { border-left-color: #1f7a95; color: #10232d; background: #e3edf1; font-weight: 600; }
-article { padding: 16px 18px; min-width: 0; }
-h4 { margin: 0 0 10px; font-size: 16px; color: #22303a; }
-h5 { margin: 14px 0 6px; font-size: 12.5px; }
-p { margin: 0 0 10px; line-height: 1.55; }
+nav a, nav span { display: block; font-size: 11px; color: #48535b; padding: 3px 10px 3px 14px; border-left: 3px solid transparent; text-decoration: none; }
+nav span { color: #8b959c; }
+nav a:hover { background: #e9edf0; }
+nav a[aria-current="true"] { border-left-color: #1f7a95; color: #10232d; background: #e3edf1; font-weight: 600; }
+/* each section: its text on the left, its example on the dark column to the right */
+.sections { min-width: 0; background: linear-gradient(90deg, #fff 0 56%, #2b2f33 56%); }
+section { display: grid; grid-template-columns: 56fr 44fr; border-bottom: 1px solid #e3e7ea; }
+section:last-child { min-height: 560px; }
+.txt { padding: 18px 18px 22px; min-width: 0; background: #fff; }
+.ex { padding: 18px 16px; min-width: 0; color: #f2a541; }
+.ex-in { position: sticky; top: 12px; display: grid; gap: 8px; }
+.ex-h { display: flex; justify-content: space-between; align-items: center; gap: 8px; color: #d6dadd; font-size: 11px; }
+.ex-h code { color: #9fd2e6; }
+h4 { margin: 0 0 10px; font-size: 15px; color: #1f6f87; }
+h5 { margin: 14px 0 6px; font-size: 12px; }
+p { margin: 0 0 10px; line-height: 1.6; }
 aside { border: 1px solid #d9e1e5; border-radius: 4px; padding: 8px 10px; background: #f7fafb; }
 aside b { margin-right: 6px; }
-table { border-collapse: collapse; width: 100%; margin: 4px 0 12px; font-size: 11.5px; }
-th, td { text-align: left; padding: 6px 8px; border: 1px solid #e3e7ea; }
+table { border-collapse: collapse; width: 100%; margin: 4px 0 12px; font-size: 11px; }
+th, td { text-align: left; padding: 6px 8px; border: 1px solid #e3e7ea; vertical-align: top; }
 th { background: #f4f6f7; }
-code, pre { font-family: var(--f-mono, ui-monospace, monospace); font-size: 11px; }
-pre { background: #f2f4f5; padding: 8px 10px; border-radius: 3px; overflow-x: auto; margin: 0 0 10px; }
-.ex { background: #2b2f33; color: #f2a541; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
-.ex-h { display: flex; justify-content: space-between; align-items: center; color: #d6dadd; font-size: 11.5px; }
-.ex-h code { color: #9fd2e6; }
-.copy { font: inherit; font-size: 11px; color: #e8ebed; background: transparent; border: 1px solid #555c62; border-radius: 3px; padding: 4px 8px; cursor: pointer; }
-.ex pre { background: transparent; color: #f2a541; padding: 0; margin: 0; white-space: pre-wrap; word-break: break-word; line-height: 1.55; font-size: 11.5px; }
+code, pre { font-family: var(--f-mono, ui-monospace, monospace); font-size: 10.5px; }
+.txt pre { background: #f2f4f5; padding: 8px 10px; border-radius: 3px; overflow-x: auto; margin: 0 0 10px; }
+.copy { font: inherit; font-size: 10.5px; color: #e8ebed; background: transparent; border: 1px solid #555c62; border-radius: 3px; padding: 3px 8px; cursor: pointer; }
+.ex pre { background: transparent; color: #f2a541; padding: 0; margin: 0; white-space: pre-wrap; word-break: break-word; line-height: 1.55; font-size: 11px; }
 @container (max-width: 640px) {
-  .docs { grid-template-columns: 1fr; }
-  nav { border-right: 0; border-bottom: 1px solid #e3e7ea; padding: 6px 8px; display: flex; gap: 2px; overflow-x: auto; }
-  .g { display: none; }
-  nav ul { display: flex; }
-  nav button { white-space: nowrap; border-left: 0; border-bottom: 3px solid transparent; padding: 6px 10px; }
-  nav button[aria-current="true"] { border-bottom-color: #1f7a95; }
+  .page { grid-template-columns: 1fr; height: 520px; }
+  nav { display: none; }
+  .sections { background: #fff; }
+  section { grid-template-columns: 1fr; }
+  section:last-child { min-height: 0; }
+  .ex { background: #2b2f33; }
+  .ex-in { position: static; }
 }
 `;
 
 class VpApiDocs extends HTMLElement {
   connectedCallback() {
-    const groups = [...new Set(SECTIONS.map((s) => s.group))];
+    const byId = Object.fromEntries(SECTIONS.map(s => [s.id, s]));
+    const u = Math.random().toString(36).slice(2, 7);
     const root = mount(this, css, `
-      <div class="docs">
-        <nav aria-label="Partner API documentation">
-          ${groups.map((g) => `<p class="g">${g}</p><ul>${SECTIONS.filter((s) => s.group === g).map((s) => `<li><button type="button" data-id="${s.id}">${s.title}</button></li>`).join('')}</ul>`).join('')}
-        </nav>
-        <article tabindex="-1" aria-live="polite"></article>
-        <div class="ex" aria-label="Example response" role="region">
-          <div class="ex-h"><code class="req"></code><button type="button" class="copy">Copy</button></div>
-          <pre class="res"></pre>
+      <div class="win">
+        <div class="chrome" aria-hidden="true"><i style="width:44px"></i><span style="flex:1"></span><i style="width:42px"></i><i style="width:42px"></i><i style="width:42px"></i><i style="width:42px"></i></div>
+        <div class="page" tabindex="0" aria-label="Partner API documentation, scrollable">
+          <nav aria-label="Partner API documentation">
+            ${OUTLINE.map(([g, items]) => `<p class="g">${g}</p><ul>${items.map(k => byId[k] && k !== 'basics'
+              ? `<li><a href="#${k}-${u}" data-id="${k}">${byId[k].title}</a></li>`
+              : byId[k] ? '' : `<li><span>${k}</span></li>`).join('')}</ul>`).join('')}
+          </nav>
+          <div class="sections">
+            ${SECTIONS.map(s => `<section id="${s.id}-${u}" data-id="${s.id}" aria-labelledby="h-${s.id}-${u}">
+              <div class="txt"><h4 id="h-${s.id}-${u}">${s.title}</h4>${s.body}</div>
+              <div class="ex">${s.res ? `<div class="ex-in" role="group" aria-label="Example response for ${s.title}">
+                <div class="ex-h"><code>${s.req}</code><button type="button" class="copy">Copy</button></div>
+                <pre>${s.res}</pre></div>` : ''}</div>
+            </section>`).join('')}
+          </div>
         </div>
       </div>`);
     if (!root) return;
-    this.root = root;
-    root.querySelectorAll('nav button').forEach((b) => b.addEventListener('click', () => this.show(b.dataset.id)));
-    const copy = root.querySelector('.copy');
-    copy.addEventListener('click', async () => {
-      const text = root.querySelector('.res').textContent;
-      try { await navigator.clipboard.writeText(text); copy.textContent = 'Copied'; }
-      catch { const r = document.createRange(); r.selectNodeContents(root.querySelector('.res')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); copy.textContent = 'Selected'; }
-      setTimeout(() => { copy.textContent = 'Copy'; }, 1600);
-    });
-    this.show('iam', true);
-  }
-  show(id, initial) {
-    const s = SECTIONS.find((x) => x.id === id), r = this.root;
-    r.querySelectorAll('nav button').forEach((b) => b.setAttribute('aria-current', String(b.dataset.id === id)));
-    const art = r.querySelector('article');
-    if (initial) art.removeAttribute('aria-live');
-    art.innerHTML = `<h4>${s.title}</h4>${s.body}`;
-    if (initial) art.setAttribute('aria-live', 'polite');
-    r.querySelector('.req').textContent = s.req;
-    r.querySelector('.res').textContent = s.res;
+    const page = root.querySelector('.page');
+    // the nav jumps within the page's own scroll, not the whole site
+    root.querySelectorAll('nav a').forEach(a => a.addEventListener('click', e => {
+      e.preventDefault();
+      const sec = root.getElementById(a.getAttribute('href').slice(1));
+      page.scrollTo({ top: sec.offsetTop - page.offsetTop });
+      // keyboard users land on the section they chose (a mouse click just scrolls)
+      if (e.detail === 0) { const h = sec.querySelector('h4'); h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
+    }));
+    // mark the section being read
+    const links = [...root.querySelectorAll('nav a')];
+    const mark = () => {
+      const y = page.scrollTop + 40;
+      let cur = SECTIONS[0].id;
+      for (const sec of root.querySelectorAll('section')) if (sec.offsetTop - page.offsetTop <= y) cur = sec.dataset.id;
+      links.forEach(a => a.setAttribute('aria-current', String(a.dataset.id === cur)));
+    };
+    page.addEventListener('scroll', mark, { passive: true }); mark();
+    root.querySelectorAll('.copy').forEach(b => b.addEventListener('click', async () => {
+      const pre = b.closest('.ex-in').querySelector('pre');
+      try { await navigator.clipboard.writeText(pre.textContent); b.textContent = 'Copied'; }
+      catch { const r = document.createRange(); r.selectNodeContents(pre); const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = 'Selected'; }
+      setTimeout(() => { b.textContent = 'Copy'; }, 1600);
+    }));
   }
 }
 customElements.define('vp-api-docs', VpApiDocs);
