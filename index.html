@@ -110,6 +110,7 @@
        0.45s  about section (quote and bio) fades and rises
        1.5s   "Select a badge" hint
      If this script never runs, none of the hiding applies (it's all scoped to .js). */
+  .hero::part(hero-title) { font-size: clamp(40px, 7vw, 60px); }
   .js .hero::part(hero-panel), .js .motion-toggle, .js .hero::part(hint), .js .hero::part(corner), .js .about { transition: opacity 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), transform 1.4s cubic-bezier(0.16, 1, 0.3, 1); }
   .js .hero::part(canvas), .js .hero::part(overlay) { transition: opacity 1.3s cubic-bezier(0.25, 0.1, 0.25, 1); }
   .js .motion-toggle { transition-delay: 0.25s; }
