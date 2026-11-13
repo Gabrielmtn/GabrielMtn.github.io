@@ -1029,6 +1029,7 @@ function startGL(ctx) {
     }
   }
 
+  const spD = new THREE.Vector3(), spA = new THREE.Vector3(), spB = new THREE.Vector3(), SPIRAL = 3 * Math.PI;
   const latV = new THREE.Vector3(), nrm = new THREE.Vector3(), thick = new THREE.Vector3(), sideV = new THREE.Vector3(), cardX = new THREE.Vector3(), worldX = new THREE.Vector3(1, 0, 0), tan = new THREE.Vector3(), pt = new THREE.Vector3();
   function syncMeshes() {
     for (const L of lanyards) {
@@ -1039,7 +1040,13 @@ function startGL(ctx) {
       L.shadowTail.position.copy(L.anchor);
       const pts = L.curve.points;
       for (let k = 0; k < N - 1; k++) pts[k].copy(L.x[k]);
-      pts[N - 1].copy(L.hang).applyQuaternion(drawQ).add(L.pos);   // the strap follows the clip round
+      // The rope ends at the clip where the physics has it; the flare's lean moves the drawn clip off that point, round
+      // in a circle as the badge spins. Rather than bend only the last stretch to reach it, the whole strap follows the
+      // clip round in a spiral: the swing grows from nothing at the anchor to the clip's own (t², a parabola down the
+      // strap) and lags behind it further up, about one and a half coils, as the spinning mass drags the strap after it.
+      pts[N - 1].copy(L.hang).applyQuaternion(L.q).add(L.pos);
+      spD.copy(L.hang).applyQuaternion(drawQ).add(L.pos).sub(pts[N - 1]);
+      const spOn = spD.lengthSq() > 1e-10, spSgn = L.ang.y < 0 ? -1 : 1;
       cardX.set(1, 0, 0).applyQuaternion(drawQ);
       // Track how far the card has spun (unwrapped), so the strap winds and unwinds a twist as it flips.
       fwd.set(0, 0, 1).applyQuaternion(L.q);
@@ -1071,7 +1078,7 @@ function startGL(ctx) {
         const u2 = u * u, u3 = u2 * u;
         return 3 * u2 - 2 * u3 + a * (u3 - 2 * u2 + u) + b * (u3 - u2);
       };
-      const twistZone = t => {
+      const twistAt = t => {
         let th = 0;
         for (let z = 0; z < zones; z++) {
           const amt = Math.min(Math.PI, tw - z * Math.PI); if (amt <= 0) break;
@@ -1087,12 +1094,6 @@ function startGL(ctx) {
         }
         return th * twS;
       };
-      // While a wound strap lets go, the twist doesn't stay bunched above the clip: it spreads up the whole strap in a
-      // parabola (angle t², so the turning rate builds steadily from nothing at the anchor to its fastest at the clip),
-      // the way a released rope untwists along its full length. Eased in as the unwind starts and back out after.
-      L.uw = (L.uw || 0) + ((L.unspin && !reduce ? 1 : 0) - (L.uw || 0)) * (L.unspin ? 0.08 : 0.04);
-      const uw = L.uw < 0.002 ? 0 : L.uw * L.uw * (3 - 2 * L.uw);
-      const twistAt = uw ? t => (1 - uw) * twistZone(t) + uw * L.twist * t * t : twistZone;
       const posB = L.strap2.geometry.attributes.position, uvB = L.strap2.geometry.attributes.uv;
       const hw = 0.06 * S, repeat = 0.12 * S * (L.tex.cvS.height / 128); let arc = 0;
       // Squash and stretch: measure how stretched the strap is against its rest length, and thin it toward the
@@ -1106,7 +1107,17 @@ function startGL(ctx) {
       for (let k = 0; k <= L.SEG; k++) {
         // slices about twice as dense at the clip end as at the top, where the twists bunch up
         const s = k / L.SEG, t = s + 0.45 * s * (1 - s);
-        L.curve.getPoint(t, pt); L.curve.getTangent(t, tan);
+        const at = (tt, out) => {
+          L.curve.getPoint(tt, out);
+          if (spOn) {
+            const a = -spSgn * SPIRAL * (1 - tt), c = Math.cos(a), sn = Math.sin(a), w = tt * tt;
+            out.x += w * (spD.x * c + spD.z * sn); out.y += w * spD.y; out.z += w * (spD.z * c - spD.x * sn);
+          }
+          return out;
+        };
+        at(t, pt);
+        if (spOn) tan.subVectors(at(Math.min(1, t + 0.002), spA), at(Math.max(0, t - 0.002), spB)).normalize();
+        else L.curve.getTangent(t, tan);
         if (k > 0) arc += pt.distanceTo(tmpA); tmpA.copy(pt);
         // Lettering is pinned to the strap material, not to measured distance: each rope segment has the same rest
         // length and the same share of t, so v follows t and the print stretches and twists with the strap.
