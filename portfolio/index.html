@@ -106,7 +106,7 @@
   .mat { background: var(--panel); border: 1px solid var(--line); border-radius: 4px; padding: clamp(10px, 2vw, 22px); display: grid; place-items: center; }
   .mat.light { background: #eceeed; border-color: #eceeed; }
   /* a reference image (someone else's work, for context): smaller, and labelled as such */
-  figure.ref { grid-column: span 4; }
+  figure.three, figure.ref { grid-column: span 3; }
   .ref-label { color: var(--muted); margin: 0 0 10px; }
   @media (max-width: 560px) { figure.ref { grid-column: span 6; } }
   .mat img { border-radius: 2px; }
@@ -361,13 +361,13 @@
       </div>
     </div>
     <div class="table">
-      <figure class="two">
-        <pf-artifact><scan-cadence><img src="img/akamai-cadence.png" width="304" height="315" alt="Scan summary card with concentric progress rings for low, medium, and critical findings, 58 percent complete."></scan-cadence></pf-artifact>
-        <figcaption>Scan cadence concept. Remediation works critical findings first.</figcaption>
-      </figure>
-      <figure class="four">
+      <figure>
         <pf-artifact><scan-calendar><img src="img/akamai-calendar.png" width="569" height="323" alt="Compliance calendar wireframe showing each product's scans across months, with flags for a scan due in one day and a missed scan."></scan-calendar></pf-artifact>
         <figcaption>Compliance calendar wireframe. Choose a marker for its detail.</figcaption>
+      </figure>
+      <figure class="three">
+        <scan-cadence><img src="img/akamai-cadence.png" width="304" height="315" alt="Scan summary card with concentric progress rings for low, medium, and critical findings, 58 percent complete."></scan-cadence>
+        <figcaption>Scan summary concept: remediation progress by severity.</figcaption>
       </figure>
       <!-- reference only: Akamai's own public stats, not Gabriel's work, so it's shown as a plain image, not rebuilt -->
       <figure class="ref">
