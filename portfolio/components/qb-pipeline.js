@@ -139,7 +139,7 @@ mark { background: rgba(142,164,255,.3); color: inherit; border-radius: 2px; }
 @container (max-width: 760px) {
   .body { grid-template-columns: minmax(0, 1fr); }
   .lib { border-left: 0; border-top: 1px solid var(--line); }
-  .res { max-height: 300px; }
+  .res { max-height: 300px; overflow: auto; }
 }
 @container (max-width: 540px) {
   .split { grid-template-columns: minmax(0, 1fr); padding-top: 22px; gap: 22px; }
