@@ -54,6 +54,7 @@ const css = `
 :host { display: block; container-type: inline-size; --bg: #12161a; --card: #1a1f22; --line: #2d3437; --line2: #3a4246; --ink: #e7ebe9; --mut: #a3aca8; --acc: #8ea4ff; --ok: #5fd38d; }
 ${focusCss}
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 .app { background: var(--bg); border: 1px solid var(--line); border-radius: 4px; color: var(--ink); font: 14px/1.4 var(--f-body, system-ui, sans-serif); overflow: hidden; }
 .mono { font: 500 10.5px/1.2 var(--f-mono, ui-monospace, monospace); letter-spacing: .08em; text-transform: uppercase; color: var(--mut); }
 button { font: inherit; color: inherit; cursor: pointer; }
