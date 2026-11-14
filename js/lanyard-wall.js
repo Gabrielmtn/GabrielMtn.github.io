@@ -1472,13 +1472,16 @@ canvas.over { z-index: 4; pointer-events: none; touch-action: auto; }
 /* The hero: a title panel over the top of the wall, with the lanyards hanging behind it (from <lanyard-hero>). */
 .hero { padding: var(--lanyard-hero-pad, 40px max(16px, env(safe-area-inset-right, 0px)) 8px max(16px, env(safe-area-inset-left, 0px))); }
 .hero-in { max-width: var(--lanyard-hero-max, 1180px); margin: 0 auto; }
-.hero-panel { pointer-events: auto; max-width: 820px; -webkit-user-select: text; user-select: text; color: var(--lanyard-ink, #e7ebe9);
+.hero-panel { pointer-events: auto; max-width: 820px; container-type: inline-size; -webkit-user-select: text; user-select: text; color: var(--lanyard-ink, #e7ebe9);
   background: var(--lanyard-hero-bg, rgba(13, 16, 19, 0.84)); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
   border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 14px; padding: 22px 26px 24px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
   text-shadow: 0 1px 12px #13171a, 0 0 2px #13171a; }
+.hero-seg { display: inline-block; max-width: 100%; }
 .hero-eyebrow { font: 12px var(--_mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--_muted); margin: 0 0 10px; }
-.hero-title { font-family: var(--lanyard-font-display, ${DEFAULT_FONTS.display}); font-stretch: 125%; font-weight: 850; font-size: clamp(40px, 7vw, 84px);
-  line-height: 0.92; letter-spacing: -0.01em; margin: 0; text-wrap: balance; overflow-wrap: anywhere; }
+.hero-title { font-family: var(--lanyard-font-display, ${DEFAULT_FONTS.display}); font-stretch: 125%; font-weight: 850;
+  /* sized to the panel, not the window, so a long word like "Component" fits on narrow screens instead of breaking */
+  font-size: clamp(28px, 11cqi, 84px);
+  line-height: 0.95; letter-spacing: -0.01em; margin: 0; text-wrap: balance; overflow-wrap: break-word; hyphens: manual; }
 .hero-text { max-width: 60ch; color: var(--lanyard-hero-text, #d6ddd9); margin: 14px 0 0; font: 17px/1.5 var(--_body); }
 .hero-links { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; margin: 22px 0 0; }
 .hero-links:empty { display: none; }
@@ -1767,7 +1770,13 @@ export class LanyardWall extends HTMLElement {
     const lvl = Math.min(6, Math.max(1, parseInt(a('heading-level'), 10) || 1));
     const mk = (tag, cls, text) => { const n = document.createElement(tag); n.className = cls; n.setAttribute('part', cls); if (text != null) n.textContent = text; return n; };
     const panel = mk('div', 'hero-panel');
-    if (a('eyebrow')) panel.append(mk('p', 'hero-eyebrow', a('eyebrow')));
+    // An eyebrow like "Open-source web component · MIT License" wraps only between its parts, each separator dot
+    // starting the next part, so a line never ends on a lone dot or splits "MIT / License".
+    if (a('eyebrow')) {
+      const eb = mk('p', 'hero-eyebrow');
+      a('eyebrow').split(/ (?=[·•|–—] )/).forEach((part, k) => { if (k) eb.append(' '); eb.append(mk('span', 'hero-seg', part)); });
+      panel.append(eb);
+    }
     if (a('heading')) panel.append(mk(`h${lvl}`, 'hero-title', a('heading')));
     // body: the text attribute, or the <p> children (as plain text, one paragraph each)
     const paras = el.querySelectorAll(':scope > p').length ? [...el.querySelectorAll(':scope > p')].map(p => p.textContent.trim()) : a('text') ? [a('text')] : [];
