@@ -3,157 +3,126 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Virgin Pulse case study · Gabriel Martin</title>
-<meta name="description" content="Accessibility strategy at Virgin Pulse: a Section 508 requirement on the Bank of America contract, a flexbox and grid proof of concept that became the engineering standard, and training for 400+ people.">
+<title>Virgin Pulse — Case Study — Gabriel Martin</title>
+<meta content="How I led accessibility strategy at Virgin Pulse, training 400+ people and establishing WCAG AA compliance as the engineering standard for 300+ engineers." name="description"/>
+<meta content="Virgin Pulse — Case Study — Gabriel Martin" property="og:title"/>
+<meta content="How I led accessibility strategy at Virgin Pulse, training 400+ people and establishing WCAG AA compliance as the engineering standard for 300+ engineers." property="og:description"/>
+<meta content="article" property="og:type"/>
+<meta content="https://gabrielmartin.dev/case-studies/virgin-pulse/" property="og:url"/>
 <meta name="author" content="Gabriel Martin">
-<meta property="og:title" content="Virgin Pulse case study · Gabriel Martin">
-<meta property="og:description" content="Accessibility strategy at Virgin Pulse: a Section 508 requirement on the Bank of America contract, a flexbox and grid proof of concept that became the engineering standard, and training for 400+ people.">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://gabrielmartin.dev/case-studies/virgin-pulse/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,400..900&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
 <link rel="stylesheet" href="../study.css">
-<style>
-  /* the four layout approaches from the training deck */
-  .spectrum { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: 24px; }
-  .philosophy { border: 1px solid var(--line); border-radius: 6px; padding: 14px; color: var(--muted); display: grid; gap: 10px; align-content: start; }
-  .philosophy.is-chosen { border-color: var(--accent); color: var(--ink); }
-  .philosophy-label { font: 500 12px/1.4 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; }
-  .philosophy-diagram { width: 100%; height: auto; display: block; }
-  .philosophy-note { font-size: 14.5px; line-height: 1.5; margin: 0; color: var(--body); }
-  @media (max-width: 720px) { .spectrum { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-</style>
 </head>
 <body>
   <a href="#main" class="skip">Skip to content</a>
   <div class="wrap">
     <div class="top">
       <a href="../" class="label">Case studies</a>
-      <nav aria-label="Case studies">
-        <a href="../virgin-pulse/" class="label" aria-current="page">Virgin Pulse</a>
-        <a href="../putnam/" class="label">Putnam</a>
-        <a href="../akamai/" class="label">Akamai</a>
-      </nav>
+      <nav aria-label="Case studies"><a href="../virgin-pulse/" class="label" aria-current="page">Virgin Pulse</a><a href="../putnam/" class="label">Putnam</a><a href="../akamai/" class="label">Akamai</a></nav>
     </div>
 
     <main id="main">
       <header class="intro">
-        <p class="label">Enterprise wellness · 2021–2023</p>
+        <p class="label">Standards & Training · 2021–2023</p>
         <h1>Virgin Pulse</h1>
-        <p class="role">UX Design Engineer, leading accessibility strategy for a Section 508 requirement on the Bank of America contract.</p>
+        <p class="role">UX Design Engineer · Leading Accessibility Strategy</p>
+        <dl class="dek"><div><dt class="label">Sector</dt><dd>Enterprise Wellness</dd></div><div><dt class="label">Standard</dt><dd>Section 508 / WCAG AA</dd></div><div><dt class="label">Scope</dt><dd>300+ engineers · org-wide SOP</dd></div></dl>
       </header>
 
-      <section aria-labelledby="h-why">
-        <h2 id="h-why">Why they hired me</h2>
+      <section aria-labelledby="v-thesis">
+        <p class="label">The fundamental</p>
+        <blockquote><p>We don't control how content is consumed. Users do.</p><footer class="label">Andrés Galante, <em>Accessible Font Sizing, Explained</em></footer></blockquote>
         <p>Virgin Pulse hired me into the product org for a specific reason: Bank of America, one of the biggest clients, had been promised Section 508 compliance, and the product and engineering orgs were struggling to communicate. At the time, I was a designer whose background sat at the intersection of front-end engineering and accessibility, which was exactly where the problem lived. I joined the product team as their first UX Design Engineer.</p>
         <p>Together with engineering leadership, we developed a shift-left strategy before I knew the term "shift-left" existed. Instead of treating WCAG acceptance criteria as a QA gate, we moved accessibility upstream into how features were designed, built, and reviewed, with shared standards around flexbox and grid giving engineering and QA a common vocabulary.</p>
-        <p>I partnered with leadership from engineering, QA, and product to define the architecture shift, then prototyped it with a platform engineer. That flexbox and grid proof of concept became the foundation for our accessibility standards, training, and documentation. I also built annotation tools, ran two training tracks (one for design, one for engineering), and held open office hours twice a week, so both teams developed working fluency in Reflow (1.4.10) and Resize Text (1.4.4) and caught issues before they shipped.</p>
+        <p>I partnered with leadership from engineering, QA, and product to define the architecture shift, then prototyped it with a platform engineer. That flexbox/grid proof of concept became the foundation for our accessibility standards, training, and documentation. I also built annotation tools, ran two training tracks (one for design, one for engineering), and held twice-weekly open office hours, so both teams developed working fluency in Reflow (1.4.10) and Resize Text (1.4.4) and caught issues before they shipped.</p>
+      </section>
+      <section aria-labelledby="v-spectrum">
+        <p class="label">The spectrum</p>
+        <h2 id="v-spectrum">Four approaches to responsive layout. Only one holds up when users zoom or resize.</h2>
+        <p>This was a core element of our training. Most teams were shipping the fixed example, or at best the fluid example, and calling it responsive. The fourth is the one that meets WCAG and scales.</p>
+        <figure><div aria-label="Responsive layout philosophies" class="spectrum" role="group">
+<div class="philosophy">
+<span class="philosophy-label">Fixed</span>
+<svg aria-label="Diagram showing fixed-width layout breaking at zoom with content overflow" class="philosophy-diagram" role="img" viewbox="0 0 120 100" xmlns="http://www.w3.org/2000/svg">
+<rect fill="none" height="24" opacity="0.35" stroke="currentColor" stroke-width="0.8" width="104" x="8" y="10"></rect>
+<rect fill="currentColor" height="3" opacity="0.55" width="80" x="20" y="16"></rect>
+<rect fill="currentColor" height="3" opacity="0.55" width="60" x="20" y="22"></rect>
+<rect fill="none" height="24" opacity="0.35" stroke="currentColor" stroke-width="0.8" width="60" x="30" y="42"></rect>
+<rect fill="currentColor" height="3" opacity="0.55" width="80" x="20" y="48"></rect>
+<rect fill="currentColor" height="3" opacity="0.55" width="60" x="20" y="54"></rect>
+<line opacity="0.5" stroke="currentColor" stroke-dasharray="1.5 1.5" stroke-width="0.6" x1="30" x2="90" y1="66" y2="66"></line>
+<text fill="currentColor" font-family="IBM Plex Mono, monospace" font-size="4.5" opacity="0.6" text-anchor="middle" x="60" y="78">overflow</text>
+<rect fill="none" height="12" opacity="0.35" stroke="currentColor" stroke-width="0.8" width="24" x="48" y="82"></rect>
+<rect fill="currentColor" height="3" opacity="0.55" width="80" x="20" y="86"></rect>
+</svg>
+<p class="philosophy-note">Pixel-set widths. Breaks at zoom. Overflows narrow viewports.</p>
+</div>
+<div class="philosophy">
+<span class="philosophy-label">Fluid</span>
+<svg aria-label="Diagram showing fluid layout scaling continuously across viewport sizes" class="philosophy-diagram" role="img" viewbox="0 0 120 100" xmlns="http://www.w3.org/2000/svg">
+<rect fill="none" height="24" opacity="0.35" stroke="currentColor" stroke-width="0.8" width="104" x="8" y="10"></rect>
+<rect fill="currentColor" height="3" opacity="0.55" width="96" x="12" y="16"></rect>
+<rect fill="currentColor" height="3" opacity="0.55" width="70" x="12" y="22"></rect>
+<rect fill="none" height="24" opacity="0.35" stroke="currentColor" stroke-width="0.8" width="60" x="30" y="42"></rect>
+<rect fill="currentColor" height="3" opacity="0.55" width="52" x="34" y="48"></rect>
+<rect fill="currentColor" height="3" opacity="0.55" width="38" x="34" y="54"></rect>
+<rect fill="none" height="20" opacity="0.35" stroke="currentColor" stroke-width="0.8" width="24" x="48" y="74"></rect>
+<rect fill="currentColor" height="3" opacity="0.55" width="18" x="51" y="80"></rect>
+<rect fill="currentColor" height="3" opacity="0.55" width="13" x="51" y="85"></rect>
+</svg>
+<p class="philosophy-note">Scales continuously. Typography breaks at extremes (lines too long, then too short).</p>
+</div>
+<div class="philosophy">
+<span class="philosophy-label">Adaptive</span>
+<svg aria-label="Diagram showing adaptive layout jumping at preset breakpoints" class="philosophy-diagram" role="img" viewbox="0 0 120 100" xmlns="http://www.w3.org/2000/svg">
+<rect fill="none" height="24" opacity="0.35" stroke="currentColor" stroke-width="0.8" width="104" x="8" y="10"></rect>
+<rect fill="currentColor" height="3" opacity="0.55" width="96" x="12" y="16"></rect>
+<rect fill="currentColor" height="3" opacity="0.55" width="70" x="12" y="22"></rect>
+<rect fill="none" height="24" opacity="0.35" stroke="currentColor" stroke-width="0.8" width="60" x="30" y="42"></rect>
+<rect fill="currentColor" height="3" opacity="0.55" width="52" x="34" y="48"></rect>
+<rect fill="currentColor" height="3" opacity="0.55" width="38" x="34" y="54"></rect>
+<rect fill="none" height="20" opacity="0.35" stroke="currentColor" stroke-width="0.8" width="24" x="48" y="74"></rect>
+<rect fill="currentColor" height="3" opacity="0.55" width="16" x="52" y="80"></rect>
+<rect fill="currentColor" height="3" opacity="0.55" width="11" x="52" y="85"></rect>
+<line opacity="0.35" stroke="currentColor" stroke-dasharray="1 2" stroke-width="0.4" x1="0" x2="120" y1="36" y2="36"></line>
+<line opacity="0.35" stroke="currentColor" stroke-dasharray="1 2" stroke-width="0.4" x1="0" x2="120" y1="68" y2="68"></line>
+</svg>
+<p class="philosophy-note">Jumps at preset breakpoints. Stable between them, but content can overflow or clip at the transitions.</p>
+</div>
+<div class="philosophy is-chosen">
+<span class="philosophy-label">Fluid + Breakpoints</span>
+<svg aria-label="Diagram showing fluid layout within bands that reflows at breakpoint thresholds, the recommended approach" class="philosophy-diagram" role="img" viewbox="0 0 120 100" xmlns="http://www.w3.org/2000/svg">
+<rect fill="none" height="24" opacity="0.7" stroke="currentColor" stroke-width="1" width="104" x="8" y="10"></rect>
+<rect fill="currentColor" height="3" opacity="0.75" width="96" x="12" y="16"></rect>
+<rect fill="currentColor" height="3" opacity="0.75" width="76" x="12" y="22"></rect>
+<rect fill="none" height="24" opacity="0.7" stroke="currentColor" stroke-width="1" width="60" x="30" y="42"></rect>
+<rect fill="currentColor" height="3" opacity="0.75" width="52" x="34" y="48"></rect>
+<rect fill="currentColor" height="3" opacity="0.75" width="40" x="34" y="54"></rect>
+<rect fill="none" height="20" opacity="0.7" stroke="currentColor" stroke-width="1" width="24" x="48" y="74"></rect>
+<rect fill="currentColor" height="3" opacity="0.75" width="16" x="52" y="80"></rect>
+<rect fill="currentColor" height="3" opacity="0.75" width="12" x="52" y="85"></rect>
+<circle cx="8" cy="36" fill="currentColor" r="1.3"></circle>
+<circle cx="30" cy="68" fill="currentColor" r="1.3"></circle>
+</svg>
+<p class="philosophy-note">Fluid within bands. Reflows at thresholds. Predictably designed to meet WCAG Resize/Reflow at all zoom levels.</p>
+</div>
+</div></figure>
+        <p class="caption">Diagram from the training deck <em>Engineering Responsiveness: Concepts and Training</em>, delivered org-wide at Virgin Pulse.</p>
+      </section>
+      <section aria-labelledby="v-work">
+        <p class="label">The work</p>
+        <h2 id="v-work">Building the approach into standards, code, and training.</h2>
+        <ol><li>Co-authored Virgin Pulse's WCAG AA strategy to meet the Section 508 requirement on the Bank of America contract, defining accessible patterns and component standards adopted organization-wide.</li><li>Led a proof of concept refactoring Angular micro-frontend templates and CSS to meet Reflow (1.4.10) and Resize Text (1.4.4). The approach was adopted as the engineering SOP across 300+ engineers.</li><li>Designed and delivered two accessibility training curricula (one for engineers, one for designers and product leads) built on relative units, fluid grids, and container-guided layout.</li></ol>
+      </section>
+      <section aria-labelledby="v-outcome">
+        <p class="label">Outcome</p>
+        <dl class="outcomes"><div><dt>400+</dt><dd>Engineers, designers, and PMs trained</dd></div><div><dt>2</dt><dd>Training curricula delivered (engineers + designers/PMs)</dd></div><div><dt>§508</dt><dd>Enterprise contract requirement met</dd></div></dl>
+        <aside class="artifact"><p class="label">Artifact upon request</p><h3>Engineering Responsiveness: Concepts and Training</h3><p>The original workshop deck, still the reference for responsive and accessible front-end work across the Virgin Pulse engineering org. Covers WCAG principles, fluid grids, breakpoints as a last resort, relative units, Flexbox, and Grid.</p><figure><div class="frame"><img src="../img/vp-training-deck.png" alt="Slides from the training deck: navy slides with layout diagrams, breakpoint grids and flexbox examples." width="720" height="273" loading="lazy"></div></figure></aside>
       </section>
 
-      <section aria-labelledby="h-layout">
-        <h2 id="h-layout">Four approaches to responsive layout</h2>
-        <p>This was a core part of the training. Most teams were shipping the fixed example, or at best the fluid one, and calling it responsive. The fourth is the one that meets WCAG and scales.</p>
-        <figure>
-        <div class="spectrum" role="group" aria-label="Responsive layout philosophies">
-
-          <div class="philosophy">
-            <span class="philosophy-label">Fixed</span>
-            <svg class="philosophy-diagram" viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram showing fixed-width layout breaking at zoom with content overflow">
-              <rect x="8" y="10" width="104" height="24" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.35"/>
-              <rect x="20" y="16" width="80" height="3" fill="currentColor" opacity="0.55"/>
-              <rect x="20" y="22" width="60" height="3" fill="currentColor" opacity="0.55"/>
-              <rect x="30" y="42" width="60" height="24" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.35"/>
-              <rect x="20" y="48" width="80" height="3" fill="currentColor" opacity="0.55"/>
-              <rect x="20" y="54" width="60" height="3" fill="currentColor" opacity="0.55"/>
-              <line x1="30" y1="66" x2="90" y2="66" stroke="currentColor" stroke-dasharray="1.5 1.5" stroke-width="0.6" opacity="0.5"/>
-              <text x="60" y="78" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="4.5" fill="currentColor" opacity="0.6">overflow</text>
-              <rect x="48" y="82" width="24" height="12" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.35"/>
-              <rect x="20" y="86" width="80" height="3" fill="currentColor" opacity="0.55"/>
-            </svg>
-            <p class="philosophy-note">Pixel-set widths. Breaks at zoom. Overflows narrow viewports.</p>
-          </div>
-
-          <div class="philosophy">
-            <span class="philosophy-label">Fluid</span>
-            <svg class="philosophy-diagram" viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram showing fluid layout scaling continuously across viewport sizes">
-              <rect x="8" y="10" width="104" height="24" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.35"/>
-              <rect x="12" y="16" width="96" height="3" fill="currentColor" opacity="0.55"/>
-              <rect x="12" y="22" width="70" height="3" fill="currentColor" opacity="0.55"/>
-              <rect x="30" y="42" width="60" height="24" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.35"/>
-              <rect x="34" y="48" width="52" height="3" fill="currentColor" opacity="0.55"/>
-              <rect x="34" y="54" width="38" height="3" fill="currentColor" opacity="0.55"/>
-              <rect x="48" y="74" width="24" height="20" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.35"/>
-              <rect x="51" y="80" width="18" height="3" fill="currentColor" opacity="0.55"/>
-              <rect x="51" y="85" width="13" height="3" fill="currentColor" opacity="0.55"/>
-            </svg>
-            <p class="philosophy-note">Scales continuously. Typography breaks at extremes (lines too long, then too short).</p>
-          </div>
-
-          <div class="philosophy">
-            <span class="philosophy-label">Adaptive</span>
-            <svg class="philosophy-diagram" viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram showing adaptive layout jumping at preset breakpoints">
-              <rect x="8" y="10" width="104" height="24" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.35"/>
-              <rect x="12" y="16" width="96" height="3" fill="currentColor" opacity="0.55"/>
-              <rect x="12" y="22" width="70" height="3" fill="currentColor" opacity="0.55"/>
-              <rect x="30" y="42" width="60" height="24" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.35"/>
-              <rect x="34" y="48" width="52" height="3" fill="currentColor" opacity="0.55"/>
-              <rect x="34" y="54" width="38" height="3" fill="currentColor" opacity="0.55"/>
-              <rect x="48" y="74" width="24" height="20" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.35"/>
-              <rect x="52" y="80" width="16" height="3" fill="currentColor" opacity="0.55"/>
-              <rect x="52" y="85" width="11" height="3" fill="currentColor" opacity="0.55"/>
-              <line x1="0" y1="36" x2="120" y2="36" stroke="currentColor" stroke-dasharray="1 2" stroke-width="0.4" opacity="0.35"/>
-              <line x1="0" y1="68" x2="120" y2="68" stroke="currentColor" stroke-dasharray="1 2" stroke-width="0.4" opacity="0.35"/>
-            </svg>
-            <p class="philosophy-note">Jumps at preset breakpoints. Stable between them, but content can overflow or clip at the transitions.</p>
-          </div>
-
-          <div class="philosophy is-chosen">
-            <span class="philosophy-label">Fluid + Breakpoints</span>
-            <svg class="philosophy-diagram" viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram showing fluid layout within bands that reflows at breakpoint thresholds, the recommended approach">
-              <rect x="8" y="10" width="104" height="24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.7"/>
-              <rect x="12" y="16" width="96" height="3" fill="currentColor" opacity="0.75"/>
-              <rect x="12" y="22" width="76" height="3" fill="currentColor" opacity="0.75"/>
-              <rect x="30" y="42" width="60" height="24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.7"/>
-              <rect x="34" y="48" width="52" height="3" fill="currentColor" opacity="0.75"/>
-              <rect x="34" y="54" width="40" height="3" fill="currentColor" opacity="0.75"/>
-              <rect x="48" y="74" width="24" height="20" fill="none" stroke="currentColor" stroke-width="1" opacity="0.7"/>
-              <rect x="52" y="80" width="16" height="3" fill="currentColor" opacity="0.75"/>
-              <rect x="52" y="85" width="12" height="3" fill="currentColor" opacity="0.75"/>
-              <circle cx="8" cy="36" r="1.3" fill="currentColor"/>
-              <circle cx="30" cy="68" r="1.3" fill="currentColor"/>
-            </svg>
-            <p class="philosophy-note">Fluid within bands. Reflows at thresholds. Predictably designed to meet WCAG Resize/Reflow at all zoom levels.</p>
-          </div>
-
-        </div>
-          <figcaption class="label">From the training deck Engineering Responsiveness: Concepts and Training</figcaption>
-        </figure>
-      </section>
-
-      <section aria-labelledby="h-work">
-        <h2 id="h-work">What I did</h2>
-        <ul>
-          <li>Co-authored Virgin Pulse's WCAG AA strategy to meet the Section 508 requirement on the Bank of America contract, defining accessible patterns and component standards adopted across the organization.</li>
-          <li>Led a proof of concept refactoring Angular micro-frontend templates and CSS to meet Reflow (1.4.10) and Resize Text (1.4.4). The approach became the engineering SOP for 300+ engineers.</li>
-          <li>Designed and delivered two accessibility curricula, one for engineers and one for designers and product leads, built on relative units, fluid grids, and container-guided layout.</li>
-        </ul>
-      </section>
-
-      <section aria-labelledby="h-result">
-        <h2 id="h-result">Result</h2>
-        <p>The Section 508 requirement on the contract was met. More than 400 engineers, designers and PMs went through the two curricula, and the flexbox and grid approach became the standard way the org built responsive, accessible front ends.</p>
-        <figure>
-          <div class="frame"><img src="../img/vp-training-deck.png" alt="Slides from the training deck: navy slides with layout diagrams, breakpoint grids and flexbox examples." width="720" height="273" loading="lazy"></div>
-          <figcaption class="label">Engineering Responsiveness: Concepts and Training · full deck available on request</figcaption>
-        </figure>
-        <p style="margin-top:20px">The deck covers WCAG principles, fluid grids, breakpoints as a last resort, relative units, Flexbox and Grid, and it stayed the reference for responsive, accessible front-end work in the Virgin Pulse engineering org.</p>
-      </section>
-
-      <section class="next" aria-label="Next case study">
-        <span class="label">Next</span>
-        <a href="../putnam/">Putnam Investments</a>
-      </section>
+      <nav class="pager" aria-label="More case studies"><div><p class="label">Next</p><a href="../putnam/">Putnam Investments</a></div></nav>
     </main>
 
     <footer class="foot">

@@ -55,6 +55,41 @@ figcaption { margin-top: 12px; }
 .frame { border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
 .frame.pad { padding: 18px; }
 
+/* project facts under the title */
+.dek { display: flex; flex-wrap: wrap; gap: 14px 36px; margin: 22px 0 0; }
+.dek dt { margin-bottom: 2px; }
+.dek dd { margin: 0; color: var(--ink); font-size: 15px; }
+section > .label + h2, section > .label + blockquote { margin-top: 8px; }
+
+/* diagrams and their notes */
+.diagram { width: 100%; height: auto; display: block; color: var(--ink); }
+figure > .label + .frame { margin-top: 10px; }
+.caption { font-size: 15px; color: var(--muted); margin-top: 14px; }
+
+/* the four layout approaches (Virgin Pulse) */
+.spectrum { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.philosophy { border: 1px solid var(--line); border-radius: 6px; padding: 14px; color: var(--muted); display: grid; gap: 10px; align-content: start; }
+.philosophy.is-chosen { border-color: var(--accent); color: var(--ink); }
+.philosophy-label { font: 500 12px/1.4 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; }
+.philosophy-diagram { width: 100%; height: auto; display: block; }
+.philosophy-note { font-size: 14.5px; line-height: 1.5; margin: 0; color: var(--body); }
+@media (max-width: 720px) { .spectrum { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* outcome figures as plain rows, not stat tiles */
+.outcomes { margin: 4px 0 0; display: grid; gap: 0; max-width: 64ch; }
+.outcomes > div { display: grid; grid-template-columns: 7.5em minmax(0, 1fr); gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.outcomes > div:first-child { border-top: 1px solid var(--line); }
+.outcomes dt { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+.outcomes dd { margin: 0; }
+.artifact { margin-top: 36px; }
+.artifact h3 { font: 600 19px/1.35 var(--f-body); color: var(--ink); margin: 6px 0 10px; }
+
+/* previous / next */
+.pager { margin-top: clamp(40px, 6vw, 56px); padding-top: 28px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px 32px; }
+.pager > div:last-child:not(:first-child) { text-align: right; margin-left: auto; }
+.pager a { font-weight: 600; font-size: 19px; display: inline-block; margin-top: 4px; }
+@media (max-width: 480px) { .outcomes > div { grid-template-columns: minmax(0, 1fr); gap: 2px; } }
+
 .next { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; align-items: baseline; }
 .next a:not(.label) { font-weight: 600; font-size: 19px; }
 
