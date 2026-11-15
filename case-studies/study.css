@@ -99,3 +99,6 @@ figure > .label + .frame { margin-top: 10px; }
 .foot address { font-style: normal; }
 
 @media print { body { background: #fff; color: #000; } }
+
+/* the opening line of a study */
+.lead { font-size: 20px; line-height: 1.45; color: var(--ink); max-width: 52ch; }
