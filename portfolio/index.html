@@ -87,6 +87,8 @@
   .note { border-left: 2px solid var(--accent); padding-left: 16px; color: var(--ink); }
   .draft { font: 500 12px/1.5 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: #f0b85c; margin: 0 0 12px; }
 
+  .lead { font-size: 20px; line-height: 1.45; color: var(--ink); }
+  .sub-h { font: 600 clamp(19px, 2.2vw, 23px)/1.3 var(--f-body); color: var(--ink); margin: 56px 0 16px; padding-top: 32px; border-top: 1px solid var(--line); }
   /* figures */
   .figs { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 32px 28px; margin-top: 28px; align-items: start; }
   .figs > figure { margin: 0; grid-column: span 12; min-width: 0; }
@@ -154,91 +156,113 @@
   </header>
 
   <div class="tools">
-    <p class="label" id="work-label">Work, 2010 to now</p>
+    <p class="label" id="work-label">Work, newest first</p>
     <button type="button" id="toggle-all" aria-controls="work">Open all</button>
   </div>
 
   <main id="work" class="projects" aria-labelledby="work-label" tabindex="-1">
 
-    <!-- Early work -->
-    <details class="project" id="early-work">
+    <!-- Innovative Driven. DRAFT copy built from Gabriel's notes: replace with his own words -->
+    <details class="project" id="innovative-driven">
       <summary>
-        <span class="label">2010</span>
-        <h2>Early Work</h2>
-        <p class="sub">First-time founder · UX research, user flows, state flow diagrams</p>
+        <span class="label">2025–2026</span>
+        <h2>Innovative Driven</h2>
+        <p class="sub">Product Architect · Process mapping, client onboarding, Azure DevOps</p>
         <svg class="chev" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m3 6 5 5 5-5"/></svg>
       </summary>
       <div class="body">
         <div class="text">
-          <p>In 2010, before fully putting on my designer hat, I was a first-time founder having to wear all of them. I recognized the value of UX research and design in my work promoting economic mobility, and applied these principles to my work through user testing, iteration, and data analysis to seek product-market fit. My UX research included creating user flows, data flow, and state flow diagrams.</p>
+          <p class="draft">Draft copy · to be rewritten</p>
+          <p>Innovative Driven builds an LLM-based eDiscovery tool used by about 40 law firms. I joined the software development team to support the VP of Engineering, owned product design, and ran the team’s Azure DevOps board as its PM.</p>
+          <p>Onboarding a new client took weeks. I mapped the existing flow in Figma, from a contract closing in Salesforce to a ready eDiscovery instance, to show every handoff and bottleneck. We used that map in stakeholder strategy meetings, I scoped the work as an epic and wrote the tickets, and the developers built and iterated on it. Onboarding went from weeks to under 15 minutes, with everyone online.</p>
         </div>
         <div class="figs">
           <figure>
-            <div class="frame light"><img src="img/organism-state-flow.jpg" width="1400" height="1488" loading="lazy" alt="Organism state flow diagram: about fifty screens and actions, from Start and Authentication through the landing page, the Viewbooth, the Laboratory, test creation and the test player, joined by lines colored for anonymous users, users, and investors."></div>
-            <figcaption>State and Data flow diagrams, 2010</figcaption>
+            <div class="frame flow" role="group" aria-labelledby="flow-cap">
+              <ol class="spine">
+                <li><div class="node start"><span>Salesforce Sales Cloud</span><b>Contract closed</b></div></li>
+                <li><div class="node"><b>Contract details</b></div></li>
+                <li>
+                  <ul class="fan" aria-label="Set up for the client">
+                    <li><div class="node"><span>Infrastructure</span><b>Repository setup</b></div></li>
+                    <li><div class="node"><span>Infrastructure</span><b>Virtual machine setup</b></div></li>
+                    <li><div class="node"><span>Infrastructure</span><b>Partitions setup</b></div></li>
+                    <li><div class="node"><span>HR</span><b>Contractor onboarding</b></div></li>
+                    <li><div class="node"><span>Cases</span><b>Initial case structure</b></div></li>
+                  </ul>
+                </li>
+              </ol>
+            </div>
+            <figcaption id="flow-cap">Client onboarding as an org flowchart: a closed contract in Salesforce Sales Cloud feeds the contract details, which set up the client’s repository, virtual machine, and partitions, onboard contractors through HR, and structure the client’s initial cases. Redrawn for this page, with no client data.</figcaption>
           </figure>
         </div>
       </div>
     </details>
-
-    <!-- Art, interaction design, and animation -->
-    <details class="project" id="art">
+    <!-- Quickbase -->
+    <details class="project" id="quickbase">
       <summary>
-        <span class="label">2014–2015</span>
-        <h2>Art, Interaction Design, and Animation</h2>
-        <p class="sub">JS developer and interaction designer · ReAnimate.css, Art@60fps</p>
+        <span class="label">2023</span>
+        <h2>Quickbase Pipelines</h2>
+        <p class="sub">Sr. Interaction Designer (contract) · Information architecture, interaction design, prototyping</p>
         <svg class="chev" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m3 6 5 5 5-5"/></svg>
       </summary>
       <div class="body">
         <div class="text">
-          <p>In 2014 I took off the founder hat and picked up two new ones: JS developer and interaction designer. I became fascinated with mastering performant animations and interactions and used art and open-source experiments to practice. I released an interaction library, ReAnimate.CSS in 2015, and conducted my first UX research for a client, a card sort held at the Boston Public Library.</p>
-          <p class="note"><strong>What I still use:</strong> The habit of thinking about rendering and state before reaching for an animation. Performance and craft aren't in tension if you understand the DOM well enough.</p>
+          <p>Pipelines lets Quickbase customers connect their data to other services and automate the work in between. The existing drag-and-drop builder was hard to read and hard to learn. With another designer, I worked out the information architecture and interaction design for its replacement: a node-based guided flow in an open workspace, where every step names its channel and action, splits into collapsible sections that put the data first, and is found through one search across every channel. I prototyped it in LiteGraph so stakeholders and testers could react to how it actually felt to use.</p>
+          <p>I led wireframing and interactive prototyping for the new builder and ran workshops with SMEs, engineers, and UX researchers to set the technical scope. Users in the private beta gave it <strong>95%</strong> positive feedback.</p>
         </div>
         <div class="figs">
-          <figure class="w6">
-            <reanimate-demo css="../reanimate/reanimate.css"><img src="img/reanimate.png" width="556" height="339" loading="lazy" alt="ReAnimate.css homepage with a pink gradient logo and dropdowns for animation type, duration, and easing next to an Animate it button."></reanimate-demo>
-            <figcaption>Homepage of <a href="../reanimate/">ReAnimate.css</a>, running here</figcaption>
-          </figure>
-          <figure class="w6">
-            <css-sphere><img src="img/art-60fps.png" width="411" height="395" loading="lazy" alt="Art@60fps: red, orange and yellow star-cut rings turning in 3D."></css-sphere>
-            <figcaption>Art@60fps using HAML, and SCSS nth-child iteration, 2015 (<a href="https://codepen.io/Gabrielmtn/pen/jEXOjw">CodePen</a>)</figcaption>
+          <figure>
+            <pf-artifact><qb-pipeline>
+              <ol>
+                <li>Quickbase trigger: when a record is added to Projects</li>
+                <li>Quickbase search: find the matching row in Budgets</li>
+                <li>Condition: if the budget is over $50,000. If yes, send a Slack message to #finance; if no, create a calendar kickoff event.</li>
+              </ol>
+            </qb-pipeline></pf-artifact>
+            <figcaption>A working sketch of the builder’s structure: steps flow top to bottom, each opens to its data with the connection folded away, and one search covers every channel. Add a step, change the test budget, run it. Redrawn for this page.</figcaption>
           </figure>
         </div>
       </div>
     </details>
-
-    <!-- Eastern Bank -->
-    <details class="project" id="eastern-bank">
+    <!-- Virgin Pulse -->
+    <details class="project" id="virgin-pulse">
       <summary>
-        <span class="label">2015–2017</span>
-        <h2>Eastern Bank: Seeing the UX/Dev Collaboration Puzzle From the Developer’s POV</h2>
-        <p class="sub">UX Developer, Eastern Labs · SCSS framework, interaction design, WCAG audits</p>
+        <span class="label">2021–2023</span>
+        <h2>Virgin Pulse: The Convergence of UX &amp; Engineering</h2>
+        <p class="sub">UX Design Engineer · Accessibility strategy, training, pattern library, rewards, partner API</p>
         <svg class="chev" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m3 6 5 5 5-5"/></svg>
       </summary>
       <div class="body">
         <div class="text">
-          <p>At Eastern Bank's Innovation Lab I spotted a bottleneck that was causing friction for everyone else on the UX team: designers and engineers were iterating in parallel but speaking different languages, and it was costing the team time with daily tweaks.</p>
-          <p>I built a standardized SCSS framework as a Rosetta stone between them. Designers could make systemic changes without touching code. Engineers could maintain DRY, efficient architecture without babysitting design drift. The friction didn't just decrease, it was removed empowering us to iterate quickly but without the pain.</p>
-          <p>Over the next two years I grew into a my UX Developer role, going deep into WCAG audits and compliance-sensitive work across finance and education.</p>
-          <p class="note"><strong>What I still use:</strong> The habit of asking which side of the design/engineering divide a problem is actually coming from before trying to solve it.</p>
+          <p class="note">From my experience, accessibility at large orgs doesn't fail because people don't care. It fails because the people who care are speaking different languages.</p>
+          <p>Virgin Pulse was already pushing for better WCAG compliance when I joined, but the effort was stalling. Engineering leadership was struggling to normalize internal best practices, and the product team had little familiarity with responsive UI or resizable text. I came in to bridge that gap, taking a federated approach and building buy-in across both orgs rather than pushing mandates from the center. Then I gave both sides tools and a language they could share.</p>
         </div>
         <div class="figs">
-          <figure class="w8">
-            <div class="frame light"><img src="img/eastern-desktop.png" width="2000" height="1741" loading="lazy" alt="Business banking accounts page: a navigation column on the left and tables of checking, savings, and loan accounts with current and available balances."></div>
-            <figcaption>Interaction design and UI development, 2017</figcaption>
+          <figure>
+            <div class="frame"><img src="img/vp-deck.png" width="2000" height="546" loading="lazy" alt="Overview of the slides from the WCAG Resize and Reflow training deck: navy slides with layout diagrams, breakpoint grids, and flexbox examples."></div>
+            <figcaption>WCAG Resize/Reflow training deck, 2022</figcaption>
           </figure>
+        </div>
+        <div class="text" style="margin-top:32px">
+          <p>For 350+ engineers, I focused on the fundamental concepts behind Resize and Reflow, and the CSS modules that enable them. The training reoriented how they thought about layout: not just screen sizes, but the core goal of keeping content perceivable, understandable, and robust.</p>
+          <p>For 50 designers and PMs, I focused on shared language, writing accessibility acceptance criteria, and annotation. That's where the disconnect usually lives. I built an annotation library for communicating testable, specific a11y AC that engineers could implement without guessing.</p>
+          <p>Together the two curricula reached 400+ people and became the foundation of Virgin Pulse's WCAG AA compliance strategy, a contractual Section 508 requirement the org had been struggling to fulfill before I joined.</p>
+          <p>As the team had needs, during this period, I also took on UX design work across multiple streams, including our pattern library team, gamification/rewards team, and platform team, which was working on a Partner Platform API documentation page.</p>
+          <p>My ability to communicate effectively with my technical colleagues helped me incorporate their technical guidance into our UX design process so that in the end, we delivered artifacts that not only met our UX goals, but also exceeded our accessibility, performance, and usability standards up to that point.</p>
+        </div>
+        <div class="figs">
           <figure class="w4">
-            <div class="frame light"><img src="img/eastern-mobile.png" width="974" height="1699" loading="lazy" alt="Mobile banking app: account balance cards in blue, green, purple, and orange under Checking and Savings, with a Loans section below."></div>
-            <figcaption>Interaction design and state animations, 2017</figcaption>
+            <pf-artifact><vp-rewards><img src="img/vp-rewards.png" width="212" height="570" loading="lazy" alt="Mobile prototype of a How to Earn screen listing steps, active minutes, and workout minutes with progress bars toward daily, monthly, and one-time rewards."></vp-rewards></pf-artifact>
+            <figcaption>Rewards for Steps Prototype, 2022. Tap an activity to log it.</figcaption>
           </figure>
-          <figure class="w6">
-            <div class="frame"><video src="img/eastern-login.webm" width="1072" height="1200" controls muted loop playsinline preload="metadata" aria-describedby="eb-video-d"></video></div>
-            <figcaption id="eb-video-d">Sign-in prototype: floating labels, a show-password toggle, the forgot-username flow, and choosing how to receive a security code.</figcaption>
+          <figure class="w8">
+            <pf-artifact><vp-api-docs><img src="img/vp-partner-api.png" width="458" height="671" loading="lazy" alt="Partner API documentation page prototype with a navigation column, explanatory text in the middle, and example JSON responses in a dark code panel."></vp-api-docs></pf-artifact>
+            <figcaption>Partner API prototype, 2022. Scroll the page: each section's example response sits beside it.</figcaption>
           </figure>
         </div>
       </div>
     </details>
-
     <!-- Akamai -->
     <details class="project" id="akamai">
       <summary>
@@ -296,120 +320,85 @@
         </div>
       </div>
     </details>
-
-    <!-- Virgin Pulse -->
-    <details class="project" id="virgin-pulse">
+    <!-- Eastern Bank -->
+    <details class="project" id="eastern-bank">
       <summary>
-        <span class="label">2021–2023</span>
-        <h2>Virgin Pulse: The Convergence of UX &amp; Engineering</h2>
-        <p class="sub">UX Design Engineer · Accessibility strategy, training, pattern library, rewards, partner API</p>
+        <span class="label">2015–2017</span>
+        <h2>Eastern Bank: Seeing the UX/Dev Collaboration Puzzle From the Developer’s POV</h2>
+        <p class="sub">UX Developer, Eastern Labs · SCSS framework, interaction design, WCAG audits</p>
         <svg class="chev" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m3 6 5 5 5-5"/></svg>
       </summary>
       <div class="body">
         <div class="text">
-          <p class="note">From my experience, accessibility at large orgs doesn't fail because people don't care. It fails because the people who care are speaking different languages.</p>
-          <p>Virgin Pulse was already pushing for better WCAG compliance when I joined, but the effort was stalling. Engineering leadership was struggling to normalize internal best practices, and the product team had little familiarity with responsive UI or resizable text. I came in to bridge that gap, taking a federated approach and building buy-in across both orgs rather than pushing mandates from the center. Then I gave both sides tools and a language they could share.</p>
+          <p>At Eastern Bank's Innovation Lab I spotted a bottleneck that was causing friction for everyone else on the UX team: designers and engineers were iterating in parallel but speaking different languages, and it was costing the team time with daily tweaks.</p>
+          <p>I built a standardized SCSS framework as a Rosetta stone between them. Designers could make systemic changes without touching code. Engineers could maintain DRY, efficient architecture without babysitting design drift. The friction didn't just decrease, it was removed empowering us to iterate quickly but without the pain.</p>
+          <p>Over the next two years I grew into a my UX Developer role, going deep into WCAG audits and compliance-sensitive work across finance and education.</p>
+          <p class="note"><strong>What I still use:</strong> The habit of asking which side of the design/engineering divide a problem is actually coming from before trying to solve it.</p>
         </div>
         <div class="figs">
-          <figure>
-            <div class="frame"><img src="img/vp-deck.png" width="2000" height="546" loading="lazy" alt="Overview of the slides from the WCAG Resize and Reflow training deck: navy slides with layout diagrams, breakpoint grids, and flexbox examples."></div>
-            <figcaption>WCAG Resize/Reflow training deck, 2022</figcaption>
-          </figure>
-        </div>
-        <div class="text" style="margin-top:32px">
-          <p>For 350+ engineers, I focused on the fundamental concepts behind Resize and Reflow, and the CSS modules that enable them. The training reoriented how they thought about layout: not just screen sizes, but the core goal of keeping content perceivable, understandable, and robust.</p>
-          <p>For 50 designers and PMs, I focused on shared language, writing accessibility acceptance criteria, and annotation. That's where the disconnect usually lives. I built an annotation library for communicating testable, specific a11y AC that engineers could implement without guessing.</p>
-          <p>Together the two curricula reached 400+ people and became the foundation of Virgin Pulse's WCAG AA compliance strategy, a contractual Section 508 requirement the org had been struggling to fulfill before I joined.</p>
-          <p>As the team had needs, during this period, I also took on UX design work across multiple streams, including our pattern library team, gamification/rewards team, and platform team, which was working on a Partner Platform API documentation page.</p>
-          <p>My ability to communicate effectively with my technical colleagues helped me incorporate their technical guidance into our UX design process so that in the end, we delivered artifacts that not only met our UX goals, but also exceeded our accessibility, performance, and usability standards up to that point.</p>
-        </div>
-        <div class="figs">
-          <figure class="w4">
-            <pf-artifact><vp-rewards><img src="img/vp-rewards.png" width="212" height="570" loading="lazy" alt="Mobile prototype of a How to Earn screen listing steps, active minutes, and workout minutes with progress bars toward daily, monthly, and one-time rewards."></vp-rewards></pf-artifact>
-            <figcaption>Rewards for Steps Prototype, 2022. Tap an activity to log it.</figcaption>
-          </figure>
           <figure class="w8">
-            <pf-artifact><vp-api-docs><img src="img/vp-partner-api.png" width="458" height="671" loading="lazy" alt="Partner API documentation page prototype with a navigation column, explanatory text in the middle, and example JSON responses in a dark code panel."></vp-api-docs></pf-artifact>
-            <figcaption>Partner API prototype, 2022. Scroll the page: each section's example response sits beside it.</figcaption>
+            <div class="frame light"><img src="img/eastern-desktop.png" width="2000" height="1741" loading="lazy" alt="Business banking accounts page: a navigation column on the left and tables of checking, savings, and loan accounts with current and available balances."></div>
+            <figcaption>Interaction design and UI development, 2017</figcaption>
+          </figure>
+          <figure class="w4">
+            <div class="frame light"><img src="img/eastern-mobile.png" width="974" height="1699" loading="lazy" alt="Mobile banking app: account balance cards in blue, green, purple, and orange under Checking and Savings, with a Loans section below."></div>
+            <figcaption>Interaction design and state animations, 2017</figcaption>
+          </figure>
+          <figure class="w6">
+            <div class="frame"><video src="img/eastern-login.webm" width="1072" height="1200" controls muted loop playsinline preload="metadata" aria-describedby="eb-video-d"></video></div>
+            <figcaption id="eb-video-d">Sign-in prototype: floating labels, a show-password toggle, the forgot-username flow, and choosing how to receive a security code.</figcaption>
           </figure>
         </div>
       </div>
     </details>
-
-    <!-- Quickbase -->
-    <details class="project" id="quickbase">
+    <!-- Early work -->
+    <details class="project" id="early-work">
       <summary>
-        <span class="label">2023</span>
-        <h2>Quickbase Pipelines</h2>
-        <p class="sub">Sr. Interaction Designer (contract) · Information architecture, interaction design, prototyping</p>
+        <span class="label">2010</span>
+        <h2>Early Work</h2>
+        <p class="sub">First-time founder · UX research, user flows, state flow diagrams</p>
         <svg class="chev" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m3 6 5 5 5-5"/></svg>
       </summary>
       <div class="body">
         <div class="text">
-          <p>Pipelines lets Quickbase customers connect their data to other services and automate the work in between. The existing drag-and-drop builder was hard to read and hard to learn. With another designer, I worked out the information architecture and interaction design for its replacement: a node-based guided flow in an open workspace, where every step names its channel and action, splits into collapsible sections that put the data first, and is found through one search across every channel. I prototyped it in LiteGraph so stakeholders and testers could react to how it actually felt to use.</p>
-          <p>I led wireframing and interactive prototyping for the new builder and ran workshops with SMEs, engineers, and UX researchers to set the technical scope. Users in the private beta gave it <strong>95%</strong> positive feedback.</p>
+          <p>In 2010, before fully putting on my designer hat, I was a first-time founder having to wear all of them. I recognized the value of UX research and design in my work promoting economic mobility, and applied these principles to my work through user testing, iteration, and data analysis to seek product-market fit. My UX research included creating user flows, data flow, and state flow diagrams.</p>
         </div>
         <div class="figs">
           <figure>
-            <pf-artifact><qb-pipeline>
-              <ol>
-                <li>Quickbase trigger: when a record is added to Projects</li>
-                <li>Quickbase search: find the matching row in Budgets</li>
-                <li>Condition: if the budget is over $50,000. If yes, send a Slack message to #finance; if no, create a calendar kickoff event.</li>
-              </ol>
-            </qb-pipeline></pf-artifact>
-            <figcaption>A working sketch of the builder’s structure: steps flow top to bottom, each opens to its data with the connection folded away, and one search covers every channel. Add a step, change the test budget, run it. Redrawn for this page.</figcaption>
+            <div class="frame light"><img src="img/organism-state-flow.jpg" width="1400" height="1488" loading="lazy" alt="Organism state flow diagram: about fifty screens and actions, from Start and Authentication through the landing page, the Viewbooth, the Laboratory, test creation and the test player, joined by lines colored for anonymous users, users, and investors."></div>
+            <figcaption>State and Data flow diagrams, 2010</figcaption>
           </figure>
         </div>
       </div>
     </details>
-
-    <!-- Innovative Driven. DRAFT copy built from Gabriel's notes: replace with his own words -->
-    <details class="project" id="innovative-driven">
+    <!-- Experiments: art with code and interaction design since 2014, from CSS experiments to Swirl Together -->
+    <details class="project" id="experiments">
       <summary>
-        <span class="label">2025–2026</span>
-        <h2>Innovative Driven</h2>
-        <p class="sub">Product Architect · Process mapping, client onboarding, Azure DevOps</p>
+        <span class="label">2014–2026</span>
+        <h2>Experiments: Art, Interaction Design, and Animation</h2>
+        <p class="sub">Own work, open source · ReAnimate.css, Art@60fps, Swirl Together</p>
         <svg class="chev" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m3 6 5 5 5-5"/></svg>
       </summary>
       <div class="body">
         <div class="text">
-          <p class="draft">Draft copy · to be rewritten</p>
-          <p>Innovative Driven builds an LLM-based eDiscovery tool used by about 40 law firms. I joined the software development team to support the VP of Engineering, owned product design, and ran the team’s Azure DevOps board as its PM.</p>
-          <p>Onboarding a new client took weeks. I mapped the existing flow in Figma, from a contract closing in Salesforce to a ready eDiscovery instance, to show every handoff and bottleneck. We used that map in stakeholder strategy meetings, I scoped the work as an epic and wrote the tickets, and the developers built and iterated on it. Onboarding went from weeks to under 15 minutes, with everyone online.</p>
+          <p class="lead">I've been making art with code and designing how people play with it since 2014, from pure-CSS experiments to a painting app at Steam Next Fest.</p>
+        </div>
+        <div class="text">
+          <p>In 2014 I took off the founder hat and picked up two new ones: JS developer and interaction designer. I became fascinated with mastering performant animations and interactions and used art and open-source experiments to practice. I released an interaction library, ReAnimate.CSS in 2015, and conducted my first UX research for a client, a card sort held at the Boston Public Library.</p>
+          <p class="note"><strong>What I still use:</strong> The habit of thinking about rendering and state before reaching for an animation. Performance and craft aren't in tension if you understand the DOM well enough.</p>
         </div>
         <div class="figs">
-          <figure>
-            <div class="frame flow" role="group" aria-labelledby="flow-cap">
-              <ol class="spine">
-                <li><div class="node start"><span>Salesforce Sales Cloud</span><b>Contract closed</b></div></li>
-                <li><div class="node"><b>Contract details</b></div></li>
-                <li>
-                  <ul class="fan" aria-label="Set up for the client">
-                    <li><div class="node"><span>Infrastructure</span><b>Repository setup</b></div></li>
-                    <li><div class="node"><span>Infrastructure</span><b>Virtual machine setup</b></div></li>
-                    <li><div class="node"><span>Infrastructure</span><b>Partitions setup</b></div></li>
-                    <li><div class="node"><span>HR</span><b>Contractor onboarding</b></div></li>
-                    <li><div class="node"><span>Cases</span><b>Initial case structure</b></div></li>
-                  </ul>
-                </li>
-              </ol>
-            </div>
-            <figcaption id="flow-cap">Client onboarding as an org flowchart: a closed contract in Salesforce Sales Cloud feeds the contract details, which set up the client’s repository, virtual machine, and partitions, onboard contractors through HR, and structure the client’s initial cases. Redrawn for this page, with no client data.</figcaption>
+          <figure class="w6">
+            <reanimate-demo css="../reanimate/reanimate.css"><img src="img/reanimate.png" width="556" height="339" loading="lazy" alt="ReAnimate.css homepage with a pink gradient logo and dropdowns for animation type, duration, and easing next to an Animate it button."></reanimate-demo>
+            <figcaption>Homepage of <a href="../reanimate/">ReAnimate.css</a>, running here</figcaption>
+          </figure>
+          <figure class="w6">
+            <css-sphere><img src="img/art-60fps.png" width="411" height="395" loading="lazy" alt="Art@60fps: red, orange and yellow star-cut rings turning in 3D."></css-sphere>
+            <figcaption>Art@60fps using HAML, and SCSS nth-child iteration, 2015 (<a href="https://codepen.io/Gabrielmtn/pen/jEXOjw">CodePen</a>)</figcaption>
           </figure>
         </div>
-      </div>
-    </details>
-
-    <!-- Swirl Together -->
-    <details class="project" id="swirl-together">
-      <summary>
-        <span class="label">2022–2026</span>
-        <h2>Swirl Together: Art Therapy From Prototype To Production</h2>
-        <p class="sub">Designer and engineer, end to end · WebGL, user testing, accessibility</p>
-        <svg class="chev" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m3 6 5 5 5-5"/></svg>
-      </summary>
-      <div class="body">
+      
+        <h3 class="sub-h" id="swirl-together">Swirl Together: Art Therapy From Prototype To Production</h3>
         <div class="text">
           <p>In 2017 Pavel Dobryakov posted a fluid simulation using WebGL shaders and the Navier-Stokes equations, and it blew my mind. It showed me a level of browser performance I'd never seen before, fluid dynamics that felt more tactile and alive in a browser tab than some native programs I’d used.</p>
           <p>Over the years, as I grew as a UX designer and developer, I felt more empowered to stand on the shoulders of the people who inspired me. So, I forked it on CodePen and started prototyping a new UX around it. I added controls directly into the shader and shared it with friends who were artists and engineers. Seeing Chris Coyier (the creator of CodePen), a person whom I’ve admired for years, leave a heart on the prototype was a huge honor.</p>
@@ -450,8 +439,9 @@
     btn.addEventListener('click', () => { const open = !all.every(d => d.open); all.forEach(d => { d.open = open; }); sync(); });
     all.forEach(d => d.addEventListener('toggle', sync));
     const openHash = () => {
-      const d = location.hash && document.getElementById(location.hash.slice(1));
-      if (d && d.tagName === 'DETAILS') { d.open = true; d.scrollIntoView(); d.querySelector('summary').focus({ preventScroll: true }); }
+      const el = location.hash && document.getElementById(location.hash.slice(1));
+      const d = el && el.closest('details.project');
+      if (d) { d.open = true; el.scrollIntoView(); if (el === d) d.querySelector('summary').focus({ preventScroll: true }); }
     };
     addEventListener('hashchange', openHash); openHash();
   })();
