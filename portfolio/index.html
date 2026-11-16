@@ -105,28 +105,8 @@
   .scroll { overflow-x: auto; }
   .ak-ref { display: block; width: 100%; min-width: 520px; height: auto; }
 
-  /* Innovative Driven: onboarding as a top-down node graph */
-  .flow { --node: #1c2226; padding: 28px 20px 32px; }
-  .flow ol, .flow ul { list-style: none; margin: 0; padding: 0; }
-  .flow .spine { display: grid; justify-items: center; gap: 28px; }
-  .flow .spine > li { position: relative; width: 100%; display: grid; justify-items: center; }
-  .flow .spine > li + li::before { content: ""; position: absolute; top: -28px; left: 50%; width: 2px; height: 28px; margin-left: -1px; background: var(--muted); }
-  .node { background: var(--node); border: 1px solid #3c464a; border-radius: 6px; padding: 10px 14px; text-align: center; max-width: 260px; }
-  .node b { display: block; color: var(--ink); font-weight: 600; font-size: 15px; line-height: 1.3; }
-  .node span { display: block; font: 500 11px/1.4 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
-  .node.start { border-color: var(--accent); }
-  .fan { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; position: relative; padding-top: 28px; width: 100%; }
-  .fan::before { content: ""; position: absolute; top: 0; left: 10%; right: 10%; border-top: 2px solid var(--muted); }
-  .fan > li { position: relative; display: grid; }
-  .fan > li::before { content: ""; position: absolute; top: -28px; left: 50%; width: 2px; height: 28px; margin-left: -1px; background: var(--muted); }
-  .fan .node { max-width: none; height: 100%; display: grid; align-content: center; }
-  @media (max-width: 720px) {
-    .flow .fan { grid-template-columns: minmax(0, 1fr); padding: 0 0 0 22px; gap: 10px; margin-top: 0; }
-    .fan::before { top: 0; bottom: 30px; left: 0; right: auto; width: 2px; border-top: 0; background: var(--muted); }
-    .fan::after { content: ""; position: absolute; top: 0; left: 0; width: 50%; border-top: 2px solid var(--muted); }
-    .fan > li::before { top: 50%; left: -22px; width: 22px; height: 2px; margin: -1px 0 0; }
-    .fan .node { text-align: left; }
-  }
+  /* Innovative Driven: onboarding graph */
+  .flow { padding: 22px 20px 26px; }
 
   /* footer */
   .end { margin-top: clamp(48px, 8vw, 72px); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px 32px; align-items: baseline; }
@@ -178,22 +158,8 @@
         </div>
         <div class="figs">
           <figure>
-            <div class="frame flow" role="group" aria-labelledby="flow-cap">
-              <ol class="spine">
-                <li><div class="node start"><span>Salesforce Sales Cloud</span><b>Contract closed</b></div></li>
-                <li><div class="node"><b>Contract details</b></div></li>
-                <li>
-                  <ul class="fan" aria-label="Set up for the client">
-                    <li><div class="node"><span>Infrastructure</span><b>Repository setup</b></div></li>
-                    <li><div class="node"><span>Infrastructure</span><b>Virtual machine setup</b></div></li>
-                    <li><div class="node"><span>Infrastructure</span><b>Partitions setup</b></div></li>
-                    <li><div class="node"><span>HR</span><b>Contractor onboarding</b></div></li>
-                    <li><div class="node"><span>Cases</span><b>Initial case structure</b></div></li>
-                  </ul>
-                </li>
-              </ol>
-            </div>
-            <figcaption id="flow-cap">Client onboarding as an org flowchart: a closed contract in Salesforce Sales Cloud feeds the contract details, which set up the client’s repository, virtual machine, and partitions, onboard contractors through HR, and structure the client’s initial cases. Redrawn for this page, with no client data.</figcaption>
+            <div class="frame flow"><onboard-flow aria-describedby="flow-cap"></onboard-flow></div>
+            <figcaption id="flow-cap">Client onboarding as an org flowchart, from a contract closing in Salesforce Sales Cloud to case setup and the setup complete notification. Most steps are redacted. Redrawn for this page, with no client data.</figcaption>
           </figure>
         </div>
       </div>
