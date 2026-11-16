@@ -9,3 +9,4 @@ import './scan-cadence.js';
 import './scan-calendar.js';
 import './reanimate-demo.js';
 import './css-sphere.js';
+import './zoom-pan.js';
