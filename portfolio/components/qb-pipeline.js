@@ -252,8 +252,20 @@ class QbPipeline extends HTMLElement {
     });
   }
   setOpen(t, open) {
+    // the step body slides open and closed (height and opacity, from wherever it is), unless motion is reduced
+    const bd = this.root.getElementById(t.getAttribute('aria-controls'));
     t.setAttribute('aria-expanded', String(open));
-    this.root.getElementById(t.getAttribute('aria-controls')).hidden = !open;
+    if (reducedMotion() || !bd.isConnected) { bd.hidden = !open; return; }
+    const from = bd.hidden ? 0 : bd.getBoundingClientRect().height;
+    if (bd._anim) bd._anim.cancel();
+    bd.hidden = false;
+    const to = open ? bd.scrollHeight : 0;
+    bd.style.overflow = 'hidden';
+    bd._anim = bd.animate(
+      [{ height: from + 'px', opacity: from ? 1 : 0, paddingTop: from ? '4px' : '0px', paddingBottom: from ? '10px' : '0px' },
+       { height: to + 'px', opacity: open ? 1 : 0, paddingTop: open ? '4px' : '0px', paddingBottom: open ? '10px' : '0px' }],
+      { duration: 260, easing: open ? 'cubic-bezier(.2,.7,.2,1)' : 'cubic-bezier(.4,0,.6,1)' });
+    bd._anim.onfinish = () => { bd._anim = null; bd.style.overflow = ''; if (!open) bd.hidden = true; };
   }
   drawBranch(b) {
     const ol = this.root.querySelector(`.br[data-br="${b}"] .list`);

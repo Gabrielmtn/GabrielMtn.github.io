@@ -115,7 +115,10 @@ h5 { margin: 14px 0 6px; font-size: 12px; }
 p { margin: 0 0 10px; line-height: 1.6; }
 aside { border: 1px solid #d9e1e5; border-radius: 4px; padding: 8px 10px; background: #f7fafb; }
 aside b { margin-right: 6px; }
-table { border-collapse: collapse; width: 100%; margin: 4px 0 12px; font-size: 11px; }
+table { border-collapse: collapse; width: 100%; margin: 4px 0 12px; font-size: 11px; table-layout: fixed; }
+/* long URLs and hostnames wrap inside their cell instead of pushing the table into the example column */
+th, td { overflow-wrap: anywhere; }
+.txt code { overflow-wrap: anywhere; }
 th, td { text-align: left; padding: 6px 8px; border: 1px solid #e3e7ea; vertical-align: top; }
 th { background: #f4f6f7; }
 code, pre { font-family: var(--f-mono, ui-monospace, monospace); font-size: 10.5px; }

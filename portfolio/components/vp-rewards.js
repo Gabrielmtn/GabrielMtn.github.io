@@ -1,6 +1,6 @@
-// <vp-rewards> Rebuild of the "How to earn" rewards-for-steps prototype.
-// The daily total counts only the activity with the most points; logging
-// activity moves the "Active" flag to whichever one leads.
+// <vp-rewards> Rebuild of the "How to earn" rewards-for-steps prototype. It shows the member's data as it stood: the
+// daily total counts only the activity with the most points, and the "Active" flag marks that activity. Nothing is
+// logged here; the activity rows are information, not controls.
 import { mount, fmt, focusCss } from './shared.js';
 
 const MAX = 140;
@@ -32,8 +32,7 @@ ${focusCss}
 .acts { list-style: none; margin: 12px 0 0; padding: 0; }
 .acts li + li { margin-top: 2px; }
 .or { text-align: center; font-size: 11px; color: #7d878c; letter-spacing: .1em; margin: 2px 0; }
-.act { width: 100%; display: grid; grid-template-columns: 56px 26px 1fr auto; gap: 8px; align-items: center; background: none; border: 0; padding: 10px 2px; font: inherit; color: inherit; cursor: pointer; text-align: left; border-radius: 6px; }
-.act:hover { background: #f1f5f6; }
+.act { display: grid; grid-template-columns: 56px 26px 1fr auto; gap: 8px; align-items: center; padding: 10px 2px; }
 .flag { visibility: hidden; background: #127a8f; color: #fff; font-size: 11px; padding: 4px 8px; clip-path: polygon(0 0, 82% 0, 100% 50%, 82% 100%, 0 100%); }
 .act[data-active="true"] .flag { visibility: visible; }
 svg { width: 24px; height: 24px; fill: none; stroke: #127a8f; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
@@ -75,10 +74,8 @@ class VpRewards extends HTMLElement {
           <div class="total"><span>Daily Exercise Total</span><span><span class="coin" aria-hidden="true"></span><span class="tv"></span></span></div>
           <div class="bar" role="progressbar" aria-label="Daily exercise total" aria-valuemin="0" aria-valuemax="${MAX}"><i></i></div>
           <ul class="acts">
-            ${ACTS.map((a, i) => `${i ? '<li class="or" aria-hidden="true">OR</li>' : ''}<li><button type="button" class="act" data-k="${a.key}"><span class="flag">Active</span><svg viewBox="0 0 24 24" aria-hidden="true">${a.icon}</svg><span class="name">${a.label}</span><span class="val"></span></button></li>`).join('')}
+            ${ACTS.map((a, i) => `${i ? '<li class="or" aria-hidden="true">OR</li>' : ''}<li class="act" data-k="${a.key}"><span class="flag">Active</span><svg viewBox="0 0 24 24" aria-hidden="true">${a.icon}</svg><span class="name">${a.label}</span><span class="val"></span></li>`).join('')}
           </ul>
-          <p class="hint">Tap an activity to log some. The flag follows whichever earns the most.</p>
-          <p class="hint" role="status" aria-live="polite" style="min-height:1.4em;margin:2px 0 0"></p>
         </div>
         ${sections.map((s, si) => `
           <button type="button" class="band" aria-expanded="${s.open}" aria-controls="s${si}-${uid}">${s.title} <span class="chev" aria-hidden="true">▾</span></button>
@@ -102,18 +99,9 @@ class VpRewards extends HTMLElement {
       b.setAttribute('aria-expanded', String(open));
       root.getElementById(b.getAttribute('aria-controls')).hidden = !open;
     }));
-    root.querySelectorAll('.act').forEach((b) => b.addEventListener('click', () => {
-      const a = this.acts.find((x) => x.key === b.dataset.k);
-      if (a.val >= a.goal) { this.say(`${a.label} goal already met.`); return; }
-      a.val = Math.min(a.goal, a.val + a.step);
-      this.render();
-      const lead = this.lead();
-      this.say(`Logged ${a.verb}. ${lead.label} leads with ${pts(lead)} points.`);
-    }));
     this.render();
   }
   lead() { return this.acts.reduce((m, a) => (pts(a) > pts(m) ? a : m), this.acts[0]); }
-  say(t) { this.root.querySelector('[role="status"]').textContent = t; }
   render() {
     const r = this.root, lead = this.lead(), total = pts(lead);
     r.querySelector('.tv').textContent = `${total} / ${MAX}`;
@@ -123,7 +111,7 @@ class VpRewards extends HTMLElement {
       const b = r.querySelector(`.act[data-k="${a.key}"]`);
       b.dataset.active = String(a === lead);
       b.querySelector('.val').textContent = `${fmt(a.val)} / ${fmt(a.goal)}`;
-      b.setAttribute('aria-label', `${a.label}, ${fmt(a.val)} of ${fmt(a.goal)}, ${pts(a)} points${a === lead ? ', counts toward today' : ''}. Log ${a.verb}.`);
+      b.querySelector('.flag').setAttribute('aria-hidden', String(a !== lead));   // "Active" is read only on the leader
     }
   }
 }
