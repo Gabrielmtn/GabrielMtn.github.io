@@ -21,7 +21,7 @@ button { font: 600 13px/1 var(--f-body, system-ui, sans-serif); color: #e7ebe9; 
   min-width: 32px; height: 32px; padding: 0 8px; cursor: pointer; }
 button:hover { background: rgba(255, 255, 255, .1); }
 button:disabled { opacity: .4; cursor: default; background: none; }
-.lvl { font: 500 11px/1 var(--f-mono, ui-monospace, monospace); color: #9aa39f; min-width: 3.5em; text-align: center; }
+.lvl { font: 500 12px/1 var(--f-mono, ui-monospace, monospace); color: #9aa39f; min-width: 3.5em; text-align: center; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 @media (prefers-reduced-motion: reduce) { .ctl { transition: none; } }
 `;

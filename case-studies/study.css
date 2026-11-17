@@ -28,7 +28,7 @@ img { max-width: 100%; height: auto; display: block; }
   padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
 
 /* the one label style */
-.label { font: 500 12px/1.5 var(--f-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 0; }
+.label { font: 500 13px/1.5 var(--f-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 0; }
 a.label { text-decoration: none; }
 a.label:hover, a.label[aria-current] { color: var(--ink); }
 
@@ -70,7 +70,7 @@ figure > .label + .frame { margin-top: 10px; }
 .spectrum { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
 .philosophy { border: 1px solid var(--line); border-radius: 6px; padding: 14px; color: var(--muted); display: grid; gap: 10px; align-content: start; }
 .philosophy.is-chosen { border-color: var(--accent); color: var(--ink); }
-.philosophy-label { font: 500 12px/1.4 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; }
+.philosophy-label { font: 500 13px/1.4 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; }
 .philosophy-diagram { width: 100%; height: auto; display: block; }
 .philosophy-note { font-size: 14.5px; line-height: 1.5; margin: 0; color: var(--body); }
 @media (max-width: 720px) { .spectrum { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

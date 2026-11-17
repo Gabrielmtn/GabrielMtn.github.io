@@ -1477,7 +1477,7 @@ canvas.over { z-index: 4; pointer-events: none; touch-action: auto; }
   border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 14px; padding: 22px 26px 24px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
   text-shadow: 0 1px 12px #13171a, 0 0 2px #13171a; }
 .hero-seg { display: inline-block; max-width: 100%; }
-.hero-eyebrow { font: 12px var(--_mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--_muted); margin: 0 0 10px; }
+.hero-eyebrow { font: 13px var(--_mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--_muted); margin: 0 0 10px; }
 .hero-title { font-family: var(--lanyard-font-display, ${DEFAULT_FONTS.display}); font-stretch: 125%; font-weight: 850;
   /* sized to the panel, not the window, so a long word like "Component" fits on narrow screens instead of breaking */
   font-size: clamp(28px, 11cqi, 84px);
@@ -1505,12 +1505,12 @@ canvas.over { z-index: 4; pointer-events: none; touch-action: auto; }
   color: var(--lanyard-tip-ink, #13171a); font: 14px/1.35 var(--_body); padding: 8px 12px; border-radius: 8px; pointer-events: none; white-space: nowrap;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25); }
 .tip strong { display: block; font-weight: 600; }
-.tip span { display: block; font-family: var(--_mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.8; }
+.tip span { display: block; font-family: var(--_mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.8; }
 .tip span:empty { display: none; }
 .tip::after { content: ""; position: absolute; left: 50%; bottom: -5px; width: 10px; height: 10px; background: inherit; transform: translateX(-50%) rotate(45deg); }
 .tip.below { transform: translate(-50%, 10px); }
 .tip.below::after { bottom: auto; top: -5px; }
-.hint { position: absolute; bottom: 16px; left: 16px; margin: 0; font: 12.5px var(--_mono); letter-spacing: 0.08em; text-transform: uppercase;
+.hint { position: absolute; bottom: 16px; left: 16px; margin: 0; font: 13px var(--_mono); letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--_muted); pointer-events: none; }
 .hint:empty { display: none; }
 /* slot="corner": a small line of your own (a credit, a link) in the bottom-right corner of the badge area */

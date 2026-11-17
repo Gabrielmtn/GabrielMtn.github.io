@@ -43,11 +43,11 @@ svg { display: block; width: 100%; height: auto; overflow: visible; }
 .head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 10px 20px; margin: 0 0 18px; }
 .legend { display: grid; gap: 8px; margin: 0; }
 .legend ul { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 0; padding: 0; list-style: none;
-  font: 500 11px/1.4 var(--f-mono, ui-monospace, monospace); letter-spacing: .06em; text-transform: uppercase; color: #9aa39f; }
+  font: 500 12px/1.4 var(--f-mono, ui-monospace, monospace); letter-spacing: .06em; text-transform: uppercase; color: #9aa39f; }
 .legend li { display: flex; align-items: center; gap: 7px; }
 .legend i { width: 10px; height: 10px; border-radius: 2px; }
 .legend svg { width: 22px; height: 14px; display: inline; }
-.tag { order: -1; margin: 0 0 0 auto; font: 600 11px/1.3 var(--f-mono, ui-monospace, monospace); letter-spacing: .08em; text-transform: uppercase;
+.tag { order: -1; margin: 0 0 0 auto; font: 600 12px/1.3 var(--f-mono, ui-monospace, monospace); letter-spacing: .08em; text-transform: uppercase;
   color: #f0b85c; border: 1px solid rgba(240, 184, 92, .55); background: rgba(240, 184, 92, .08); border-radius: 4px; padding: 6px 10px; }
 @media (min-width: 720px) { .tag { order: 0; } }
 `;
