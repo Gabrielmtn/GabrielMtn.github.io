@@ -104,6 +104,40 @@
   .scroll { overflow-x: auto; }
   .ak-ref { display: block; width: 100%; min-width: 520px; height: auto; }
 
+  /* thumbnail rows: small previews on one row (scrolling sideways on narrow screens); each opens in the viewer */
+  .thumbs { list-style: none; margin: 28px 0 0; padding: 0 0 6px; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(150px, 1fr);
+    gap: 18px; overflow-x: auto; scroll-snap-type: x proximity; }
+  .thumbs > li { scroll-snap-align: start; min-width: 0; }
+  .thumbs figure { margin: 0; }
+  .thumbs figure figcaption { font-size: 13px; line-height: 1.4; margin-top: 8px; }
+  .tn { position: relative; display: block; width: 100%; aspect-ratio: 4 / 3; padding: 0; border: 1px solid var(--line); border-radius: 6px;
+    overflow: hidden; background: #fff; cursor: zoom-in; transition: border-color .2s, transform .2s; }
+  .tn:hover { border-color: var(--muted); transform: translateY(-2px); }
+  .tn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .tn-v { position: absolute; inset: 0; display: block; pointer-events: none; }
+  .tn-v > img, .tn-v > svg { display: block; width: 100%; height: 100%; min-width: 0; object-fit: cover; object-position: top center; }
+  .tn-v > scan-cadence { width: 100%; max-width: none; }
+  .tn .tn-tag { position: absolute; z-index: 1; left: 6px; bottom: 6px; font-size: 10px; letter-spacing: .06em; padding: 3px 6px; border-radius: 3px;
+    background: rgba(14,18,20,.85); color: var(--ink); line-height: 1.2; text-align: left; }
+  /* the viewer */
+  .lb { width: min(1100px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); padding: 0; border: 1px solid var(--line); border-radius: 8px;
+    background: var(--panel); color: var(--body); }
+  .lb::backdrop { background: rgba(6,8,9,.82); }
+  .lb[open] { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; }
+  .lb-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 12px 10px 16px; border-bottom: 1px solid var(--line); }
+  .lb-bar .label { margin: 0; }
+  .lb-btns { display: flex; gap: 6px; }
+  .lb button { font: 500 13px/1 var(--f-body); color: var(--ink); background: transparent; border: 1px solid var(--line); border-radius: 4px;
+    min-width: 36px; height: 34px; padding: 0 10px; cursor: pointer; }
+  .lb button:hover { border-color: var(--muted); }
+  .lb-stage { overflow: auto; padding: 16px; display: grid; place-items: start center; }
+  .lb-stage > * { max-width: 100%; }
+  .lb-stage img { display: block; max-width: 100%; height: auto; max-height: calc(100dvh - 190px); width: auto; background: #fff; border-radius: 4px; }
+  .lb-stage svg { display: block; width: 100%; min-width: 560px; height: auto; }
+  .lb-stage scan-cadence { width: 340px; }
+  .lb-cap { margin: 0; padding: 10px 16px 14px; font-size: 14px; color: var(--muted); border-top: 1px solid var(--line); }
+  @media (prefers-reduced-motion: reduce) { .tn { transition: none; } .tn:hover { transform: none; } }
+
   /* Innovative Driven: onboarding graph */
   .flow { padding: 22px 20px 26px; }
 
@@ -260,32 +294,29 @@
           <p>Using task analysis interviews with Infosec stakeholders, I learned their current workflow involved reviewing data from vulnerability scanning software, compliance data from internal APIs, intranet calendars, spreadsheets, and data from NIST.gov.</p>
           <p>In collaboration with them, we began sketching ways we might unify these sources of information, reduce the steps, and give immediate feedback on whether a product contained a critical vulnerability on track for compliance.</p>
         </div>
-        <div class="figs">
-          <!-- reference only: Akamai's own public stats, not Gabriel's work -->
-          <figure class="w8">
-        <p class="label ref-label">For reference · not my work</p>
-        <div class="frame scroll"><svg class="ak-ref" viewBox="0 0 658 422" role="img" aria-labelledby="ak-ref-t" xmlns="http://www.w3.org/2000/svg" font-family='"Segoe UI", "Instrument Sans", Inter, system-ui, sans-serif'><title id="ak-ref-t">Akamai Traffic Statistics, last updated August 14, 2019. Totals: 1,538 networks, 3,974 locations, 137 countries, 252,881 servers, 130,287 domains active, 3 global NOCCs, and 101.917 billion hours saved versus the public internet. Peak daily usage: bit rate 82.4 Tbps (3/12/19), request rate 101,597,981 hits per second (7/24/18), bytes delivered 10,762,499 TB (9/13/18), requests delivered 10,275 billion (10/4/18), unique client IPv4 683 million (4/14/18), unique client IPv6 3.12 billion (12/23/18), largest attack 1.3 Tbps (2/28/18). Lifetime: 911,902,103 Tb bits delivered, 2,831,017 billion hits, 52,023,159 live events, 3.325 trillion live streams, 22.3 trillion on-demand streams.</title><rect width="658" height="422" fill="#111111"/><polygon points="0,0 241,0 492,36 0,36" fill="#080808"/><rect width="20" height="22" fill="#84bd3b"/><text x="27" y="21" font-size="11.6" fill="#f2f2f2">Akamai Traffic Statistics</text><image x="604" y="4" width="50" height="30" href="data:image/png;base64,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"/><text x="27" y="53" font-size="6.7" fill="#f7942a">Total Networks</text><text x="27" y="81" font-size="16.6" font-weight="300" fill="#f2f2f2">1,538</text><text x="89.5" y="53" font-size="6.7" fill="#f7942a">Total Locations</text><text x="89.5" y="81" font-size="16.6" font-weight="300" fill="#f2f2f2">3,974</text><text x="151.5" y="53" font-size="6.7" fill="#f7942a">Total Countries</text><text x="151.5" y="81" font-size="16.6" font-weight="300" fill="#f2f2f2">137</text><text x="213.5" y="53" font-size="6.7" fill="#f7942a">Total Servers</text><text x="213.5" y="81" font-size="16.6" font-weight="300" fill="#f2f2f2">252,881</text><text x="296.5" y="53" font-size="6.7" fill="#f7942a">Total Domains Active</text><text x="296.5" y="81" font-size="16.6" font-weight="300" fill="#f2f2f2">130,287</text><text x="378.5" y="53" font-size="6.7" fill="#f7942a">Global NOCCs</text><text x="378.5" y="81" font-size="16.6" font-weight="300" fill="#f2f2f2">3</text><text x="631" y="53" font-size="6.7" fill="#f7942a" text-anchor="end">Time Saved vs. Public Internet</text><text x="631" y="81" font-size="17.4" fill="#f2f2f2" text-anchor="end">101.917 billion hours</text><rect x="27" y="97" width="300" height="27" fill="#494949"/><rect x="331" y="97" width="299" height="27" fill="#494949"/><text x="39" y="113" font-size="7" font-weight="600" fill="#f2f2f2">Peak Daily Usage</text><text x="343" y="113" font-size="7" font-weight="600" fill="#f2f2f2">Lifetime Statistics</text><text x="39" y="146.3" font-size="8.2" fill="#f7942a">Bit Rate (03/12/19)</text><text x="315" y="146.3" font-size="8.2" fill="#f2f2f2" text-anchor="end">82.4 Tbps</text><line x1="39" y1="162.6" x2="315" y2="162.6" stroke="#3a3a3a" stroke-width="1"/><text x="39" y="184.9" font-size="8.2" fill="#f7942a">Request Rate (07/24/18)</text><text x="315" y="184.9" font-size="8.2" fill="#f2f2f2" text-anchor="end">101,597,981 hits/sec</text><line x1="39" y1="201.2" x2="315" y2="201.2" stroke="#3a3a3a" stroke-width="1"/><text x="39" y="223.5" font-size="8.2" fill="#f7942a">Bytes Delivered (09/13/18)</text><text x="315" y="223.5" font-size="8.2" fill="#f2f2f2" text-anchor="end">10,762,499 TB</text><line x1="39" y1="239.8" x2="315" y2="239.8" stroke="#3a3a3a" stroke-width="1"/><text x="39" y="262.1" font-size="8.2" fill="#f7942a">Requests Delivered (10/04/18)</text><text x="315" y="262.1" font-size="8.2" fill="#f2f2f2" text-anchor="end">10,275 billion</text><line x1="39" y1="278.4" x2="315" y2="278.4" stroke="#3a3a3a" stroke-width="1"/><text x="39" y="300.7" font-size="8.2" fill="#f7942a">Unique Client IPv4 (04/14/18)</text><text x="315" y="300.7" font-size="8.2" fill="#f2f2f2" text-anchor="end">683 million</text><line x1="39" y1="317.0" x2="315" y2="317.0" stroke="#3a3a3a" stroke-width="1"/><text x="39" y="339.3" font-size="8.2" fill="#f7942a">Unique Client IPv6 (12/23/18)</text><text x="315" y="339.3" font-size="8.2" fill="#f2f2f2" text-anchor="end">3.12 billion</text><line x1="39" y1="355.6" x2="315" y2="355.6" stroke="#3a3a3a" stroke-width="1"/><text x="39" y="377.9" font-size="8.2" fill="#f7942a">Largest Attack (2/28/18)</text><text x="315" y="377.9" font-size="8.2" fill="#f2f2f2" text-anchor="end">1.3 Tbps</text><text x="342" y="146.3" font-size="8.2" fill="#f7942a">Bits Delivered</text><text x="618" y="146.3" font-size="8.2" fill="#f2f2f2" text-anchor="end">911,902,103 Tb</text><line x1="342" y1="162.6" x2="618" y2="162.6" stroke="#3a3a3a" stroke-width="1"/><text x="342" y="184.9" font-size="8.2" fill="#f7942a">Hits Delivered</text><text x="618" y="184.9" font-size="8.2" fill="#f2f2f2" text-anchor="end">2,831,017 billion</text><line x1="342" y1="201.2" x2="618" y2="201.2" stroke="#3a3a3a" stroke-width="1"/><text x="342" y="223.5" font-size="8.2" fill="#f7942a">Live Events Delivered</text><text x="618" y="223.5" font-size="8.2" fill="#f2f2f2" text-anchor="end">52,023,159</text><line x1="342" y1="239.8" x2="618" y2="239.8" stroke="#3a3a3a" stroke-width="1"/><text x="342" y="262.1" font-size="8.2" fill="#f7942a">Live Streams Delivered</text><text x="618" y="262.1" font-size="8.2" fill="#f2f2f2" text-anchor="end">3.325 trillion</text><line x1="342" y1="278.4" x2="618" y2="278.4" stroke="#3a3a3a" stroke-width="1"/><text x="342" y="300.7" font-size="8.2" fill="#f7942a">On Demand Streams Delivered</text><text x="618" y="300.7" font-size="8.2" fill="#f2f2f2" text-anchor="end">22.3 trillion</text><text x="631" y="416" font-size="4.3" fill="#e6e6e6" text-anchor="end">Last updated on Aug 14th, 2019</text></svg></div>
-        <figcaption>Akamai's public traffic statistics, 2019</figcaption>
-      </figure>
-          <figure class="w4">
-            <scan-cadence><img src="img/akamai-cadence.png" width="304" height="315" loading="lazy" alt="Scan summary card with concentric progress rings for low, medium, and critical findings, 58 percent complete."></scan-cadence>
+        <!-- a row of thumbnails; each opens full size in the viewer (script at the end of the page) -->
+        <ul class="thumbs" aria-label="Akamai artifacts">
+          <li><figure>
+            <button type="button" class="tn" aria-haspopup="dialog"><span class="tn-tag label">For reference · not my work</span><span class="tn-v"><svg class="ak-ref" viewBox="0 0 658 422" role="img" aria-labelledby="ak-ref-t" xmlns="http://www.w3.org/2000/svg" font-family='"Segoe UI", "Instrument Sans", Inter, system-ui, sans-serif'><title id="ak-ref-t">Akamai Traffic Statistics, last updated August 14, 2019. Totals: 1,538 networks, 3,974 locations, 137 countries, 252,881 servers, 130,287 domains active, 3 global NOCCs, and 101.917 billion hours saved versus the public internet. Peak daily usage: bit rate 82.4 Tbps (3/12/19), request rate 101,597,981 hits per second (7/24/18), bytes delivered 10,762,499 TB (9/13/18), requests delivered 10,275 billion (10/4/18), unique client IPv4 683 million (4/14/18), unique client IPv6 3.12 billion (12/23/18), largest attack 1.3 Tbps (2/28/18). Lifetime: 911,902,103 Tb bits delivered, 2,831,017 billion hits, 52,023,159 live events, 3.325 trillion live streams, 22.3 trillion on-demand streams.</title><rect width="658" height="422" fill="#111111"/><polygon points="0,0 241,0 492,36 0,36" fill="#080808"/><rect width="20" height="22" fill="#84bd3b"/><text x="27" y="21" font-size="11.6" fill="#f2f2f2">Akamai Traffic Statistics</text><image x="604" y="4" width="50" height="30" href="data:image/png;base64,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"/><text x="27" y="53" font-size="6.7" fill="#f7942a">Total Networks</text><text x="27" y="81" font-size="16.6" font-weight="300" fill="#f2f2f2">1,538</text><text x="89.5" y="53" font-size="6.7" fill="#f7942a">Total Locations</text><text x="89.5" y="81" font-size="16.6" font-weight="300" fill="#f2f2f2">3,974</text><text x="151.5" y="53" font-size="6.7" fill="#f7942a">Total Countries</text><text x="151.5" y="81" font-size="16.6" font-weight="300" fill="#f2f2f2">137</text><text x="213.5" y="53" font-size="6.7" fill="#f7942a">Total Servers</text><text x="213.5" y="81" font-size="16.6" font-weight="300" fill="#f2f2f2">252,881</text><text x="296.5" y="53" font-size="6.7" fill="#f7942a">Total Domains Active</text><text x="296.5" y="81" font-size="16.6" font-weight="300" fill="#f2f2f2">130,287</text><text x="378.5" y="53" font-size="6.7" fill="#f7942a">Global NOCCs</text><text x="378.5" y="81" font-size="16.6" font-weight="300" fill="#f2f2f2">3</text><text x="631" y="53" font-size="6.7" fill="#f7942a" text-anchor="end">Time Saved vs. Public Internet</text><text x="631" y="81" font-size="17.4" fill="#f2f2f2" text-anchor="end">101.917 billion hours</text><rect x="27" y="97" width="300" height="27" fill="#494949"/><rect x="331" y="97" width="299" height="27" fill="#494949"/><text x="39" y="113" font-size="7" font-weight="600" fill="#f2f2f2">Peak Daily Usage</text><text x="343" y="113" font-size="7" font-weight="600" fill="#f2f2f2">Lifetime Statistics</text><text x="39" y="146.3" font-size="8.2" fill="#f7942a">Bit Rate (03/12/19)</text><text x="315" y="146.3" font-size="8.2" fill="#f2f2f2" text-anchor="end">82.4 Tbps</text><line x1="39" y1="162.6" x2="315" y2="162.6" stroke="#3a3a3a" stroke-width="1"/><text x="39" y="184.9" font-size="8.2" fill="#f7942a">Request Rate (07/24/18)</text><text x="315" y="184.9" font-size="8.2" fill="#f2f2f2" text-anchor="end">101,597,981 hits/sec</text><line x1="39" y1="201.2" x2="315" y2="201.2" stroke="#3a3a3a" stroke-width="1"/><text x="39" y="223.5" font-size="8.2" fill="#f7942a">Bytes Delivered (09/13/18)</text><text x="315" y="223.5" font-size="8.2" fill="#f2f2f2" text-anchor="end">10,762,499 TB</text><line x1="39" y1="239.8" x2="315" y2="239.8" stroke="#3a3a3a" stroke-width="1"/><text x="39" y="262.1" font-size="8.2" fill="#f7942a">Requests Delivered (10/04/18)</text><text x="315" y="262.1" font-size="8.2" fill="#f2f2f2" text-anchor="end">10,275 billion</text><line x1="39" y1="278.4" x2="315" y2="278.4" stroke="#3a3a3a" stroke-width="1"/><text x="39" y="300.7" font-size="8.2" fill="#f7942a">Unique Client IPv4 (04/14/18)</text><text x="315" y="300.7" font-size="8.2" fill="#f2f2f2" text-anchor="end">683 million</text><line x1="39" y1="317.0" x2="315" y2="317.0" stroke="#3a3a3a" stroke-width="1"/><text x="39" y="339.3" font-size="8.2" fill="#f7942a">Unique Client IPv6 (12/23/18)</text><text x="315" y="339.3" font-size="8.2" fill="#f2f2f2" text-anchor="end">3.12 billion</text><line x1="39" y1="355.6" x2="315" y2="355.6" stroke="#3a3a3a" stroke-width="1"/><text x="39" y="377.9" font-size="8.2" fill="#f7942a">Largest Attack (2/28/18)</text><text x="315" y="377.9" font-size="8.2" fill="#f2f2f2" text-anchor="end">1.3 Tbps</text><text x="342" y="146.3" font-size="8.2" fill="#f7942a">Bits Delivered</text><text x="618" y="146.3" font-size="8.2" fill="#f2f2f2" text-anchor="end">911,902,103 Tb</text><line x1="342" y1="162.6" x2="618" y2="162.6" stroke="#3a3a3a" stroke-width="1"/><text x="342" y="184.9" font-size="8.2" fill="#f7942a">Hits Delivered</text><text x="618" y="184.9" font-size="8.2" fill="#f2f2f2" text-anchor="end">2,831,017 billion</text><line x1="342" y1="201.2" x2="618" y2="201.2" stroke="#3a3a3a" stroke-width="1"/><text x="342" y="223.5" font-size="8.2" fill="#f7942a">Live Events Delivered</text><text x="618" y="223.5" font-size="8.2" fill="#f2f2f2" text-anchor="end">52,023,159</text><line x1="342" y1="239.8" x2="618" y2="239.8" stroke="#3a3a3a" stroke-width="1"/><text x="342" y="262.1" font-size="8.2" fill="#f7942a">Live Streams Delivered</text><text x="618" y="262.1" font-size="8.2" fill="#f2f2f2" text-anchor="end">3.325 trillion</text><line x1="342" y1="278.4" x2="618" y2="278.4" stroke="#3a3a3a" stroke-width="1"/><text x="342" y="300.7" font-size="8.2" fill="#f7942a">On Demand Streams Delivered</text><text x="618" y="300.7" font-size="8.2" fill="#f2f2f2" text-anchor="end">22.3 trillion</text><text x="631" y="416" font-size="4.3" fill="#e6e6e6" text-anchor="end">Last updated on Aug 14th, 2019</text></svg></span></button>
+            <figcaption>Akamai's public traffic statistics, 2019</figcaption>
+          </figure></li>
+          <li><figure>
+            <button type="button" class="tn" aria-haspopup="dialog"><span class="tn-v"><scan-cadence><img src="img/akamai-cadence.png" width="304" height="315" loading="lazy" alt="Scan summary card with concentric progress rings for low, medium, and critical findings, 58 percent complete."></scan-cadence></span></button>
             <figcaption>Early cadence concept, 2019</figcaption>
-          </figure>
-        </div>
-        <div class="figs">
-          <figure class="w4">
-            <div class="frame light"><img src="img/akamai-scan-wire.png" width="650" height="786" loading="lazy" alt="Wireframe list of scan authorization entries, each marked Mapper Shared, with warning and pending icons."></div>
+          </figure></li>
+          <li><figure>
+            <button type="button" class="tn" aria-haspopup="dialog"><span class="tn-v"><img src="img/akamai-scan-wire.png" width="650" height="786" loading="lazy" alt="Wireframe list of scan authorization entries, each marked Mapper Shared, with warning and pending icons."></span></button>
             <figcaption>Vulnerability scan initial wireframes, 2019</figcaption>
-          </figure>
-          <figure class="w4">
-            <div class="frame light"><img src="img/akamai-infosec-wire.png" width="1106" height="1395" loading="lazy" alt="Hand-drawn style wireframe of a dashboard: a header, filter controls, and two columns of vulnerability rows with severity icons and scores."></div>
+          </figure></li>
+          <li><figure>
+            <button type="button" class="tn" aria-haspopup="dialog"><span class="tn-v"><img src="img/akamai-infosec-wire.png" width="1106" height="1395" loading="lazy" alt="Hand-drawn style wireframe of a dashboard: a header, filter controls, and two columns of vulnerability rows with severity icons and scores."></span></button>
             <figcaption>Initial wireframe with Infosec team, 2019</figcaption>
-          </figure>
-          <figure class="w4">
-            <div class="frame light"><img src="img/akamai-vuln-component.png" width="624" height="887" loading="lazy" alt="Vulnerability component prototype: an ESSL SQA FIPS card listing release scans, next monthly scan, days to SLA, and the owner."></div>
+          </figure></li>
+          <li><figure>
+            <button type="button" class="tn" aria-haspopup="dialog"><span class="tn-v"><img src="img/akamai-vuln-component.png" width="624" height="887" loading="lazy" alt="Vulnerability component prototype: an ESSL SQA FIPS card listing release scans, next monthly scan, days to SLA, and the owner."></span></button>
             <figcaption>Vulnerability component prototype, 2019</figcaption>
-          </figure>
-        </div>
+          </figure></li>
+        </ul>
         <div class="text" style="margin-top:32px">
           <p>With so many sources of data, as well as multiple user types, I worked closely with many of the Infosec team’s compliance experts near-daily. I used remote and in-person card sorts to build our information architecture around their expectations, and would quickly bring those learnings into wireframes and iterate using their feedback.</p>
           <p class="note"><strong>Impact:</strong> Ultimately, I’d design, iterate, and rapidly move our user-centered designs into front-end prototypes and user flows they could interact with. This user-centered design and evaluation process helped us craft a tool they could feel confident in, and be sure it was designed with their precise critical workflows in mind.</p>
@@ -448,6 +479,52 @@
       if (d) { d.open = true; el.scrollIntoView(); if (el === d) d.querySelector('summary').focus({ preventScroll: true }); }
     };
     addEventListener('hashchange', openHash); openHash();
+  })();
+</script>
+<dialog class="lb" aria-labelledby="lb-cap">
+  <div class="lb-bar"><p class="label" id="lb-n"></p>
+    <div class="lb-btns"><button type="button" data-go="-1" aria-label="Previous">←</button><button type="button" data-go="1" aria-label="Next">→</button><button type="button" data-go="close">Close</button></div></div>
+  <div class="lb-stage"></div>
+  <p class="lb-cap" id="lb-cap"></p>
+</dialog>
+<script>
+  // The viewer for thumbnail rows: a thumbnail opens a copy of its artifact at full size in a modal dialog. Arrow keys or
+  // the arrow buttons step through the row, Escape or Close shuts it, and focus goes back to the thumbnail it came from.
+  (() => {
+    const dlg = document.querySelector('.lb'), stage = dlg.querySelector('.lb-stage');
+    let row = [], i = 0;
+    const show = () => {
+      const fig = row[i].closest('figure');
+      const view = row[i].querySelector('.tn-v').cloneNode(true);
+      view.querySelectorAll('[id]').forEach(el => {        // keep ids unique; relabel what pointed at them
+        const old = el.id, id = old + '-lb'; el.id = id;
+        view.querySelectorAll(`[aria-labelledby="${old}"]`).forEach(x => x.setAttribute('aria-labelledby', id));
+      });
+      view.querySelectorAll('img[loading]').forEach(img => img.removeAttribute('loading'));
+      stage.replaceChildren(...view.childNodes);
+      stage.scrollTo(0, 0);
+      dlg.querySelector('.lb-cap').textContent = fig.querySelector('figcaption').textContent;
+      const tag = fig.querySelector('.tn-tag');
+      dlg.querySelector('#lb-n').textContent = `${i + 1} of ${row.length}` + (tag ? ` · ${tag.textContent}` : '');
+    };
+    const go = d => { i = (i + d + row.length) % row.length; show(); };
+    document.querySelectorAll('.thumbs').forEach(list => {
+      const btns = [...list.querySelectorAll('.tn')];
+      btns.forEach((b, k) => {
+        b.setAttribute('aria-label', 'View larger: ' + b.closest('figure').querySelector('figcaption').textContent);
+        b.addEventListener('click', () => { row = btns; i = k; show(); dlg.showModal(); dlg.querySelector('[data-go="close"]').focus(); });
+      });
+    });
+    dlg.addEventListener('click', e => {
+      if (e.target === dlg) return dlg.close();           // a click on the backdrop
+      const b = e.target.closest('[data-go]'); if (!b) return;
+      if (b.dataset.go === 'close') dlg.close(); else go(Number(b.dataset.go));
+    });
+    dlg.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') { go(1); e.preventDefault(); }
+      else if (e.key === 'ArrowLeft') { go(-1); e.preventDefault(); }
+    });
+    dlg.addEventListener('close', () => { stage.replaceChildren(); row[i]?.focus(); });   // back to the thumbnail last shown
   })();
 </script>
 <script type="module" src="components/index.js"></script>
