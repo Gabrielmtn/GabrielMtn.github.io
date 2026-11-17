@@ -43,6 +43,7 @@
 
   .top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
   h1.label { font-weight: 500; }
+  .top nav { display: flex; flex-wrap: wrap; gap: 4px 18px; }
 
   /* ─────────── the three studies ─────────── */
   .studies { margin: clamp(40px, 7vw, 72px) 0 0; padding: 0; list-style: none; }
@@ -87,7 +88,7 @@
     <main id="main">
       <div class="top">
         <h1 class="label">Case studies</h1>
-        <a href="/" class="label">Gabriel Martin · gabrielmartin.dev</a>
+        <nav aria-label="Site"><a href="/" class="label">Home</a><a href="../portfolio/" class="label">Portfolio</a><a href="mailto:Gabriel@GabrielMartin.dev" class="label">Contact</a></nav>
       </div>
 
       <ul class="studies">
