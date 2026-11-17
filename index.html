@@ -26,7 +26,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
   /* Layout: a full-bleed wall the badges hang on (the <lanyard-wall> component), with the about section below. */
   :root {
@@ -91,7 +90,7 @@
   .about a:hover, .about a:focus-visible { text-decoration-thickness: 2px; }
   .blurb { font-size: 18px; line-height: 1.65; max-width: 65ch; }
   .blurb p { margin: 0 0 1.1rem; color: #d3d9d6; }
-  .email-link { display: inline-flex; align-items: center; gap: 0.6rem; margin-top: 1.5rem; padding: 0.75rem 1.5rem; background: var(--accent); color: var(--accent-ink) !important; border-radius: 5px; text-decoration: none; font-weight: 700; font-size: 1.1rem; }
+  .email-link { width: fit-content; margin-inline: auto; display: flex; align-items: center; gap: 0.6rem; margin-top: 1.5rem; padding: 0.75rem 1.5rem; background: var(--accent); color: var(--accent-ink) !important; border-radius: 5px; text-decoration: none; font-weight: 700; font-size: 1.1rem; }
   .email-link:hover { filter: brightness(1.08); }
   @media (max-width: 600px) {
     .quote-container { padding-left: 1rem; margin-bottom: 2rem; }
@@ -260,11 +259,11 @@
 
     <section class="blurb" aria-labelledby="about-h">
       <h2 id="about-h" class="sr-only">About Gabriel Martin</h2>
-      <!-- DRAFT copy (Claude), in the case-study voice, for Gabriel to rewrite -->
-      <p>At Virgin Pulse, a Bank of America contract depended on Section 508. I built a fluid-layout proof of concept that held up at 400% zoom. It became the layout standard for 350+ engineers, and I trained more than 400 people across the company to work the same way.</p>
-      <p>Most of my 15 years have looked like that: designing in Figma, writing the front end, running the research and keeping the backlog, often on the same project. The quote above is the job I try to do on a team. I learn how the whole thing fits together, technically and for the business, so it ships.</p>
+      <p>The quote above is how I aspire to deliver value within a team.</p>
+      <p>I bring 15 years of experience across UX disciplines, engineering, design, and user research. This variety of experiences helps me bring diverse perspectives and expertise together, understand user and business needs, and have the technical and design chops to help teams transform complex challenges into elegant solutions that users love.</p>
+      <p>I believe the secret is to use that experience as a bridging force within cross-disciplinary teams, bringing everyone's vision together to deliver products that are technically robust, intuitive to use, and accessible to all.</p>
       <p class="blurb-work">If a team member with this kind of cross-discipline background is something you're looking for, I'd love to hear from you. If you'd like to know more about my work, I've prepared a few <a href="case-studies/">case studies</a>.</p>
-      <a href="mailto:Gabriel@GabrielMartin.dev" class="email-link"><i class="fas fa-envelope" aria-hidden="true"></i><span>Get in touch</span></a>
+      <a href="mailto:Gabriel@GabrielMartin.dev" class="email-link"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></svg><span>Get in touch</span></a>
     </section>
     <footer class="site-foot">
       <p class="foot-cta">Have a project or a role to fill? <a href="mailto:Gabriel@GabrielMartin.dev">Gabriel@GabrielMartin.dev</a></p>
