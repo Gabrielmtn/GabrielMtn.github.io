@@ -47,6 +47,10 @@ function wrap(c, text, maxW) {
     if (c.measureText(t).width > maxW && cur) { lines.push(cur); cur = w; } else cur = t; }
   if (cur) lines.push(cur); return lines;
 }
+// set c.font at the largest size (down to 60% of max) at which text fits in maxW
+function fitFont(c, text, weight, max, maxW, family) {
+  let px = max; for (; px > max * 0.6; px -= 2) { c.font = `${weight} ${px}px ${family}`; if (c.measureText(text).width <= maxW) break; }
+}
 function rr(c, x, y, w, h, r) { c.beginPath(); c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r);
   c.arcTo(x + w, y + h, x, y + h, r); c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath(); }
 function cover(c, img, W, H) { const s = Math.max(W / img.width, H / img.height);
@@ -127,10 +131,12 @@ function drawFront(b, i, cv, o) {
     const bw = TW - 104 - pad * 2, bh = pH - pad * 2, k = Math.min(bw / b.logoImg.width, bh / b.logoImg.height);
     const lw = b.logoImg.width * k, lh = b.logoImg.height * k;
     c.drawImage(b.logoImg, 52 + pad + (bw - lw) / 2, pY + pad + (bh - lh) / 2, lw, lh);
-    if (b.subLogoImg) { // second logo under the plate (e.g. the company that was in the incubator)
+    if (b.subLogoImg) { // second logo under the plate (e.g. the company that was in the incubator), with sub text after it
       const sh = 64, sw = b.subLogoImg.width * sh / b.subLogoImg.height;
       c.drawImage(b.subLogoImg, 60, pY + pH + 26, sw, sh);
-    } else if (b.sub) { c.textBaseline = 'top'; c.textAlign = 'left'; c.fillStyle = ink; c.font = `500 50px ${o.f.body}`; c.globalAlpha = 0.85; c.fillText(b.sub, 60, pY + pH + 22); c.globalAlpha = 1; }
+      if (b.sub) { const x = 60 + sw + 20; c.textBaseline = 'middle'; c.textAlign = 'left'; c.fillStyle = ink; c.globalAlpha = 0.85;
+        fitFont(c, b.sub, 500, 46, TW - 64 - x, o.f.body); c.fillText(b.sub, x, pY + pH + 26 + sh / 2 + 2); c.globalAlpha = 1; }
+    } else if (b.sub) { c.textBaseline = 'top'; c.textAlign = 'left'; c.fillStyle = ink; fitFont(c, b.sub, 500, 50, TW - 120, o.f.body); c.globalAlpha = 0.85; c.fillText(b.sub, 60, pY + pH + 22); c.globalAlpha = 1; }
   } else {
   stretch(c, 'expanded');
   let size = 176, lines = [];
@@ -141,7 +147,7 @@ function drawFront(b, i, cv, o) {
   c.textBaseline = 'top'; c.textAlign = 'left'; c.fillStyle = ink;
   let y = 236; lines.forEach(l => { c.fillText(l, 58, y); y += size * 0.94; });
   stretch(c, 'normal');
-  if (b.sub) { c.font = `500 52px ${o.f.body}`; c.globalAlpha = 0.8; c.fillText(b.sub, 64, y + 8); c.globalAlpha = 1; }
+  if (b.sub) { fitFont(c, b.sub, 500, 52, TW - 128, o.f.body); c.globalAlpha = 0.8; c.fillText(b.sub, 64, y + 8); c.globalAlpha = 1; }
   }
 
   // name on one line beside the seal
