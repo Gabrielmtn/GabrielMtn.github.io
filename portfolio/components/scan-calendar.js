@@ -12,7 +12,7 @@ const ROWS = [
 ];
 
 const css = `
-:host { display: block; }
+:host { display: block; container: cal / inline-size; }
 ${focusCss}
 .card { background: #f7f8f8; color: #5a6168; border-radius: 4px; font-family: var(--f-body, system-ui, sans-serif); padding: 14px 16px 16px; }
 .head { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
@@ -21,8 +21,16 @@ ${focusCss}
 .toggle[aria-expanded="false"] .chev { transform: rotate(-90deg); }
 .filter { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; cursor: pointer; }
 .filter input { accent-color: #3c4650; width: 15px; height: 15px; }
-.scroll { overflow-x: auto; margin-top: 8px; }
-.grid { display: grid; grid-template-columns: minmax(150px, 1.6fr) repeat(8, minmax(44px, 1fr)); min-width: 500px; position: relative; }
+.scroll { margin-top: 8px; }
+/* the grid always fits its card: no sideways scrolling. On narrow cards the two earliest days, which have no
+   markers, drop out, and the type tightens */
+.grid { display: grid; grid-template-columns: minmax(96px, 1.5fr) repeat(8, minmax(0, 1fr)); position: relative; }
+.mark { position: relative; z-index: 1; }
+@container cal (max-width: 470px) {
+  .grid { grid-template-columns: minmax(80px, 1.3fr) repeat(6, minmax(0, 1fr)); }
+  .grid .early { display: none; }
+  .day, .row-name { font-size: 11.5px; } .pill { font-size: 10.5px; padding: 3px 5px; }
+}
 .day { font-size: 12.5px; text-align: center; padding: 8px 0; color: #6f777e; }
 .day.today { color: #2f363c; font-weight: 600; }
 .row-name { font-size: 12.5px; padding: 0 8px 0 0; display: flex; align-items: center; min-height: 64px; border-top: 1px solid #e6e8ea; }
@@ -52,12 +60,12 @@ class ScanCalendar extends HTMLElement {
           <div class="scroll">
             <div class="grid" role="table" aria-label="Scan schedule for May 1 to May 8">
               <div role="row" style="display:contents"><span role="columnheader" class="row-name" style="border:0;min-height:0"><span class="visually">Product</span></span>
-                ${DAYS.map((d, i) => `<span role="columnheader" class="day${i === TODAY ? ' today' : ''}">${d}${i === TODAY ? '<br>Today' : ''}</span>`).join('')}</div>
+                ${DAYS.map((d, i) => `<span role="columnheader" class="day${i === TODAY ? ' today' : ''}${i < 2 ? ' early' : ''}">${d}${i === TODAY ? '<br>Today' : ''}</span>`).join('')}</div>
               ${ROWS.map((r, ri) => `<div role="row" style="display:contents" data-risk="${r.marks.some((m) => m.kind === 'due' || m.kind === 'missed')}">
                 <span role="rowheader" class="row-name">${r.name}</span>
                 ${DAYS.map((_, di) => {
                   const m = r.marks.find((x) => x.d === di);
-                  return `<span role="cell" class="cell${di === TODAY ? ' today' : ''}">${m ? `<button type="button" class="mark" data-kind="${m.kind}" data-r="${ri}" aria-pressed="false" aria-label="${r.name}, ${DAYS[di]}: ${m.text}"><span class="pill">${m.text}</span>${m.kind === 'due' || m.kind === 'missed' ? '<span class="warn" aria-hidden="true"></span>' : ''}</button>` : ''}</span>`;
+                  return `<span role="cell" class="cell${di === TODAY ? ' today' : ''}${di < 2 ? ' early' : ''}">${m ? `<button type="button" class="mark" data-kind="${m.kind}" data-r="${ri}" aria-pressed="false" aria-label="${r.name}, ${DAYS[di]}: ${m.text}"><span class="pill">${m.text}</span>${m.kind === 'due' || m.kind === 'missed' ? '<span class="warn" aria-hidden="true"></span>' : ''}</button>` : ''}</span>`;
                 }).join('')}
               </div>`).join('')}
             </div>

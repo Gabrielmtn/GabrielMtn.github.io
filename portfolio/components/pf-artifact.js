@@ -1,6 +1,6 @@
 // <pf-artifact> wraps one live rebuild. It finds the original screenshot
 // (the <img> fallback inside the child component) and offers a toggle to
-// compare the rebuild against it. label="..." replaces the "Live rebuild" wording.
+// compare the rebuild against it (only with the compare attribute). label="..." replaces the "Live rebuild" wording.
 const css = `
 :host { display: block; container-type: inline-size; }
 @container (max-width: 340px) { .x { display: none; } }
@@ -36,7 +36,7 @@ class PfArtifact extends HTMLElement {
     const stage = root.querySelector('.stage');
     const orig = root.querySelector('.orig');
     const lbl = root.querySelector('.lbl');
-    if (!img) { btn.hidden = true; return; }
+    if (!img || !this.hasAttribute('compare')) { btn.hidden = true; return; }
     const copy = img.cloneNode();
     copy.loading = 'lazy';
     orig.append(copy);
