@@ -32,7 +32,7 @@
       </header>
 
       <section>
-        <p class="lead">I built every component keyboard-first, so it behaved the same way every time.</p>
+        <p class="lead">I built accessible, predictable components that screen reader users can rely on.</p>
         <p>This was a full accessibility refactor for Putnam Investments. Dozens of interactive components (comboboxes, menus, dialogs, disclosure widgets) needed to be rebuilt from the ground up to meet WCAG AA. I worked directly from the ARIA Authoring Practices Guide (APG) keyboard interaction patterns to build each component.</p>
         <p>The work taught me to think like a screen reader user: keyboard first. Navigation happens with arrow keys, Enter, Escape, and Tab. I implemented keyboard behavior before adding ARIA roles to communicate state.</p>
       </section>
@@ -178,7 +178,7 @@
       </section>
       <section aria-labelledby="p-work">
         <h2 id="p-work">Building from APG patterns, validated with JAWS, NVDA, and VoiceOver.</h2>
-        <ol><li>Started with APG keyboard interaction documentation for each component type. Implemented arrow key navigation, Enter/Escape behavior, and focus management exactly as the patterns specified. Added ARIA roles to communicate state to screen readers after the keyboard behavior was correct.</li><li>Treated page structure as a navigation system. Landmark regions, heading hierarchy, and tab order had to work together. A user's mental map depends on all three being consistent. Fix one in isolation and the others break.</li><li>Made focus management part of the component design. Dialogs return focus to the trigger on close. Composite widgets use roving tabindex. Modal focus traps are intentional and escapable. Tested every pattern by navigating without a mouse before adding screen reader validation.</li><li>Tested every component in JAWS, NVDA, and VoiceOver before shipping. If the keyboard interaction was predictable, screen readers announced it correctly. If keyboard behavior was wrong, no amount of ARIA could fix it.</li></ol>
+        <ol><li>Started with APG keyboard interaction documentation for each component type. Implemented arrow key navigation, Enter/Escape behavior, and focus management exactly as the patterns specified. Added ARIA roles to communicate state to screen readers after the keyboard behavior was correct.</li><li>Treated page structure as a navigation system. Landmark regions, heading hierarchy, and tab order had to work together. A user's mental map depends on all three being consistent.</li><li>Made focus management part of the component design. Dialogs return focus to the trigger on close. Composite widgets use roving tabindex. Modal focus traps are intentional and escapable. Tested every pattern by navigating without a mouse before adding screen reader validation.</li><li>Tested every component in JAWS, NVDA, and VoiceOver before shipping. If the keyboard interaction was predictable, screen readers announced it correctly. If the fundamental structure was wrong, no amount of ARIA attributes could consistently fix it across all screen readers.</li></ol>
       </section>
       <section aria-labelledby="p-outcome">
         <h2 id="p-outcome">Outcome</h2>
