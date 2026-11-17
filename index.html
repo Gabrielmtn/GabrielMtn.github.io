@@ -103,12 +103,11 @@
   }
   /* Reduced motion: set from the visitor's OS/browser preference, and switchable with the toggle (top right) */
   html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-motion="reduced"] *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
-  /* Load-in, as one sequence. Everything waits, invisible, until the page is finished laying out: fonts loaded, the
-     badge wall built, sized and drawn (so nothing below can be pushed down afterwards). Then it all comes in together:
-       0s     header panel fades and rises; badge wall fades in as the badges lower into place (INTRO in the script)
-       0.25s  reduced-motion toggle
-       0.45s  about section (quote and bio) fades and rises
-       1.5s   "Select a badge" hint
+  /* Load-in, in two steps, so the page is never blank while the 3D wall gets ready:
+       as soon as the wall's script has loaded (its header is in place and won't move), the header panel fades and
+       rises, with the reduced-motion toggle just after;
+       once the wall is built, sized and drawn (so nothing below can be pushed down afterwards), the badges fade in as
+       they lower into place, the about section (quote and bio) follows at 0.45s and the "Select a badge" hint at 1.5s.
      If this script never runs, none of the hiding applies (it's all scoped to .js). */
   .hero::part(hero-title) { font-size: clamp(40px, 7vw, 60px); }
   .js .hero::part(hero-panel), .js .motion-toggle, .js .hero::part(hint), .js .hero::part(corner), .js .about { transition: opacity 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), transform 1.4s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -116,7 +115,7 @@
   .js .motion-toggle { transition-delay: 0.25s; }
   .js .about { transition-delay: 0.45s; }
   .js .hero::part(hint), .js .hero::part(corner) { transition-delay: 1.5s; }
-  .js.is-loading .hero::part(hero-panel), .js.is-loading .motion-toggle { opacity: 0; transform: translateY(14px); }
+  .js.pre-wall .hero::part(hero-panel), .js.pre-wall .motion-toggle { opacity: 0; transform: translateY(14px); }
   .js.is-loading .about { opacity: 0; transform: translateY(24px); }
   .js.is-loading .hero::part(canvas), .js.is-loading .hero::part(overlay), .js.is-loading .hero::part(hint), .js.is-loading .hero::part(corner) { opacity: 0; }
   /* reduced motion keeps the gentle fades but drops the rise */
@@ -137,13 +136,15 @@
   // OS/browser asks for reduced motion; otherwise off
   (() => { let saved = null; try { saved = localStorage.getItem('motion'); } catch (e) {}
     document.documentElement.dataset.motion = saved === 'reduced' || matchMedia('(prefers-reduced-motion: reduce)').matches ? 'reduced' : 'full'; })();
-  // load-in: the page stays hidden until the badge wall says it's ready (window.__reveal), then everything comes in
-  // together. A 4s cap means a slow network or a failed script never leaves the page blank.
-  (() => { const de = document.documentElement; de.classList.add('js', 'is-loading');
+  // load-in: the header comes in as soon as the wall's script is defined (pre-wall); the rest waits until the wall says
+  // it's ready (window.__reveal). A 4s cap means a slow network or a failed script never leaves anything hidden.
+  (() => { const de = document.documentElement; de.classList.add('js', 'is-loading', 'pre-wall');
+    const early = () => requestAnimationFrame(() => requestAnimationFrame(() => de.classList.remove('pre-wall')));
+    customElements.whenDefined('lanyard-wall').then(early);
     const subs = [];
     window.__onReveal = f => de.classList.contains('is-loading') ? subs.push(f) : f();
     window.__reveal = () => { if (!de.classList.contains('is-loading')) return;
-      requestAnimationFrame(() => { de.classList.remove('is-loading'); subs.splice(0).forEach(f => f()); }); };
+      requestAnimationFrame(() => { de.classList.remove('is-loading', 'pre-wall'); subs.splice(0).forEach(f => f()); }); };
     setTimeout(() => window.__reveal(), 4000);
   })();
 </script>
@@ -186,7 +187,21 @@
     </lanyard-section>
   </lanyard-badge>
 
-  <lanyard-badge id="akamai" org="Akamai" logo="img/badges/akamai.png" role="UX Designer / Developer" start="03/2019" end="09/2019"
+  <lanyard-badge id="putnam" org="Putnam Investments" print-label="Putnam" role="Accessibility UX Engineer" start="05/2017" end="11/2017"
+                 color="#0b2a4a" band="#7fb8e6" band2="#123f6b" strap="#08203a">
+    <lanyard-section label="UX design">
+      <ul data-side="front"><li>APG Keyboard Patterns</li><li>Screen Reader Testing</li><li>Page Flow Review</li></ul>
+      <ul data-side="back"><li>Rebuilt each pattern from the ARIA Authoring Practices Guide’s keyboard model before adding any ARIA</li>
+        <li>Validated every component in JAWS, NVDA and VoiceOver before it shipped</li></ul>
+    </lanyard-section>
+    <lanyard-section label="UX engineering">
+      <ul data-side="front"><li>Accessible Combobox</li><li>Menus &amp; Dialogs</li><li>WCAG AA Refactor</li></ul>
+      <ul data-side="back"><li>Engineered accessible interaction patterns for dropdowns, menus and form controls to WCAG AA</li>
+        <li>Refactored dozens of interactive components across the site</li></ul>
+    </lanyard-section>
+  </lanyard-badge>
+
+  <lanyard-badge id="akamai" org="Akamai" logo="img/badges/akamai.png" role="Sr. UI/UX Developer / Designer" start="03/2019" end="09/2019"
                  color="#0d0f12" band="#0096d6" band2="#f28a1a" strap="#0d0f12" strap-ink="#f28a1a">
     <lanyard-section label="UX design">
       <ul data-side="front"><li>Information Architecture</li><li>Contextual Inquiry</li><li>Card Sorting</li></ul>
@@ -201,7 +216,7 @@
     </lanyard-section>
   </lanyard-badge>
 
-  <lanyard-badge id="pearson" org="Pearson" logo="img/badges/pearson.png" role="Senior UI/UX Developer" start="01/2018" end="12/2018"
+  <lanyard-badge id="pearson" org="Pearson" logo="img/badges/pearson.png" role="Sr. UI/UX Developer" start="01/2018" end="12/2018"
                  color="#2b1660" band="#b18cf2" band2="#5b2bb5" strap="#1c0d45">
     <lanyard-section label="UX design">
       <ul data-side="front"><li>Platform Redesign</li><li>Stakeholder Collaboration</li><li>Section 508 UX</li></ul>
@@ -214,7 +229,7 @@
     </lanyard-section>
   </lanyard-badge>
 
-  <lanyard-badge id="virginpulse" org="Virgin Pulse" logo="img/badges/virginpulse.png" role="UX Designer / Developer" start="07/2021" end="02/2023"
+  <lanyard-badge id="virginpulse" org="Virgin Pulse" logo="img/badges/virginpulse.png" role="UX Design Engineer" start="07/2021" end="02/2023"
                  color="#d81e2c" band="#ffe1dc" band2="#8f0f1b" strap="#8f0f1b">
     <lanyard-section label="UX design">
       <ul data-side="front"><li>Design Workshops</li><li>Wireframing</li><li>Accessibility Curricula</li></ul>
