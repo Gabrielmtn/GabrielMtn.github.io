@@ -83,22 +83,20 @@
 
   /* about: the previous homepage content and layout, on the same dark ground */
   .about { position: relative; z-index: 3; margin-top: calc(-1 * var(--ext)); padding-block: 64px 96px; border-top: 1px solid var(--line); font-family: system-ui, -apple-system, "Segoe UI", Roboto, Georgia, serif; line-height: 1.6; }
-  .about .inner { max-width: 800px; display: flex; flex-direction: column; align-items: center; text-align: center; }
-  .quote-container { margin: 0 0 3rem; padding: 2rem 2rem 2.5rem; position: relative; border-left: 5px solid var(--accent); background: var(--panel); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35); }
-  .quote-mark { font-size: 4rem; line-height: 1; position: absolute; left: 1.2rem; top: 0.4rem; color: var(--accent); opacity: 0.3; }
-  blockquote { font-size: 1.8rem; font-style: italic; margin: 1.2rem 0 0; padding: 0; color: var(--ink); }
-  .attribution { font-size: 1.2rem; margin-top: 1.4rem; color: var(--muted); }
+  .about .inner { max-width: 760px; font-family: var(--f-body); }
+  .quote-container { margin: 0 0 3rem; padding: 0.25rem 0 0.25rem 1.5rem; border-left: 3px solid var(--accent); }
+  blockquote { font-size: 1.35rem; line-height: 1.5; font-style: italic; margin: 0; padding: 0; color: var(--ink); }
+  .attribution { font-size: 1rem; margin-top: 1rem; color: var(--muted); }
   .about a { color: var(--accent); text-underline-offset: 3px; }
   .about a:hover, .about a:focus-visible { text-decoration-thickness: 2px; }
-  .blurb { font-size: 1.1rem; max-width: 600px; padding: 2.5rem 2.25rem 2.25rem; background: var(--panel); border-radius: 5px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35); }
-  .blurb p { margin: 0 0 1rem; color: #d3d9d6; }
-  .email-link { display: inline-flex; align-items: center; gap: 0.6rem; margin-top: 2.5rem; padding: 0.75rem 1.5rem; background: var(--accent); color: var(--accent-ink) !important; border-radius: 5px; text-decoration: none; font-weight: 700; font-size: 1.1rem; }
+  .blurb { font-size: 18px; line-height: 1.65; max-width: 65ch; }
+  .blurb p { margin: 0 0 1.1rem; color: #d3d9d6; }
+  .email-link { display: inline-flex; align-items: center; gap: 0.6rem; margin-top: 1.5rem; padding: 0.75rem 1.5rem; background: var(--accent); color: var(--accent-ink) !important; border-radius: 5px; text-decoration: none; font-weight: 700; font-size: 1.1rem; }
   .email-link:hover { filter: brightness(1.08); }
   @media (max-width: 600px) {
-    .quote-container { padding: 1.5rem 1rem 1.75rem 1.25rem; margin-bottom: 1.5rem; }
-    blockquote { font-size: 1.15rem; line-height: 1.45; text-align: left; }
-    .attribution { text-align: left; font-size: 1rem; }
-    .blurb { font-size: 1rem; padding: 1.25rem; text-align: left; }
+    .quote-container { padding-left: 1rem; margin-bottom: 2rem; }
+    blockquote { font-size: 1.15rem; }
+    .blurb { font-size: 17px; }
     .email-link { width: 100%; justify-content: center; box-sizing: border-box; }
   }
   /* Reduced motion: set from the visitor's OS/browser preference, and switchable with the toggle (top right) */
@@ -130,6 +128,15 @@
   .motion-toggle[aria-pressed="true"] .sw::after { transform: translateX(12px); }
   .motion-toggle:focus-visible { outline: 3px solid #ffd166; outline-offset: 3px; }
   @media (max-width: 600px) { .hero { --lanyard-hero-pad: 52px max(16px, env(safe-area-inset-right, 0px)) 8px max(16px, env(safe-area-inset-left, 0px)); } }
+
+  /* shared site footer (same on every page) */
+  .site-foot { margin-top: clamp(48px, 8vw, 72px); padding-top: 28px; border-top: 1px solid var(--line); display: grid; gap: 14px; }
+  .site-foot .foot-cta { font-size: 19px; color: var(--ink); margin: 0; }
+  .site-foot .foot-cta a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 5px; }
+  .site-foot .foot-nav { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+  .site-foot .label { margin: 0; } .site-foot a.label { color: var(--muted); } .site-foot a.label:hover { color: var(--ink); }
+  .site-foot address { font-style: normal; }
+  .site-foot { text-align: left; font-family: var(--f-body); } .site-foot .label { font: 500 13px/1.5 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
 </style>
 <script>
   // set the motion preference before anything paints: on if the visitor turned it on here before, or if their
@@ -167,7 +174,7 @@
               seal="Badge Drawer · Alumni" labels="UX design | UX engineering" hint="Select a badge for details"
               label="Work history badges and volunteer pins">
 <lanyard-hero eyebrow="UX Architect / Designer / Engineer" heading="Gabriel Martin" email="Gabriel@GabrielMartin.dev"
-              links="See my work case-studies/">
+              links="See my work case-studies/ | Portfolio portfolio/">
   <p>Hi, I’m Gabriel. For 15 years I’ve worked where UX design and front-end engineering meet, and I’m usually the person on a team who connects them.</p>
   <p>I’m at home in code, in Figma, and in PM tools, and I know which one a problem needs. I design and build systems with accessibility, usability, and performance built in from the start.</p>
 </lanyard-hero>
@@ -187,6 +194,20 @@
     </lanyard-section>
   </lanyard-badge>
 
+  <lanyard-badge id="eastern" org="Eastern Bank" print-label="Eastern Labs" role="UX Developer" start="09/2015" end="03/2017"
+                 color="#0b4a3d" band="#7ed3b2" band2="#1f7a63" strap="#07352c">
+    <lanyard-section label="UX design">
+      <ul data-side="front"><li>Interaction Design</li><li>WCAG Audits</li><li>Design Handoff</li></ul>
+      <ul data-side="back"><li>Interaction design at Eastern Labs, the bank’s innovation lab</li>
+        <li>WCAG audits and compliance-sensitive work in finance</li></ul>
+    </lanyard-section>
+    <lanyard-section label="UX engineering">
+      <ul data-side="front"><li>SCSS Framework</li><li>Flexbox Teaching</li><li>Design-to-Code Bridge</li></ul>
+      <ul data-side="back"><li>Built a standardized SCSS framework so designers could make systemic changes without touching code</li>
+        <li>Taught people Flexbox along the way</li></ul>
+    </lanyard-section>
+  </lanyard-badge>
+
   <lanyard-badge id="putnam" org="Putnam Investments" display-name="Putnam Investments, via Cantina Digital Agency" sub="via Cantina Digital Agency" print-label="Putnam · Cantina" role="Accessibility UX Engineer" start="05/2017" end="11/2017"
                  color="#0b2a4a" band="#7fb8e6" band2="#123f6b" strap="#08203a">
     <lanyard-section label="UX design">
@@ -198,6 +219,19 @@
       <ul data-side="front"><li>Accessible Combobox</li><li>Menus &amp; Dialogs</li><li>WCAG AA Refactor</li></ul>
       <ul data-side="back"><li>Engineered accessible interaction patterns for dropdowns, menus and form controls to WCAG AA</li>
         <li>Refactored dozens of interactive components across the site</li></ul>
+    </lanyard-section>
+  </lanyard-badge>
+
+  <lanyard-badge id="pearson" org="Pearson" logo="img/badges/pearson.png" role="Sr. UI/UX Developer" start="01/2018" end="12/2018"
+                 color="#2b1660" band="#b18cf2" band2="#5b2bb5" strap="#1c0d45">
+    <lanyard-section label="UX design">
+      <ul data-side="front"><li>Platform Redesign</li><li>Stakeholder Collaboration</li><li>Section 508 UX</li></ul>
+      <ul data-side="back"><li>Redesigned a complex education platform with stakeholders during its rebuild</li></ul>
+    </lanyard-section>
+    <lanyard-section label="UX engineering">
+      <ul data-side="front"><li>Angular UI Development</li><li>MathJax/MathML Rendering</li><li>Chrome OS PWA</li></ul>
+      <ul data-side="back"><li>Built interface and experience work in Angular, MathJax and MathML for educational content</li>
+        <li>Shipped the rebuild as a Chrome OS PWA under extensive Section 508 requirements</li></ul>
     </lanyard-section>
   </lanyard-badge>
 
@@ -216,19 +250,6 @@
     </lanyard-section>
   </lanyard-badge>
 
-  <lanyard-badge id="pearson" org="Pearson" logo="img/badges/pearson.png" role="Sr. UI/UX Developer" start="01/2018" end="12/2018"
-                 color="#2b1660" band="#b18cf2" band2="#5b2bb5" strap="#1c0d45">
-    <lanyard-section label="UX design">
-      <ul data-side="front"><li>Platform Redesign</li><li>Stakeholder Collaboration</li><li>Section 508 UX</li></ul>
-      <ul data-side="back"><li>Redesigned a complex education platform with stakeholders during its rebuild</li></ul>
-    </lanyard-section>
-    <lanyard-section label="UX engineering">
-      <ul data-side="front"><li>Angular UI Development</li><li>MathJax/MathML Rendering</li><li>Chrome OS PWA</li></ul>
-      <ul data-side="back"><li>Built interface and experience work in Angular, MathJax and MathML for educational content</li>
-        <li>Shipped the rebuild as a Chrome OS PWA under extensive Section 508 requirements</li></ul>
-    </lanyard-section>
-  </lanyard-badge>
-
   <lanyard-badge id="virginpulse" org="Virgin Pulse" logo="img/badges/virginpulse.png" role="UX Design Engineer" start="07/2021" end="02/2023"
                  color="#d81e2c" band="#ffe1dc" band2="#8f0f1b" strap="#8f0f1b">
     <lanyard-section label="UX design">
@@ -240,6 +261,34 @@
       <ul data-side="front"><li>Micro-frontend POCs</li><li>WCAG Reflow Refactor</li><li>Component Library</li></ul>
       <ul data-side="back"><li>Led AngularJS micro-frontend POCs to meet WCAG Reflow and Resize</li>
         <li>Part of the front-end component library team, responsible for WCAG-compliant behavior across its components</li></ul>
+    </lanyard-section>
+  </lanyard-badge>
+
+  <lanyard-badge id="quickbase" org="Quickbase" tag="Contract" print-label="Quickbase Pipelines" role="Sr. Interaction Designer" start="2023" end="2023"
+                 color="#1d2a30" band="#3fbf7f" band2="#e8613c" strap="#121b1f" strap-ink="#3fbf7f">
+    <lanyard-section label="UX design">
+      <ul data-side="front"><li>Information Architecture</li><li>Interaction Design</li><li>SME Workshops</li></ul>
+      <ul data-side="back"><li>Worked out the information architecture and interaction design for a node-based pipeline builder, with another designer</li>
+        <li>Ran workshops with SMEs, engineers and UX researchers; the private beta gave it 95% positive feedback</li></ul>
+    </lanyard-section>
+    <lanyard-section label="UX engineering">
+      <ul data-side="front"><li>LiteGraph Prototype</li><li>Interactive Wireframes</li><li>Technical Scoping</li></ul>
+      <ul data-side="back"><li>Prototyped the builder in LiteGraph so stakeholders and testers could react to how it felt to use</li>
+        <li>Set the technical scope with engineering in those workshops</li></ul>
+    </lanyard-section>
+  </lanyard-badge>
+
+  <lanyard-badge id="innovative" org="Innovative Driven" role="Product Architect / UX Designer" start="03/2025" end="03/2026"
+                 color="#14323a" band="#5fd3c4" band2="#2a8f86" strap="#0c2329">
+    <lanyard-section label="UX design">
+      <ul data-side="front"><li>UX Research</li><li>Process Mapping</li><li>AI Product Design</li></ul>
+      <ul data-side="back"><li>Led the UX research and design of an LLM-based eDiscovery tool adopted by dozens of law firms</li>
+        <li>Mapped client onboarding from a closed contract in Salesforce to a ready instance, taking it from two weeks to 15 minutes</li></ul>
+    </lanyard-section>
+    <lanyard-section label="UX engineering">
+      <ul data-side="front"><li>Epics &amp; Tickets</li><li>Azure DevOps PM</li><li>WCAG AA &amp; Keyboard</li></ul>
+      <ul data-side="back"><li>Scoped the onboarding work as an epic, wrote the tickets and ran the team’s Azure DevOps board</li>
+        <li>Kept the tool WCAG AA compliant and fully keyboard operable</li></ul>
     </lanyard-section>
   </lanyard-badge>
 
@@ -257,7 +306,6 @@
 <main id="about" class="about gutter">
   <div class="inner">
     <div class="quote-container" role="region" aria-label="Featured quote">
-      <span class="quote-mark" aria-hidden="true">“</span>
       <blockquote>
         In my experience, projects almost always ship because one single person makes them ship. To be clear, that person doesn't write all the code or do all the work, and I'm not saying the project could ship without an entire team behind it. But it's really important that one person on the project has an end-to-end understanding of the whole thing: how it hangs together technically, and what product or business purpose it serves.
       </blockquote>
@@ -266,12 +314,17 @@
 
     <section class="blurb" aria-labelledby="about-h">
       <h2 id="about-h" class="sr-only">About Gabriel Martin</h2>
-      <p>Hi, I'm Gabriel. The quote above is how I aspire to deliver value within a team.</p>
-      <p>I bring 15 years of experience across UX disciplines, engineering, design, and user research. This variety of experiences helps me bring diverse perspectives and expertise together, understand user and business needs, and have the technical and design chops to help teams transform complex challenges into elegant solutions that users love.</p>
-      <p>I believe the secret is to use that experience as a bridging force within cross-disciplinary teams, bringing everyone's vision together to deliver products that are technically robust, intuitive to use, and accessible to all.</p>
+      <!-- DRAFT copy (Claude), in the case-study voice, for Gabriel to rewrite -->
+      <p>At Virgin Pulse, a Bank of America contract depended on Section 508. I built a fluid-layout proof of concept that held up at 400% zoom. It became the layout standard for 350+ engineers, and I trained more than 400 people across the company to work the same way.</p>
+      <p>Most of my 15 years have looked like that: designing in Figma, writing the front end, running the research and keeping the backlog, often on the same project. The quote above is the job I try to do on a team. I learn how the whole thing fits together, technically and for the business, so it ships.</p>
       <p class="blurb-work">If a team member with this kind of cross-discipline background is something you're looking for, I'd love to hear from you. If you'd like to know more about my work, I've prepared a few <a href="case-studies/">case studies</a>.</p>
       <a href="mailto:Gabriel@GabrielMartin.dev" class="email-link"><i class="fas fa-envelope" aria-hidden="true"></i><span>Get in touch</span></a>
     </section>
+    <footer class="site-foot">
+      <p class="foot-cta">Have a project or a role to fill? <a href="mailto:Gabriel@GabrielMartin.dev">Gabriel@GabrielMartin.dev</a></p>
+      <nav aria-label="Footer" class="foot-nav"><a href="/" class="label">Home</a><a href="/case-studies/" class="label">Case studies</a><a href="/portfolio/" class="label">Portfolio</a></nav>
+      <address class="label">Gabriel Martin · Boston, MA</address>
+    </footer>
   </div>
 </main>
 

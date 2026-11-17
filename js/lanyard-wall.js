@@ -23,8 +23,8 @@ function shade(hex, amt) { const t = amt < 0 ? 0 : 255, p = Math.abs(amt);
   return '#' + rgb(hex).map(v => Math.round(v + (t - v) * p).toString(16).padStart(2, '0')).join(''); }
 const buildColor = b => b.band2 || shade(b.band, -0.32);
 
-/* dates: "MM/YYYY" */
-function parseMY(s) { const m = /^\s*(\d{1,2})\s*\/\s*(\d{4})\s*$/.exec(s || ''); return m ? { m: +m[1], y: +m[2] } : null; }
+/* dates: "MM/YYYY", or just "YYYY" when the month isn't known */
+function parseMY(s) { const m = /^\s*(?:(\d{1,2})\s*\/\s*)?(\d{4})\s*$/.exec(s || ''); return m ? { m: m[1] ? +m[1] : 0, y: +m[2] } : null; }
 function fmtRange(b) {
   const a = parseMY(b.start), z = parseMY(b.end);
   if (!a && !z) return '';
@@ -32,7 +32,7 @@ function fmtRange(b) {
   return a ? `${a.y}–present` : String(z.y);
 }
 function tenure(b) {
-  const a = parseMY(b.start), z = parseMY(b.end); if (!a || !z) return '';
+  const a = parseMY(b.start), z = parseMY(b.end); if (!a || !z || !a.m || !z.m) return '';
   const n = (z.y - a.y) * 12 + (z.m - a.m) + 1; if (n <= 0) return '';
   const y = Math.floor(n / 12), mo = n % 12;
   return [y ? `${y} yr` : '', mo ? `${mo} mo` : ''].filter(Boolean).join(' ');
@@ -519,7 +519,10 @@ function startGL(ctx) {
     const vw = Math.max(320, hero.clientWidth), n = data.length, P = SWAG.length;
     const mode = vw >= 1200 ? 'row' : vw >= 700 ? 'grid' : 'column';
     const clampPx = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
-    const W = mode === 'row' ? clampPx((vw - 64) / n * 0.72, 250, 320)
+    // a long row hangs in two staggered tiers instead, the lower tier's straps running down between the upper badges
+    const tiers = mode === 'row' && (vw - 64) / n * 0.72 < 250 ? 2 : 1;
+    // (two tiers: the widest badge that leaves a quarter-width gap between neighbours in the same tier)
+    const W = mode === 'row' ? (tiers === 2 ? clampPx(2 * (vw - 96) / (1.25 * (n - 1) + 2), 200, 300) : clampPx((vw - 64) / n * 0.72, 250, 320))
       : mode === 'grid' ? clampPx(vw * 0.4, 300, 370)
       : clampPx(vw - 72, 220, 340);
     const CH = W * 1.5, gap = Math.round(W * 0.18), top = Math.round(W * 0.5);
@@ -530,7 +533,12 @@ function startGL(ctx) {
     // runs behind the badges in the layers ahead of it.
     // Long lists squeeze the layers so the deepest stays in front of the wall.
     const LAYER = Math.min(0.58, 1.75 / Math.max(1, (mode === 'grid' ? Math.ceil(n / 2) : n) - 1));
-    if (mode === 'row') {
+    if (mode === 'row' && tiers === 2) {
+      const m = W / 2 + 48, sp = (vw - 2 * m) / Math.max(1, n - 1), y0 = top + CH / 2, y1 = y0 + CH * 1.08;
+      for (let i = 0; i < n; i++)   // in order: upper, lower, upper, lower…
+        cards.push({ x: m + sp * i, y: i % 2 ? y1 : y0, z: 0, row: 0 });
+      bottom = y1 + CH / 2;
+    } else if (mode === 'row') {
       const sp = vw / n, drop = CH * 0.16;
       for (let i = 0; i < n; i++) cards.push({ x: sp * (i + 0.5), y: top + CH / 2 + (i % 2 ? drop : 0), z: 0, row: 0 });
       bottom = top + CH + drop;
@@ -550,7 +558,7 @@ function startGL(ctx) {
     // otherwise in rows under the badges with enough clearance that a hanging card can't cover them.
     const pins = [];
     let pinD, height;
-    const rowGap = mode === 'row' ? vw / n - W : mode === 'grid' ? vw - 48 - 2 * W : 0;
+    const rowGap = mode === 'row' ? (tiers === 2 ? 0 : vw / n - W) : mode === 'grid' ? vw - 48 - 2 * W : 0;
     if (mode === 'row' && n >= 3 && rowGap >= 92) {
       pinD = Math.min(118, rowGap - 22);
       const sp = vw / n, g = k => sp * (k + 1);

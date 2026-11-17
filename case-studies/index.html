@@ -43,6 +43,16 @@
 
   .top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
   h1.label { font-weight: 500; }
+  .page-h { margin-top: clamp(32px, 5vw, 48px); }
+  .page-note { margin: 10px 0 0; color: var(--muted); font-size: 15px; max-width: 60ch; } .page-note a { color: var(--ink); }
+  /* shared site footer (same on every page) */
+  .site-foot { margin-top: clamp(48px, 8vw, 72px); padding-top: 28px; border-top: 1px solid var(--line); display: grid; gap: 14px; }
+  .site-foot .foot-cta { font-size: 19px; color: var(--ink); margin: 0; }
+  .site-foot .foot-cta a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 5px; }
+  .site-foot .foot-nav { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+  .site-foot .label { margin: 0; } .site-foot a.label { color: var(--muted); } .site-foot a.label:hover { color: var(--ink); }
+  .site-foot address { font-style: normal; }
+
   .top nav { display: flex; flex-wrap: wrap; gap: 4px 18px; }
 
   /* ─────────── the three studies ─────────── */
@@ -87,9 +97,11 @@
   <div class="wrap">
     <main id="main">
       <div class="top">
-        <h1 class="label">Case studies</h1>
-        <nav aria-label="Site"><a href="/" class="label">Home</a><a href="../portfolio/" class="label">Portfolio</a><a href="mailto:Gabriel@GabrielMartin.dev" class="label">Contact</a></nav>
+        <a href="/" class="label">Gabriel Martin</a>
+        <nav aria-label="Site"><a href="/case-studies/" class="label" aria-current="page">Case studies</a><a href="/portfolio/" class="label">Portfolio</a><a href="mailto:Gabriel@GabrielMartin.dev" class="label">Contact</a></nav>
       </div>
+      <h1 class="label page-h">Case studies</h1>
+      <p class="page-note">Three projects in depth. For more of the visual work, see the <a href="/portfolio/">portfolio</a>; for the full work history, the badges on the <a href="/">home page</a>.</p>
 
       <ul class="studies">
 
@@ -172,9 +184,10 @@
       </ul>
     </main>
 
-    <footer class="foot">
-      <p class="foot-cta">Have a project or a role to fill? <a href="mailto:Gabriel@GabrielMartin.dev">Get in touch</a>.</p>
-      <address class="label">Gabriel Martin · Boston, MA · 2026</address>
+    <footer class="site-foot">
+      <p class="foot-cta">Have a project or a role to fill? <a href="mailto:Gabriel@GabrielMartin.dev">Gabriel@GabrielMartin.dev</a></p>
+      <nav aria-label="Footer" class="foot-nav"><a href="/" class="label">Home</a><a href="/case-studies/" class="label">Case studies</a><a href="/portfolio/" class="label">Portfolio</a></nav>
+      <address class="label">Gabriel Martin · Boston, MA</address>
     </footer>
   </div>
 </body>
