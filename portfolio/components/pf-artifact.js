@@ -1,12 +1,13 @@
 // <pf-artifact> wraps one live rebuild. It finds the original screenshot
 // (the <img> fallback inside the child component) and offers a toggle to
-// compare the rebuild against it.
+// compare the rebuild against it. label="..." replaces the "Live rebuild" wording.
 const css = `
 :host { display: block; container-type: inline-size; }
 @container (max-width: 340px) { .x { display: none; } }
 .bar { white-space: nowrap; display: flex; justify-content: space-between; align-items: center; gap: 8px; margin: 0 0 10px;
   font: 500 12px/1.2 var(--f-mono, ui-monospace, monospace); letter-spacing: .1em; text-transform: uppercase; color: var(--muted, #a3aca8); }
-.state { display: inline-flex; align-items: center; gap: 8px; }
+.state { display: inline-flex; align-items: center; gap: 8px; min-width: 0; }
+.lbl { white-space: normal; }
 .dot { width: 7px; height: 7px; border-radius: 50%; background: #5fd38d; box-shadow: 0 0 0 3px rgba(95,211,141,.16); }
 :host([showing="original"]) .dot { background: var(--muted, #a3aca8); box-shadow: none; }
 button { font: inherit; letter-spacing: inherit; text-transform: inherit; color: var(--ink, #e7ebe9); background: transparent;
@@ -23,9 +24,10 @@ class PfArtifact extends HTMLElement {
     if (this.shadowRoot) return;
     const root = this.attachShadow({ mode: 'open' });
     const img = this.querySelector('img');
+    const live = this.getAttribute('label') || 'Live<span class="x"> rebuild</span>';
     root.innerHTML = `<style>${css}</style>
       <div class="bar">
-        <span class="state"><span class="dot" aria-hidden="true"></span><span class="lbl">Live<span class="x"> rebuild</span></span></span>
+        <span class="state"><span class="dot" aria-hidden="true"></span><span class="lbl">${live}</span></span>
         <button type="button" aria-pressed="false"><span class="x">Compare </span>original</button>
       </div>
       <div class="stage"><slot></slot></div>
@@ -43,7 +45,7 @@ class PfArtifact extends HTMLElement {
       btn.setAttribute('aria-pressed', String(showOriginal));
       stage.hidden = showOriginal;
       orig.hidden = !showOriginal;
-      lbl.innerHTML = showOriginal ? 'Original<span class="x"> screenshot</span>' : 'Live<span class="x"> rebuild</span>';
+      lbl.innerHTML = showOriginal ? 'Original<span class="x"> screenshot</span>' : live;
       this.setAttribute('showing', showOriginal ? 'original' : 'live');
     });
   }
