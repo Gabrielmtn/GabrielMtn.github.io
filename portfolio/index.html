@@ -105,7 +105,7 @@
   .ak-ref { display: block; width: 100%; min-width: 520px; height: auto; }
 
   /* thumbnail rows: small previews on one row (scrolling sideways on narrow screens); each opens in the viewer */
-  .thumbs { list-style: none; margin: 28px 0 0; padding: 0 0 6px; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(150px, 1fr);
+  .thumbs { list-style: none; margin: 28px 0 0; padding: 0 0 6px; display: grid; grid-auto-flow: column; grid-auto-columns: clamp(150px, calc((100% - 72px) / 5), 240px);
     gap: 18px; overflow-x: auto; scroll-snap-type: x proximity; }
   .thumbs > li { scroll-snap-align: start; min-width: 0; }
   .thumbs figure { margin: 0; }
@@ -115,8 +115,11 @@
   .tn:hover { border-color: var(--muted); transform: translateY(-2px); }
   .tn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   .tn-v { position: absolute; inset: 0; display: block; pointer-events: none; }
-  .tn-v > img, .tn-v > svg { display: block; width: 100%; height: 100%; min-width: 0; object-fit: cover; object-position: top center; }
+  .tn-v > img, .tn-v > svg, .tn-v > video { display: block; width: 100%; height: 100%; min-width: 0; object-fit: cover; object-position: top center; }
   .tn-v > scan-cadence { width: 100%; max-width: none; }
+  .tn-play { position: absolute; z-index: 1; left: 50%; top: 50%; width: 44px; height: 44px; margin: -22px 0 0 -22px; border-radius: 50%;
+    background: rgba(14,18,20,.78); border: 1px solid rgba(255,255,255,.35); }
+  .tn-play::after { content: ""; position: absolute; left: 17px; top: 13px; border-style: solid; border-width: 9px 0 9px 14px; border-color: transparent transparent transparent #fff; }
   .tn .tn-tag { position: absolute; z-index: 1; left: 6px; bottom: 6px; font-size: 10px; letter-spacing: .06em; padding: 3px 6px; border-radius: 3px;
     background: rgba(14,18,20,.85); color: var(--ink); line-height: 1.2; text-align: left; }
   /* the viewer */
@@ -135,6 +138,7 @@
   .lb-stage img { display: block; max-width: 100%; height: auto; max-height: calc(100dvh - 190px); width: auto; background: #fff; border-radius: 4px; }
   .lb-stage svg { display: block; width: 100%; min-width: 560px; height: auto; }
   .lb-stage scan-cadence { width: 340px; }
+  .lb-stage video { display: block; max-width: 100%; max-height: calc(100dvh - 190px); width: auto; height: auto; border-radius: 4px; }
   .lb-cap { margin: 0; padding: 10px 16px 14px; font-size: 14px; color: var(--muted); border-top: 1px solid var(--line); }
   @media (prefers-reduced-motion: reduce) { .tn { transition: none; } .tn:hover { transform: none; } }
 
@@ -348,20 +352,20 @@
           <p>Over the next two years I grew into my UX Developer role, going deep into WCAG audits and compliance-sensitive work in finance, and teaching people Flexbox along the way.</p>
           <p class="note"><strong>What I still use:</strong> The habit of asking which side of the design/engineering divide a problem is actually coming from before trying to solve it.</p>
         </div>
-        <div class="figs">
-          <figure class="w8">
-            <div class="frame light"><img src="img/eastern-desktop.png" width="2000" height="1741" loading="lazy" alt="Business banking accounts page: a navigation column on the left and tables of checking, savings, and loan accounts with current and available balances."></div>
+        <ul class="thumbs" aria-label="Eastern Bank artifacts">
+          <li><figure>
+            <button type="button" class="tn" aria-haspopup="dialog"><span class="tn-v"><img src="img/eastern-desktop.png" width="2000" height="1741" loading="lazy" alt="Business banking accounts page: a navigation column on the left and tables of checking, savings, and loan accounts with current and available balances."></span></button>
             <figcaption>Interaction design and UI development, 2017</figcaption>
-          </figure>
-          <figure class="w4">
-            <div class="frame light"><img src="img/eastern-mobile.png" width="974" height="1699" loading="lazy" alt="Mobile banking app: account balance cards in blue, green, purple, and orange under Checking and Savings, with a Loans section below."></div>
+          </figure></li>
+          <li><figure>
+            <button type="button" class="tn" aria-haspopup="dialog"><span class="tn-v"><img src="img/eastern-mobile.png" width="974" height="1699" loading="lazy" alt="Mobile banking app: account balance cards in blue, green, purple, and orange under Checking and Savings, with a Loans section below."></span></button>
             <figcaption>Interaction design and state animations, 2017</figcaption>
-          </figure>
-          <figure class="w6">
-            <div class="frame"><video src="img/eastern-login.webm" width="1072" height="1200" controls muted loop playsinline preload="metadata" aria-describedby="eb-video-d"></video></div>
-            <figcaption id="eb-video-d">Sign-in prototype: floating labels, a show-password toggle, the forgot-username flow, and choosing how to receive a security code.</figcaption>
-          </figure>
-        </div>
+          </figure></li>
+          <li><figure>
+            <button type="button" class="tn" aria-haspopup="dialog"><span class="tn-play" aria-hidden="true"></span><span class="tn-v"><video src="img/eastern-login.webm#t=0.5" width="1072" height="1200" muted loop playsinline preload="metadata"></video></span></button>
+            <figcaption>Sign-in prototype: floating labels, a show-password toggle, the forgot-username flow, and choosing how to receive a security code.</figcaption>
+          </figure></li>
+        </ul>
       </div>
     </details>
     <!-- Early work -->
@@ -501,8 +505,10 @@
         view.querySelectorAll(`[aria-labelledby="${old}"]`).forEach(x => x.setAttribute('aria-labelledby', id));
       });
       view.querySelectorAll('img[loading]').forEach(img => img.removeAttribute('loading'));
+      view.querySelectorAll('video').forEach(v => { v.controls = true; v.src = v.getAttribute('src').replace(/#t=.*/, ''); });
       stage.replaceChildren(...view.childNodes);
       stage.scrollTo(0, 0);
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) stage.querySelector('video')?.play().catch(() => {});
       dlg.querySelector('.lb-cap').textContent = fig.querySelector('figcaption').textContent;
       const tag = fig.querySelector('.tn-tag');
       dlg.querySelector('#lb-n').textContent = `${i + 1} of ${row.length}` + (tag ? ` · ${tag.textContent}` : '');
