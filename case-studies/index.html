@@ -50,6 +50,7 @@
   figcaption { margin-top: 12px; }
   .shot { border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
   .shot img { width: 100%; }
+  .live { position: relative; z-index: 1; }   /* the rebuild sits above the card link, so its controls stay usable */
   .keys { border: 1px solid var(--line); border-radius: 6px; padding: 18px; }
   .keys svg { width: 100%; height: auto; display: block; }
 
@@ -152,8 +153,7 @@
                 <span class="read">Read the case study</span>
           </div>
           <figure>
-            <div class="shot"><img src="img/akamai-calendar.png" width="569" height="323" loading="lazy"
-                       alt="Wireframe of a compliance calendar: each product's scans across a week of dates, with a warning for a scan due in one day and another for a missed scan."></div>
+            <div class="live"><pf-artifact label="Obfuscated as per client request"><scan-calendar><img src="../portfolio/img/akamai-calendar.png" width="1783" height="1015" loading="lazy" alt="Compliance calendar wireframe showing each product's scans across months, with flags for a scan due in one day and a missed scan."></scan-calendar></pf-artifact></div>
             <figcaption class="label">From the prototyping rounds: the scan calendar</figcaption>
           </figure>
         </li>
@@ -167,5 +167,6 @@
       <address class="label">Gabriel Martin · Boston, MA</address>
     </footer>
   </div>
+<script type="module">import "../portfolio/components/pf-artifact.js"; import "../portfolio/components/scan-calendar.js";</script>
 </body>
 </html>
