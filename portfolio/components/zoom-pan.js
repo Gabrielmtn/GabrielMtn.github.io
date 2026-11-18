@@ -1,12 +1,12 @@
 // <zoom-pan> A wide image you can zoom into and drag around. Once it has been on screen for a third of a second it
-// eases into its leftmost fifth (zoom="5") and shows its controls: zoom out, zoom in, and fit. Drag to pan, or focus it
+// eases into its leftmost fifth (zoom="5", from the point at="x y") and shows its controls: zoom out, zoom in, and fit. Drag to pan, or focus it
 // and use the arrow keys, + and -, and 0 to fit. A sharper copy (hd="...") is swapped in the first time it zooms.
 // The image stays in the page's own markup, so its alt text is read as usual. For people who prefer reduced motion
 // it does not zoom on its own; the controls are there from the start.
 import { mount, reducedMotion, focusCss } from './shared.js';
 
 const css = `
-:host { display: block; position: relative; overflow: hidden; touch-action: pan-y; }
+:host { display: block; position: relative; overflow: hidden; touch-action: pan-y; container-type: inline-size; }
 ${focusCss}
 .view { position: relative; overflow: hidden; outline: none; cursor: default; }
 :host([zoomed]) .view { cursor: grab; }
@@ -24,6 +24,9 @@ button:disabled { opacity: .4; cursor: default; background: none; }
 .lvl { font: 500 12px/1 var(--f-mono, ui-monospace, monospace); color: #9aa39f; min-width: 3.5em; text-align: center; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 @media (prefers-reduced-motion: reduce) { .ctl { transition: none; } }
+/* on small screens the controls shrink, and the zoom level is still announced but not shown */
+@container (max-width: 480px) { .ctl { right: 6px; bottom: 6px; padding: 2px; } button { min-width: 28px; height: 28px; padding: 0 6px; font-size: 12px; }
+  .lvl { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); } }
 `;
 
 class ZoomPan extends HTMLElement {
@@ -68,9 +71,12 @@ class ZoomPan extends HTMLElement {
     io.observe(this);
   }
   intro() {
+    // zoom="5" sets how far in; at="x y" (fractions of the image, default "0 0") is the point that lands at the top left
     const z = Number(this.getAttribute('zoom')) || 5;
+    const [fx = 0, fy = 0] = (this.getAttribute('at') || '').split(/\s+/).map(Number).filter((v) => !Number.isNaN(v));
+    const w = this.view.clientWidth, h = this.view.clientHeight;
     this.sharpen();
-    this.set(z, 0, 0, true, 900);
+    this.set(z, -fx * w * z, -fy * h * z, true, 900);
     this.toggleAttribute('controls', true);
   }
   sharpen() {
