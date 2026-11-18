@@ -95,3 +95,9 @@ figure > .label + .frame { margin-top: 10px; }
 
 /* a thumbnail row inside the text column: all five fit across on wide screens, and scroll sideways on narrow ones */
 @media (min-width: 720px) { .artifact .thumbs { grid-auto-columns: minmax(0, 1fr); gap: 12px; } }
+
+/* the hero visual: the strongest artifact of each study, right under the summary card, wider than the text column */
+.hero-fig { margin: 32px 0 0; width: min(1040px, calc(100vw - 32px)); margin-left: calc(50% - min(520px, 50vw - 16px)); }
+.hero-fig figcaption { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: baseline; }
+.hero-fig .caption { margin: 0; }
+.hero-pad { padding: clamp(18px, 3vw, 32px); background: var(--panel); }
