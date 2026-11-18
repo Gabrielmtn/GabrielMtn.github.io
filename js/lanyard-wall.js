@@ -961,7 +961,9 @@ function startGL(ctx) {
       const rest = L.rest * (1 - L.shrink);
       for (let k = 0; k < N - 1; k++) {
         const a = L.x[k], b = L.x[k + 1], wa = k === 0 ? 0 : WP;
-        tmpA.subVectors(b, a); const len = tmpA.length(); if (len < 1e-6) continue;
+        // A strap only pulls: it resists stretching but goes slack when pushed together, so a badge lifted or
+        // thrown upward rises freely on a loose strap and falls back until the strap pulls taut again.
+        tmpA.subVectors(b, a); const len = tmpA.length(); if (len < 1e-6 || len <= rest) continue;
         const lam = -(len - rest) / (wa + WP + AR / (h * h));
         tmpA.multiplyScalar(lam / len); a.addScaledVector(tmpA, -wa); b.addScaledVector(tmpA, WP);
       }
@@ -1021,6 +1023,9 @@ function startGL(ctx) {
       }
     }
     for (const L of lanyards) { L.pos.z = Math.min(0.7, Math.max(-2.2, L.pos.z)); } // stays off the wall and doesn't lunge at the viewer
+    // the held badge's recent path, so letting go can throw it at the speed the hand was moving (see release)
+    if (grab) { const L = lanyards[grab.i], hs = grab.hist || (grab.hist = []);
+      hs.push([simT, L.pos.x, L.pos.y, L.pos.z]); while (hs.length > 2 && simT - hs[0][0] > 0.12) hs.shift(); }
     for (const L of lanyards) {
       if (L.holdUntil > simT) continue;
       L.vel.subVectors(L.pos, L.prevPos).divideScalar(h);
@@ -1250,6 +1255,13 @@ function startGL(ctx) {
     if (!grab) return;
     const g = grab; grab = null;
     if (reduce) { const L = lanyards[g.i]; L.vel.set(0, 0, 0); L.ang.set(0, 0, 0); L.prevPos.copy(L.pos); }   // no fling on release
+    // A held badge only moves on the steps right after the pointer does, so its last-step speed is close to zero and
+    // a toss would just drop. Take the speed from where it was ~80 ms ago instead, so an upward flick throws it up.
+    if (!reduce && g.hist && g.hist.length > 1) {
+      const L = lanyards[g.i], hs = g.hist, end = hs[hs.length - 1];
+      const from = hs.find(r => end[0] - r[0] <= 0.08) || hs[0], dt = end[0] - from[0];
+      if (dt > 0.01) { L.vel.set(end[1] - from[1], end[2] - from[2], end[3] - from[3]).divideScalar(dt); L.prevPos.copy(L.pos).addScaledVector(L.vel, -H); }
+    }
     { const L = lanyards[g.i]; const v = L.vel.length(), a = L.ang.length();
       if (v > 6) { const k = 6 / v; L.vel.multiplyScalar(k); L.prevPos.copy(L.pos).addScaledVector(L.vel, -H); }
       if (a > 8) L.ang.multiplyScalar(8 / a); } canvas.style.cursor = e.pointerType === 'mouse' ? 'grab' : '';
