@@ -1,0 +1,44 @@
+/* gabrielmartin.dev: the shared rules every page uses. Page styles come after this file and may add to it, but the
+   tokens, the label style, the header and the footer live here only. The rules behind them are in docs/SITE-SPEC.md. */
+:root {
+  /* color */
+  --wall: #13171a;        /* page ground */
+  --panel: #1a1f22;       /* raised surfaces: cards, figures, dialogs */
+  --ink: #e7ebe9;         /* headings, links, emphasis */
+  --body: #c6cdc9;        /* running text */
+  --muted: #9aa39f;       /* labels, captions, secondary text (6.4:1 or better on --wall and --panel) */
+  --line: #2d3437;        /* hairlines and borders */
+  --accent: #8ea4ff;      /* the one accent: link underlines, focus rings, primary buttons */
+  --accent-ink: #0b1020;  /* text on --accent */
+  color-scheme: dark;
+  /* type */
+  --f-display: "Anybody", "Arial Black", "Helvetica Neue", sans-serif;
+  --f-body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+
+/* skip link */
+.skip { position: absolute; left: -9999px; top: 0; }
+.skip:focus { left: 16px; top: 16px; z-index: 10; background: var(--ink); color: var(--wall); padding: 8px 14px; border-radius: 6px; }
+
+/* the label: small mono caps, used for eyebrows, captions, nav and metadata */
+.label { font: 500 13px/1.5 var(--f-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 0; }
+a.label { text-decoration: none; }
+a.label:hover, a.label[aria-current] { color: var(--ink); }
+
+/* site header: name on the left, Case studies / Portfolio / Contact on the right */
+.top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
+.top nav { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+
+/* a short line under a page heading saying what the page is for */
+.page-note { margin: 0; color: var(--muted); font-size: 15px; max-width: 60ch; }
+.page-note a { color: var(--ink); }
+
+/* site footer, the same on every page */
+.site-foot { margin-top: clamp(48px, 8vw, 72px); padding-top: 28px; border-top: 1px solid var(--line); display: grid; gap: 14px; text-align: left; font-family: var(--f-body); }
+.site-foot .foot-cta { font-size: 19px; color: var(--ink); margin: 0; }
+.site-foot .foot-cta a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 5px; }
+.site-foot .foot-nav { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.site-foot a.label { color: var(--muted); }
+.site-foot a.label:hover { color: var(--ink); }
+.site-foot address { font-style: normal; }

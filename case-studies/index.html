@@ -9,19 +9,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!-- the homepage's type: Anybody (display), Instrument Sans (body), IBM Plex Mono (labels) -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,400..900&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="stylesheet" href="../css/site.css">
 <style>
   /* Minimal: the homepage's colors and type, three plain sections split by hairlines, each with one visual. */
-  :root {
-    --wall: #13171a;
-    --ink: #e7ebe9;
-    --muted: #9aa39f;
-    --line: #2d3437;
-    --accent: #8ea4ff;
-    color-scheme: dark;
-    --f-display: "Anybody", "Arial Black", "Helvetica Neue", sans-serif;
-    --f-body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-    --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
-  }
   *, *::before, *::after { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
   body { margin: 0; background: var(--wall); color: var(--ink); font: 17px/1.6 var(--f-body); -webkit-font-smoothing: antialiased; }
@@ -30,30 +20,16 @@
   :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   img { max-width: 100%; height: auto; display: block; }
 
-  .skip { position: absolute; left: -9999px; top: 0; }
-  .skip:focus { left: 16px; top: 16px; z-index: 10; background: var(--ink); color: var(--wall); padding: 8px 14px; border-radius: 6px; }
 
   .wrap { max-width: 1080px; margin: 0 auto; padding-block: 28px 64px;
     padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
 
   /* the one label style: small mono caps */
-  .label { font: 500 13px/1.5 var(--f-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 0; }
-  a.label { text-decoration: none; }
-  a.label:hover { color: var(--ink); }
 
-  .top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
   h1.label { font-weight: 500; }
   .page-h { margin-top: clamp(32px, 5vw, 48px); }
-  .page-note { margin: 10px 0 0; color: var(--muted); font-size: 15px; max-width: 60ch; } .page-note a { color: var(--ink); }
-  /* shared site footer (same on every page) */
-  .site-foot { margin-top: clamp(48px, 8vw, 72px); padding-top: 28px; border-top: 1px solid var(--line); display: grid; gap: 14px; }
-  .site-foot .foot-cta { font-size: 19px; color: var(--ink); margin: 0; }
-  .site-foot .foot-cta a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 5px; }
-  .site-foot .foot-nav { display: flex; flex-wrap: wrap; gap: 4px 18px; }
-  .site-foot .label { margin: 0; } .site-foot a.label { color: var(--muted); } .site-foot a.label:hover { color: var(--ink); }
-  .site-foot address { font-style: normal; }
+  .page-note { margin-top: 10px; }
 
-  .top nav { display: flex; flex-wrap: wrap; gap: 4px 18px; }
 
   /* ─────────── the three studies ─────────── */
   .studies { margin: clamp(40px, 7vw, 72px) 0 0; padding: 0; list-style: none; }
