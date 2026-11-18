@@ -1816,7 +1816,7 @@ export class LanyardWall extends HTMLElement {
     links.forEach((l, k) => {
       const link = mk('a', `hero-link${k ? '' : ' primary'}`, l.label); link.setAttribute('part', k ? 'hero-link' : 'hero-link primary');
       link.href = l.href; if (l.target) { link.target = l.target; link.rel = 'noopener'; }
-      if (!k) { const arrow = document.createElement('span'); arrow.setAttribute('aria-hidden', 'true'); arrow.textContent = '→'; link.append(arrow); }
+      if (!k) { const arrow = document.createElement('span'); arrow.setAttribute('aria-hidden', 'true'); arrow.setAttribute('part', 'hero-arrow'); arrow.textContent = '→'; link.append(arrow); }   // hide with ::part(hero-arrow)
       row.append(link);
     });
     if (a('email')) { const m = mk('a', 'hero-mail', a('email')); m.href = `mailto:${a('email')}`; row.append(m); }

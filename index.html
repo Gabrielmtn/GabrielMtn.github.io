@@ -98,6 +98,7 @@
   /* both hero links share the outlined style (the component fills the first one by default) */
   .hero::part(primary) { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1px var(--muted); filter: none; }
   .hero::part(primary):hover { box-shadow: inset 0 0 0 1px var(--ink); }
+  .hero::part(hero-arrow) { display: none; }
   .js .hero::part(hero-panel), .js .motion-toggle, .js .hero::part(hint), .js .hero::part(corner), .js .about { transition: opacity 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), transform 1.4s cubic-bezier(0.16, 1, 0.3, 1); }
   .js .hero::part(canvas), .js .hero::part(overlay) { transition: opacity 1.3s cubic-bezier(0.25, 0.1, 0.25, 1); }
   .js .motion-toggle { transition-delay: 0.25s; }
