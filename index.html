@@ -95,6 +95,9 @@
        they lower into place, the about section (quote and bio) follows at 0.45s and the "Select a badge" hint at 1.5s.
      If this script never runs, none of the hiding applies (it's all scoped to .js). */
   .hero::part(hero-title) { font-size: clamp(40px, 7vw, 60px); }
+  /* both hero links share the outlined style (the component fills the first one by default) */
+  .hero::part(primary) { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1px var(--muted); filter: none; }
+  .hero::part(primary):hover { box-shadow: inset 0 0 0 1px var(--ink); }
   .js .hero::part(hero-panel), .js .motion-toggle, .js .hero::part(hint), .js .hero::part(corner), .js .about { transition: opacity 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), transform 1.4s cubic-bezier(0.16, 1, 0.3, 1); }
   .js .hero::part(canvas), .js .hero::part(overlay) { transition: opacity 1.3s cubic-bezier(0.25, 0.1, 0.25, 1); }
   .js .motion-toggle { transition-delay: 0.25s; }
@@ -153,7 +156,7 @@
               seal="Badge Drawer · Alumni" labels="UX design | UX engineering" hint="Select a badge for details"
               label="Work history badges and volunteer pins">
 <lanyard-hero eyebrow="UX Architect / Designer / Engineer" heading="Gabriel Martin" email="Gabriel@GabrielMartin.dev"
-              links="See my work case-studies/ | Portfolio portfolio/">
+              links="Case Studies case-studies/ | Portfolio portfolio/">
   <p>Hi, I’m Gabriel. For 15 years I’ve worked where UX design and front-end engineering meet, and I’m usually the person on a team who connects them.</p>
   <p>I’m at home in code, in Figma, and in PM tools, and I know which one a problem needs. I design and build systems with accessibility, usability, and performance built in from the start.</p>
 </lanyard-hero>
