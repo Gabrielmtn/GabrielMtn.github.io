@@ -84,3 +84,11 @@ figure > .label + .frame { margin-top: 10px; }
 /* the opening line of a study */
 .lead { font-size: 20px; line-height: 1.45; color: var(--ink); max-width: 52ch; }
 
+
+/* summary card at the top of a case study: problem, what I did, result (the result reads first on a skim) */
+.tldr { margin: 36px 0 0; padding: 20px 22px; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; }
+.tldr dl { margin: 0; display: grid; gap: 16px 28px; }
+.tldr dt { margin-bottom: 4px; }
+.tldr dd { margin: 0; font-size: 16px; line-height: 1.55; }
+.tldr .res dd { color: var(--ink); font-size: 18px; font-weight: 500; }
+@media (min-width: 720px) { .tldr dl { grid-template-columns: 1fr 1fr; } .tldr .res { grid-column: 1 / -1; padding-top: 14px; border-top: 1px solid var(--line); } }
