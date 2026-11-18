@@ -1007,7 +1007,7 @@ function startGL(ctx) {
           P.pos.x += c * dir; P.prevPos.x += c * dir;
           handContacts.push([P, ga ? A : B, dir, 'x']);
         } else {
-          const corr = Math.min(ox * 0.04, 0.0015 * S);
+          const corr = Math.min(ox * 0.028, 0.00105 * S);   // gentle, so the push-apart doesn't add much speed
           A.pos.x -= corr * sx * wa; B.pos.x += corr * sx * wb;
           contacts.push([A, B, sx]);
         }
@@ -1035,17 +1035,18 @@ function startGL(ctx) {
     // A badge pushed by the hand moves at least as fast as the hand pushes it, and the push itself adds nothing more.
     // Its strap pulling back against the hand can't store up speed either, so when the hand eases off, or slides
     // past its edge, the badge doesn't spring away: it just swings from where it was left. A fast hit still knocks it
-    // on a little faster than the hand moved (up to 30% more, from 1 badge-width a second up to 3).
+    // on a little faster than that (up to 30% more, from 1 badge-width a second up to 3). The knocked badge keeps
+    // 70% of that speed once it's free, so a knock sends it swinging rather than rocketing off.
     for (const [P, Hd, dir, ax] of handContacts) {
       const vH = Hd.vel[ax] * dir, vP = P.vel[ax] * dir;
-      const hit = Math.min(1, Math.max(0, (vH / S - 1) / 2)), want = vH * (1 + 0.3 * hit);
+      const hit = Math.min(1, Math.max(0, (vH / S - 1) / 2)), want = 0.7 * vH * (1 + 0.3 * hit);
       if (vP < want) P.vel[ax] += (want - vP) * dir;
     }
     for (const [A, B, sx] of contacts) {
       const rel = (B.vel.x - A.vel.x) * sx;          // < 0 means they're closing
       if (rel < 0) { const imp = rel * 0.45; A.vel.x += imp * sx; B.vel.x -= imp * sx; }
       const sep = (B.vel.x - A.vel.x) * sx;          // cap how fast contact can push them apart
-      const maxSep = 0.6 * S;
+      const maxSep = 0.42 * S;   // (was 0.6: 30% softer, so knocked badges don't fly apart)
       if (sep > maxSep) { const k = (sep - maxSep) * 0.5; A.vel.x += k * sx; B.vel.x -= k * sx; }
       A.ang.multiplyScalar(0.996); B.ang.multiplyScalar(0.996);
     }
