@@ -92,3 +92,6 @@ figure > .label + .frame { margin-top: 10px; }
 .tldr dd { margin: 0; font-size: 16px; line-height: 1.55; }
 .tldr .res dd { color: var(--ink); font-size: 18px; font-weight: 500; }
 @media (min-width: 720px) { .tldr dl { grid-template-columns: 1fr 1fr; } .tldr .res { grid-column: 1 / -1; padding-top: 14px; border-top: 1px solid var(--line); } }
+
+/* a thumbnail row inside the text column: all five fit across on wide screens, and scroll sideways on narrow ones */
+@media (min-width: 720px) { .artifact .thumbs { grid-auto-columns: minmax(0, 1fr); gap: 12px; } }

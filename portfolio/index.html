@@ -14,6 +14,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
 <link rel="stylesheet" href="../css/site.css">
+<link rel="stylesheet" href="../css/thumbs.css">
 <style>
   /* The same plain, dark look as the case studies: one label style, hairline rules, every project a section you can
      open and close. */
@@ -80,43 +81,6 @@
   .scroll { overflow-x: auto; }
   .ak-ref { display: block; width: 100%; min-width: 520px; height: auto; }
 
-  /* thumbnail rows: small previews on one row (scrolling sideways on narrow screens); each opens in the viewer */
-  .thumbs { list-style: none; margin: 28px 0 0; padding: 0 0 6px; display: grid; grid-auto-flow: column; grid-auto-columns: clamp(150px, calc((100% - 72px) / 5), 240px);
-    gap: 18px; overflow-x: auto; scroll-snap-type: x proximity; }
-  .thumbs > li { scroll-snap-align: start; min-width: 0; }
-  .thumbs figure { margin: 0; }
-  .thumbs figure figcaption { font-size: 13px; line-height: 1.4; margin-top: 8px; }
-  .tn { position: relative; display: block; width: 100%; aspect-ratio: 4 / 3; padding: 0; border: 1px solid var(--line); border-radius: 6px;
-    overflow: hidden; background: #fff; cursor: zoom-in; transition: border-color .2s, transform .2s; }
-  .tn:hover { border-color: var(--muted); transform: translateY(-2px); }
-  .tn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-  .tn-v { position: absolute; inset: 0; display: block; pointer-events: none; }
-  .tn-v > img, .tn-v > svg, .tn-v > video { display: block; width: 100%; height: 100%; min-width: 0; object-fit: cover; object-position: top center; }
-  .tn-v > scan-cadence { width: 100%; max-width: none; }
-  .tn-play { position: absolute; z-index: 1; left: 50%; top: 50%; width: 44px; height: 44px; margin: -22px 0 0 -22px; border-radius: 50%;
-    background: rgba(14,18,20,.78); border: 1px solid rgba(255,255,255,.35); }
-  .tn-play::after { content: ""; position: absolute; left: 17px; top: 13px; border-style: solid; border-width: 9px 0 9px 14px; border-color: transparent transparent transparent #fff; }
-  .tn .tn-tag { position: absolute; z-index: 1; left: 6px; bottom: 6px; font-size: 10px; letter-spacing: .06em; padding: 3px 6px; border-radius: 3px;
-    background: rgba(14,18,20,.85); color: var(--ink); line-height: 1.2; text-align: left; }
-  /* the viewer */
-  .lb { width: min(1100px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); padding: 0; border: 1px solid var(--line); border-radius: 8px;
-    background: var(--panel); color: var(--body); }
-  .lb::backdrop { background: rgba(6,8,9,.82); }
-  .lb[open] { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; }
-  .lb-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 12px 10px 16px; border-bottom: 1px solid var(--line); }
-  .lb-bar .label { margin: 0; }
-  .lb-btns { display: flex; gap: 6px; }
-  .lb button { font: 500 13px/1 var(--f-body); color: var(--ink); background: transparent; border: 1px solid var(--line); border-radius: 4px;
-    min-width: 36px; height: 34px; padding: 0 10px; cursor: pointer; }
-  .lb button:hover { border-color: var(--muted); }
-  .lb-stage { overflow: auto; padding: 16px; display: grid; place-items: start center; }
-  .lb-stage > * { max-width: 100%; }
-  .lb-stage img { display: block; max-width: 100%; height: auto; max-height: calc(100dvh - 190px); width: auto; background: #fff; border-radius: 4px; }
-  .lb-stage svg { display: block; width: 100%; min-width: 560px; height: auto; }
-  .lb-stage scan-cadence { width: 340px; }
-  .lb-stage video { display: block; max-width: 100%; max-height: calc(100dvh - 190px); width: auto; height: auto; border-radius: 4px; }
-  .lb-cap { margin: 0; padding: 10px 16px 14px; font-size: 14px; color: var(--muted); border-top: 1px solid var(--line); }
-  @media (prefers-reduced-motion: reduce) { .tn { transition: none; } .tn:hover { transform: none; } }
 
   /* Innovative Driven: onboarding graph */
   .flow { padding: 22px 20px 26px; }
@@ -445,54 +409,7 @@
     addEventListener('hashchange', openHash); openHash();
   })();
 </script>
-<dialog class="lb" aria-labelledby="lb-cap">
-  <div class="lb-bar"><p class="label" id="lb-n"></p>
-    <div class="lb-btns"><button type="button" data-go="-1" aria-label="Previous">←</button><button type="button" data-go="1" aria-label="Next">→</button><button type="button" data-go="close">Close</button></div></div>
-  <div class="lb-stage"></div>
-  <p class="lb-cap" id="lb-cap"></p>
-</dialog>
-<script>
-  // The viewer for thumbnail rows: a thumbnail opens a copy of its artifact at full size in a modal dialog. Arrow keys or
-  // the arrow buttons step through the row, Escape or Close shuts it, and focus goes back to the thumbnail it came from.
-  (() => {
-    const dlg = document.querySelector('.lb'), stage = dlg.querySelector('.lb-stage');
-    let row = [], i = 0;
-    const show = () => {
-      const fig = row[i].closest('figure');
-      const view = row[i].querySelector('.tn-v').cloneNode(true);
-      view.querySelectorAll('[id]').forEach(el => {        // keep ids unique; relabel what pointed at them
-        const old = el.id, id = old + '-lb'; el.id = id;
-        view.querySelectorAll(`[aria-labelledby="${old}"]`).forEach(x => x.setAttribute('aria-labelledby', id));
-      });
-      view.querySelectorAll('img[loading]').forEach(img => img.removeAttribute('loading'));
-      view.querySelectorAll('video').forEach(v => { v.controls = true; v.src = v.getAttribute('src').replace(/#t=.*/, ''); });
-      stage.replaceChildren(...view.childNodes);
-      stage.scrollTo(0, 0);
-      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) stage.querySelector('video')?.play().catch(() => {});
-      dlg.querySelector('.lb-cap').textContent = fig.querySelector('figcaption').textContent;
-      const tag = fig.querySelector('.tn-tag');
-      dlg.querySelector('#lb-n').textContent = `${i + 1} of ${row.length}` + (tag ? ` · ${tag.textContent}` : '');
-    };
-    const go = d => { i = (i + d + row.length) % row.length; show(); };
-    document.querySelectorAll('.thumbs').forEach(list => {
-      const btns = [...list.querySelectorAll('.tn')];
-      btns.forEach((b, k) => {
-        b.setAttribute('aria-label', 'View larger: ' + b.closest('figure').querySelector('figcaption').textContent);
-        b.addEventListener('click', () => { row = btns; i = k; show(); dlg.showModal(); dlg.querySelector('[data-go="close"]').focus(); });
-      });
-    });
-    dlg.addEventListener('click', e => {
-      if (e.target === dlg) return dlg.close();           // a click on the backdrop
-      const b = e.target.closest('[data-go]'); if (!b) return;
-      if (b.dataset.go === 'close') dlg.close(); else go(Number(b.dataset.go));
-    });
-    dlg.addEventListener('keydown', e => {
-      if (e.key === 'ArrowRight') { go(1); e.preventDefault(); }
-      else if (e.key === 'ArrowLeft') { go(-1); e.preventDefault(); }
-    });
-    dlg.addEventListener('close', () => { stage.replaceChildren(); row[i]?.focus(); });   // back to the thumbnail last shown
-  })();
-</script>
+<script src="../js/thumbs.js" defer></script>
 <script type="module" src="components/index.js"></script>
 </body>
 </html>
